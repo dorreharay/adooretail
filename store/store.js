@@ -1,6 +1,7 @@
 import { createStore as createReduxStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import root from './reducers';
+import { createLogger } from 'redux-logger'
 // import client from '../apollo'
 
 const createStore = (initialState = {}) => {
@@ -23,6 +24,10 @@ const createStore = (initialState = {}) => {
     }
   }
 
+  const logger = createLogger({
+    // ...options
+  });
+
   const rootReducer = (state, action) => {
     if (action.type === 'RESET_STATE') {
       state = undefined;
@@ -35,7 +40,7 @@ const createStore = (initialState = {}) => {
     rootReducer,
     initialState,
     composeEnhancers(
-      // applyMiddleware(...middleware),
+      applyMiddleware(logger),
       ...enhancers
     )
   );

@@ -2,23 +2,28 @@ import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, StyleSheet, } from 'react-native'
 import Carousel from 'react-native-snap-carousel';
 
-import { deviceWidth, deviceHeight } from '../../../helpers'
+import { deviceWidth, deviceHeight } from '../../../helpers/dimensions'
 
-import Login from './components/Login/LoginContainer'
-import InputCash from './components/StartSession/InputCash'
-import InputEmployee from './components/StartSession/InputEmployee/InputEmployeeContainer'
+import Login from './components/Login/Login'
+import InputCash from './components/InputCash/InputCash'
+import InputEmployees from './components/InputEmployees/InputEmployees'
+
 import SharedBackground from '../../components/SharedBackground'
 
 function InitialLayout({ navigation }) {
   const sliderRef = useRef(null)
   const [entries] = useState([{}, {}, {}])
 
+  useEffect(() => {
+    return () => sliderRef.current.snapToItem(0)
+  }, [])
+
   const _renderItem = ({ item, index }) => {
     return (
       <View style={styles.container}>
-        {index === 0 && <Login snapToIndex={sliderRef.current.snapToNext} navigation={navigation} />}
-        {index === 1 && <InputCash navigation={navigation} />}
-        {index === 2 && <InputEmployee navigation={navigation} />}
+        {index === 0 && <Login sliderRef={sliderRef} navigation={navigation} />}
+        {index === 1 && <InputCash sliderRef={sliderRef} navigation={navigation} />}
+        {index === 2 && <InputEmployees sliderRef={sliderRef} navigation={navigation} />}
       </View>
     );
   }
@@ -34,11 +39,14 @@ function InitialLayout({ navigation }) {
           sliderHeight={deviceHeight}
           itemWidth={deviceWidth}
           itemHeight={deviceHeight}
-          activeSlideOffset={0}
+          // activeSlideOffset={0}
           swipeThreshold={0}
           inactiveSlideScale={1}
           useScrollView
-          // scrollEnabled={false}
+          scrollEnabled={false}
+          delayPressIn={0}
+          activeSlideOffset={2}
+          enableMomentum={true}
         />
       </View>
       <SharedBackground source={require('../../../assets/images/background.png')} />

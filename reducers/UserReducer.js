@@ -58,8 +58,9 @@ const ACTION_HANDLERS = {
     return {...state, token: action.payload}
   },
   [SET_CURRENT_SESSION]: (state, action) => {
+    const currentSession = !action.payload ? {} : action.payload
 
-    return {...state, currentSession: action.payload}
+    return {...state, currentSession}
   },
   [SET_START_CASH]: (state, action) => {
 

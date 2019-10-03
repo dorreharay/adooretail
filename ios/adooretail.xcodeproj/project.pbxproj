@@ -7,31 +7,35 @@
 	objects = {
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* adooretailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* adooretailTests.m */; };
+		0D4689DB36FA4851AFBF3063 /* evolventa_oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE1F208BD547F39AC736ED /* evolventa_oblique.ttf */; };
+		0FCCB7B9007640D8A461A474 /* ttcommons_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD7F8A786E804F9CA1F61E6F /* ttcommons_light.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2BE496BC70B74D9ABBA3E04E /* agfutura.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35DEB27310614DD8B8DBF3D4 /* agfutura.ttf */; };
+		2CE2578D72B54989A9AE86A2 /* ttcommons_demibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E7AF4CB88C4AA7904F5CB7 /* ttcommons_demibold.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* adooretailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* adooretailTests.m */; };
-		2BE496BC70B74D9ABBA3E04E /* agfutura.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35DEB27310614DD8B8DBF3D4 /* agfutura.ttf */; };
-		C27323DD87544542890D7A44 /* comfortaa_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D5240A2E9394E439DBCBF1B /* comfortaa_bold.ttf */; };
-		5D02E774376B4475803D2474 /* comfortaa_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B9BBDBB884449287450F5D /* comfortaa_light.ttf */; };
-		4D3515997B8F4D50B16635F2 /* comfortaa_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E3802A23E4B1E9E4BCCDA /* comfortaa_regular.ttf */; };
-		B3FD2D5994D54795A61173AB /* evolventa_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F71F6E5C5B9481B8B1597FB /* evolventa_bold.ttf */; };
-		D7A1BC8C6F014F4C80041F7F /* evolventa_boldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7DB6337A4AE4EAD83C97F6C /* evolventa_boldOblique.ttf */; };
-		0D4689DB36FA4851AFBF3063 /* evolventa_oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE1F208BD547F39AC736ED /* evolventa_oblique.ttf */; };
-		BB2B2662E41B47E8B56D3228 /* evolventa_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B63B469352A44FEF97443976 /* evolventa_regular.ttf */; };
-		B27FDE6752A244CCB9AC9CA0 /* futura_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D75FF2D341A64C3D9B9BB769 /* futura_light.ttf */; };
-		D0642424D96A40FEB4312299 /* futura_new_demi.otf in Resources */ = {isa = PBXBuildFile; fileRef = 644C413EDDC14CBEA53BB574 /* futura_new_demi.otf */; };
 		2F6E2AABAE5146F6B10F978F /* futura_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3D9D423EBAD44BE9D4441E1 /* futura_regular.ttf */; };
-		A74798B7CF514FF1AAE8285D /* ttcommons_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 263E1FAEBCAC4DDE985C9C1D /* ttcommons_black.ttf */; };
-		D2CD76222092430DA4769EB9 /* ttcommons_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 359D632707204E67BE139DB3 /* ttcommons_bold.ttf */; };
-		2CE2578D72B54989A9AE86A2 /* ttcommons_demibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47E7AF4CB88C4AA7904F5CB7 /* ttcommons_demibold.ttf */; };
+		3F9EF1AFEEC09DAE6FF3E574 /* libPods-adooretail-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A28F95E8B77BE491FD44458 /* libPods-adooretail-tvOSTests.a */; };
+		4D3515997B8F4D50B16635F2 /* comfortaa_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B3E3802A23E4B1E9E4BCCDA /* comfortaa_regular.ttf */; };
+		5D02E774376B4475803D2474 /* comfortaa_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B9BBDBB884449287450F5D /* comfortaa_light.ttf */; };
+		69A3517E6F02D67B5AF42C2A /* libPods-adooretail-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF2845785FD26B1C9CB1E884 /* libPods-adooretail-tvOS.a */; };
 		6DECEA0C1DDD47C5BC3DDE5A /* ttcommons_extralight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0704EE5D281E499988D646B7 /* ttcommons_extralight.ttf */; };
-		0FCCB7B9007640D8A461A474 /* ttcommons_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD7F8A786E804F9CA1F61E6F /* ttcommons_light.ttf */; };
+		97DC900C315A219D64789243 /* libPods-adooretailTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E51170B4BBC060A855F21F24 /* libPods-adooretailTests.a */; };
+		A74798B7CF514FF1AAE8285D /* ttcommons_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 263E1FAEBCAC4DDE985C9C1D /* ttcommons_black.ttf */; };
 		AFDB68B25075464A918D5A8F /* ttcommons_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BF3AACCE02544998228975F /* ttcommons_medium.ttf */; };
+		B27FDE6752A244CCB9AC9CA0 /* futura_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D75FF2D341A64C3D9B9BB769 /* futura_light.ttf */; };
+		B3FD2D5994D54795A61173AB /* evolventa_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F71F6E5C5B9481B8B1597FB /* evolventa_bold.ttf */; };
+		BB2B2662E41B47E8B56D3228 /* evolventa_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B63B469352A44FEF97443976 /* evolventa_regular.ttf */; };
+		C1964B1111E54B10FE0B3B78 /* libPods-adooretail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC0E5CF3E11F18BC04C002F /* libPods-adooretail.a */; };
+		C27323DD87544542890D7A44 /* comfortaa_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D5240A2E9394E439DBCBF1B /* comfortaa_bold.ttf */; };
+		D0642424D96A40FEB4312299 /* futura_new_demi.otf in Resources */ = {isa = PBXBuildFile; fileRef = 644C413EDDC14CBEA53BB574 /* futura_new_demi.otf */; };
+		D2CD76222092430DA4769EB9 /* ttcommons_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 359D632707204E67BE139DB3 /* ttcommons_bold.ttf */; };
+		D7A1BC8C6F014F4C80041F7F /* evolventa_boldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7DB6337A4AE4EAD83C97F6C /* evolventa_boldOblique.ttf */; };
 		DF37C4E2D69C49F98E02519E /* ttcommons_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2F126A7CFAD44E48B11B671 /* ttcommons_regular.ttf */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +61,9 @@
 		00E356EE1AD99517003FC87E /* adooretailTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = adooretailTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* adooretailTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = adooretailTests.m; sourceTree = "<group>"; };
+		00EBE4EFAB917A6925381119 /* Pods-adooretail.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail.debug.xcconfig"; path = "Target Support Files/Pods-adooretail/Pods-adooretail.debug.xcconfig"; sourceTree = "<group>"; };
+		0704EE5D281E499988D646B7 /* ttcommons_extralight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_extralight.ttf; path = ../assets/fonts/ttcommons_extralight.ttf; sourceTree = "<group>"; };
+		0D5240A2E9394E439DBCBF1B /* comfortaa_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = comfortaa_bold.ttf; path = ../assets/fonts/comfortaa_bold.ttf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* adooretail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = adooretail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = adooretail/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = adooretail/AppDelegate.m; sourceTree = "<group>"; };
@@ -64,28 +71,37 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = adooretail/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = adooretail/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = adooretail/main.m; sourceTree = "<group>"; };
+		1FEE1F208BD547F39AC736ED /* evolventa_oblique.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = evolventa_oblique.ttf; path = ../assets/fonts/evolventa_oblique.ttf; sourceTree = "<group>"; };
+		23B9BBDBB884449287450F5D /* comfortaa_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = comfortaa_light.ttf; path = ../assets/fonts/comfortaa_light.ttf; sourceTree = "<group>"; };
+		263E1FAEBCAC4DDE985C9C1D /* ttcommons_black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_black.ttf; path = ../assets/fonts/ttcommons_black.ttf; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* adooretail-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "adooretail-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* adooretail-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "adooretail-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F71F6E5C5B9481B8B1597FB /* evolventa_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = evolventa_bold.ttf; path = ../assets/fonts/evolventa_bold.ttf; sourceTree = "<group>"; };
+		359D632707204E67BE139DB3 /* ttcommons_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_bold.ttf; path = ../assets/fonts/ttcommons_bold.ttf; sourceTree = "<group>"; };
+		35DEB27310614DD8B8DBF3D4 /* agfutura.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = agfutura.ttf; path = ../assets/fonts/agfutura.ttf; sourceTree = "<group>"; };
+		47E7AF4CB88C4AA7904F5CB7 /* ttcommons_demibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_demibold.ttf; path = ../assets/fonts/ttcommons_demibold.ttf; sourceTree = "<group>"; };
+		4B3E3802A23E4B1E9E4BCCDA /* comfortaa_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = comfortaa_regular.ttf; path = ../assets/fonts/comfortaa_regular.ttf; sourceTree = "<group>"; };
+		62506A17FDF1445CD2C33508 /* Pods-adooretail-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-adooretail-tvOSTests/Pods-adooretail-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		644C413EDDC14CBEA53BB574 /* futura_new_demi.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = futura_new_demi.otf; path = ../assets/fonts/futura_new_demi.otf; sourceTree = "<group>"; };
+		6BF3AACCE02544998228975F /* ttcommons_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_medium.ttf; path = ../assets/fonts/ttcommons_medium.ttf; sourceTree = "<group>"; };
+		7FB91B2D0C6F42FA3EFEA732 /* Pods-adooretailTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretailTests.debug.xcconfig"; path = "Target Support Files/Pods-adooretailTests/Pods-adooretailTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8A28F95E8B77BE491FD44458 /* libPods-adooretail-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretail-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BC0E5CF3E11F18BC04C002F /* libPods-adooretail.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretail.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D4CA8DC0F6A6B8A4F58E829 /* Pods-adooretail-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail-tvOS.release.xcconfig"; path = "Target Support Files/Pods-adooretail-tvOS/Pods-adooretail-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		A3D9D423EBAD44BE9D4441E1 /* futura_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = futura_regular.ttf; path = ../assets/fonts/futura_regular.ttf; sourceTree = "<group>"; };
+		AE89DE446409D2055DB5A32A /* Pods-adooretail.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail.release.xcconfig"; path = "Target Support Files/Pods-adooretail/Pods-adooretail.release.xcconfig"; sourceTree = "<group>"; };
+		B63B469352A44FEF97443976 /* evolventa_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = evolventa_regular.ttf; path = ../assets/fonts/evolventa_regular.ttf; sourceTree = "<group>"; };
+		B8229EB49CCE136137057360 /* Pods-adooretailTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretailTests.release.xcconfig"; path = "Target Support Files/Pods-adooretailTests/Pods-adooretailTests.release.xcconfig"; sourceTree = "<group>"; };
+		C64FE4528F365CCACC7EE9C4 /* Pods-adooretail-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-adooretail-tvOS/Pods-adooretail-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		CD7F8A786E804F9CA1F61E6F /* ttcommons_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_light.ttf; path = ../assets/fonts/ttcommons_light.ttf; sourceTree = "<group>"; };
+		D07DB77C50C81CC32FC958F4 /* Pods-adooretail-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-adooretail-tvOSTests/Pods-adooretail-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D2F126A7CFAD44E48B11B671 /* ttcommons_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_regular.ttf; path = ../assets/fonts/ttcommons_regular.ttf; sourceTree = "<group>"; };
+		D75FF2D341A64C3D9B9BB769 /* futura_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = futura_light.ttf; path = ../assets/fonts/futura_light.ttf; sourceTree = "<group>"; };
+		D7DB6337A4AE4EAD83C97F6C /* evolventa_boldOblique.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = evolventa_boldOblique.ttf; path = ../assets/fonts/evolventa_boldOblique.ttf; sourceTree = "<group>"; };
+		E51170B4BBC060A855F21F24 /* libPods-adooretailTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretailTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		35DEB27310614DD8B8DBF3D4 /* agfutura.ttf */ = {isa = PBXFileReference; name = "agfutura.ttf"; path = "../assets/fonts/agfutura.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0D5240A2E9394E439DBCBF1B /* comfortaa_bold.ttf */ = {isa = PBXFileReference; name = "comfortaa_bold.ttf"; path = "../assets/fonts/comfortaa_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		23B9BBDBB884449287450F5D /* comfortaa_light.ttf */ = {isa = PBXFileReference; name = "comfortaa_light.ttf"; path = "../assets/fonts/comfortaa_light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4B3E3802A23E4B1E9E4BCCDA /* comfortaa_regular.ttf */ = {isa = PBXFileReference; name = "comfortaa_regular.ttf"; path = "../assets/fonts/comfortaa_regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2F71F6E5C5B9481B8B1597FB /* evolventa_bold.ttf */ = {isa = PBXFileReference; name = "evolventa_bold.ttf"; path = "../assets/fonts/evolventa_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D7DB6337A4AE4EAD83C97F6C /* evolventa_boldOblique.ttf */ = {isa = PBXFileReference; name = "evolventa_boldOblique.ttf"; path = "../assets/fonts/evolventa_boldOblique.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1FEE1F208BD547F39AC736ED /* evolventa_oblique.ttf */ = {isa = PBXFileReference; name = "evolventa_oblique.ttf"; path = "../assets/fonts/evolventa_oblique.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B63B469352A44FEF97443976 /* evolventa_regular.ttf */ = {isa = PBXFileReference; name = "evolventa_regular.ttf"; path = "../assets/fonts/evolventa_regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D75FF2D341A64C3D9B9BB769 /* futura_light.ttf */ = {isa = PBXFileReference; name = "futura_light.ttf"; path = "../assets/fonts/futura_light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		644C413EDDC14CBEA53BB574 /* futura_new_demi.otf */ = {isa = PBXFileReference; name = "futura_new_demi.otf"; path = "../assets/fonts/futura_new_demi.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A3D9D423EBAD44BE9D4441E1 /* futura_regular.ttf */ = {isa = PBXFileReference; name = "futura_regular.ttf"; path = "../assets/fonts/futura_regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		263E1FAEBCAC4DDE985C9C1D /* ttcommons_black.ttf */ = {isa = PBXFileReference; name = "ttcommons_black.ttf"; path = "../assets/fonts/ttcommons_black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		359D632707204E67BE139DB3 /* ttcommons_bold.ttf */ = {isa = PBXFileReference; name = "ttcommons_bold.ttf"; path = "../assets/fonts/ttcommons_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		47E7AF4CB88C4AA7904F5CB7 /* ttcommons_demibold.ttf */ = {isa = PBXFileReference; name = "ttcommons_demibold.ttf"; path = "../assets/fonts/ttcommons_demibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0704EE5D281E499988D646B7 /* ttcommons_extralight.ttf */ = {isa = PBXFileReference; name = "ttcommons_extralight.ttf"; path = "../assets/fonts/ttcommons_extralight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CD7F8A786E804F9CA1F61E6F /* ttcommons_light.ttf */ = {isa = PBXFileReference; name = "ttcommons_light.ttf"; path = "../assets/fonts/ttcommons_light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		6BF3AACCE02544998228975F /* ttcommons_medium.ttf */ = {isa = PBXFileReference; name = "ttcommons_medium.ttf"; path = "../assets/fonts/ttcommons_medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D2F126A7CFAD44E48B11B671 /* ttcommons_regular.ttf */ = {isa = PBXFileReference; name = "ttcommons_regular.ttf"; path = "../assets/fonts/ttcommons_regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FF2845785FD26B1C9CB1E884 /* libPods-adooretail-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretail-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97DC900C315A219D64789243 /* libPods-adooretailTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1964B1111E54B10FE0B3B78 /* libPods-adooretail.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69A3517E6F02D67B5AF42C2A /* libPods-adooretail-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F9EF1AFEEC09DAE6FF3E574 /* libPods-adooretail-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,8 +176,27 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				8BC0E5CF3E11F18BC04C002F /* libPods-adooretail.a */,
+				FF2845785FD26B1C9CB1E884 /* libPods-adooretail-tvOS.a */,
+				8A28F95E8B77BE491FD44458 /* libPods-adooretail-tvOSTests.a */,
+				E51170B4BBC060A855F21F24 /* libPods-adooretailTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7CFB2012C17410DB95DF2396 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				00EBE4EFAB917A6925381119 /* Pods-adooretail.debug.xcconfig */,
+				AE89DE446409D2055DB5A32A /* Pods-adooretail.release.xcconfig */,
+				C64FE4528F365CCACC7EE9C4 /* Pods-adooretail-tvOS.debug.xcconfig */,
+				8D4CA8DC0F6A6B8A4F58E829 /* Pods-adooretail-tvOS.release.xcconfig */,
+				D07DB77C50C81CC32FC958F4 /* Pods-adooretail-tvOSTests.debug.xcconfig */,
+				62506A17FDF1445CD2C33508 /* Pods-adooretail-tvOSTests.release.xcconfig */,
+				7FB91B2D0C6F42FA3EFEA732 /* Pods-adooretailTests.debug.xcconfig */,
+				B8229EB49CCE136137057360 /* Pods-adooretailTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -176,6 +215,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				B31BB21C9D1A413E805883D3 /* Resources */,
+				7CFB2012C17410DB95DF2396 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -194,7 +234,7 @@
 			sourceTree = "<group>";
 		};
 		B31BB21C9D1A413E805883D3 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				35DEB27310614DD8B8DBF3D4 /* agfutura.ttf */,
 				0D5240A2E9394E439DBCBF1B /* comfortaa_bold.ttf */,
@@ -217,7 +257,6 @@
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -226,6 +265,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "adooretailTests" */;
 			buildPhases = (
+				0E67E44CEEBEDC1E87D2F6D1 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -244,6 +284,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "adooretail" */;
 			buildPhases = (
+				9D792D242DC7C0B0DFCA167F /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -255,7 +296,7 @@
 			dependencies = (
 			);
 			name = adooretail;
-			productName = "adooretail";
+			productName = adooretail;
 			productReference = 13B07F961A680F5B00A75B9A /* adooretail.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -263,6 +304,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "adooretail-tvOS" */;
 			buildPhases = (
+				1AE6D7A4EBB13EB80FF60862 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -282,6 +324,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "adooretail-tvOSTests" */;
 			buildPhases = (
+				87B2A9AF47A32D61C9544DBA /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -309,6 +352,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 9CF2H73UZW;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -325,6 +371,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -408,6 +455,50 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		0E67E44CEEBEDC1E87D2F6D1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-adooretailTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1AE6D7A4EBB13EB80FF60862 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-adooretail-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -421,6 +512,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		87B2A9AF47A32D61C9544DBA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-adooretail-tvOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9D792D242DC7C0B0DFCA167F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-adooretail-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -527,6 +662,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FB91B2D0C6F42FA3EFEA732 /* Pods-adooretailTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -549,6 +685,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8229EB49CCE136137057360 /* Pods-adooretailTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -568,43 +705,52 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 00EBE4EFAB917A6925381119 /* Pods-adooretail.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 9CF2H73UZW;
 				INFOPLIST_FILE = adooretail/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.adoo.adooretail;
 				PRODUCT_NAME = adooretail;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE89DE446409D2055DB5A32A /* Pods-adooretail.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9CF2H73UZW;
 				INFOPLIST_FILE = adooretail/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.adoo.adooretail;
 				PRODUCT_NAME = adooretail;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C64FE4528F365CCACC7EE9C4 /* Pods-adooretail-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -632,6 +778,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D4CA8DC0F6A6B8A4F58E829 /* Pods-adooretail-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -659,6 +806,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D07DB77C50C81CC32FC958F4 /* Pods-adooretail-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -685,6 +833,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62506A17FDF1445CD2C33508 /* Pods-adooretail-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;

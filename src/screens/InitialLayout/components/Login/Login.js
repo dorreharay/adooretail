@@ -1,359 +1,211 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect, useRef, } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Easing, Alert, } from "react-native";
 import axios from 'axios';
 import _ from 'lodash';
+import { useDispatch } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Ripple from 'react-native-material-ripple';
-import Orientation from 'react-native-orientation';
 import DeviceInfo from 'react-native-device-info';
+import Toast, {DURATION} from 'react-native-easy-toast'
 import Svg, { Circle } from 'react-native-svg';
-import Datastore from 'react-native-local-mongodb';
-const localOptions = new Datastore({ filename: 'localOptions', autoload: true });
+import styles from './styles';
 
-import { API_URL }  from '../../../../../config/api';
+import { API_URL } from '../../../../../config/api';
+import { loginKeyboardLayout } from '../../../../../helpers/keyboards'
+import { setAuthToken, setCurrentSession } from '../../../../../reducers/UserReducer';
 
-import LoginLoader  from '../../../../components/LoginLoader';
-import SharedBackground from '../../../../components/SharedBackground';
+import LoginLoader from '../../../../components/LoginLoader';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
+function Login(props) {
+  const { navigation, sliderRef, } = props;
 
-    this.state = {
-      passwordArray: [
-        { entered: false, },
-        { entered: false, },
-        { entered: false, },
-        { entered: false, },
-        { entered: false, },
-        { entered: false, },
-        { entered: false, },
-      ],
-      loading: false, 
-      error: false,
-      currentInput: '',
-    };
-    this.promptPosition = new Animated.Value(-400)
-    this.animatedValue = new Animated.Value(0)
-  }
-  
-  componentDidMount() {
-    Orientation.lockToLandscape();
-    
-    // this.validateDeviceID('1111222')
+  const initialPassword = [
+    { entered: false, },
+    { entered: false, },
+    { entered: false, },
+    { entered: false, },
+    { entered: false, },
+    { entered: false, },
+    { entered: false, },
+  ]
 
-    this.props.navigation.addListener("didFocus", () => {
-      // localOptions.remove({}, { multi: true }, async (err, productsDocs) => {})
-      localOptions.find({}, async (err, localOptionsArr) => {
-        console.log(localOptionsArr)
-        if(localOptionsArr.length === 0) {
-          this.togglePrompt(true)
-        }
-      })
-    });
+  const toast = useRef(null)
+  const [passwordArray, setPasswordArray] = useState(initialPassword)
+  const [loading, setLoadingStatus] = useState(false)
+  const [error, setError] = useState(false)
+  const [currentInput, setCurrentInput] = useState('')
+
+  const [promptPosition] = useState(new Animated.Value(-400))
+  const [animatedValue] = useState(new Animated.Value(0))
+
+  const dispatch = useDispatch();
+
+  const resetState = () => {
+    setPasswordArray(initialPassword)
+    setLoadingStatus(false)
+    setError(false)
+    setCurrentInput('')
   }
 
-  handlePromptChoise = (choisePositive) => {
-    localOptions.find({}, async (err, localOptionsArr) => {
-      if(localOptionsArr.length === 0) {
-        localOptions.insert([{ ...localOptionsArr[0], id: 1, isLoginStartPage: choisePositive }], async (e, newDoc) => this.togglePrompt(false))
-      } else {
-        localOptions.update({ id: 1 }, { $set: { isLoginStartPage: choisePositive } }, {}, () => this.togglePrompt(false))
-      }
-    })
-  }
-
-  togglePrompt = (status) => {
-    console.log(status)
-
-    Animated.timing(this.promptPosition, {
-      toValue: status ? 40 : -400, 
+  const togglePrompt = (status) => {
+    Animated.timing(promptPosition, {
+      toValue: status ? 40 : -400,
       duration: 300,
       easing: Easing.linear
     }).start()
   }
 
-  validateDeviceID = async (deviceId) => {
-    this.setState({ loading: true })
+  const handleAnimation = () => {
+    Animated.sequence([
+
+      Animated.timing(animatedValue, { toValue: 10.0, duration: 50, easing: Easing.linear }),
+
+      Animated.timing(animatedValue, { toValue: -10.0, duration: 50, easing: Easing.linear }),
+
+      Animated.timing(animatedValue, { toValue: 0.0, duration: 50, easing: Easing.linear }),
+
+    ]).start();
+  }
+
+  const validateDeviceID = async (deviceId) => {
+    setLoadingStatus(true)
 
     try {
-      const result = await axios.get(`${API_URL}/user/token/${deviceId}`)
-      const token = result.data.token[0]._id;
-      const serverIds = result.data.deviceUniqueId[0].deviceUniqueId;
+      const { data } = await axios.get(`${API_URL}/user/token/${deviceId}`)
 
-      const uniqueId = DeviceInfo.getUniqueID();
+      if (data.token.length === 0) 
+        throw new Error('Device ID is incorrect')
+      
+      const token = data.token[0]._id;
+      const serverIds = data.deviceUniqueId[0].deviceUniqueId;      
 
-      if(!serverIds.includes(uniqueId)) {
-        throw new Error('Device ID is incorrect') 
-      }
-    
-      const currentSession = result.data.current_session[0].current_session;
-      this.props.setAuthToken(token)
-      this.props.setCurrentSession(currentSession)
-    
-        if(_.isEmpty(currentSession)) {
-          this.props.snapToIndex(1)
-          // this.props.navigation.navigate('InputCash')
-        } else {
-          this.props.snapToIndex(1)
-          // this.props.navigation.navigate('Sales')
-        }
-        this.setState({ 
-          passwordArray: [
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-          ],
-          loading: false,
-          error: false,
-          currentInput: '',
-        })  
+      const uniqueId = await DeviceInfo.getUniqueId();
+
+      if (!serverIds.includes(uniqueId))
+        throw new Error('Device ID is incorrect')
+      
+      const currentSession = data.current_session[0].current_session;
+
+      dispatch(setAuthToken(token))
+      dispatch(setCurrentSession(currentSession))
+
+      if (_.isEmpty(currentSession))
+        sliderRef.current.snapToNext()
+      else
+        // go to sales screen
+        throw new Error('Session exists')
+        // sliderRef.current.snapToItem(1)
+
+      resetState()
     } catch (e) {
-      Alert.alert(e.message)
-        this.handleAnimation()
-        this.setState({
-          error: true, loading: false,
-          currentInput: '',
-          passwordArray: [
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-            { entered: false, },
-          ],
-        })
-     
+      toast.current.show(e.message, DURATION.LENGTH_LONG)
+      console.log(e.message)
+      setLoadingStatus(false)
+      handleAnimation()
+      resetState()
     }
   }
 
-  handleKeyPress = (input) => {
-    let { currentInput, passwordArray, loading, error } = this.state;
-
+  const handleKeyPress = (input) => {
     let newInput = currentInput;
 
-    if(currentInput.length < passwordArray.length) {
+    if (currentInput.length < passwordArray.length)
       newInput = currentInput + input;
-    } else {
+    else 
       return
-    }
 
     const enteredLength = passwordArray.filter(item => item.entered === true).length
 
-    if(error) {
-      this.setState({ error: false })
-    }
+    if (error)
+      setError(false)
 
-    this.setState({
-      currentInput: newInput,
-      passwordArray: passwordArray.map((item, index) => index === enteredLength ? ({ ...item, entered: true, }) : item) 
-    })
+    const newPass = passwordArray.map((item, index) => index === enteredLength ? ({ ...item, entered: true, }) : item)
 
-    if(newInput.length === passwordArray.length && !loading && !error) {
-      this.validateDeviceID(newInput)
+    setCurrentInput(newInput)
+    setPasswordArray(newPass)
+
+    if (newInput.length === passwordArray.length && !loading && !error) {
+      validateDeviceID(newInput)
     }
   }
 
-  handleDeleteSign = () => {
-    this.togglePrompt()
-    let { currentInput, passwordArray } = this.state;
-
+  const handleDeleteSign = () => {
     let newInput = currentInput;
 
-    if(currentInput.length > 0) {
+    if (currentInput.length > 0)
       newInput = currentInput.slice(0, -1);
-    } else {
+    else
       return
-    }
 
     const enteredLength = passwordArray.filter(item => item.entered === true).length
 
-    this.setState({
-      currentInput: newInput,
-      passwordArray: passwordArray.map((item, index) => index === enteredLength - 1 ? ({ ...item, entered: false, }) : item) 
-    })
+    const newPass = passwordArray.map((item, index) => index === enteredLength - 1 ? ({ ...item, entered: false, }) : item)
+
+    setCurrentInput(newInput)
+    setPasswordArray(newPass)
   }
 
-  handleAnimation = () => {
-      Animated.sequence([
+  useEffect(() => {
+    // validateDeviceID('1111222')
 
-        Animated.timing(this.animatedValue, {toValue: 10.0, duration: 50, easing: Easing.linear}),
+    return () => {
+      sliderRef.current.snapToItem(0)
+    };
+  }, [])
 
-        Animated.timing(this.animatedValue, {toValue: -10.0, duration: 50, easing: Easing.linear}),
+  return (
+    <View style={styles.container}>
+      <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>хід за допомогою Device ID</Text>
+      <Animated.View style={[styles.idDots, { left: animatedValue }]}>
+        {passwordArray.map((item, index) => (
+          <Svg width={styles.dot.width} height={styles.dot.height} key={index}>
+            <Circle
+              cx={styles.dot.cx}
+              cy={styles.dot.cy}
+              r={styles.dot.r}
+              strokeWidth="1.5"
+              stroke="white"
+              fill={item.entered ? 'white' : "#33333300"}
+            />
+          </Svg>
+        ))}
+      </Animated.View>
 
-        Animated.timing(this.animatedValue, {toValue: 0.0, duration: 50, easing: Easing.linear}),
-        
-      ]).start();
-  }
-
-  render() {
-    const { passwordArray, loading, error } = this.state;
-  
-    return (
-      <LinearGradient style={styles.container} start={{x: -1, y: -1}} end={{x: 1, y: 1}} colors={['#6F6F6F00', '#1B1B1B00']}>
-        <SharedBackground navigation={this.props.navigation} />
-        <Animated.View style={[styles.startPagePrompt, { right: this.promptPosition }]}>
-          <View style={{ alignItems: 'center', width: '100%', height: '40%', paddingTop: '10%', paddingLeft: '7%', paddingRight: '10%', }}>
-            <Text style={[styles.promptButtonText, { color: '#F6F6F6', fontSize: 22, }]}>Зробити вхід стартовою сторінкою?</Text>
-          </View>
-          <View style={{ alignItems: 'center', justifyContent: 'flex-end', width: '100%', height: '60%', paddingBottom: '10%', }}>
-            <Ripple style={styles.promptButton} onPress={() => this.handlePromptChoise(true)} rippleColor={'#F3F3F3'}>
-              <Text style={styles.promptButtonText}>Так</Text>
-            </Ripple>
-            <Ripple style={[styles.promptButton, { marginTop: '7%', paddingBottom: '5%', }]} onPress={() => this.handlePromptChoise(false)} rippleColor={'#F3F3F3'}>
-              <Text style={styles.promptButtonText}>Ні</Text>
-            </Ripple>
-          </View>
-        </Animated.View>
-        <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>хід за допомогою Device ID</Text>
-        <Animated.View style={[styles.idDots, { left: this.animatedValue }]}>
-          {passwordArray.map((item, index) => (
-            <Svg height="45" width="45" key={index}>
-              <Circle
-                cx="25"
-                cy="25"
-                r="16"
-                strokeWidth="1.5"
-                stroke="white"
-                fill={item.entered ? 'white' : "#33333300"}
-              />
-            </Svg>
-          ))}
-        </Animated.View>
-        
-        <Text style={styles.loginCaption}>Device ID можна змінити в налаштування Adoo Cloud Account</Text>
-        <View style={styles.lsNumpad}>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('1')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>1</Text>
+      <Text style={styles.loginCaption}>Device ID можна змінити в налаштування Adoo Cloud Account</Text>
+      <View style={styles.lsNumpad}>
+        {loginKeyboardLayout.map((num, index) => (
+          <Ripple
+            style={styles.lsNum}
+            onPress={() => num.disabled ? null : handleKeyPress(num.value)}
+            rippleColor={`#858585${num.disabled ? '00' : ''}`}
+            rippleContainerBorderRadius={50} rippleFades rippleCentered key={index}
+          >
+            <Text style={styles.lsNumText}>{num.value}</Text>
           </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('2')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>2</Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('3')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>3</Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('4')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>4</Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('5')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>5</Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('6')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>6</Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('7')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>7</Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('8')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>8</Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('9')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>9</Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('0')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}></Text>
-          </Ripple>
-          <Ripple style={styles.lsNum} onPress={() => this.handleKeyPress('0')} rippleColor={'#565656'} rippleContainerBorderRadius={50} rippleCentered>
-            <Text style={styles.lsNumText}>0</Text>
-          </Ripple>
-          <TouchableOpacity style={styles.lsNum} onPress={this.handleDeleteSign} activeOpacity={1}>
-            <Image style={{ width: 32, height: 27, marginRight: 5, }} source={require('../../../../../assets/images/erase.png')} fadeDuration={0} />
-          </TouchableOpacity>
+        ))}
+        <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
+          <Image style={{ width: 32, height: 27, marginRight: 5, }} source={require('../../../../../assets/images/erase.png')} fadeDuration={0} />
+        </Ripple>
+      </View>
+      <LoginLoader active={loading} />
+      <Toast ref={toast}/>
+      <Animated.View style={[styles.startPagePrompt, { left: promptPosition }]}>
+        <View style={{ alignItems: 'center', width: '100%', height: '40%', paddingTop: '10%', paddingLeft: '7%', paddingRight: '10%', }}>
+          <Text style={[styles.promptButtonText, { color: '#F6F6F6', fontSize: 22, }]}>Зробити вхід стартовою сторінкою?</Text>
         </View>
-        <LoginLoader active={loading} />
-      </LinearGradient>
-    );
-  }
+        <View style={{ alignItems: 'center', justifyContent: 'flex-end', width: '100%', height: '60%', paddingBottom: '10%', }}>
+          <Ripple style={styles.promptButton} onPress={() => handlePromptChoise(true)} rippleColor={'#F3F3F3'}>
+            <Text style={styles.promptButtonText}>Так</Text>
+          </Ripple>
+          <Ripple style={[styles.promptButton, { marginTop: '7%', paddingBottom: '5%', }]} onPress={() => handlePromptChoise(false)} rippleColor={'#F3F3F3'}>
+            <Text style={styles.promptButtonText}>Ні</Text>
+          </Ripple>
+        </View>
+      </Animated.View>
+    </View>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: { 
-    flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: '2%',
-  },
-  loginHeading: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontFamily: 'comfortaa_light',
-    letterSpacing: 1,
-  },
-  loginHeadingSuper: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontFamily: 'comfortaa_light',
-    letterSpacing: 2,
-  },
-  idDots: {
-    width: 380,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    marginTop: 35,
-  },
-  dot: {
-    width: 35,
-    height: 35,
-  },
-  loginCaption: {
-    color: '#F7F7F7',
-    fontSize: 13,
-    fontFamily: 'futura_light',
-    marginTop: 50,
-  },
-  lsNumpad: {
-    width: 480,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 20,
-  },  
-  lsNum: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 100,
-    height: 100,
-    marginLeft: '5%',
-    marginRight: '5%',
-    borderRadius: 100,
-  },
-  lsNumText: {
-    color: '#F6F6F6',
-    fontSize: 40,
-    fontFamily: 'comfortaa_light',
-    textAlign: 'center',
-    textAlignVertical :'center',
-    // elevation: 1,
-  },
-  startPagePrompt: {
-    alignItems: 'center',
-    position: 'absolute',
-    top: 200,
-    width: 280,
-    height: 300,
-    backgroundColor: '#D2D2D233',
-    borderRadius: 3,
-    zIndex: 100,
-  },
-  promptButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '86%',
-    height: '40%',
-    borderRadius: 3,
-    backgroundColor: '#D2D2D233',
-  },
-  promptButtonText: {
-    color: '#ffffff',
-    fontSize: 20,
-    fontFamily: 'futura_light',
-  },
-})
+
 
 export default Login;
