@@ -3,6 +3,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation'
 
 import InitialLayout from '../src/screens/InitialLayout/InitialLayout'
+import SalesLayout from '../src/screens/SalesLayout/SalesLayout'
 
 const defaultTabBarOptions = {
   inactiveTintColor: '#8e8e93',
@@ -25,6 +26,7 @@ const defaultTabBarOptions = {
 const materialNavigation = createMaterialTopTabNavigator (
   {
     InitialLayout: { screen: InitialLayout },
+    SalesLayout: { screen: SalesLayout, }
   },
   {
     defaultNavigationOptions: {
@@ -39,7 +41,7 @@ const materialNavigation = createMaterialTopTabNavigator (
         duration: 0,
       },
     }),
-    initialRouteName: 'InitialLayout',
+    initialRouteName: 'SalesLayout',
   }
 );
 
