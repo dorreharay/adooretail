@@ -3,7 +3,7 @@ import { Text, View, Image, StyleSheet, } from 'react-native'
 import styles from './styles'
 import SharedButton from '../../../../../../components/SharedButton';
 
-const headerHeight = 70
+const headerHeight = 68
 
 const headerButtonSizes = { width: headerHeight, height: headerHeight, }
 const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
@@ -11,13 +11,23 @@ const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
 function LeftSide(props) {
   const { sliderRef } = props;
 
+  const [loading, setLoadingStatus] = useState(false)
+
+  const toggleLoading = () => {
+    setLoadingStatus(true)
+
+    setTimeout(() => setLoadingStatus(false), 3000)
+  }
+
   return (
     <View style={styles.container}>
       <View style={[styles.header, { height: headerHeight, }]}>
         <SharedButton
           buttonSizes={headerButtonSizes}
-          iconSizes={headerIcon}
+          iconSizes={{ width: headerIcon.width + 1, height: headerIcon.height + 1, }}
           source={require('../../../../../../../assets/images/clock.png')}
+          onPress={toggleLoading}
+          loading={loading}
         />
 
         <View style={{ flexDirection: 'row' }}>
