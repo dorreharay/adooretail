@@ -61,6 +61,11 @@
 		<string>ttcommons_light.ttf</string>
 		<string>ttcommons_medium.ttf</string>
 		<string>ttcommons_regular.ttf</string>
+		<string>probapro_bold.ttf</string>
+		<string>probapro_extralight.ttf</string>
+		<string>probapro_light.ttf</string>
+		<string>probapro_medium.ttf</string>
+		<string>probapro_regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

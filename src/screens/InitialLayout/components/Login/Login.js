@@ -81,8 +81,8 @@ function Login(props) {
 
       const uniqueId = await DeviceInfo.getUniqueId();
 
-      if (!serverIds.includes(uniqueId))
-        throw new Error('Device ID is incorrect')
+      // if (!serverIds.includes(uniqueId))
+      //   throw new Error('Device ID is incorrect')
       
       const currentSession = data.current_session[0].current_session;
 

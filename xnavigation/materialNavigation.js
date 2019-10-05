@@ -25,8 +25,8 @@ const defaultTabBarOptions = {
 
 const materialNavigation = createMaterialTopTabNavigator (
   {
+    SalesLayout: { screen: SalesLayout, },
     InitialLayout: { screen: InitialLayout },
-    SalesLayout: { screen: SalesLayout, }
   },
   {
     defaultNavigationOptions: {
