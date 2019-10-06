@@ -13,6 +13,7 @@ const initialState = {
     status: false,
     sessionID: '',
   },
+  initialLoading: true,
 };
 
 export function setAuthToken(payload) {

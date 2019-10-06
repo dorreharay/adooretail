@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
 
-import { PROBA_REGULAR } from '../../../../../../../config/fonts'
+import { PROBA_LIGHT } from '@fonts'
 
 function Option({ text, icon, index, dimensions }) {
   return (
@@ -17,17 +17,21 @@ function Option({ text, icon, index, dimensions }) {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            borderLeftWidth: 1,
+            borderLeftColor: '#EAEAEA',
+            borderRightWidth: 1,
+            borderRightColor: '#EAEAEA',
             backgroundColor: '#FFFFFF',
           }, 
-          index === 0 && { borderTopLeftRadius: 5, borderTopRightRadius: 5, },
-          index === 3 && { borderBottomLeftRadius: 5, borderBottomRightRadius: 5, },
+          index === 0 && { borderTopWidth: 1, borderTopColor: '#EAEAEA', borderTopLeftRadius: 5, borderTopRightRadius: 5, },
+          index === 3 && { borderBottomWidth: 1, borderBottomColor: '#EAEAEA', borderBottomLeftRadius: 5, borderBottomRightRadius: 5, },
           index !== 4 && { borderBottomColor: '#EEEEEE', borderBottomWidth: 1 },
-          index === 4 && { marginTop: 10, borderRadius: 5, backgroundColor: '#FFFFFF', }
+          index === 4 && { marginTop: 5, borderRadius: 5, borderWidth: 1, borderColor: '#EAEAEA', backgroundColor: '#FFFFFF', }
         ]
       }
     >
-      <Text style={{ color: index === 4 ? '#CC1B1B' : '#000000', fontSize: 17, fontFamily: PROBA_REGULAR }}>{text}</Text>
-      <Image style={{ width: dimensions[0], height: dimensions[1] }} source={icon}></Image>
+      <Image style={{ width: dimensions[0], height: dimensions[1], marginRight: 20, }} source={icon}></Image>
+      <Text style={{ flexGrow: 1, color: index === 4 ? '#CC1B1B' : '#000000', fontSize: 18, fontFamily: PROBA_LIGHT }}>{text}</Text>
     </View>
   )
 }

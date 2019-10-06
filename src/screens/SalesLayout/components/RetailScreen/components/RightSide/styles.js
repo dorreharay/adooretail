@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, } from '../../../../../../../config/fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
 const toolsBarHeight = 45
 
@@ -9,6 +9,7 @@ const base = {
     flexGrow: 2,
     padding: '2%',
     paddingTop: 15,
+    paddingBottom: 0,
     backgroundColor: '#F4F4F4'
   },
   toolsBar: {
@@ -80,12 +81,6 @@ const base = {
     width: '100%',
     height: '100%',
   },
-  toastText: {
-    marginBottom: 2,
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontFamily: PROBA_REGULAR,
-  }
 };
  
 const styles = createStyles(

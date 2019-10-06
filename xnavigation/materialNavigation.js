@@ -25,15 +25,15 @@ const defaultTabBarOptions = {
 
 const materialNavigation = createMaterialTopTabNavigator (
   {
-    SalesLayout: { screen: SalesLayout, },
     InitialLayout: { screen: InitialLayout },
+    SalesLayout: { screen: SalesLayout, },
   },
   {
     defaultNavigationOptions: {
       header: null,
       tabBarVisible: false,
       swipeEnabled: false,
-      backBehavior: 'order',
+      backBehavior: 'none',
       optimizationsEnabled: true,
     },
     transitionConfig: () => ({
@@ -41,7 +41,7 @@ const materialNavigation = createMaterialTopTabNavigator (
         duration: 0,
       },
     }),
-    initialRouteName: 'SalesLayout',
+    // initialRouteName: 'InitialLayout',
   }
 );
 

@@ -85,16 +85,15 @@ function Login(props) {
       //   throw new Error('Device ID is incorrect')
       
       const currentSession = data.current_session[0].current_session;
-
+      
       dispatch(setAuthToken(token))
+
       dispatch(setCurrentSession(currentSession))
 
       if (_.isEmpty(currentSession))
         sliderRef.current.snapToNext()
       else
-        // go to sales screen
-        throw new Error('Session exists')
-        // sliderRef.current.snapToItem(1)
+        navigation.navigate('SalesLayout')
 
       resetState()
     } catch (e) {
@@ -148,9 +147,7 @@ function Login(props) {
   useEffect(() => {
     // validateDeviceID('1111222')
 
-    return () => {
-      sliderRef.current.snapToItem(0)
-    };
+    return () => {};
   }, [])
 
   return (
@@ -184,7 +181,7 @@ function Login(props) {
           </Ripple>
         ))}
         <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <Image style={{ width: 32, height: 27, marginRight: 5, }} source={require('../../../../../assets/images/erase.png')} fadeDuration={0} />
+          <Image style={{ width: 32, height: 27, marginRight: 5, }} source={require('@images/erase.png')} fadeDuration={0} />
         </Ripple>
       </View>
       <LoginLoader active={loading} />

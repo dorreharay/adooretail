@@ -47,8 +47,6 @@ function InputEmployees({ sliderRef }) {
         incasations: [],
       }
 
-      return
-
       await axios.post(`${API_URL}/user/session/init/${token}`, newSessionObj)
 
       const { data } = await axios.get(`${API_URL}/user/session/${token}`)
@@ -56,7 +54,7 @@ function InputEmployees({ sliderRef }) {
 
       dispatch(setCurrentSession(currentSession))
 
-      // navigation.navigate('Sales')
+      navigation.navigate('SalesLayout')
 
       setTimeout(() => {
         setLoadingStatus(false)
@@ -76,11 +74,11 @@ function InputEmployees({ sliderRef }) {
       <EmployeesList employees={employees} checked={checked} handleCheck={handleCheck} />
 
       <TouchableOpacity style={styles.proceedButton} onPress={handleProceed} activeOpacity={1}>
-        <Image style={{ width: 20, height: 15, }} source={require('../../../../../assets/images/tick_light.png')} fadeDuration={0}></Image>
+        <Image style={{ width: 20, height: 15, }} source={require('@images/tick_light.png')} fadeDuration={0}></Image>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.backButton} onPress={() => sliderRef.current.snapToPrev()} activeOpacity={1}>
-        <Image style={{ width: 18, height: 18, transform: [{ rotate: '180deg' }] }} source={require('../../../../../assets/images/erase.png')} fadeDuration={0}></Image>
+      <TouchableOpacity style={styles.backButton} onPress={() => setTimeout(() => sliderRef.current.snapToPrev(), 250)} activeOpacity={1}>
+        <Image style={{ width: 18, height: 18, transform: [{ rotate: '180deg' }] }} source={require('@images/erase.png')} fadeDuration={0}></Image>
       </TouchableOpacity>
 
       <LoginLoader active={loading} />

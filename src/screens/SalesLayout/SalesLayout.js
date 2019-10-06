@@ -1,20 +1,58 @@
-import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, StyleSheet, Alert, } from 'react-native'
+import React, { useRef, useState, useEffect, } from 'react';
+import { Text, View, Image, StyleSheet, Alert, } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios'
 import Carousel from 'react-native-snap-carousel';
+import Toast, {DURATION} from 'react-native-easy-toast'
 
-import { deviceWidth, deviceHeight } from '../../../helpers/dimensions'
+import { deviceWidth, deviceHeight } from '@dimensions'
+import { API_URL } from '@api'
+import { PROBA_REGULAR } from '@fonts'
 
-import SharedButton from '../../../src/components/SharedButton'
 import RetailScreen from './components/RetailScreen/RetailScreen';
 import PanelScreens from '../SalesLayout/components/RetailScreen/components/RightSide/PanelScreens/PanelScreens'
 
+import { setProducts } from '../../../reducers/OrdersReducer'
+
 function SalesLayout({ navigation }) {
   const sliderRef = useRef(null)
+  const toast = useRef(null)
   const [entries] = useState([{}, {}])
 
+  const products = useSelector(state => state.orders.products)
+  const token = useSelector(state => state.user.token)
+
+  const dispatch = useDispatch()
+
   useEffect(() => {
+    navigation.addListener('didFocus', () => {
+      loadProducts()
+    })
+
     return () => sliderRef.current.snapToItem(0)
-  }, [])
+  }, [token])
+
+  const loadProducts = async () => {
+    try {
+      const { data } = await axios.get(`${API_URL}/user/products/${token}`)
+
+      function chunkArray(myArray, chunk_size){
+          var results = [];
+          
+          while (myArray.length) {
+              results.push(myArray.splice(0, chunk_size));
+          }
+          
+          return results;
+      }
+    
+      const newProducts = chunkArray(data.products, 4);
+
+      dispatch(setProducts(newProducts))
+    } catch (error) {
+      toast.current.show("Помилка мережі", 1000);
+    }
+  }
 
   const slideTo = (direction) => {
     if(direction === 'next')
@@ -27,7 +65,7 @@ function SalesLayout({ navigation }) {
   const _renderItem = ({ item, index }) => {
     return (
       <View style={styles.container}>
-        {index === 0 && <RetailScreen slideTo={slideTo} />}
+        {index === 0 && <RetailScreen slideTo={slideTo} loadProducts={loadProducts} />}
         {index === 1 && <PanelScreens slideTo={slideTo} />}
       </View>
     );
@@ -55,6 +93,21 @@ function SalesLayout({ navigation }) {
           enableMomentum={true}
         />
       </View>
+      <Toast
+        ref={toast}
+        opacity={1}
+        style={{ paddingHorizontal: 20, backgroundColor:'#00000066'}}
+        position='bottom'
+        positionValue={50}
+        textStyle={{
+          marginBottom: 2,
+          color: '#FFFFFF',
+          fontSize: 17,
+          fontFamily: PROBA_REGULAR,
+        }}
+        fadeInDuration={600}
+        fadeOutDuration={800}
+      />
     </View>
   )
 }

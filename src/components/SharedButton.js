@@ -8,11 +8,12 @@ class SharedButton extends Component {
   }
 
   animateIn = () => {
+    const { scale, duration } = this.props;
     const { animatePress } = this.state;
 
     Animated.timing(animatePress, {
-      toValue: 0.7,
-      duration: 100,
+      toValue: scale ? scale : 0.7,
+      duration: duration ? duration : 100,
     }).start()
   }
 
@@ -54,7 +55,7 @@ class SharedButton extends Component {
   }
 
   render() {
-    const { buttonSizes, iconSizes, source, loading, backgroundColor, borderRadius, } = this.props;
+    const { buttonSizes, iconSizes, source, loading, backgroundColor, borderRadius, forceStyles = {}, } = this.props;
     const { animatePress, updateIconAnimation, } = this.state;
 
     const spin = updateIconAnimation.interpolate({
@@ -63,7 +64,7 @@ class SharedButton extends Component {
     })
 
     return (
-      <View>
+      <View style={forceStyles}>
         <TouchableWithoutFeedback
           onPressIn={this.animateIn}
           onPressOut={this.animateOut}

@@ -18,7 +18,7 @@ function PanelScreens({ token, panelStates, slideTo }) {
           onPress={() => setTimeout(() => slideTo('prev'), 250)}
           buttonSizes={{ ...styles.goBack, width: 60, height: 60, }}
           iconSizes={{ width: 18, height: 18, }}
-          source={require('../../../../../../../../assets/images/x_icon.png')}
+          source={require('@images/x_icon.png')}
           backgroundColor='#FFFFFF99' borderRadius={50}
         />
       </View>

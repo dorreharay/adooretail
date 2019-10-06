@@ -90,7 +90,7 @@ function InputCash(props) {
       dispatch(setEmployees(employees))
       dispatch(setStartCash(currentInput))
 
-      sliderRef.current.snapToNext()
+      setTimeout(() => sliderRef.current.snapToNext(), 250)
 
       setLoadingStatus(false)
 
@@ -120,19 +120,19 @@ function InputCash(props) {
         ))}
 
         <Ripple style={styles.lsNum} onPress={handleProceed} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <Image style={{ width: 30, height: 30, marginRight: 5, }} source={require('../../../../../assets/images/key.png')} fadeDuration={0} />
+          <Image style={{ width: 30, height: 30, marginRight: 5, }} source={require('@images/key.png')} fadeDuration={0} />
         </Ripple>
         <Ripple style={styles.lsNum} onPress={() => handleKeyPress('0')} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
           <Text style={styles.lsNumText}>0</Text>
         </Ripple>
         <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <Image style={{ width: 34, height: 28, marginRight: 5, }} source={require('../../../../../assets/images/erase.png')} fadeDuration={0} />
+          <Image style={{ width: 34, height: 28, marginRight: 5, }} source={require('@images/erase.png')} fadeDuration={0} />
         </Ripple>
       </View>
       
       {employees.length !== 0 && (
-        <TouchableOpacity style={styles.backButton} onPress={() => sliderRef.current.snapToNext()} activeOpacity={1}>
-          <Image style={{ width: 18, height: 18, }} source={require('../../../../../assets/images/erase.png')} fadeDuration={0}></Image>
+        <TouchableOpacity style={styles.backButton} onPress={() => setTimeout(() => sliderRef.current.snapToNext(), 250)} activeOpacity={1}>
+          <Image style={{ width: 18, height: 18, }} source={require('@images/erase.png')} fadeDuration={0}></Image>
         </TouchableOpacity>
       )}
       <LoginLoader active={loading} />

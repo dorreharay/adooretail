@@ -2,7 +2,7 @@ import React from 'react'
 import { View , Text, Image, TouchableOpacity, StyleSheet, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 
-import { COMFORTAA_REGULAR, } from '../../../../../../config/fonts'
+import { COMFORTAA_REGULAR, } from '@fonts'
 import { ScrollView } from 'react-native-gesture-handler';
 
 function EmployeesList({ employees, checked, handleCheck, }) {

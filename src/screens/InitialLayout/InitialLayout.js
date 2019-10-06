@@ -49,7 +49,7 @@ function InitialLayout({ navigation }) {
           enableMomentum={true}
         />
       </View>
-      <SharedBackground source={require('../../../assets/images/background.png')} />
+      <SharedBackground source={require('@images/background.png')} />
     </View>
   )
 }

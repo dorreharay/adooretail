@@ -67,11 +67,11 @@ function LeftSide(props) {
           <SharedButton
             buttonSizes={headerButtonSizes}
             iconSizes={{ width: headerIcon.width + 1, height: headerIcon.height + 1, }}
-            source={require('../../../../../../../assets/images/clock.png')}
+            source={require('@images/clock.png')}
           />
           <Text style={styles.connectionText}>{currentTime}</Text>
           {/* <View style={{ paddingLeft: 25, flexDirection: 'row', alignItems: 'center', height: headerHeight }}>
-            <Image style={{ width: 10, height: 10, marginRight: 5, }} source={require('../../../../../../../assets/images/stutus_online.png')}></Image>
+            <Image style={{ width: 10, height: 10, marginRight: 5, }} source={require('@images/stutus_online.png')}></Image>
             
           </View> */}
         </View>
@@ -80,12 +80,12 @@ function LeftSide(props) {
           <SharedButton
             buttonSizes={headerButtonSizes}
             iconSizes={headerIcon}
-            source={require('../../../../../../../assets/images/split_orders.png')}
+            source={require('@images/split_orders.png')}
           />
           <SharedButton
             buttonSizes={headerButtonSizes}
             iconSizes={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
-            source={require('../../../../../../../assets/images/x_icon.png')}
+            source={require('@images/x_icon.png')}
           />
         </View>
       </View>
