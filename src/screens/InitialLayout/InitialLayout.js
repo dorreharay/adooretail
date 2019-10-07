@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, StyleSheet, } from 'react-native'
+import { useSelector } from 'react-redux'
+import _ from 'lodash'
 import Carousel from 'react-native-snap-carousel';
 
 import { deviceWidth, deviceHeight } from '../../../helpers/dimensions'
@@ -14,16 +16,28 @@ function InitialLayout({ navigation }) {
   const sliderRef = useRef(null)
   const [entries] = useState([{}, {}, {}])
 
+  const endOfSession = useSelector(state => state.user.endOfSession)
+
   useEffect(() => {
+    
+
     return () => sliderRef.current.snapToItem(0)
-  }, [])
+  }, [endOfSession])
 
   const _renderItem = ({ item, index }) => {
+    console.log('///////////////////////////////////////', endOfSession)
+
     return (
       <View style={styles.container}>
-        {index === 0 && <Login sliderRef={sliderRef} navigation={navigation} />}
-        {index === 1 && <InputCash sliderRef={sliderRef} navigation={navigation} />}
-        {index === 2 && <InputEmployees sliderRef={sliderRef} navigation={navigation} />}
+        {!endOfSession.status ? (
+          <>
+            {index === 0 && <Login sliderRef={sliderRef} navigation={navigation} />}
+            {index === 1 && <InputCash sliderRef={sliderRef} navigation={navigation} />}
+            {index === 2 && <InputEmployees sliderRef={sliderRef} navigation={navigation} />}
+          </>
+        ) : (
+          <InputCash sliderRef={sliderRef} navigation={navigation} />
+        )}
       </View>
     );
   }

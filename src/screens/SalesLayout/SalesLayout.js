@@ -12,6 +12,7 @@ import { API_URL } from '@api'
 import { PROBA_REGULAR } from '@fonts'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
+import EndOfSessionModal from './components/EndOfSessionModal'
 import PanelScreens from '../SalesLayout/components/RetailScreen/components/RightSide/PanelScreens/PanelScreens'
 
 import { setProducts } from '../../../reducers/OrdersReducer'
@@ -20,6 +21,7 @@ function SalesLayout({ navigation }) {
   const sliderRef = useRef(null)
   const toast = useRef(null)
   const [entries] = useState([{}, {}])
+  const [isVisible, setModalVisibility] = useState(false)
 
   const products = useSelector(state => state.orders.products)
   const token = useSelector(state => state.user.token)
@@ -44,7 +46,7 @@ function SalesLayout({ navigation }) {
     const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
 
     if(!isValid) {
-      console.log('aaa')
+      setModalVisibility(true)
     }
   }
 
@@ -107,6 +109,11 @@ function SalesLayout({ navigation }) {
           delayPressIn={0}
           activeSlideOffset={2}
           enableMomentum={true}
+        />
+        <EndOfSessionModal
+          navigation={navigation}
+          isVisible={isVisible}
+          setModalVisibility={setModalVisibility}
         />
       </View>
       <Toast
