@@ -9,12 +9,16 @@ import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
 
 function RetailScreen(props) {
-  const { sliderRef } = props;
+  const { slideTo, products, loadProducts, } = props;
 
   return (
     <View style={styles.container}>
       <LeftSide />
-      <RightSide />
+      <RightSide
+        slideTo={slideTo}
+        products={products}
+        loadProducts={loadProducts}
+      />
     </View>
   )
 }

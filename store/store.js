@@ -2,42 +2,26 @@ import { createStore as createReduxStore, applyMiddleware, compose } from 'redux
 import thunk from 'redux-thunk';
 import root from './reducers';
 import { createLogger } from 'redux-logger'
-// import client from '../apollo'
+import { persistStore, persistReducer } from 'redux-persist'
+import AsyncStorage from '@react-native-community/async-storage';
 
-const createStore = (initialState = {}) => {
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage
+}
 
-  // ======================================================
-  // Middleware Configuration
-  // ======================================================
-  //Added Apollo client to actions. See docs how use it: https://www.apollographql.com/docs/react/api/apollo-client.html
-  // const middleware = [thunk.withExtraArgument(client)];
-
-  // ======================================================
-  // Store Enhancers
-  // ======================================================
+export default createStore = (initialState = {}) => {
   const enhancers = [];
   let composeEnhancers = compose;
 
-  if (process.env.NODE_ENV === 'development') {
-    if (typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function') {
-      composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    }
-  }
+  const logger = createLogger({});
 
-  const logger = createLogger({
-    // ...options
-  });
+  const rootReducer = (state, action) => root(state, action);
 
-  const rootReducer = (state, action) => {
-    if (action.type === 'RESET_STATE') {
-      state = undefined;
-    }
-  
-    return root(state, action);
-  }
+  const persistedReducer = persistReducer(persistConfig, rootReducer)
 
   const store = createReduxStore(
-    rootReducer,
+    persistedReducer,
     initialState,
     composeEnhancers(
       applyMiddleware(logger),
@@ -45,11 +29,6 @@ const createStore = (initialState = {}) => {
     )
   );
 
-  // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-  // store.unsubscribeHistory = history.listen(updateLocation(store));
-
-
-  return store
-};
-
-export default createStore;
+  let persistor = persistStore(store)
+  return { store, persistor }
+}
