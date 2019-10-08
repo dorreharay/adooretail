@@ -41,8 +41,8 @@ const base = {
     position: 'absolute',
     bottom: 0,
     left: 0,
-    paddingHorizontal: 25,
-    paddingVertical: 20,
+    paddingHorizontal: 30,
+    paddingVertical: 25,
     backgroundColor: '#FFFFFF',
   },
   categoryTitle4: {
@@ -60,7 +60,7 @@ const base = {
     bottom: 0,
     left: 0,
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 20,
     backgroundColor: '#FFFFFF',
   },
   categoryTitleText3: {
@@ -80,7 +80,7 @@ const base = {
   categoryTitleText5: {
     marginBottom: 0,
     color: '#3E3E3E',
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: PROBA_REGULAR,
     lineHeight: 20,
   }

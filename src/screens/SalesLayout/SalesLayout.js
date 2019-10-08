@@ -15,7 +15,7 @@ import RetailScreen from './components/RetailScreen/RetailScreen';
 import EndOfSessionModal from './components/EndOfSessionModal'
 import PanelScreens from '../SalesLayout/components/RetailScreen/components/RightSide/PanelScreens/PanelScreens'
 
-import { setProducts } from '../../../reducers/OrdersReducer'
+import { setProducts, setLayout, } from '../../../reducers/OrdersReducer'
 // import console = require('console');
 
 function SalesLayout({ navigation }) {
@@ -23,6 +23,7 @@ function SalesLayout({ navigation }) {
   const toast = useRef(null)
   const [entries] = useState([{}, {}])
   const [isVisible, setModalVisibility] = useState(false)
+  const [refreshedProducts, setRefreshedProducts] = useState([])
   const products = useSelector(state => state.orders.products)
   const layout = useSelector(state => state.orders.layout)
   const token = useSelector(state => state.user.token)
@@ -30,29 +31,44 @@ function SalesLayout({ navigation }) {
 
   const dispatch = useDispatch()
 
-  const updateLayout = (data, layout) => {
+  const loadProducts = async () => {
+    try {
+      const { data } = await axios.get(`${API_URL}/user/products/${token}`)
+      
+      setRefreshedProducts(data.products)
+    } catch (error) {
+      toast.current.show("Помилка мережі", 1000);
+    }
+  }
+
+  const updateLayout = (products, cardsPerRow) => {
     function chunkArray(myArray, chunk_size){
       var results = [];
       
       while (myArray.length) {
-          results.push(myArray.splice(0, chunk_size));
+        results.push(myArray.splice(0, chunk_size));
       }
       
       return results;
-  }
+    }
 
-    const newProducts = chunkArray(data.products, layout);
+    const newProducts = chunkArray(products, cardsPerRow);
 
     dispatch(setProducts(newProducts))
   }
 
   useMemo(() => {
-    updateLayout({ products: products.flat() }, layout)
+    updateLayout(products.flat(), layout)
   }, [layout])
+
+  useMemo(() => {
+    if(refreshedProducts.length !== 0)
+      updateLayout(refreshedProducts, layout)
+  }, [refreshedProducts])
 
   useEffect(() => {
     navigation.addListener('didFocus', () => {
-      loadProducts(layout)
+      loadProducts()
       validateSession()
     })
 
@@ -68,16 +84,6 @@ function SalesLayout({ navigation }) {
 
     if(!isValid) {
       // setModalVisibility(true)
-    }
-  }
-
-  const loadProducts = async () => {
-    try {
-      const { data } = await axios.get(`${API_URL}/user/products/${token}`)
-
-      updateLayout(data, layout)
-    } catch (error) {
-      toast.current.show("Помилка мережі", 1000);
     }
   }
 

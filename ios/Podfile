@@ -40,6 +40,8 @@ target 'adooretail' do
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
+  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
+
   target 'adooretailTests' do
     inherit! :search_paths
     # Pods for testing
