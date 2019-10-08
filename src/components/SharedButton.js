@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, View, TouchableWithoutFeedback, StyleSheet, Image, Alert } from 'react-native';
+import { Animated, View, TouchableWithoutFeedback, StyleSheet, Image, Alert, Text, } from 'react-native';
 
 class SharedButton extends Component {
   state = {
@@ -55,7 +55,7 @@ class SharedButton extends Component {
   }
 
   render() {
-    const { buttonSizes, iconSizes, source, loading, backgroundColor, borderRadius, forceStyles = {}, } = this.props;
+    const { buttonSizes, iconSizes, source, loading, backgroundColor, borderRadius, forceStyles = {}, text, } = this.props;
     const { animatePress, updateIconAnimation, } = this.state;
 
     const spin = updateIconAnimation.interpolate({
@@ -84,7 +84,11 @@ class SharedButton extends Component {
               loading ? (
                 null
               ) : (
-                <Animated.Image style={{ width: iconSizes.width, height: iconSizes.height, transform: [{ rotate: spin }] }} source={source} />
+                text ? (
+                  <Text>{text}</Text>
+                ) : (
+                  <Animated.Image style={{ width: iconSizes.width, height: iconSizes.height, transform: [{ rotate: spin }] }} source={source} />
+                )
               )
             )}
           </Animated.View>

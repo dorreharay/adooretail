@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
   modal: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '43%',
-    paddingTop: 70,
+    paddingHorizontal: 100,
+    paddingTop: 60,
     paddingBottom: 55,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   linearButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '80%',
+    width: 300,
     height: 70,
     marginTop: 60,
   },

@@ -1,16 +1,25 @@
 const SET_OPEN_ORDER = 'SET_OPEN_ORDERS';
 const SET_SLIDE_INDEX = 'SET_SLIDE_INDEX';
 const SET_PRODUCTS = 'SET_PRODUCTS';
+const SET_LAYOUT = 'SET_LAYOUT'
 
 const initialState = {
   receipts: [],
   products: [],
   slideIndex: 0,
+  layout: 4,
 };
 
 export function setProducts(payload) {
   return {
     type: SET_PRODUCTS,
+    payload
+  }
+}
+
+export function setLayout(payload) {
+  return {
+    type: SET_LAYOUT,
     payload
   }
 }
@@ -41,6 +50,9 @@ const ACTION_HANDLERS = {
   },
   [SET_SLIDE_INDEX]: (state, action) => {
     return {...state, slideIndex: action.payload}
+  },
+  [SET_LAYOUT]: (state, action) => {
+    return {...state, layout: action.payload}
   },
 };
 

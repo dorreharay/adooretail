@@ -25,8 +25,6 @@ function InitialLayout({ navigation }) {
   }, [endOfSession])
 
   const _renderItem = ({ item, index }) => {
-    console.log('///////////////////////////////////////', endOfSession)
-
     return (
       <View style={styles.container}>
         {!endOfSession.status ? (

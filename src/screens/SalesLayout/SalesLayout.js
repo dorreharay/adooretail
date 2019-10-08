@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, } from 'react';
+import React, { useRef, useState, useEffect, useMemo, } from 'react';
 import { Text, View, Image, StyleSheet, Alert, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
@@ -16,27 +16,48 @@ import EndOfSessionModal from './components/EndOfSessionModal'
 import PanelScreens from '../SalesLayout/components/RetailScreen/components/RightSide/PanelScreens/PanelScreens'
 
 import { setProducts } from '../../../reducers/OrdersReducer'
+// import console = require('console');
 
 function SalesLayout({ navigation }) {
   const sliderRef = useRef(null)
   const toast = useRef(null)
   const [entries] = useState([{}, {}])
   const [isVisible, setModalVisibility] = useState(false)
-
   const products = useSelector(state => state.orders.products)
+  const layout = useSelector(state => state.orders.layout)
   const token = useSelector(state => state.user.token)
   const currentSession = useSelector(state => state.user.currentSession)
 
   const dispatch = useDispatch()
 
+  const updateLayout = (data, layout) => {
+    function chunkArray(myArray, chunk_size){
+      var results = [];
+      
+      while (myArray.length) {
+          results.push(myArray.splice(0, chunk_size));
+      }
+      
+      return results;
+  }
+
+    const newProducts = chunkArray(data.products, layout);
+
+    dispatch(setProducts(newProducts))
+  }
+
+  useMemo(() => {
+    updateLayout({ products: products.flat() }, layout)
+  }, [layout])
+
   useEffect(() => {
     navigation.addListener('didFocus', () => {
-      loadProducts()
+      loadProducts(layout)
       validateSession()
     })
 
     return () => sliderRef.current.snapToItem(0)
-  }, [token, currentSession])
+  }, [token, currentSession, layout])
 
   const validateSession = () => {
     const sessionStartTime = moment(currentSession.startTime).tz('Europe/Kiev')
@@ -46,7 +67,7 @@ function SalesLayout({ navigation }) {
     const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
 
     if(!isValid) {
-      setModalVisibility(true)
+      // setModalVisibility(true)
     }
   }
 
@@ -54,19 +75,7 @@ function SalesLayout({ navigation }) {
     try {
       const { data } = await axios.get(`${API_URL}/user/products/${token}`)
 
-      function chunkArray(myArray, chunk_size){
-          var results = [];
-          
-          while (myArray.length) {
-              results.push(myArray.splice(0, chunk_size));
-          }
-          
-          return results;
-      }
-    
-      const newProducts = chunkArray(data.products, 4);
-
-      dispatch(setProducts(newProducts))
+      updateLayout(data, layout)
     } catch (error) {
       toast.current.show("Помилка мережі", 1000);
     }
@@ -83,7 +92,12 @@ function SalesLayout({ navigation }) {
   const _renderItem = ({ item, index }) => {
     return (
       <View style={styles.container}>
-        {index === 0 && <RetailScreen slideTo={slideTo} loadProducts={loadProducts} />}
+        {index === 0 && (
+          <RetailScreen
+            slideTo={slideTo}
+            loadProducts={loadProducts}
+          />
+        )}
         {index === 1 && <PanelScreens slideTo={slideTo} />}
       </View>
     );

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, TextInput, Alert, Animated, } from 'react-native'
 import {useNetInfo} from "@react-native-community/netinfo";
+import { useSelector, useDispatch } from 'react-redux'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import { Menu, MenuOptions, MenuOption, MenuTrigger, withMenuContext,  } from 'react-native-popup-menu';
 import _ from 'lodash'
@@ -8,6 +9,7 @@ import styles from './styles'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { PROBA_REGULAR } from '@fonts'
+import { setLayout } from '../../../../../../../reducers/OrdersReducer'
 
 import SharedButton from '../../../../../../components/SharedButton';
 import Option from './Option'
@@ -17,14 +19,23 @@ const onlineIcon = require('@images/status_online.png')
 const offlineIcon = require('@images/status_offline.png')
 const waitingIcon = require('@images/status_waiting.png')
 
+const layoutIcons = {
+  3: require('@images/3cols.png'),
+  4: require('@images/4cols.png'),
+  5: require('@images/5cols.png'),
+}
+
 function RightSide(props) {
-  const { slideTo, products, loadProducts } = props;
+  const { slideTo, products, loadProducts, } = props;
 
   const toast = useRef(null)
 
   const netInfo = useNetInfo();
 
-  const [searchTerm, setSearchTerm] = useState(0)
+  const layout = useSelector(state => state.orders.layout)
+  const dispatch = useDispatch()
+
+  const [searchTerm, setSearchTerm] = useState('')
   
   const loadProductsThrottled = useRef(_.throttle(() => loadProducts(), 5000))
 
@@ -39,6 +50,24 @@ function RightSide(props) {
       toast.current.show("Оновлення продуктів", 1000)
       loadProductsThrottled.current()
     }
+  }
+
+  const changeLayout = () => {
+    var newLayout = 4
+
+    if(layout === 3) {
+      newLayout = 4
+    }
+
+    if(layout === 4) {
+      newLayout = 5
+    }
+
+    if(layout === 5) {
+      newLayout = 3
+    }
+
+    dispatch(setLayout(newLayout))
   }
 
   return (
@@ -69,6 +98,13 @@ function RightSide(props) {
             {netInfo.isConnected && !netInfo.isInternetReachable && 'waiting'}
           </Text>
         </View>
+        <SharedButton
+          onPress={changeLayout}
+          buttonSizes={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
+          iconSizes={{ width: styles.update.width, height: styles.update.height - 20, }}
+          text={layout}
+          backgroundColor={'#FFFFFF'}
+        />
         <SharedButton
           onPress={loadAgain}
           buttonSizes={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
