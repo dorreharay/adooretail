@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo, } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Alert, } from 'react-native';
 import { useSelector, } from 'react-redux';
-import { CachedImage } from 'react-native-cached-image';
+import FastImage from 'react-native-fast-image'
 import _ from 'lodash'
 import styles from './styles'
 
@@ -37,7 +37,9 @@ function Products() {
 
     const newItem = newActiveCategory[key]
 
-    updateLayout(newItem.variants, layout)
+    const withback = [{ title: 'back', }, ...newItem.variants]
+
+    updateLayout(withback, layout)
   }
 
   useMemo(() => {
@@ -68,7 +70,10 @@ function Products() {
                 onPress={() => changeActiveCategory(index, key)}
                 activeOpacity={1} key={key}
               >
-                <CachedImage loadingIndicator={() => <View />} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', }} source={{ uri: rowItem.img_url }} />
+                <FastImage
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
+                  source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
+                />
                 <TouchableOpacity style={styles[`categoryTitle${layout}`]} onPress={() => changeActiveCategory(index, key)} activeOpacity={1} key={index}>
                   <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
                 </TouchableOpacity>
@@ -81,13 +86,28 @@ function Products() {
             {activeCategory.map((row, index) => (
               <View style={styles.row} key={index}>
                 {row.map((rowItem, key) => (
-                  <TouchableOpacity
-                    style={[styles[`colsProduct${layout}`], { backgroundColor: 'red' }, key === 0 && { marginLeft: 0, }]}
-                    onPress={resetCategory}
-                    activeOpacity={1} key={key}
-                  >
-    
-                  </TouchableOpacity>
+                  rowItem.title === 'back' ? (
+                    <TouchableOpacity
+                      style={[styles[`colsProduct${layout}`], { alignItems: 'center', justifyContent: 'center', }, { marginLeft: 0, backgroundColor: 'white' }]}
+                      onPress={resetCategory}
+                      activeOpacity={1}
+                      key={key}
+                    >
+                      <FastImage
+                        style={{ width: 15, height: 30, }}
+                        source={require('@images/back_thin.png')}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      style={[styles[`colsProduct${layout}`], { backgroundColor: 'red' }, key === 0 && { marginLeft: 0, }]}
+                      onPress={() => {}}
+                      activeOpacity={1}
+                      key={key}
+                    >
+      
+                    </TouchableOpacity>
+                  )
                 ))}
               </View>
             ))}
