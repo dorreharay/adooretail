@@ -56,7 +56,6 @@ function Products() {
     <ScrollView
       ref={scrollView}
       style={styles.container}
-      scrollEnabled={!activeCategory || activeCategory.length > 6}
       contentContainerStyle={{ paddingBottom: 50, }}
       showsVerticalScrollIndicator={false}
       bounces
