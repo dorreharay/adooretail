@@ -11,6 +11,7 @@ import { deviceWidth, deviceHeight, } from '@dimensions'
 import SharedButton from '../../../../../../components/SharedButton';
 import { setActiveSlide } from '../../../../../../../reducers/OrdersReducer'
 import Receipt from './components/Receipt';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const headerHeight = 68
 
@@ -27,17 +28,9 @@ function LeftSide(props) {
   const activeSlide = useSelector(state => state.orders.activeSlide)
   const receipts = useSelector(state => state.orders.receipts)
 
-  const [entries] = useState([{
-    backgroundColor: 'yellow',
-  }, {
-    backgroundColor: 'orange',
-  }, {
-    backgroundColor: 'pink',
-  }, {
-    backgroundColor: 'green',
-  }])
+  const [entries] = useState([{}, {}, {}, {}])
 
-  const [leftSideWidth, setLeftSideWidth] = useState(0)
+  const [leftSideWidth, setLeftSideWidth] = useState(10)
   const [currentTime, setCurrentTime] = useState(moment(Date.now()).format('dddd DD.MM | HH:mm').charAt(0).toUpperCase() + moment(Date.now()).format('dddd DD.MM | HH:mm').slice(1))
 
   const validateTime = (leftSideWidth) => {
@@ -82,7 +75,7 @@ function LeftSide(props) {
 
   const _renderItem = ({ item, index }) => {
     return (
-      <View style={{ flex: 1, width: '31.5%', }}>
+      <View style={{ flex: 1, }}>
         {entries.map((item, key) => (
           index === key && (
             <Receipt
@@ -122,46 +115,16 @@ function LeftSide(props) {
           />
         </View>
       </View>
-      <View style={styles.receipts}>
-        <Carousel
-          ref={receiptsRef}
-          data={entries}
-          renderItem={_renderItem}
-          sliderWidth={deviceWidth}
-          sliderHeight={deviceHeight}
-          itemWidth={deviceWidth}
-          itemHeight={deviceHeight}
-          activeSlideOffset={100}
-          callbackOffsetMargin={100}
-          swipeThreshold={200}
-          inactiveSlideScale={1}
-          useScrollView
-          firstItem={activeSlide}
-          onSnapToItem={(index) => dispatch(setActiveSlide(index))}
-          delayPressIn={0}
-          enableMomentum={true}
+      <ScrollView style={styles.receipts}>
+        <Receipt
+          receipt={receipts[activeSlide]}
         />
-        <Pagination
-          dotsLength={entries.length}
-          activeDotIndex={activeSlide}
-          containerStyle={{ alignSelf: 'flex-end', marginRight: 10, paddingTop: 15, paddingBottom: 3, }}
-          dotStyle={{
-              width: 4,
-              height: 4,
-              borderRadius: 4,
-              backgroundColor: 'rgba(0, 0, 0, 0.75)'
-          }}
-          inactiveDotOpacity={0.4}
-          inactiveDotScale={0.6}
-        />
-      </View>
-      <View style={styles.proceedContainer}>
-        <LinearGradient start={{x: -1, y: -1}} end={{x: 1, y: 1}} colors={['#FF7675', '#FD9C6C']}  style={[styles.lsproceedButton, false &&   { opacity: 0.6 }]} >
-          <TouchableOpacity activeOpacity={1} style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ color: 'white', fontFamily: 'futura_regular', fontSize: 22, letterSpacing: 0.7, }}>ОПЛАТА 0₴ </Text>
-          </TouchableOpacity>
+      </ScrollView>
+      <SharedButton forceStyles={[styles.proceedContainer]} buttonSizes={{ width: '100%', }} duration={200}>
+        <LinearGradient start={{x: -1, y: -1}} end={{x: 1, y: 1}} colors={['#FF7675', '#FD9C6C']} style={[styles.lsproceedButton, false &&   { opacity: 0.6 }]} >
+          <Text style={{ color: 'white', fontFamily: 'futura_regular', fontSize: 22, letterSpacing: 0.7, }}>ОПЛАТА 0₴ </Text>
         </LinearGradient>
-      </View>
+      </SharedButton>
     </View>
   )
 }

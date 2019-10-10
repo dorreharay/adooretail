@@ -4,10 +4,8 @@ import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from '../styles'
 
 function Receipt({ receipt }) {
-  receipt = [{ title: 'Еспресо 250мл', price: 20, quantity: 1, }, { title: 'Лате 350мл', price: 20, quantity: 1, }]
-
   return (
-    <View style={{ flex: 1, flexDirection: 'column' }}>
+    <View style={{ flex: 1, flexDirection: 'column', paddingRight: 10, }}>
       {receipt.map((item, index) => (
         <View style={styles.receiptItem} key={index}>
           <View style={styles.receiptTitle}>

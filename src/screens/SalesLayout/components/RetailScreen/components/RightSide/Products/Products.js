@@ -1,17 +1,30 @@
 import React, { useState, useRef, useMemo, } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Alert, } from 'react-native';
-import { useSelector, } from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
 import FastImage from 'react-native-fast-image'
+import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
+import { setReceipts } from '../../../../../../../../reducers/OrdersReducer'
+
 function Products() {
+  const dispatch = useDispatch()
   const layout = useSelector(state => state.orders.layout)
   const products = useSelector(state => state.orders.products)
+  const receipts = useSelector(state => state.orders.receipts)
 
   const scrollView = useRef(null)
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
+
+  const activeSlide = useSelector(state => state.orders.activeSlide)
+
+  const addProductQuantity = (product) => {
+    const newReceipts = receipts.map((item, key) => key === activeSlide ? ([...item, product]) : item)
+    
+    dispatch(setReceipts(newReceipts))
+  }
 
   const updateLayout = (productsArg, cardsPerRow) => {
     function chunkArray(myArray, chunk_size){
@@ -41,10 +54,6 @@ function Products() {
 
     updateLayout(withback, layout)
   }
-
-  useMemo(() => {
-    
-  }, [categoryVisible])
 
   const resetCategory = () => {
     scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
@@ -92,19 +101,24 @@ function Products() {
                       activeOpacity={1}
                       key={key}
                     >
-                      <FastImage
-                        style={{ width: 15, height: 30, }}
-                        source={require('@images/back_thin.png')}
-                      />
+                        <FastImage
+                          style={{ width: 15, height: 30, }}
+                          source={require('@images/back_thin.png')}
+                        />
                     </TouchableOpacity>
                   ) : (
                     <TouchableOpacity
-                      style={[styles[`colsProduct${layout}`], { backgroundColor: 'red' }, key === 0 && { marginLeft: 0, }]}
-                      onPress={() => {}}
+                      style={[styles[`colsProduct${layout}`], key === 0 && { marginLeft: 0, }]}
+                      onPress={() => addProductQuantity(rowItem)}
                       activeOpacity={1}
                       key={key}
                     >
-      
+                      <LinearGradient colors={[rowItem.color, rowItem.shadow]} style={styles.variant}>
+                        <View style={styles.variantPrice}>
+                          <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
+                        </View>
+                        <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
+                      </LinearGradient>
                     </TouchableOpacity>
                   )
                 ))}
