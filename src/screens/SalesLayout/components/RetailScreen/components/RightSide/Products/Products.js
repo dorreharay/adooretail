@@ -1,29 +1,48 @@
-import React, { useState, useRef, useMemo, } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Alert, } from 'react-native';
-import { useDispatch, useSelector, } from 'react-redux';
+import React, { useState, useRef, useEffect, } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, } from 'react-native';
+import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
-import { setReceipts } from '../../../../../../../../reducers/OrdersReducer'
+import SharedButton from '../../../../../../../components/SharedButton'
 
-function Products() {
-  const dispatch = useDispatch()
+function Products(props) {
+  const { receipts, setReceipts } = props;
+
   const layout = useSelector(state => state.orders.layout)
   const products = useSelector(state => state.orders.products)
-  const receipts = useSelector(state => state.orders.receipts)
 
   const scrollView = useRef(null)
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
+  const [longPress, setLongPress] = useState(null)
+  const [prevQuantity, setPrevQuantity] = useState(0)
 
-  const activeSlide = useSelector(state => state.orders.activeSlide)
+  const addProductQuantity = (product) => (force) => {
+    const productExists = !!receipts.find(item => item.title === product.title)
 
-  const addProductQuantity = (product) => {
-    const newReceipts = receipts.map((item, key) => key === activeSlide ? ([...item, product]) : item)
-    
-    dispatch(setReceipts(newReceipts))
+    let newReceipts = []
+
+    if(productExists) {
+      newReceipts = receipts.map((item, index) => {
+        if(item.title === product.title) {
+          setPrevQuantity(item.quantity)
+
+          console.log('---->', item.quantity)
+          console.log('----<', prevQuantity)
+
+          return ({ ...item, quantity: item.quantity + 1 })
+        }
+
+        return item
+      })
+    } else {
+      newReceipts = [...receipts, { ...product, quantity: 1, }]
+    }
+
+    setReceipts(newReceipts)
   }
 
   const updateLayout = (productsArg, cardsPerRow) => {
@@ -54,6 +73,14 @@ function Products() {
 
     updateLayout(withback, layout)
   }
+
+  useEffect(() => {
+    if(activeCategory) {
+      const flattened = activeCategory.flat()
+      
+      updateLayout(flattened, layout)
+    }
+  }, [layout])
 
   const resetCategory = () => {
     scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
@@ -107,11 +134,11 @@ function Products() {
                         />
                     </TouchableOpacity>
                   ) : (
-                    <TouchableOpacity
-                      style={[styles[`colsProduct${layout}`], key === 0 && { marginLeft: 0, }]}
-                      onPress={() => addProductQuantity(rowItem)}
-                      activeOpacity={1}
-                      key={key}
+                    <SharedButton
+                      onPress={(force) => addProductQuantity(rowItem)(force)}
+                      forceStyles={[styles[`colsProduct${layout}`], key === 0 && { marginLeft: 0, }]}
+                      buttonSizes={{ flex: 1, width: '100%', }}
+                      scale={0.9} onStart
                     >
                       <LinearGradient colors={[rowItem.color, rowItem.shadow]} style={styles.variant}>
                         <View style={styles.variantPrice}>
@@ -119,7 +146,7 @@ function Products() {
                         </View>
                         <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
                       </LinearGradient>
-                    </TouchableOpacity>
+                    </SharedButton>
                   )
                 ))}
               </View>

@@ -61,7 +61,7 @@ function SalesLayout({ navigation }) {
     updateLayout(products.flat(), layout)
   }, [layout])
 
-  useMemo(() => {
+  useEffect(() => {
     if(refreshedProducts.length !== 0)
       updateLayout(refreshedProducts, layout)
   }, [refreshedProducts])
@@ -89,8 +89,10 @@ function SalesLayout({ navigation }) {
 
   const slideTo = (direction) => {
     if(direction === 'next')
-      sliderRef.current.snapToNext()
-
+      setTimeout(() => {
+        sliderRef.current.snapToNext()
+      }, 260);
+      
     if(direction === 'prev')
       sliderRef.current.snapToPrev()
   }

@@ -32,7 +32,7 @@ const base = {
   colsProduct5: {
     width: '18.5%',
     height: deviceWidth * 0.12,
-    marginLeft: '2%',
+    marginLeft: '1.9%',
     marginBottom: 20,
     borderRadius: 5,
   },
@@ -43,8 +43,8 @@ const base = {
     left: 0,
     paddingHorizontal: 30,
     paddingVertical: 25,
-    borderBottomRightRadius: 3,
     borderBottomLeftRadius: 3,
+    borderBottomRightRadius: 3,
     backgroundColor: '#FFFFFF',
   },
   categoryTitle4: {
@@ -54,7 +54,7 @@ const base = {
     left: 0,
     paddingHorizontal: 25,
     paddingVertical: 20,
-    borderBottomRightRadius: 3,
+    borderBottomLeftRadius: 3,
     borderBottomRightRadius: 3,
     backgroundColor: '#FFFFFF',
   },
@@ -65,7 +65,7 @@ const base = {
     left: 0,
     paddingHorizontal: 15,
     paddingVertical: 20,
-    borderBottomRightRadius: 3,
+    borderBottomLeftRadius: 3,
     borderBottomRightRadius: 3,
     backgroundColor: '#FFFFFF',
   },
@@ -92,7 +92,9 @@ const base = {
   },
   variant: {
     flex: 1,
+    width: '100%',
     padding: 20,
+    borderRadius: 4,
   },
   variantText3: {
     position: 'absolute',

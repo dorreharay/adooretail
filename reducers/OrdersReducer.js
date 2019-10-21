@@ -6,7 +6,6 @@ const SET_ACTIVE_SLIDE = 'SET_ACTIVE_SLIDE';
 const SET_RECEIPTS = 'SET_RECEIPTS';
 
 const initialState = {
-  receipts: [[], [], [], []],
   products: [],
   slideIndex: 0,
   layout: 4,

@@ -1,48 +1,62 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useRef, } from 'react';
 import { Animated, View, TouchableWithoutFeedback, StyleSheet, Image, Alert, Text, } from 'react-native';
 
-class SharedButton extends Component {
-  state = {
-    animatePress: new Animated.Value(1),
-    updateIconAnimation: new Animated.Value(0),
+function SharedButton(props) {
+  const {
+    children, onPress, scale, duration, onStart, buttonSizes, iconSizes,
+    source, loading, backgroundColor, borderRadius, forceStyles = {},
+    text, rotateOnPress, loadAgain,
+  } = props;
+
+  const timerToClearSomewhere = useRef(false)
+
+  const [animatePress] = useState(new Animated.Value(1))
+  const [updateIconAnimation] = useState(new Animated.Value(0))
+  const [pressed, setPressedState] = useState(false)
+
+  function handleLongPress() {
+    onPress(true)
+    timerToClearSomewhere.current = setTimeout(handleLongPress, 100)
   }
 
-  animateIn = () => {
-    const { scale, duration } = this.props;
-    const { animatePress } = this.state;
-
+  const animateIn = () => {
     Animated.timing(animatePress, {
       toValue: scale ? scale : 0.7,
       duration: duration ? duration : 100,
-    }).start()
+    }).start(() => setPressedState(true))
+
+    if(onStart) {
+      onPress()
+    }  
   }
 
-  animateOut = () => {
-    const { animatePress } = this.state;
-
+  const animateOut = () => {
     Animated.timing(animatePress, {
       toValue: 1,
       duration: 200,
     }).start()
-    
-    if(this.props.onPress)
-      this.props.onPress()
 
-    if(this.props.rotateOnPress)
-      this.rotateIcon()
-        if(this.props.loadAgain)
-          this.props.loadAgain()
+    setPressedState(false)
+    clearTimeout(timerToClearSomewhere.current)
+
+    if(onPress && !onStart)
+      onPress()
+
+    if(rotateOnPress)
+      rotateIcon()
+        if(loadAgain)
+          loadAgain()
   }
 
-  rotateIcon = () => {
+  const rotateIcon = () => {
     Animated.loop(
       Animated.sequence([
-        Animated.timing(this.state.updateIconAnimation, {
+        Animated.timing(updateIconAnimation, {
           toValue: 1,
           duration: 500,
           useNativeDriver: true
         }),
-        Animated.timing(this.state.updateIconAnimation, {
+        Animated.timing(updateIconAnimation, {
           toValue: 0,
           duration: 0,
           useNativeDriver: true
@@ -54,54 +68,52 @@ class SharedButton extends Component {
     ).start()
   }
 
-  render() {
-    const { buttonSizes, iconSizes, source, loading, backgroundColor, borderRadius, forceStyles = {}, text, } = this.props;
-    const { animatePress, updateIconAnimation, } = this.state;
+  const spin = updateIconAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  })
 
-    const spin = updateIconAnimation.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '360deg']
-    })
-
-    return (
-      <View style={forceStyles}>
-        <TouchableWithoutFeedback
-          onPressIn={this.animateIn}
-          onPressOut={this.animateOut}
-        >
-          <Animated.View style={{
-            ...styles.button,
-            ...buttonSizes,
-            borderRadius: borderRadius ? borderRadius : 5,
-            backgroundColor: backgroundColor ? backgroundColor : '',
-            transform: [{
-              scale: animatePress
-            }]
-          }}>
-            {this.props.children ? (
-              this.props.children
+  return (
+    <View style={forceStyles}>
+      <TouchableWithoutFeedback
+        onPressIn={animateIn}
+        onPressOut={animateOut}
+        onLongPress={handleLongPress}
+      >
+        <Animated.View style={{
+          ...styles.button,
+          ...buttonSizes,
+          borderRadius: borderRadius ? borderRadius : 5,
+          backgroundColor: backgroundColor ? backgroundColor : '',
+          transform: [{
+            scale: animatePress
+          }]
+        }}>
+          {children ? (
+            children
+          ) : (
+            loading ? (
+              null
             ) : (
-              loading ? (
-                null
+              text ? (
+                <Text>{text}</Text>
               ) : (
-                text ? (
-                  <Text>{text}</Text>
-                ) : (
-                  <Animated.Image style={{ width: iconSizes.width, height: iconSizes.height, transform: [{ rotate: spin }] }} source={source} />
-                )
+                <Animated.Image style={{ width: iconSizes.width, height: iconSizes.height, transform: [{ rotate: spin }] }} source={source} />
               )
-            )}
-          </Animated.View>
-        </TouchableWithoutFeedback>
-      </View>
-    )
-  }
+            )
+          )}
+        </Animated.View>
+      </TouchableWithoutFeedback>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+    height: '100%',
   }
 })
 

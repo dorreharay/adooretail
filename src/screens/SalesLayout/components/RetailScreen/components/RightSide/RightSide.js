@@ -26,7 +26,7 @@ const layoutIcons = {
 }
 
 function RightSide(props) {
-  const { slideTo, products, loadProducts, } = props;
+  const { slideTo, products, loadProducts, receipts, setReceipts, } = props;
 
   const toast = useRef(null)
 
@@ -47,7 +47,7 @@ function RightSide(props) {
     }
 
     if(toast.current) {
-      toast.current.show("Оновлення продуктів", 1000)
+      toast.current.show("Оновлення списку", 1000)
       loadProductsThrottled.current()
     }
   }
@@ -91,7 +91,7 @@ function RightSide(props) {
         </View>
         
         <View style={styles.connection}>
-          <Image style={{ width: 10, height: 10, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
+          <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
           <Text style={styles.connectionText}>
             {netInfo.isConnected && netInfo.isInternetReachable && 'online'}
             {!netInfo.isConnected && 'offline'}
@@ -113,14 +113,14 @@ function RightSide(props) {
           rotateOnPress loadAgain={loadAgain} backgroundColor={'#FFFFFF'}
         />
         <SharedButton
-          onPress={() => props.ctx.menuActions.toggleMenu('bar')}
+          onPress={() => slideTo('next')}
           buttonSizes={{ width: styles.menu.width, height: styles.menu.height, }}
           iconSizes={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
           source={require('@images/menu.png')}
           backgroundColor={'#FFFFFF'} performOnStart
         >
           {/* props.ctx.menuActions.open() */}
-          <Menu name='bar' onSelect={() => slideTo('next')}>
+          {/* <Menu name='bar' onSelect={() => slideTo('next')}>
             <MenuTrigger
               children={
                 <View style={{ width: 50, alignItems: 'center', justifyContent: 'center', }}>
@@ -140,15 +140,19 @@ function RightSide(props) {
               }}
             >
               <MenuOption children={<Option text='ІСТОРІЯ ЗАМОВЛЕНЬ' dimensions={[16, 19]} icon={require('@images/history.png')} index={0} />} value={1} />
-              <MenuOption children={<Option text='ІНКАСАЦІЯ' dimensions={[17, 16]} icon={require('@images/warehouse.png')} index={1} />} value={2} />
+              {/* <MenuOption children={<Option text='ІНКАСАЦІЯ' dimensions={[17, 16]} icon={require('@images/warehouse.png')} index={1} />} value={2} />
               <MenuOption children={<Option text='ДЕВАЙСИ' dimensions={[17, 18]} icon={require('@images/devices.png')} index={2} />} value={3} />
-              <MenuOption children={<Option text='НАЛАШТУВАННЯ' dimensions={[17, 18]} icon={require('@images/settings.png')} index={3} />} value={4} />
-              <MenuOption children={<Option text='ЗАКІНЧИТИ ЗМІНУ' dimensions={[20, 19]} icon={require('@images/flag.png')} index={4} />} value={5} />
+              <MenuOption children={<Option text='НАЛАШТУВАННЯ' dimensions={[17, 18]} icon={require('@images/settings.png')} index={3} />} value={4} /> */}
+              {/* <MenuOption children={<Option text='ЗАКІНЧИТИ ЗМІНУ' dimensions={[20, 19]} icon={require('@images/flag.png')} index={4} />} value={5} />
             </MenuOptions>
-          </Menu>
+          </Menu> */}
         </SharedButton>
       </View>
-      <Products products={products} />
+      <Products
+        products={products}
+        receipts={receipts}
+        setReceipts={setReceipts}
+      />
       <Toast
         ref={toast}
         opacity={1}

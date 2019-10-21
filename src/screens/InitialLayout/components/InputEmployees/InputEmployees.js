@@ -52,7 +52,7 @@ function InputEmployees({ sliderRef }) {
       const { data } = await axios.get(`${API_URL}/user/session/${token}`)
       const currentSession = data.current_session;
 
-      dispatch(setCurrentSession(currentSession))
+      // dispatch(setCurrentSession(currentSession))
 
       navigation.navigate('SalesLayout')
 

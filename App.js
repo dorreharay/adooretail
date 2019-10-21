@@ -8,11 +8,14 @@ import { FUTURA_LIGHT } from '@fonts';
 
 import AppContainer from './xnavigation/materialNavigation'
 import NavigationService from './xnavigation/NavigationService';
+import { setCurrentSession } from './reducers/UserReducer'
 
-function MainApp() {  
+function MainApp({navigation}) {  
   const { initialLoading, currentSession, } = useSelector(state => ({ initialLoading: state.user.initialLoading, currentSession: state.user.currentSession }))
 
   const navigatorRef = useRef()
+
+  const [forceSlide, setForceSlide] = useState(0)
 
   useEffect(() => {
     if(initialLoading) {
@@ -23,11 +26,13 @@ function MainApp() {
             NavigationService.navigate('SalesLayout')
             setTimeout(() => {
               changeInitialLoadingWrapperOpacity(false)
-            }, 50)
+            }, 200)
           }, 110)
         }, 100)
       } else {
-        changeInitialLoadingWrapperOpacity(false)
+        if(false) {
+          setForceSlide(1)
+        }
       }
     }
   }, [navigatorRef, initialLoading, currentSession])
@@ -51,16 +56,16 @@ function MainApp() {
 
   return (
     <>
-      <AppContainer 
+      <AppContainer
+        screenProps={{
+          initialLoadingVisibility,
+          initialLoadingOpacity,
+          forceSlide,
+          changeInitialLoadingWrapperOpacity,
+        }}
+        navigation={navigation}
         ref={navigatorRef}
-      />
-      {initialLoadingVisibility && (
-        <Animated.View style={{ alignItems: 'center', justifyContent: 'center', opacity: initialLoadingOpacity, width: '100%', height: '100%', top: 0, left: 0, position: 'absolute', backgroundColor: '#2C2C2E', zIndex: 110 }}>
-          <View style={{ width: 200, marginBottom: 80, }}>
-            <Text style={{ color: '#FFFFFF', fontSize: 25, fontFamily: FUTURA_LIGHT }}>Синхронізація..</Text>
-          </View>
-        </Animated.View>
-      )}
+      />     
       <StatusBar hidden />
     </>
   )

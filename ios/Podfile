@@ -42,6 +42,8 @@ target 'adooretail' do
 
   pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
   target 'adooretailTests' do
     inherit! :search_paths
     # Pods for testing

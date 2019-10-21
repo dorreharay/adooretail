@@ -9,9 +9,11 @@ import styles from './styles'
 
 import { deviceWidth, deviceHeight, } from '@dimensions'
 import SharedButton from '../../../../../../components/SharedButton';
-import { setActiveSlide } from '../../../../../../../reducers/OrdersReducer'
+import { setActiveSlide, setReceipts } from '../../../../../../../reducers/OrdersReducer'
 import Receipt from './components/Receipt';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import scrollTrack from '@images/scroll_track.png'
 
 const headerHeight = 68
 
@@ -19,15 +21,12 @@ const headerButtonSizes = { width: headerHeight, height: headerHeight, }
 const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
 
 function LeftSide(props) {
-  const { sliderRef } = props;
+  const { receipts, setReceipts, } = props;
 
   const receiptsRef = useRef(null)
 
   const dispatch = useDispatch()
-
-  const activeSlide = useSelector(state => state.orders.activeSlide)
-  const receipts = useSelector(state => state.orders.receipts)
-
+  
   const [entries] = useState([{}, {}, {}, {}])
 
   const [leftSideWidth, setLeftSideWidth] = useState(10)
@@ -96,10 +95,10 @@ function LeftSide(props) {
         <View style={{ alignItems: 'center', flexDirection: 'row' }}>
           <SharedButton
             buttonSizes={headerButtonSizes}
-            iconSizes={{ width: headerIcon.width + 1, height: headerIcon.height + 1, }}
+            iconSizes={{ width: headerIcon.width + 1.3, height: headerIcon.height + 1, }}
             source={require('@images/clock.png')}
           />
-          <Text style={styles.connectionText}>{currentTime}</Text>
+          <Text style={styles.timeText}>{currentTime}</Text>
         </View>
 
         <View style={{ flexDirection: 'row' }}>
@@ -109,18 +108,23 @@ function LeftSide(props) {
             source={require('@images/split_orders.png')}
           />
           <SharedButton
+            onPress={() => setReceipts([])}
             buttonSizes={headerButtonSizes}
             iconSizes={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
-            source={require('@images/x_icon.png')}
+            source={require('@images/x_icon.png')} onStart
           />
         </View>
       </View>
-      <ScrollView style={styles.receipts}>
+      <ScrollView
+        style={styles.receipts}
+        contentContainerStyle={{ paddingBottom: 10, }}
+      >
         <Receipt
-          receipt={receipts[activeSlide]}
+          receipt={receipts}
+          setReceipts={setReceipts}
         />
       </ScrollView>
-      <SharedButton forceStyles={[styles.proceedContainer]} buttonSizes={{ width: '100%', }} duration={200}>
+      <SharedButton onPress={() => {}} forceStyles={[styles.proceedContainer]} buttonSizes={{ width: '100%', }} duration={200}>
         <LinearGradient start={{x: -1, y: -1}} end={{x: 1, y: 1}} colors={['#FF7675', '#FD9C6C']} style={[styles.lsproceedButton, false &&   { opacity: 0.6 }]} >
           <Text style={{ color: 'white', fontFamily: 'futura_regular', fontSize: 22, letterSpacing: 0.7, }}>ОПЛАТА 0₴ </Text>
         </LinearGradient>

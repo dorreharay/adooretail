@@ -11,13 +11,20 @@ import RightSide from './components/RightSide/RightSide';
 function RetailScreen(props) {
   const { slideTo, products, loadProducts, } = props;
 
+  const [receipts, setReceipts] = useState([])
+
   return (
     <View style={styles.container}>
-      <LeftSide />
+      <LeftSide
+        receipts={receipts}
+        setReceipts={setReceipts}
+      />
       <RightSide
         slideTo={slideTo}
         products={products}
         loadProducts={loadProducts}
+        receipts={receipts}
+        setReceipts={setReceipts}
       />
     </View>
   )

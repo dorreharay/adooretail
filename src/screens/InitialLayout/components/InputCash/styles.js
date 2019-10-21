@@ -7,7 +7,7 @@ const base = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: '3%',
+    paddingTop: '2%',
   },
   loginHeading: {
     color: '#F7F7F7',

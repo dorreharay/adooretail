@@ -41,7 +41,7 @@ const materialNavigation = createMaterialTopTabNavigator (
         duration: 0,
       },
     }),
-    // initialRouteName: 'InitialLayout',
+    initialRouteName: 'InitialLayout',
   }
 );
 

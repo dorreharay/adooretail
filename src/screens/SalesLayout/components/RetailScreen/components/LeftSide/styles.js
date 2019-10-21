@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
 const base = {
   container: {
@@ -17,9 +17,9 @@ const base = {
     borderBottomWidth: 1,
     borderBottomColor: '#F4F4F4',
   },
-  connectionText: {
+  timeText: {
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_LIGHT,
   },
   receipts: {
     flex: 1,
@@ -52,22 +52,32 @@ const base = {
   },
   receiptTitle: {
     width: '100%',
-    marginBottom: 5,
   },
   receiptTitleText: {
     color: '#343434',
     fontSize: 22,
-    fontFamily: FUTURA_REGULAR,
+    fontFamily: PROBA_REGULAR,
   },
   receiptDetails: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 10,
-    paddingBottom: 10,
     borderStyle: 'dashed',
     borderRadius : 1,
+  },
+  receiptOnePriceContainer: {
+    width: '29%',
+  },
+  receiptOnePrice: {
+    color: '#343434',
+    fontSize: 18,
+    fontFamily: 'futura_light',
+  },
+  receiptQtyContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '25%',
   },
   receiptQty: {
     display: 'flex',
@@ -76,21 +86,28 @@ const base = {
     flexDirection: 'row',
     width: 30,
     height: 30,
-    paddingTop: 3,
-    borderWidth: 0.3,
-    borderRadius: 5,
+    borderColor: '#CECECE',
+    borderWidth: 0.5,
   },
   receiptQtyText: {
     color: '#343434',
-    fontSize: 22,
-    fontFamily: FUTURA_LIGHT,
+    fontSize: 18,
+    fontFamily: PROBA_LIGHT,
   },
   receiptPrice: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     flexDirection: 'row',
-    width: '20%',
+    width: '30%',
   },
+  receiptDeleteIcon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    width: '16%',
+    height: 50,
+  }
 };
  
 const styles = createStyles(

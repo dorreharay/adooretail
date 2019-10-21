@@ -1,4 +1,4 @@
-import React, { Component, useState, } from "react";
+import React, { Component, useState, useEffect, } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -21,6 +21,11 @@ function InputCash(props) {
 
   const [currentInput, setCurrentInput] = useState('0')
   const [loading, setLoadingStatus] = useState(false)
+
+  useEffect(() => {
+    // dispatch(setEndOfSessionStatus({ status: false, sessionID: '', }))
+    return () => {};
+  }, [])
 
   const handleKeyPress = (input) => {
     let newInput = currentInput;
@@ -55,6 +60,12 @@ function InputCash(props) {
   }
 
   const handleProceed = async () => {
+    console.log('endOfSession', endOfSession)
+
+    if(endOfSession.status) {
+      setTimeout(() => sliderRef.current.snapToItem(0), 250)
+      return
+    }
     // if (endOfSession.status) {
     //   try {
     //     setLoadingStatus(true)

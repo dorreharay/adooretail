@@ -88,10 +88,11 @@ function Login(props) {
       
       dispatch(setAuthToken(token))
 
-      dispatch(setCurrentSession(currentSession))
+      // dispatch(setCurrentSession(session))
 
       if (_.isEmpty(currentSession))
-        sliderRef.current.snapToNext()
+        // sliderRef.current.snapToNext()
+        console.log('////////////')
       else
         navigation.navigate('SalesLayout')
 
