@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, StyleSheet, Alert, TouchableOpacity, } from 'react-native'
+import { Text, View, Image, StyleSheet, Alert, TouchableOpacity, TextInputб } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import Carousel, { Pagination } from 'react-native-snap-carousel';
 import moment from 'moment/min/moment-with-locales';
 import LinearGradient from 'react-native-linear-gradient'
 moment.locale('uk');
@@ -11,9 +10,10 @@ import { deviceWidth, deviceHeight, } from '@dimensions'
 import SharedButton from '../../../../../../components/SharedButton';
 import { setActiveSlide, setReceipts } from '../../../../../../../reducers/OrdersReducer'
 import Receipt from './components/Receipt';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import FastImage from 'react-native-fast-image';
 
-import scrollTrack from '@images/scroll_track.png'
+import PaymentModal from './components/PaymentModal'
 
 const headerHeight = 68
 
@@ -21,7 +21,7 @@ const headerButtonSizes = { width: headerHeight, height: headerHeight, }
 const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
 
 function LeftSide(props) {
-  const { receipts, setReceipts, } = props;
+  const { receipts, setReceipts, selectedInstance, selectReceiptInstance, } = props;
 
   const receiptsRef = useRef(null)
 
@@ -29,14 +29,22 @@ function LeftSide(props) {
   
   const [entries] = useState([{}, {}, {}, {}])
 
+  const [receiptSum, setReceiptSum] = useState(0)
+  const [paymentModalVisible, setPaymentModalVisible] = useState(false)
   const [leftSideWidth, setLeftSideWidth] = useState(10)
+  const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
+  const [paymentNotice, setPaymentNotice] = useState('')
   const [currentTime, setCurrentTime] = useState(moment(Date.now()).format('dddd DD.MM | HH:mm').charAt(0).toUpperCase() + moment(Date.now()).format('dddd DD.MM | HH:mm').slice(1))
+
+  useEffect(() => {
+    setReceiptSum(receipts[selectedInstance].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false))
+  }, [receipts[selectedInstance]]);
 
   const validateTime = (leftSideWidth) => {
     const fullDate = moment(Date.now()).format('dddd DD.MM | HH:mm')
     const shortDate = moment(Date.now()).format('DD.MM | HH:mm')
 
-    if(leftSideWidth > 400 )
+    if(leftSideWidth > 350 )
       setCurrentTime(fullDate.charAt(0).toUpperCase() + fullDate.slice(1))
     else
       setCurrentTime(shortDate)
@@ -72,63 +80,112 @@ function LeftSide(props) {
     validateTime(leftSideWidth)
   }
 
-  const _renderItem = ({ item, index }) => {
-    return (
-      <View style={{ flex: 1, }}>
-        {entries.map((item, key) => (
-          index === key && (
-            <Receipt
-              receipt={receipts[activeSlide]}
-            />
-          )
-        ))}
-      </View>
-    );
+  const setReceiptInstance = (newReceiptInstance) => {
+    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptInstance : item)
+
+    setReceipts(newReceipts)
+  }
+
+  const changePaymentModalState = (status) => {
+    if(status && receipts[selectedInstance].length === 0) return
+
+    setPaymentModalVisible(status)
   }
 
   return (
     <View style={styles.container}>
-      <View
-        style={[styles.header, { height: headerHeight, }]}
-        onLayout={(e) => startTimer(e)}
-      >
-        <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+      {isReceiptInstancesVisible ? (
+        <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: (headerHeight - 20) * 5.2, }}>
+            {receipts.map((receiptInstance, index) => (
+              <SharedButton
+                onPress={() => selectReceiptInstance(index)}
+                buttonSizes={{ width: headerHeight - 20, height: headerHeight - 20, borderWidth: 0, borderColor: '#FE8B70', }}
+                text={index + 1}
+                textStyles={[styles.receiptButtonText, selectedInstance === index && { color: '#FFFFFF' }]}
+                borderRadius={headerHeight}
+                backgroundColor={selectedInstance === index ? '#FE8B70' : '#FFFFFF'}
+                scale={0.9} onStart
+              />
+            ))}     
+          </View>
           <SharedButton
+            onPress={() => setReceiptInstancesVisibility(!isReceiptInstancesVisible)}
             buttonSizes={headerButtonSizes}
-            iconSizes={{ width: headerIcon.width + 1.3, height: headerIcon.height + 1, }}
-            source={require('@images/clock.png')}
+            borderRadius={headerHeight}
+            iconSizes={{ width: headerIcon.width - 9, height: headerIcon.height, }}
+            source={require('@images/back_thin.png')} onStart
           />
-          <Text style={styles.timeText}>{currentTime}</Text>
         </View>
+      ) : (
+        <View
+          style={[styles.header, { height: headerHeight, }]}
+          onLayout={(e) => startTimer(e)}
+        >
+          <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+            <SharedButton
+              onPress={() => {}}
+              buttonSizes={headerButtonSizes}
+              iconSizes={{ width: headerIcon.width + 1.3, height: headerIcon.height + 1, }}
+              source={require('@images/clock.png')}
+              backgroundColor={'#FFFFFF'}
+            />
+            <Text style={styles.timeText}>{currentTime}</Text>
+          </View>
 
-        <View style={{ flexDirection: 'row' }}>
-          <SharedButton
-            buttonSizes={headerButtonSizes}
-            iconSizes={headerIcon}
-            source={require('@images/split_orders.png')}
-          />
-          <SharedButton
-            onPress={() => setReceipts([])}
-            buttonSizes={headerButtonSizes}
-            iconSizes={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
-            source={require('@images/x_icon.png')} onStart
-          />
+          <View style={{ flexDirection: 'row' }}>
+            <SharedButton
+              buttonSizes={headerButtonSizes}
+              iconSizes={headerIcon}
+              onPress={() => setReceiptInstancesVisibility(!isReceiptInstancesVisible)}
+              source={require('@images/split_orders.png')} onStart
+            />
+            <SharedButton
+              onPress={() => setReceiptInstance([])}
+              buttonSizes={headerButtonSizes}
+              iconSizes={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
+              source={require('@images/x_icon.png')} onStart
+            />
+          </View>
         </View>
-      </View>
+      )}     
+    
       <ScrollView
         style={styles.receipts}
         contentContainerStyle={{ paddingBottom: 10, }}
       >
         <Receipt
-          receipt={receipts}
-          setReceipts={setReceipts}
+          receipt={receipts[selectedInstance]}
+          setReceiptInstance={setReceiptInstance}
         />
       </ScrollView>
-      <SharedButton onPress={() => {}} forceStyles={[styles.proceedContainer]} buttonSizes={{ width: '100%', }} duration={200}>
-        <LinearGradient start={{x: -1, y: -1}} end={{x: 1, y: 1}} colors={['#FF7675', '#FD9C6C']} style={[styles.lsproceedButton, false &&   { opacity: 0.6 }]} >
-          <Text style={{ color: 'white', fontFamily: 'futura_regular', fontSize: 22, letterSpacing: 0.7, }}>ОПЛАТА 0₴ </Text>
+      <SharedButton
+        onPress={() => changePaymentModalState(true)}
+        forceStyles={[styles.proceedContainer]}
+        buttonSizes={{ width: '100%', }}
+        duration={100} 
+        scale={0.94}
+        onStart
+      >
+        <LinearGradient
+          start={{x: -1, y: -1}}
+          end={{x: 1, y: 1}}
+          colors={['#FF7675', '#FD9C6C']}
+          style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.7 }]}
+        >
+          <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
         </LinearGradient>
       </SharedButton>
+
+      <PaymentModal
+        paymentModalVisible={paymentModalVisible}
+        changePaymentModalState={changePaymentModalState}
+        setPaymentModalVisible={setPaymentModalVisible}
+        paymentNotice={paymentNotice}
+        setPaymentNotice={setPaymentNotice}
+        initialReceiptSum={receiptSum}
+        setReceiptInstance={setReceiptInstance}
+      />
     </View>
   )
 }

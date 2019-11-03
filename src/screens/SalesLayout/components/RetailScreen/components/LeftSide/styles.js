@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -18,7 +18,12 @@ const base = {
     borderBottomColor: '#F4F4F4',
   },
   timeText: {
-    fontSize: 16,
+    fontSize: 15,
+    fontFamily: PROBA_LIGHT,
+  },
+  receiptButtonText: {
+    color: '#343434',
+    fontSize: 22,
     fontFamily: PROBA_LIGHT,
   },
   receipts: {
@@ -40,6 +45,12 @@ const base = {
     height: 70,
     paddingLeft: '8%',
     borderRadius: 4,
+  },
+  lsproceedButtonText: {
+    color: 'white',
+    fontSize: 22,
+    fontFamily: FUTURA_REGULAR,
+    letterSpacing: 0.7,
   },
   receiptItem: {
     display: 'flex',
@@ -107,7 +118,87 @@ const base = {
     flexDirection: 'row',
     width: '16%',
     height: 50,
-  }
+  },
+  paymentModal: {
+    alignItems: 'center',
+    width: 470,
+    height: 520,
+    paddingTop: 20,
+    backgroundColor: '#ffffff',
+  },
+  modalHeadingText: {
+    color: '#343434',
+    fontSize: 35,
+    fontFamily: PROBA_REGULAR,
+  },
+  paymentModalInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: 430,
+    height: 50,
+  },
+  paymentModalTypes: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 430,
+    height: '29%',
+    marginTop: 30,
+  },
+  paymentModalType: {
+    justifyContent: 'space-between',
+    width: '48.3%',
+    height: '100%', 
+  },
+  paymentTypeText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: PROBA_REGULAR,
+  },
+  paymentModalNotice: {
+    justifyContent: 'flex-start',
+    width: 430,
+    height: '40%',
+    marginTop: 40,
+    padding: 20,
+    paddingTop: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#EFECEC',
+    backgroundColor: '#F2F2F2'
+  },
+  paymentModalNoticeInput: {
+    color: '#707070',
+    fontSize: 20,
+    fontFamily: PROBA_REGULAR,
+  },
+  loginCaption: {
+    marginTop: 10,
+    color: '#343434',
+    fontSize: 55,
+    fontFamily: PROBA_LIGHT,
+  },
+  lsNumpad: {
+    width: 450,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+  },
+  lsNum: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 130,
+    height: 85,
+    borderRadius: 100,
+  },
+  lsNumText: {
+    color: '#343434',
+    fontSize: 42,
+    fontFamily: PROBA_REGULAR,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
 };
  
 const styles = createStyles(

@@ -26,9 +26,10 @@ const layoutIcons = {
 }
 
 function RightSide(props) {
-  const { slideTo, products, loadProducts, receipts, setReceipts, } = props;
+  const { slideTo, products, loadProducts, receipts, setReceipts, selectedInstance, } = props;
 
   const toast = useRef(null)
+  const inputRef = useRef(null)
 
   const netInfo = useNetInfo();
 
@@ -76,18 +77,23 @@ function RightSide(props) {
         <View style={styles.search}>
           <Image style={{ width: 18, height: 18, marginRight: 15, }} source={require('@images/search.png')}></Image>
           <TextInput
+            ref={inputRef}
             style={styles.inputText}
             value={searchTerm}
             placeholder=''
+            // onBlur={handleBlur}
             onChangeText={(text) => setSearchTerm(text)}
           />
 
-          <SharedButton
-            onPress={() => setSearchTerm('')}
-            buttonSizes={{ width: styles.search.height, height: styles.search.height, marginRight: 5, }}
-            iconSizes={{ width: styles.search.height - 30, height: styles.search.height - 30 }}
-            source={require('@images/x_icon.png')}
-          />
+          {searchTerm !== '' && (
+            <SharedButton
+              onPress={() => setSearchTerm('')}
+              buttonSizes={{ width: styles.search.height, height: styles.search.height, marginRight: 5, }}
+              iconSizes={{ width: styles.search.height - 30, height: styles.search.height - 30 }}
+              source={require('@images/x_icon.png')}
+            />
+          )}
+          
         </View>
         
         <View style={styles.connection}>
@@ -152,6 +158,8 @@ function RightSide(props) {
         products={products}
         receipts={receipts}
         setReceipts={setReceipts}
+        selectedInstance={selectedInstance}
+        searchTerm={searchTerm}
       />
       <Toast
         ref={toast}

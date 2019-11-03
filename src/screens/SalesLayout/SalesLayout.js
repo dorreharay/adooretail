@@ -16,7 +16,6 @@ import EndOfSessionModal from './components/EndOfSessionModal'
 import PanelScreens from '../SalesLayout/components/RetailScreen/components/RightSide/PanelScreens/PanelScreens'
 
 import { setProducts, setLayout, } from '../../../reducers/OrdersReducer'
-// import console = require('console');
 
 function SalesLayout({ navigation }) {
   const sliderRef = useRef(null)

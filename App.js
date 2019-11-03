@@ -15,7 +15,9 @@ function MainApp({navigation}) {
 
   const navigatorRef = useRef()
 
-  const [forceSlide, setForceSlide] = useState(0)
+  const currentAccount = useSelector(state => state.user.currentAccount)
+
+  const [forceSlide, setForceSlide] = useState(false)
 
   useEffect(() => {
     if(initialLoading) {
@@ -30,7 +32,7 @@ function MainApp({navigation}) {
           }, 110)
         }, 100)
       } else {
-        if(false) {
+        if(!_.isEmpty(currentAccount)) {
           setForceSlide(1)
         }
       }

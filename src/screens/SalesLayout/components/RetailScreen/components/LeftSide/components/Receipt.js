@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from '../styles'
 
-function Receipt({ receipt, setReceipts, }) {
+function Receipt({ receipt, setReceiptInstance, }) {
 
   const deleteItem = (receiptIndex) => {
     const newReceipt = receipt.filter((item, index) => index !== receiptIndex)
 
-    setReceipts(newReceipt)
+    setReceiptInstance(newReceipt)
   }
 
   return (

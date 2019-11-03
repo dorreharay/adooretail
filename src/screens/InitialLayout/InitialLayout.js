@@ -25,6 +25,8 @@ function InitialLayout({ navigation, screenProps, }) {
   const endOfSession = useSelector(state => state.user.endOfSession)
 
   useEffect(() => {
+    // if(!forceSlide) return
+
     setTimeout(() => {
       sliderRef.current.snapToItem(forceSlide)
       setTimeout(() => {
@@ -40,21 +42,15 @@ function InitialLayout({ navigation, screenProps, }) {
   const _renderItem = ({ item, index }) => {
     return (
       <View style={styles.container}>
-        {!endOfSession.status ? (
-          <>
-            {index === 0 && <NoAccount sliderRef={sliderRef} navigation={navigation} />}
-            {index === 1 && <Login sliderRef={sliderRef} navigation={navigation} />}
-            {index === 2 && <InputCash sliderRef={sliderRef} navigation={navigation} />}
-            {index === 3 && <InputEmployees sliderRef={sliderRef} navigation={navigation} />}
-          </>
-        ) : (
-          <InputCash sliderRef={sliderRef} navigation={navigation} />
-        )}
+        <>
+          {index === 0 && <NoAccount sliderRef={sliderRef} navigation={navigation} />}
+          {index === 1 && <Login sliderRef={sliderRef} navigation={navigation} />}
+          {index === 2 && <InputCash sliderRef={sliderRef} navigation={navigation} />}
+          {index === 3 && <InputEmployees sliderRef={sliderRef} navigation={navigation} />}
+        </>
       </View>
     );
   }
-
-  console.log('------->',screenProps )
 
   return (
     <View style={styles.container}>

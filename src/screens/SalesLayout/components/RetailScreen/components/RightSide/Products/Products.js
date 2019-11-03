@@ -6,10 +6,11 @@ import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
+import SearchResult from './SearchResult'
 import SharedButton from '../../../../../../../components/SharedButton'
 
 function Products(props) {
-  const { receipts, setReceipts } = props;
+  const { receipts, setReceipts, selectedInstance, searchTerm, } = props;
 
   const layout = useSelector(state => state.orders.layout)
   const products = useSelector(state => state.orders.products)
@@ -17,30 +18,60 @@ function Products(props) {
   const scrollView = useRef(null)
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
-  const [longPress, setLongPress] = useState(null)
-  const [prevQuantity, setPrevQuantity] = useState(0)
+  const [availableVariants, setAvailableVariants] = useState([])
+  const [searchResult, setSearchResult] = useState([])
+
+  useEffect(() => {
+    if(availableVariants.length === 0) {
+      const flattened = products.flat()
+
+      const newAvailableVariants = flattened.map(item => item.variants)
+    
+      setAvailableVariants(newAvailableVariants)
+    }
+  }, [availableVariants])
+
+  useEffect(() => {
+    const variantsNotEmpty = availableVariants.length !== 0
+    const searchTermNotEmpty = searchTerm.length !== 0
+    const productsNotEmpty = products.length !== 0
+
+    if(variantsNotEmpty && searchTermNotEmpty) {
+      if(!productsNotEmpty) {
+        setSearchResult([])
+  
+        return
+      }
+
+      const flattened = products.flat()
+
+      let withVariants = flattened.map(item => item.variants)
+          withVariants = withVariants.flat()
+
+      const newSearchResult = withVariants.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase()))
+
+      setSearchResult(newSearchResult)
+    }
+  }, [searchTerm])
 
   const addProductQuantity = (product) => (force) => {
-    const productExists = !!receipts.find(item => item.title === product.title)
+    const productExists = !!receipts[selectedInstance].find(item => item.title === product.title)
 
-    let newReceipts = []
+    let newReceiptsInstance = []
 
     if(productExists) {
-      newReceipts = receipts.map((item, index) => {
+      newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
         if(item.title === product.title) {
-          setPrevQuantity(item.quantity)
-
-          console.log('---->', item.quantity)
-          console.log('----<', prevQuantity)
-
           return ({ ...item, quantity: item.quantity + 1 })
         }
 
         return item
       })
     } else {
-      newReceipts = [...receipts, { ...product, quantity: 1, }]
+      newReceiptsInstance = [...receipts[selectedInstance], { ...product, quantity: 1, }]
     }
+
+    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
 
     setReceipts(newReceipts)
   }
@@ -60,6 +91,8 @@ function Products(props) {
 
     setActiveCategory(newProducts)
     setCategoryVisibility(true)
+
+    return newProducts
   }
 
   const changeActiveCategory = (index, key) => {
@@ -96,7 +129,13 @@ function Products(props) {
       showsVerticalScrollIndicator={false}
       bounces
     >
-      <View>
+      <SearchResult
+        searchTerm={searchTerm}
+        searchResult={searchResult}
+        layout={layout}
+        addProductQuantity={addProductQuantity}
+      />
+      <View style={{ backgroundColor: '#F4F4F4' }}>
         {products.map((row, index) => (
           <View style={styles.row} key={index}>
             {row.map((rowItem, key) => (
@@ -109,7 +148,7 @@ function Products(props) {
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
                   source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
                 />
-                <TouchableOpacity style={styles[`categoryTitle${layout}`]} onPress={() => changeActiveCategory(index, key)} activeOpacity={1} key={index}>
+                <TouchableOpacity style={[styles[`categoryTitle${layout}`], { bottom: -1, }]} onPress={() => changeActiveCategory(index, key)} activeOpacity={1} key={index}>
                   <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
                 </TouchableOpacity>
               </TouchableOpacity>
@@ -138,7 +177,7 @@ function Products(props) {
                       onPress={(force) => addProductQuantity(rowItem)(force)}
                       forceStyles={[styles[`colsProduct${layout}`], key === 0 && { marginLeft: 0, }]}
                       buttonSizes={{ flex: 1, width: '100%', }}
-                      scale={0.9} onStart
+                      scale={0.95} onStart
                     >
                       <LinearGradient colors={[rowItem.color, rowItem.shadow]} style={styles.variant}>
                         <View style={styles.variantPrice}>

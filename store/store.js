@@ -30,5 +30,8 @@ export default createStore = (initialState = {}) => {
   );
 
   let persistor = persistStore(store)
+
+  // persistor.flush()
+
   return { store, persistor }
 }

@@ -36,13 +36,6 @@ function ConfigureAccount(props) {
         setLoadingStatus(false)
         invokeAnimation(true)
       }, 1000)
-      
-      // setTimeout(() => {
-      //   sliderRef.current.snapToNext()
-      //   inputRef.current.blur()
-      //   Keyboard.dismiss()
-      //   setLoadingStatus(false)
-      // }, 250)
     }
 
     setAccountCode(text)

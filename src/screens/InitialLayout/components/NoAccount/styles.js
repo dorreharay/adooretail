@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -46,16 +46,56 @@ const base = {
     flexDirection: 'row',
     width: '60%',
     height: '30%',
+    marginLeft: '1.5%',
     marginVertical: 70,
   },
   account: {
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '31%',
     height: '100%',
   },
   accountItem: {
     width: '100%',
     height: '100%',
-    borderRadius: 6,
+    borderRadius: 300,
+    zIndex: 100,
+  },
+  imageContainer: {
+    position: 'absolute',
+    top: '6%',
+    left: '6%',
+    width: '88%',
+    height: '88%',
+    borderRadius: 300,
+  },
+  imageCover: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    borderRadius: 300,
+    backgroundColor: '#12294666',
+    zIndex: 1,
+  },
+  accountItemContent: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  accountItemBusinessName: {
+    textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 27,
+    fontFamily: PROBA_MEDIUM,
+  },
+  emptyAccountText: {
+    textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 70,
+    fontFamily: PROBA_LIGHT,
   },
   cameraContainer: {
     width: 400,

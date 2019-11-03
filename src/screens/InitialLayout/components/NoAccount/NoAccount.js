@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect, useRef, } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Easing, Alert, } from "react-native";
 import _ from 'lodash';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Toast, {DURATION} from 'react-native-easy-toast'
 import styles from './styles';
 
@@ -18,8 +18,10 @@ function NoAccount(props) {
   const [contentOpacity] = useState(new Animated.Value(1))
   const [successOpacity] = useState(new Animated.Value(0))
 
-  const [accounts, setAccounts] = useState([{ id: 1, }, { id: 2, }, { id: 3, }])
-  const [selectedAccount, selectAccount] = useState(null)
+  const accounts = useSelector(state => state.user.accounts)
+  const currentAccount = useSelector(state => state.user.currentAccount)
+
+  const [selectedAccount, selectAccount] = useState({ id: false, })
   const [cameraVisible, setCameraVisibility] = useState(false)
   const [loading, setLoadingStatus] = useState(false)
   const [contentVisible, setContentVisibility] = useState(true)
@@ -27,28 +29,35 @@ function NoAccount(props) {
 
   const dispatch = useDispatch();
   
-  const addAccount = () => {
+  useEffect(() => {
+    if(accounts.every(item => item.id === undefined)) {
+      setCameraVisibility(true)
+    }
+  }, [accounts])
 
+  useEffect(() => {
+    if(_.isEmpty(currentAccount)) {
+      setCameraVisibility(false)
+    }
+  }, [currentAccount])
+
+  const addAccount = () => {
+    setCameraVisibility(true)
   }
+  
 
   const toggleAdd = () => {
     setCameraVisibility(!cameraVisible)
   }
 
-  const submitAccount = () => {
-    if(!!selectedAccount) {
-      toggleAdd()
-    }
-  }
-
-  const invokeSuccessAnimation = () => {
+  const invokeSuccessAnimation = (callback) => {
     Animated.timing(
       contentOpacity,
       {
         toValue: 0,
         duration: 600,
       },
-    ).start()
+    ).start(() => callback())
     setTimeout(() => {
       setContentVisibility(false)
       Animated.timing(
@@ -131,7 +140,9 @@ function NoAccount(props) {
               accounts={accounts}
               selectedAccount={selectedAccount}
               selectAccount={selectAccount}
-              submitAccount={submitAccount}
+              submitAccount={invokeSuccessAnimation}
+              addAccount={addAccount}
+              currentAccount={currentAccount}
             />
           )}
         </Animated.View>

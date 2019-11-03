@@ -1,4 +1,5 @@
 const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
+const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
 const SET_CURRENT_SESSION = 'SET_CURRENT_SESSION';
 const SET_START_CASH = 'SET_START_CASH';
 const SET_EMPLOYEES = 'SET_EMPLOYEES';
@@ -14,7 +15,20 @@ const initialState = {
     sessionID: '',
   },
   initialLoading: true,
+  accounts: [
+    { id: 1, businessName: 'Poilka Coffee', img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128', },
+    {},
+    {}
+  ],
+  currentAccount: {}
 };
+
+export function changeAccount(payload) {
+  return {
+    type: CHANGE_ACCOUNT,
+    payload
+  }
+}
 
 export function setAuthToken(payload) {
   return {
@@ -54,6 +68,10 @@ export function setEmployees(payload) {
 
 
 const ACTION_HANDLERS = {
+  [CHANGE_ACCOUNT]: (state, action) => {
+
+    return {...state, currentAccount: action.payload}
+  },
   [SET_AUTH_TOKEN]: (state, action) => {
 
     return {...state, token: action.payload}

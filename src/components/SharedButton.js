@@ -5,7 +5,7 @@ function SharedButton(props) {
   const {
     children, onPress, scale, duration, onStart, buttonSizes, iconSizes,
     source, loading, backgroundColor, borderRadius, forceStyles = {},
-    text, rotateOnPress, loadAgain,
+    text, rotateOnPress, loadAgain, textStyles,
   } = props;
 
   const timerToClearSomewhere = useRef(false)
@@ -34,13 +34,10 @@ function SharedButton(props) {
     Animated.timing(animatePress, {
       toValue: 1,
       duration: 200,
-    }).start()
-
-    setPressedState(false)
-    clearTimeout(timerToClearSomewhere.current)
-
-    if(onPress && !onStart)
-      onPress()
+    }).start(() => {
+      if(onPress && !onStart)
+        onPress()
+    })
 
     if(rotateOnPress)
       rotateIcon()
@@ -96,7 +93,7 @@ function SharedButton(props) {
               null
             ) : (
               text ? (
-                <Text>{text}</Text>
+                <Text style={textStyles}>{text}</Text>
               ) : (
                 <Animated.Image style={{ width: iconSizes.width, height: iconSizes.height, transform: [{ rotate: spin }] }} source={source} />
               )
