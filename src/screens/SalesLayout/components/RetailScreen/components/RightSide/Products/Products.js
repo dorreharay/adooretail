@@ -16,22 +16,27 @@ function Products(props) {
   const products = useSelector(state => state.orders.products)
 
   const scrollView = useRef(null)
+  const debounce = useRef(_.debounce((callback) => callback(), 300))
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
   const [availableVariants, setAvailableVariants] = useState([])
   const [searchResult, setSearchResult] = useState([])
 
   useEffect(() => {
-    if(availableVariants.length === 0) {
+    if(products.length !== 0) {
       const flattened = products.flat()
 
       const newAvailableVariants = flattened.map(item => item.variants)
     
       setAvailableVariants(newAvailableVariants)
     }
-  }, [availableVariants])
+  }, [products])
 
   useEffect(() => {
+    debounce.current(recalculateSearchResult)
+  }, [searchTerm])
+
+  const recalculateSearchResult = () => {
     const variantsNotEmpty = availableVariants.length !== 0
     const searchTermNotEmpty = searchTerm.length !== 0
     const productsNotEmpty = products.length !== 0
@@ -52,7 +57,7 @@ function Products(props) {
 
       setSearchResult(newSearchResult)
     }
-  }, [searchTerm])
+  }
 
   const addProductQuantity = (product) => (force) => {
     const productExists = !!receipts[selectedInstance].find(item => item.title === product.title)

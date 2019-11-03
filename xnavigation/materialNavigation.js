@@ -35,6 +35,7 @@ const materialNavigation = createMaterialTopTabNavigator (
       swipeEnabled: false,
       backBehavior: 'none',
       optimizationsEnabled: true,
+      // lazy: true,
     },
     transitionConfig: () => ({
       transitionSpec: {
