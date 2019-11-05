@@ -25,8 +25,6 @@ function InitialLayout({ navigation, screenProps, }) {
   const endOfSession = useSelector(state => state.user.endOfSession)
 
   useEffect(() => {
-    // if(!forceSlide) return
-
     setTimeout(() => {
       sliderRef.current.snapToItem(forceSlide)
       setTimeout(() => {

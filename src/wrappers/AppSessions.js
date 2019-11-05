@@ -27,7 +27,7 @@ function AppSessions(props){
             NavigationService.navigate('SalesLayout')
             setTimeout(() => {
               changeInitialLoadingWrapperOpacity(false)
-            }, 200)
+            }, 250)
           }, 110)
         }, 100)
       } else {
@@ -55,7 +55,9 @@ function AppSessions(props){
       opacity={initialLoadingOpacity}
       source={require('@images/background-adv3.png')}
     >
-      <View style={{ width: '100%', height: '100%', zIndex: 10 }}>{withProps}</View>
+      <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
+        {withProps}
+      </View>
     </SharedBackground>
   )
 }

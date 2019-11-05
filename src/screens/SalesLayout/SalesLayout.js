@@ -77,7 +77,7 @@ function SalesLayout({ navigation }) {
 
     const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
 
-    if(isValid) {
+    if(!isValid) {
       setModalVisibility(true)
     }
   }
