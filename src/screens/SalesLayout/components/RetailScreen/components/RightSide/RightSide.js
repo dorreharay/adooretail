@@ -101,21 +101,21 @@ function RightSide(props) {
           onPress={changeLayout}
           buttonSizes={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
           iconSizes={{ width: styles.update.width, height: styles.update.height - 20, }}
-          text={layout}
+          text={layout} scale={0.8}
           backgroundColor={'#FFFFFF'}
         />
         <SharedButton
           onPress={loadAgain}
           buttonSizes={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
           iconSizes={{ width: styles.update.width - 27, height: styles.update.height - 26, }}
-          source={require('@images/reload.png')}
+          source={require('@images/reload.png')} scale={0.8}
           rotateOnPress loadAgain={loadAgain} backgroundColor={'#FFFFFF'}
         />
         <SharedButton
           onPress={() => {}}
           buttonSizes={{ width: styles.menu.width, height: styles.menu.height, }}
           iconSizes={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
-          source={require('@images/menu.png')}
+          source={require('@images/menu.png')} scale={0.8}
           backgroundColor={'#FFFFFF'} performOnStart
         />
       </View>
