@@ -1,26 +1,17 @@
-import React, { Component, useState, useEffect, useRef, } from "react";
-import { View, Text, Image, Keyboard, TouchableOpacity, Animated, KeyboardAvoidingView, TextInput, } from "react-native";
+import React, { useState, useEffect, useRef, } from "react";
+import { View, Text, Keyboard, TouchableOpacity, KeyboardAvoidingView, TextInput, } from "react-native";
 import axios from 'axios';
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
 import styles from '../styles';
 
-import { API_URL } from '../../../../../../config/api';
-
-import LoginLoader from '../../../../../components/LoginLoader';
-import SharedModal from '../../../../../components/SharedModal';
-
 function ConfigureAccount(props) {
-  const {
-    loading, setLoadingStatus, sliderRef,
-    setContentVisibility, setSuccessVisibility,
-  } = props
+  const { setLoadingStatus, sliderRef, } = props
 
   const inputRef = useRef(null)
   const [cameraVisible, setCameraVisibility] = useState(true)
   const [accountCode, setAccountCode] = useState('')
-  const [modalVisible, setModalVisibility] = useState(false)
 
   const setCode = (text) => {
     if(accountCode.length > 9 && text.length > accountCode.length) {
@@ -106,11 +97,6 @@ function ConfigureAccount(props) {
           </TouchableOpacity>
         </>
       )}
-      {/* <SharedModal active={modalVisible}>
-        <View style={{ width: '35%', height: '70%', backgroundColor: '#FFFFFF' }}>
-
-        </View>
-      </SharedModal> */}
     </>
   )
 }

@@ -20,9 +20,9 @@ function MainApp(props){
         NavigationService={NavigationService}
       >
         <AppContainer
-          screenProps={screenProps}
-          navigation={navigation}
           ref={navigatorRef}
+          navigation={navigation}
+          screenProps={screenProps}
         />     
       </AppSessions>
     </AppLoading>

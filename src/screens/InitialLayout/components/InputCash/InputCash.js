@@ -9,7 +9,7 @@ import { API_URL } from '../../../../../config/api';
 import { cashKeyboardLayout } from '../../../../../helpers/keyboards'
 import { setEmployees, setStartCash, setEndOfSessionStatus } from '../../../../../reducers/UserReducer'
 
-import LoginLoader from '../../../../components/LoginLoader';
+import LoginLoader from '@shared/LoginLoader';
 
 function InputCash(props) {
   const { navigation, sliderRef, } = props;

@@ -1,21 +1,11 @@
-import React, { Component, useState, useEffect, useRef, } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Easing, Alert, } from "react-native";
-import axios from 'axios';
+import React, { useState, useEffect, useRef, } from "react";
+import { View, Text, Image, TouchableOpacity, } from "react-native";
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
-import LinearGradient from 'react-native-linear-gradient';
-import Ripple from 'react-native-material-ripple';
-import DeviceInfo from 'react-native-device-info';
-import Toast, {DURATION} from 'react-native-easy-toast'
-import Svg, { Circle } from 'react-native-svg';
+import FastImage from "react-native-fast-image";
 import styles from '../styles';
 
-import { API_URL } from '../../../../../../config/api';
 import { changeAccount } from '../../../../../../reducers/UserReducer'
-
-import LoginLoader from '../../../../../components/LoginLoader';
-import SharedButton from '../../../../../components/SharedButton';
-import FastImage from "react-native-fast-image";
 
 function ChooseAccount(props) {
   const {
@@ -47,7 +37,7 @@ function ChooseAccount(props) {
             <TouchableOpacity
               style={styles.account}
               onPress={() => selectTabletAccount(item)}
-              activeOpacity={1}
+              activeOpacity={1} key={index}
             >
               <View style={[styles.accountItem, { borderWidth: 4, borderColor: (selectedAccount.id === item.id) ? '#E46162' : '#E4616200' }]}>
                 <View style={[styles.accountItem,]}>

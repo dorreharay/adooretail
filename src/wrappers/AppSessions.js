@@ -3,6 +3,8 @@ import { View } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
 import _ from 'lodash'
 
+import SharedBackground from '@shared/SharedBackground';
+
 function AppSessions(props){
   const { 
     children, navigatorRef, NavigationService,
@@ -18,7 +20,7 @@ function AppSessions(props){
 
   useEffect(() => {
     if(initialLoading) {
-      if(_.isEmpty(currentSession)) {
+      if(!_.isEmpty(currentSession)) {
         setTimeout(() => {
           NavigationService.setTopLevelNavigator(navigatorRef.current)
           setTimeout(() => {
@@ -47,7 +49,15 @@ function AppSessions(props){
     React.cloneElement(child, { forceSlide, setForceSlide, screenProps, })
   );
 
-  return withProps
+  return (
+    <SharedBackground
+      loading={initialLoadingVisibility}
+      opacity={initialLoadingOpacity}
+      source={require('@images/background-adv3.png')}
+    >
+      <View style={{ width: '100%', height: '100%', zIndex: 10 }}>{withProps}</View>
+    </SharedBackground>
+  )
 }
 
 export default AppSessions

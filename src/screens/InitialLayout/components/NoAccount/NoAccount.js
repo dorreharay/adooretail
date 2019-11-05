@@ -1,53 +1,47 @@
-import React, { Component, useState, useEffect, useRef, } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Easing, Alert, } from "react-native";
+import React, { useState, useEffect, useRef, } from "react";
+import { View, Text, Image, Animated, } from "react-native";
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import Toast, {DURATION} from 'react-native-easy-toast'
 import styles from './styles';
 
-import LoginLoader from '../../../../components/LoginLoader';
-import SharedButton from '../../../../components/SharedButton';
+import LoginLoader from '@shared/LoginLoader';
+
 import ChooseAccount from './components/ChooseAccount';
 import ConfigureAccount from './components/ConfigureAccount';
 
+const successWhite = require('@images/success-white.png')
+const failWhite = require('@images/fail-white.png')
+
 function NoAccount(props) {
-  const { navigation, sliderRef, } = props
+  const { sliderRef, } = props
 
   const toast = useRef(null)
-
-  const [contentOpacity] = useState(new Animated.Value(1))
-  const [successOpacity] = useState(new Animated.Value(0))
 
   const accounts = useSelector(state => state.user.accounts)
   const currentAccount = useSelector(state => state.user.currentAccount)
 
+  const [contentOpacity] = useState(new Animated.Value(1))
+  const [successOpacity] = useState(new Animated.Value(0))
+
   const [selectedAccount, selectAccount] = useState({ id: false, })
-  const [cameraVisible, setCameraVisibility] = useState(false)
+  const [showConfigureAccount, setConfigureAccountState] = useState(false)
   const [loading, setLoadingStatus] = useState(false)
   const [contentVisible, setContentVisibility] = useState(true)
   const [successVisible, setSuccessVisibility] = useState(false)
-
-  const dispatch = useDispatch();
   
   useEffect(() => {
-    if(accounts.every(item => item.id === undefined)) {
-      setCameraVisibility(true)
-    }
+    if(accounts.every(item => _.isEmpty(item)))
+      setConfigureAccountState(true)
   }, [accounts])
 
   useEffect(() => {
-    if(_.isEmpty(currentAccount)) {
-      setCameraVisibility(false)
-    }
+    if(_.isEmpty(currentAccount))
+      setConfigureAccountState(false)
   }, [currentAccount])
 
   const addAccount = () => {
-    setCameraVisibility(true)
-  }
-  
-
-  const toggleAdd = () => {
-    setCameraVisibility(!cameraVisible)
+    setConfigureAccountState(true)
   }
 
   const invokeSuccessAnimation = (callback) => {
@@ -117,15 +111,17 @@ function NoAccount(props) {
   return (
     <View style={styles.container}>
       {successVisible && (
-        <Animated.View style={[styles.success , { opacity: successOpacity}]}>
-          {/* <Text style={styles.successHeading}>Аккаунт додано</Text> */}
-          <Image style={{ width: 130, height: 130, }} source={successVisible === 'success' ? require('@images/success-white.png') : require('@images/fail-white.png')} />
+        <Animated.View style={[styles.success , { opacity: successOpacity }]}>
+          <Image
+            style={{ width: 130, height: 130, }} 
+            source={successVisible === 'success' ? successWhite : failWhite}
+          />
         </Animated.View>
       )}
 
       {contentVisible && (
         <Animated.View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', opacity: contentOpacity, }}>
-          {cameraVisible ? (
+          {showConfigureAccount ? (
             <ConfigureAccount
               loading={loading}
               setLoadingStatus={setLoadingStatus}

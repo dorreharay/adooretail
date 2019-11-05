@@ -7,24 +7,19 @@ import _ from 'lodash'
 import styles from './styles'
 
 import { PROBA_REGULAR } from '@fonts'
-import { setLayout } from '../../../../../../../reducers/OrdersReducer'
 
-import SharedButton from '../../../../../../components/SharedButton';
-import Option from './Option'
+import SharedButton from '@shared/SharedButton';
+
 import Products from './Products/Products'
+
+import { setLayout } from '../../../../../../../reducers/OrdersReducer'
 
 const onlineIcon = require('@images/status_online.png')
 const offlineIcon = require('@images/status_offline.png')
 const waitingIcon = require('@images/status_waiting.png')
 
-const layoutIcons = {
-  3: require('@images/3cols.png'),
-  4: require('@images/4cols.png'),
-  5: require('@images/5cols.png'),
-}
-
 function RightSide(props) {
-  const { slideTo, products, loadProducts, receipts, setReceipts, selectedInstance, } = props;
+  const { products, loadProducts, receipts, setReceipts, selectedInstance, } = props;
 
   const toast = useRef(null)
   const inputRef = useRef(null)
@@ -117,40 +112,12 @@ function RightSide(props) {
           rotateOnPress loadAgain={loadAgain} backgroundColor={'#FFFFFF'}
         />
         <SharedButton
-          onPress={() => slideTo('next')}
+          onPress={() => {}}
           buttonSizes={{ width: styles.menu.width, height: styles.menu.height, }}
           iconSizes={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
           source={require('@images/menu.png')}
           backgroundColor={'#FFFFFF'} performOnStart
-        >
-          {/* props.ctx.menuActions.open() */}
-          {/* <Menu name='bar' onSelect={() => slideTo('next')}>
-            <MenuTrigger
-              children={
-                <View style={{ width: 50, alignItems: 'center', justifyContent: 'center', }}>
-                  <Image style={{ width: 20, height: 18, }} source={require('@images/menu.png')}/>
-                </View>
-              }
-              customStyles={{
-                triggerWrapper: styles.triggerWrapper,
-                triggerText: styles.searchBarText,
-                TriggerTouchableComponent: TouchableWithoutFeedback,
-              }}
-            />
-            <MenuOptions 
-              customStyles={{
-                optionsContainer: styles.optionsContainer,
-                optionWrapper: styles.optionWrapper,
-              }}
-            >
-              <MenuOption children={<Option text='ІСТОРІЯ ЗАМОВЛЕНЬ' dimensions={[16, 19]} icon={require('@images/history.png')} index={0} />} value={1} />
-              {/* <MenuOption children={<Option text='ІНКАСАЦІЯ' dimensions={[17, 16]} icon={require('@images/warehouse.png')} index={1} />} value={2} />
-              <MenuOption children={<Option text='ДЕВАЙСИ' dimensions={[17, 18]} icon={require('@images/devices.png')} index={2} />} value={3} />
-              <MenuOption children={<Option text='НАЛАШТУВАННЯ' dimensions={[17, 18]} icon={require('@images/settings.png')} index={3} />} value={4} /> */}
-              {/* <MenuOption children={<Option text='ЗАКІНЧИТИ ЗМІНУ' dimensions={[20, 19]} icon={require('@images/flag.png')} index={4} />} value={5} />
-            </MenuOptions>
-          </Menu> */}
-        </SharedButton>
+        />
       </View>
       <Products
         products={products}

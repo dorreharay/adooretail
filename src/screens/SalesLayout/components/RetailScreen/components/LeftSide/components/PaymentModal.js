@@ -3,11 +3,12 @@ import { View, Text, TextInput, TouchableOpacity, } from 'react-native'
 import Modal, { SlideAnimation, ModalContent, ModalButton, } from 'react-native-modals';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
-import Ripple from 'react-native-material-ripple';
 import styles from '../styles'
 
+import SharedButton from '@shared/SharedButton';
+
 import { cashKeyboardLayout } from '../../../../../../../../helpers/keyboards'
-import SharedButton from '../../../../../../../components/SharedButton'
+
 
 const PaymentModal = (props) => {
   const {

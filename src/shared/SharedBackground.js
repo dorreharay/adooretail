@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { View, Image, StyleSheet, Text, Animated, } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import LoginLoader from './LoginLoader'
 
-function SharedBackground({ source, children, isWrapper, loading, opacity, }) {
+import LoginLoader from '@shared/LoginLoader';
+
+function SharedBackground({ source, children, loading, opacity, }) {
   const [loadEnd, setLoadEnd] = useState(false)
 
   const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);

@@ -1,17 +1,14 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, StyleSheet, Alert, TouchableOpacity, TextInputб } from 'react-native'
+import { Text, View, Image, ScrollView, TextInput, } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import moment from 'moment/min/moment-with-locales';
 import LinearGradient from 'react-native-linear-gradient'
-moment.locale('uk');
-import styles from './styles'
-
-import { deviceWidth, deviceHeight, } from '@dimensions'
-import SharedButton from '../../../../../../components/SharedButton';
-import { setActiveSlide, setReceipts } from '../../../../../../../reducers/OrdersReducer'
-import Receipt from './components/Receipt';
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
+import moment from 'moment/min/moment-with-locales';
+import styles from './styles'
+moment.locale('uk');
+
+import SharedButton from '@shared/SharedButton';
+import Receipt from './components/Receipt';
 
 import PaymentModal from './components/PaymentModal'
 

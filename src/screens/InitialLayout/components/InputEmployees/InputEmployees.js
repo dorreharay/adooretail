@@ -6,8 +6,10 @@ import styles from './styles'
 
 import { API_URL } from '../../../../../config/api';
 
+import LoginLoader from '@shared/LoginLoader';
+
 import EmployeesList from "./components/EmployeesList";
-import LoginLoader from '../../../../components/LoginLoader';
+
 import { setCurrentSession } from '../../../../../reducers/UserReducer';
 
 function InputEmployees({ sliderRef }) {

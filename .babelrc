@@ -7,7 +7,8 @@
         "@api": "./config/api",
         "@fonts": "./config/fonts",
         "@dimensions": "./helpers/dimensions",
-        "@keyboards": "./helpers/keyboards"
+        "@keyboards": "./helpers/keyboards",
+        "@shared": "./src/shared"
       }
     }]
   ]

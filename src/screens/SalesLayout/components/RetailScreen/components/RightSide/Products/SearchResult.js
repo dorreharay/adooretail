@@ -1,12 +1,10 @@
-import React, { useState, useRef, useEffect, } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, } from 'react-native';
-import { useSelector } from 'react-redux'
-import FastImage from 'react-native-fast-image'
+import React from 'react';
+import { View, Text, } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
-import SharedButton from '../../../../../../../components/SharedButton'
+import SharedButton from '@shared/SharedButton';
 
 function SearchResult(props) {
   const { searchTerm, searchResult, layout, addProductQuantity, } = props 

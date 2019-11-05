@@ -6,8 +6,8 @@ import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
+import SharedButton from '@shared/SharedButton';
 import SearchResult from './SearchResult'
-import SharedButton from '../../../../../../../components/SharedButton'
 
 function Products(props) {
   const { receipts, setReceipts, selectedInstance, searchTerm, } = props;

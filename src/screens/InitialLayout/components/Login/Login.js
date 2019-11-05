@@ -12,9 +12,10 @@ import styles from './styles';
 
 import { API_URL } from '../../../../../config/api';
 import { loginKeyboardLayout } from '../../../../../helpers/keyboards'
-import { setAuthToken, setCurrentSession } from '../../../../../reducers/UserReducer';
 
-import LoginLoader from '../../../../components/LoginLoader';
+import LoginLoader from '@shared/LoginLoader'
+
+import { setAuthToken, setCurrentSession } from '../../../../../reducers/UserReducer'
 
 function Login(props) {
   const { navigation, sliderRef, } = props;
@@ -79,17 +80,16 @@ function Login(props) {
       
       dispatch(setAuthToken(token))
 
-      // dispatch(setCurrentSession(session))
+      dispatch(setCurrentSession(currentSession))
 
-      if (_.isEmpty(currentSession))
-        console.log('////////////')
+      if (_.isEmpty({}))
+        setTimeout(() => sliderRef.current.snapToNext(), 250)
       else
-        navigation.navigate('SalesLayout')
+        // navigation.navigate('SalesLayout')
 
       resetState()
     } catch (e) {
       toast.current.show(e.message, DURATION.LENGTH_LONG)
-      console.log(e.message)
       setLoadingStatus(false)
       handleAnimation()
       resetState()
@@ -136,7 +136,7 @@ function Login(props) {
   }
 
   useEffect(() => {
-    validateDeviceID('1111222')
+    // validateDeviceID('1111222')
 
     return () => {};
   }, [])

@@ -11,7 +11,7 @@ import Login from './components/Login/Login'
 import InputCash from './components/InputCash/InputCash'
 import InputEmployees from './components/InputEmployees/InputEmployees'
 
-import SharedBackground from '../../components/SharedBackground'
+import SharedBackground from '@shared/SharedBackground'
 
 function InitialLayout({ navigation, screenProps, }) {
   const {
@@ -39,6 +39,10 @@ function InitialLayout({ navigation, screenProps, }) {
     return () => sliderRef.current.snapToItem(0)
   }, [forceSlide])
 
+  useEffect(() => {
+    setTimeout(() => sliderRef.current.snapToItem(1), 250)
+  }, [endOfSession])
+
   const _renderItem = ({ item, index }) => {
     return (
       <View style={styles.container}>
@@ -55,8 +59,7 @@ function InitialLayout({ navigation, screenProps, }) {
   return (
     <View style={styles.container}>
       <SharedBackground
-        loading={initialLoadingVisibility}
-        opacity={initialLoadingOpacity}
+        loading={false}
         source={require('@images/background-adv3.png')}
       >
         <View style={styles.slider}>

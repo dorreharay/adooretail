@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch, } from 'react-redux';
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
-import Modal, { SlideAnimation, ModalContent, ModalButton, } from 'react-native-modals';
+import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
 
-import { deviceHeight } from '@dimensions'
 import { FUTURA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
-import SharedButton from '../../../components/SharedButton'
+import SharedButton from '@shared/SharedButton';
+
 import { setEndOfSessionStatus } from '../../../../reducers/UserReducer'
 
 function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
@@ -39,11 +39,11 @@ function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
           <SharedButton
             onPress={endSession}
             forceStyles={styles.linearButton}
-            buttonSizes={{ width: '100%', backgroundColor: 'yellow' }}
-            scale={0.9}
+            buttonSizes={{ width: '100%', }}
+            scale={0.92}
           >
             <LinearGradient
-              style={{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', borderRadius: 3, }}
+              style={styles.linearButtonGradient}
               start={{x: -1, y: -1}} end={{x: 1, y: 1}}
               colors={['#FF7675', '#FD9C6C']}
             >
@@ -83,6 +83,13 @@ const styles = StyleSheet.create({
     width: 300,
     height: 70,
     marginTop: 60,
+  },
+  linearButtonGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    borderRadius: 3,
   },
   linearButtonText: {
     color: '#FFFFFF',
