@@ -1,12 +1,10 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, TextInput, Alert, Animated, } from 'react-native'
+import { Text, View, Image, TextInput, Alert, Animated, TouchableWithoutFeedback, } from 'react-native'
 import {useNetInfo} from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
 import Toast, {DURATION} from 'react-native-easy-toast'
-import { Menu, MenuOptions, MenuOption, MenuTrigger, withMenuContext,  } from 'react-native-popup-menu';
 import _ from 'lodash'
 import styles from './styles'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { PROBA_REGULAR } from '@fonts'
 import { setLayout } from '../../../../../../../reducers/OrdersReducer'
@@ -180,4 +178,4 @@ function RightSide(props) {
   )
 }
 
-export default withMenuContext(RightSide)
+export default RightSide

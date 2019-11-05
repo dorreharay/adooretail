@@ -83,7 +83,7 @@ const base = {
   receiptOnePrice: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: 'futura_light',
+    fontFamily: FUTURA_LIGHT,
   },
   receiptQtyContainer: {
     alignItems: 'center',

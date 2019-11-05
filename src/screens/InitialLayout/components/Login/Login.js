@@ -35,7 +35,6 @@ function Login(props) {
   const [error, setError] = useState(false)
   const [currentInput, setCurrentInput] = useState('')
 
-  const [promptPosition] = useState(new Animated.Value(-400))
   const [animatedValue] = useState(new Animated.Value(0))
 
   const dispatch = useDispatch();
@@ -45,14 +44,6 @@ function Login(props) {
     setLoadingStatus(false)
     setError(false)
     setCurrentInput('')
-  }
-
-  const togglePrompt = (status) => {
-    Animated.timing(promptPosition, {
-      toValue: status ? 40 : -400,
-      duration: 300,
-      easing: Easing.linear
-    }).start()
   }
 
   const handleAnimation = () => {
@@ -91,7 +82,6 @@ function Login(props) {
       // dispatch(setCurrentSession(session))
 
       if (_.isEmpty(currentSession))
-        // sliderRef.current.snapToNext()
         console.log('////////////')
       else
         navigation.navigate('SalesLayout')
@@ -146,7 +136,7 @@ function Login(props) {
   }
 
   useEffect(() => {
-    // validateDeviceID('1111222')
+    validateDeviceID('1111222')
 
     return () => {};
   }, [])
@@ -187,19 +177,6 @@ function Login(props) {
       </View>
       <LoginLoader active={loading} />
       <Toast ref={toast}/>
-      <Animated.View style={[styles.startPagePrompt, { left: promptPosition }]}>
-        <View style={{ alignItems: 'center', width: '100%', height: '40%', paddingTop: '10%', paddingLeft: '7%', paddingRight: '10%', }}>
-          <Text style={[styles.promptButtonText, { color: '#F6F6F6', fontSize: 22, }]}>Зробити вхід стартовою сторінкою?</Text>
-        </View>
-        <View style={{ alignItems: 'center', justifyContent: 'flex-end', width: '100%', height: '60%', paddingBottom: '10%', }}>
-          <Ripple style={styles.promptButton} onPress={() => handlePromptChoise(true)} rippleColor={'#F3F3F3'}>
-            <Text style={styles.promptButtonText}>Так</Text>
-          </Ripple>
-          <Ripple style={[styles.promptButton, { marginTop: '7%', paddingBottom: '5%', }]} onPress={() => handlePromptChoise(false)} rippleColor={'#F3F3F3'}>
-            <Text style={styles.promptButtonText}>Ні</Text>
-          </Ripple>
-        </View>
-      </Animated.View>
     </View>
   )
 }

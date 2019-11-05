@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from '../styles'
 
+import { FUTURA_LIGHT } from '@fonts'
+
 function Receipt({ receipt, setReceiptInstance, }) {
 
   const deleteItem = (receiptIndex) => {
@@ -27,7 +29,7 @@ function Receipt({ receipt, setReceiptInstance, }) {
               </TouchableOpacity>
             </View>
             <View style={styles.receiptPrice}>
-              <Text style={{ height: '100%', textAlign: 'center', color: '#343434', fontSize: 18, fontFamily: 'futura_light' }}>{item.quantity * item.price} грн</Text>
+              <Text style={{ height: '100%', textAlign: 'center', color: '#343434', fontSize: 18, fontFamily: FUTURA_LIGHT }}>{item.quantity * item.price} грн</Text>
             </View>
             <TouchableOpacity
               style={styles.receiptDeleteIcon}

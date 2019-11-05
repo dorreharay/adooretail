@@ -203,6 +203,14 @@ PODS:
     - React-cxxreact (= 0.61.1)
     - React-jsi (= 0.61.1)
   - React-jsinspector (0.61.1)
+  - react-native-camera (3.7.2):
+    - React
+    - react-native-camera/RCT (= 3.7.2)
+    - react-native-camera/RN (= 3.7.2)
+  - react-native-camera/RCT (3.7.2):
+    - React
+  - react-native-camera/RN (3.7.2):
+    - React
   - react-native-fetch-blob (0.10.6):
     - React-Core
   - react-native-netinfo (4.3.3):
@@ -287,6 +295,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-orientation (from `../node_modules/react-native-orientation`)
@@ -350,6 +359,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-fetch-blob:
     :path: "../node_modules/react-native-fetch-blob"
   react-native-netinfo:
@@ -412,6 +423,7 @@ SPEC CHECKSUMS:
   React-jsi: 61ff417c95e6c3af50fb96399037e80752fb5ce7
   React-jsiexecutor: ee45274419eb95614bbbadb98e20684c5f29996e
   React-jsinspector: 574d597112f9ea3d1b717f6fb62aef764c70dd6f
+  react-native-camera: 2815acff3b2c3bf8b5c78a80aad62398a91051f4
   react-native-fetch-blob: 0cbdf9764c75d9438c162427395f4bc35a857d5a
   react-native-netinfo: f0ebf8831cacc58f49870e41e739476a7b0d7ac0
   react-native-orientation: d4a97266b06ec8d45d74e626656a730ebbebbb6f
@@ -436,6 +448,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: cc72085bb20368b2f8dbb21b7e355c667e1309b7
   Yoga: d8c572ddec8d05b7dba08e4e5f1924004a177078
 
-PODFILE CHECKSUM: 4f9eb6c720eaa4775fc5e8d0ca2ef98bc48842c0
+PODFILE CHECKSUM: 5f86bd71b9a52159a345074d08547664f65fd219
 
 COCOAPODS: 1.7.4

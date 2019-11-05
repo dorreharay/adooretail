@@ -1,5 +1,6 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { deviceWidth } from '@dimensions';
 
 const base = {
   container: {
@@ -42,9 +43,10 @@ const base = {
     textDecorationLine: 'underline'
   },
   accountsContainer: {
+    alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    width: '60%',
+    width: deviceWidth * 0.6,
     height: '30%',
     marginLeft: '1.5%',
     marginVertical: 70,
@@ -52,8 +54,8 @@ const base = {
   account: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '31%',
-    height: '100%',
+    width: deviceWidth * 0.2,
+    height: deviceWidth * 0.2,
   },
   accountItem: {
     width: '100%',
