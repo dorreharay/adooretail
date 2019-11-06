@@ -46,7 +46,7 @@ function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
             onPress={endSession}
             forceStyles={styles.linearButton}
             buttonSizes={{ width: '100%', }}
-            scale={0.92}
+            scale={0.92} onStart
           >
             <LinearGradient
               style={styles.linearButtonGradient}
