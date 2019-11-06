@@ -62,7 +62,7 @@ function NoAccount(props) {
         },
       ).start()
       setSuccessVisibility('success')
-      setTimeout(() => sliderRef.current.snapToNext(), 2000)
+      setTimeout(() => sliderRef.current.scrollBy(1), 1500)
     }, 1000)
   }
 

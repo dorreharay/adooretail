@@ -9,7 +9,7 @@ import { FUTURA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
 import SharedButton from '@shared/SharedButton';
 
-import { setEndOfSessionStatus } from '../../../../reducers/UserReducer'
+import { setEndOfSessionStatus, setInitialSlide, setEmployees, setStartCash, } from '../../../../reducers/UserReducer'
 
 function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
   const dispatch = useDispatch()
@@ -17,15 +17,16 @@ function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
   const [loading, setLoadingStatus] = useState(false)
 
   const endSession = () => {
-    setLoadingStatus(true)
+    dispatch(setInitialSlide(false))
+    dispatch(setEmployees([]))
+    dispatch(setStartCash(0))
+    dispatch(setEndOfSessionStatus(true))
+    setModalVisibility(false)
+    dispatch(setInitialSlide(2))
 
     setTimeout(() => {
-      setLoadingStatus(false)
-      
-      dispatch(setEndOfSessionStatus({ status: true }))
-      setModalVisibility(false)
       navigation.navigate('InitialLayout')
-    }, 2000)
+    }, 300) 
   }
 
   return (

@@ -15,7 +15,7 @@ import { loginKeyboardLayout } from '../../../../../helpers/keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
 
-import { setAuthToken, setCurrentSession } from '../../../../../reducers/UserReducer'
+import { setAuthToken, setCurrentSession, setEndOfSessionStatus, } from '../../../../../reducers/UserReducer'
 
 function Login(props) {
   const { navigation, sliderRef, } = props;
@@ -81,11 +81,13 @@ function Login(props) {
       dispatch(setAuthToken(token))
 
       dispatch(setCurrentSession(currentSession))
+      dispatch(setEndOfSessionStatus(false))
 
-      if (_.isEmpty({}))
-        setTimeout(() => sliderRef.current.snapToNext(), 250)
-      else
-        // navigation.navigate('SalesLayout')
+      if (_.isEmpty(currentSession)) {
+        sliderRef.current.scrollBy(1)
+      } else {
+        navigation.navigate('SalesLayout')
+      }
 
       resetState()
     } catch (e) {

@@ -8,7 +8,11 @@ import { ScrollView } from 'react-native-gesture-handler';
 function EmployeesList({ employees, checked, handleCheck, }) {
   return (
     <View style={styles.сontainer}>
-      <ScrollView style={styles.scrollview} scrollEnabled={employees.length > 5} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollview}
+        scrollEnabled={employees.length > 5}
+        showsVerticalScrollIndicator={false}
+      >
         {employees.map((employee, index) => (
           checked.includes(index) ? (
             <TouchableOpacity
@@ -70,6 +74,7 @@ const styles = StyleSheet.create({
     width: 350,
     height: 360,
     zIndex: 100,
+    borderRadius: 22,
   },
   employee: {
     alignItems: 'center',
@@ -78,8 +83,8 @@ const styles = StyleSheet.create({
     height: 70,
     paddingLeft: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#4D4D4D',
-    backgroundColor: '#D2D2D233',
+    borderBottomColor: '#4D4D4D44',
+    backgroundColor: '#D2D2D21A',
   },
   iconPlaceholder: {
     width: 41,

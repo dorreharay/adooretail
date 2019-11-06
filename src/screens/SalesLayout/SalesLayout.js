@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect, useMemo, } from 'react';
 import { Text, View, Image, StyleSheet, Alert, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
-import Carousel from 'react-native-snap-carousel';
 import Toast, {DURATION} from 'react-native-easy-toast';
 let moment = require('moment-timezone');
 moment.locale('uk');

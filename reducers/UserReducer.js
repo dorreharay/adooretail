@@ -4,24 +4,30 @@ const SET_CURRENT_SESSION = 'SET_CURRENT_SESSION';
 const SET_START_CASH = 'SET_START_CASH';
 const SET_EMPLOYEES = 'SET_EMPLOYEES';
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
+const SET_INITIAL_SLIDE = 'SET_INITIAL_SLIDE';
 
 const initialState = {
   token: '',
   currentSession: {},
   startCash: 0,
   employees: [],
-  endOfSession: {
-    status: false,
-    sessionID: '',
-  },
+  endOfSession: false,
   initialLoading: true,
   accounts: [
     { id: 1, businessName: 'Poilka Coffee', img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128', },
     {},
     {}
   ],
-  currentAccount: {}
+  currentAccount: {},
+  initialSlide: false,
 };
+
+export function setInitialSlide(payload) {
+  return {
+    type: SET_INITIAL_SLIDE,
+    payload
+  }
+}
 
 export function changeAccount(payload) {
   return {
@@ -68,12 +74,13 @@ export function setEmployees(payload) {
 
 
 const ACTION_HANDLERS = {
+  [SET_INITIAL_SLIDE]: (state, action) => {
+    return {...state, initialSlide: action.payload}
+  },
   [CHANGE_ACCOUNT]: (state, action) => {
-
     return {...state, currentAccount: action.payload}
   },
   [SET_AUTH_TOKEN]: (state, action) => {
-
     return {...state, token: action.payload}
   },
   [SET_CURRENT_SESSION]: (state, action) => {
@@ -82,7 +89,6 @@ const ACTION_HANDLERS = {
     return {...state, currentSession}
   },
   [SET_START_CASH]: (state, action) => {
-
     return {...state, startCash: action.payload}
   },
   [SET_EMPLOYEES]: (state, action) => {

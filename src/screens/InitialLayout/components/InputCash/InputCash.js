@@ -7,15 +7,18 @@ import styles from './styles'
 
 import { API_URL } from '../../../../../config/api';
 import { cashKeyboardLayout } from '../../../../../helpers/keyboards'
-import { setEmployees, setStartCash, setEndOfSessionStatus } from '../../../../../reducers/UserReducer'
+import { setEmployees, setStartCash, setEndOfSessionStatus, setCurrentSession } from '../../../../../reducers/UserReducer'
 
 import LoginLoader from '@shared/LoginLoader';
 
 function InputCash(props) {
   const { navigation, sliderRef, } = props;
 
-  const { token, endOfSession } = useSelector(state => ({ token: state.user.token, endOfSession: state.user.endOfSession }))
+  const token = useSelector(state => state.user.token)
+  const session_id = useSelector(state => state.user.currentSession._id)
+  const endOfSession = useSelector(state => state.user.endOfSession)
   const employees = useSelector(state => state.user.employees)
+  const startCash = useSelector(state => state.user.startCash)
 
   const dispatch = useDispatch();
 
@@ -23,7 +26,6 @@ function InputCash(props) {
   const [loading, setLoadingStatus] = useState(false)
 
   useEffect(() => {
-    // dispatch(setEndOfSessionStatus({ status: false, sessionID: '', }))
     return () => {};
   }, [])
 
@@ -60,36 +62,24 @@ function InputCash(props) {
   }
 
   const handleProceed = async () => {
-    console.log('endOfSession', endOfSession)
+    if (endOfSession) {
+      try {
+        setLoadingStatus(true)
 
-    if(endOfSession.status) {
-      setTimeout(() => sliderRef.current.snapToItem(0), 250)
-      return
+        await axios.post(`${API_URL}/user/session/terminate/${token}`, { session_id, endSum: currentInput })
+
+        dispatch(setEndOfSessionStatus(false))
+        dispatch(setCurrentSession({}))
+
+        // sliderRef.current.scrollBy(-1)
+      } catch (e) {
+        console.log(e.message)
+      } finally {
+        setLoadingStatus(false)
+
+        return
+      }
     }
-    // if (endOfSession.status) {
-    //   try {
-    //     setLoadingStatus(true)
-
-    //     asyncReceiptsStorage.find({}, async (err, localReceipts) => {
-
-    //       await axios.put(`${API_URL}/user/receipts/${token}`, { localReceipts, session_id: endOfSession.sessionID })
-    //     })
-
-    //     await axios.post(`${API_URL}/user/session/terminate/${token}`, { session_id: endOfSession.sessionID, endSum: currentInput })
-
-    //     asyncReceiptsStorage.remove({}, { multi: true }, async (err, productsDocs) => { })
-
-    //     dispatch(setEndOfSessionStatus({ status: false, sessionID: '', }))
-    //   } catch (e) {
-
-    //     navigation.navigate('Login')
-    //     console.log(e.message)
-    //   }
-
-    //   setLoadingStatus(false)
-
-    //   return
-    // }
 
     try {
       setLoadingStatus(true)
@@ -101,13 +91,9 @@ function InputCash(props) {
       dispatch(setEmployees(employees))
       dispatch(setStartCash(currentInput))
 
-      setTimeout(() => sliderRef.current.snapToNext(), 250)
+      sliderRef.current.scrollBy(1)
 
       setLoadingStatus(false)
-
-      // setTimeout(() => {
-      //   setCurrentInput('0')
-      // }, 400)
     } catch (e) {
       console.log(e.message)
       setLoadingStatus(false)
@@ -116,7 +102,7 @@ function InputCash(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>C</Text>ума в касі на {endOfSession.status ? 'кінці' : 'початку'} зміни</Text>
+      <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>C</Text>ума в касі на {endOfSession ? 'кінці' : 'початку'} зміни</Text>
       <Text style={styles.loginCaption}>{currentInput}</Text>
       <View style={styles.lsNumpad}>
         {cashKeyboardLayout.map((num, index) => (
@@ -141,8 +127,8 @@ function InputCash(props) {
         </Ripple>
       </View>
       
-      {employees.length !== 0 && (
-        <TouchableOpacity style={styles.backButton} onPress={() => setTimeout(() => sliderRef.current.snapToNext(), 250)} activeOpacity={1}>
+      {employees.length !== 0 && startCash !== 0 && (
+        <TouchableOpacity style={styles.backButton} onPress={() => sliderRef.current.scrollBy(1)} activeOpacity={1}>
           <Image style={{ width: 18, height: 18, }} source={require('@images/erase.png')} fadeDuration={0}></Image>
         </TouchableOpacity>
       )}

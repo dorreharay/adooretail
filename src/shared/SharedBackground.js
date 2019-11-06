@@ -19,7 +19,7 @@ function SharedBackground({ source, children, loading, opacity, }) {
             source={source}
             onLoadEnd={() => setLoadEnd(true)}
           />
-          <LoginLoader active={true}></LoginLoader>
+          <LoginLoader active={true} opacity={opacity} />
         </>
       )}
 

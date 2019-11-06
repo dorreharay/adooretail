@@ -62,7 +62,7 @@ const base = {
   },
   backButton: {
     position: 'absolute',
-    top: 50,
+    top: 30,
     right: 30,
     alignItems: 'center',
     justifyContent: 'center',

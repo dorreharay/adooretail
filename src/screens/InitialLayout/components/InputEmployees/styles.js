@@ -21,11 +21,11 @@ const base = {
     height: 50,
     marginTop: 45,
     borderRadius: 25,
-    backgroundColor: '#D2D2D233',
+    backgroundColor: '#D2D2D226',
   },
   backButton: {
     position: 'absolute',
-    top: 50,
+    top: 30,
     left: 30,
     alignItems: 'center',
     justifyContent: 'center',
