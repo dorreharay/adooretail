@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, StyleSheet, } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch, } from 'react-redux'
 import _ from 'lodash'
 import Carousel from 'react-native-snap-carousel';
+import { setEndOfSessionStatus } from '../../../reducers/UserReducer'
 
 import { deviceWidth, deviceHeight } from '../../../helpers/dimensions'
 
@@ -18,6 +19,8 @@ function InitialLayout({ navigation, screenProps, }) {
     initialLoadingVisibility, initialLoadingOpacity,
     changeInitialLoadingWrapperOpacity, forceSlide,
   } = screenProps
+
+  const dispatch = useDispatch()
 
   const sliderRef = useRef(null)
   const [entries] = useState([{}, {}, {}])
@@ -38,7 +41,10 @@ function InitialLayout({ navigation, screenProps, }) {
   }, [forceSlide])
 
   useEffect(() => {
-    setTimeout(() => sliderRef.current.snapToItem(1), 250)
+    setTimeout(() => {
+      sliderRef.current.snapToItem(1)
+      dispatch(setEndOfSessionStatus({ status: false }))
+    }, 250)
   }, [endOfSession])
 
   const _renderItem = ({ item, index }) => {

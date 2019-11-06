@@ -86,11 +86,11 @@ function SharedButton(props) {
             scale: animatePress
           }]
         }}>
-          {children ? (
-            children
+          {loading ? (
+            null
           ) : (
-            loading ? (
-              null
+            children ? (
+              children
             ) : (
               text ? (
                 <Text style={textStyles}>{text}</Text>

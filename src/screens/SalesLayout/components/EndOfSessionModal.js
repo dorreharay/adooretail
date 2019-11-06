@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch, } from 'react-redux';
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
+import * as Progress from 'react-native-progress';
 
 import { FUTURA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
@@ -13,10 +14,18 @@ import { setEndOfSessionStatus } from '../../../../reducers/UserReducer'
 function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
   const dispatch = useDispatch()
 
+  const [loading, setLoadingStatus] = useState(false)
+
   const endSession = () => {
-    dispatch(setEndOfSessionStatus({ status: true }))
-    setModalVisibility(false)
-    navigation.navigate('InitialLayout')
+    setLoadingStatus(true)
+
+    setTimeout(() => {
+      setLoadingStatus(false)
+      
+      dispatch(setEndOfSessionStatus({ status: true }))
+      setModalVisibility(false)
+      navigation.navigate('InitialLayout')
+    }, 2000)
   }
 
   return (
@@ -27,9 +36,6 @@ function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
 				animationDuration: 30,
 				useNativeDriver: true,
 			})}
-			// swipeDirection={['up', 'down']}
-			// onSwipeOut={() => setPaymentModalVisible(false)}
-			// onTouchOutside={() => setPaymentModalVisible(false)}
 		>
       <ModalContent>
         <View style={styles.modal}>
@@ -47,7 +53,14 @@ function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
               start={{x: -1, y: -1}} end={{x: 1, y: 1}}
               colors={['#FF7675', '#FD9C6C']}
             >
-              <Text style={styles.linearButtonText}>ЗАКІНЧИТИ ЗМІНУ</Text>
+              {loading ? (
+                <Progress.Circle
+                  endAngle={0.9} size={25} color={'#FFFFFF'} 
+                  borderWidth={2} indeterminate={true} 
+                />
+              ) : (
+                <Text style={styles.linearButtonText}>ЗАКІНЧИТИ ЗМІНУ</Text>
+              )}
             </LinearGradient>
           </SharedButton>
         </View>
