@@ -81,6 +81,23 @@ const base = {
     width: '100%',
     height: '100%',
   },
+  modal: {
+    width: 300,
+    height: 400,
+  },
+  modalItem: {
+    width: 300,
+    height: 60,
+    marginBottom: 2,
+    backgroundColor: '#FFFFFF'
+  },
+  modalItemRed: {
+    width: 300,
+    height: 60,
+    marginTop: 9,
+    borderRadius: 3,
+    backgroundColor: '#FFFFFF'
+  }
 };
  
 const styles = createStyles(

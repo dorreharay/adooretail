@@ -142,7 +142,7 @@ const base = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 430,
-    height: '29%',
+    height: '26%',
     marginTop: 30,
   },
   paymentModalType: {
@@ -183,7 +183,7 @@ const base = {
     justifyContent: 'space-between',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 10,
+    marginTop: 20,
   },
   lsNum: {
     alignItems: 'center',
@@ -199,6 +199,22 @@ const base = {
     textAlign: 'center',
     textAlignVertical: 'center',
   },
+  modalDetails: {
+    marginTop: 80,
+  },
+  detailsRow: {
+    width: 430,
+    height: 60,
+    paddingHorizontal: 4,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  detailsRowText: {
+    color: '#343434',
+    fontSize: 25,
+    fontFamily: PROBA_REGULAR,
+  }
 };
  
 const styles = createStyles(

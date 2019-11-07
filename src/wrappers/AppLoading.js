@@ -1,10 +1,15 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { View, Animated, } from 'react-native'
 import _ from 'lodash'
+import Orientation from 'react-native-orientation';
 
 function AppLoading({ children, }){
   const [initialLoadingOpacity] = useState(new Animated.Value(1))
   const [initialLoadingVisibility, setInitialLoadingVisibility] = useState(true)
+
+  useEffect(() => {
+    Orientation.lockToLandscape();
+  }, [])
 
   const changeInitialLoadingWrapperOpacity = (visible) => {
     Animated.timing(

@@ -182,7 +182,7 @@ function Products(props) {
                       onPress={(force) => addProductQuantity(rowItem)(force)}
                       forceStyles={[styles[`colsProduct${layout}`], key === 0 && { marginLeft: 0, }]}
                       buttonSizes={{ flex: 1, width: '100%', }}
-                      scale={0.95} onStart
+                      scale={0.95} onStart key={key}
                     >
                       <LinearGradient colors={[rowItem.color, rowItem.shadow]} style={styles.variant}>
                         <View style={styles.variantPrice}>

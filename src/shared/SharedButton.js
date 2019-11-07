@@ -5,7 +5,7 @@ function SharedButton(props) {
   const {
     children, onPress, scale, duration, onStart, buttonSizes, iconSizes,
     source, loading, backgroundColor, borderRadius, forceStyles = {},
-    text, rotateOnPress, loadAgain, textStyles,
+    text, rotateOnPress, loadAgain, textStyles, key,
   } = props;
 
   const timerToClearSomewhere = useRef(false)
@@ -71,7 +71,7 @@ function SharedButton(props) {
   })
 
   return (
-    <View style={forceStyles}>
+    <View style={forceStyles} key={key ? key : 0}>
       <TouchableWithoutFeedback
         onPressIn={animateIn}
         onPressOut={animateOut}

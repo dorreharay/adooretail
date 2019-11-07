@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, TextInput, Alert, Animated, TouchableWithoutFeedback, } from 'react-native'
-import {useNetInfo} from "@react-native-community/netinfo";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
-import Toast, {DURATION} from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import _ from 'lodash'
+import Modal, { FadeAnimation, ModalContent, } from 'react-native-modals';
 import styles from './styles'
 
 import { PROBA_REGULAR } from '@fonts'
@@ -30,17 +31,18 @@ function RightSide(props) {
   const dispatch = useDispatch()
 
   const [searchTerm, setSearchTerm] = useState('')
-  
+  const [menuVisible, setMenuVisibility] = useState(false)
+
   const loadProductsThrottled = useRef(_.throttle(() => loadProducts(), 5000))
 
   const loadAgain = () => {
-    if(!netInfo.isConnected || !netInfo.isInternetReachable) {
+    if (!netInfo.isConnected || !netInfo.isInternetReachable) {
       toast.current.show("Потрібне інтернет з'єднання", 1000);
 
       return
     }
 
-    if(toast.current) {
+    if (toast.current) {
       toast.current.show("Оновлення списку", 1000)
       loadProductsThrottled.current()
     }
@@ -49,20 +51,24 @@ function RightSide(props) {
   const changeLayout = () => {
     var newLayout = 4
 
-    if(layout === 3) {
+    if (layout === 3) {
       newLayout = 4
     }
 
-    if(layout === 4) {
+    if (layout === 4) {
       newLayout = 5
     }
 
-    if(layout === 5) {
+    if (layout === 5) {
       newLayout = 3
     }
 
     dispatch(setLayout(newLayout))
   }
+
+  const openMenu = () => setMenuVisibility(true)
+
+  const closeMenu = () => setMenuVisibility(false)
 
   return (
     <View style={styles.container}>
@@ -86,9 +92,9 @@ function RightSide(props) {
               source={require('@images/x_icon.png')}
             />
           )}
-          
+
         </View>
-        
+
         <View style={styles.connection}>
           <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
           <Text style={styles.connectionText}>
@@ -112,7 +118,7 @@ function RightSide(props) {
           rotateOnPress loadAgain={loadAgain} backgroundColor={'#FFFFFF'}
         />
         <SharedButton
-          onPress={() => {}}
+          onPress={openMenu}
           buttonSizes={{ width: styles.menu.width, height: styles.menu.height, }}
           iconSizes={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
           source={require('@images/menu.png')} scale={0.8}
@@ -126,10 +132,31 @@ function RightSide(props) {
         selectedInstance={selectedInstance}
         searchTerm={searchTerm}
       />
+      <Modal
+        visible={menuVisible}
+        modalAnimation={new FadeAnimation()}
+        animationDuration={0}
+        onSwipeOut={closeMenu}
+        swipeDirection={['up', 'down']}
+        onTouchOutside={closeMenu}
+        modalStyle={{ position: 'relative', bottom: '26%', left: '34%', backgroundColor: '#FFFFFF00' }}
+        containerStyles={{ backgroundColor: '#FFFFFF00' }}
+      >
+        <ModalContent style={{ backgroundColor: '#FFFFFF00' }}>
+          <View style={styles.modal}>
+            <View style={styles.modalItem}></View>
+            <View style={styles.modalItem}></View>
+            <View style={styles.modalItem}></View>
+            <View style={styles.modalItem}></View>
+
+            <View style={styles.modalItemRed}></View>
+          </View>
+        </ModalContent>
+      </Modal>
       <Toast
         ref={toast}
         opacity={1}
-        style={{ paddingHorizontal: 20, backgroundColor:'#00000066'}}
+        style={{ paddingHorizontal: 20, backgroundColor: '#00000066' }}
         position='bottom'
         positionValue={50}
         textStyle={{

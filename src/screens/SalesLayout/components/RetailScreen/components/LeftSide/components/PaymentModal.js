@@ -18,7 +18,8 @@ const PaymentModal = (props) => {
 
   const noticeRef = useRef(null)
   const [currentInput, setCurrentInput] = useState('0')
-  const [selectedPaymentType, selectPaymentType] = useState(false)
+  const [selectedPaymentType, selectPaymentType] = useState('готівка')
+  const [editSumMode, setEditSumMode] = useState(false)
   const [sumError, setSumError] = useState(false)
 
   const sendReceipt = () => {
@@ -30,7 +31,6 @@ const PaymentModal = (props) => {
 
     changePaymentModalState(false)
     setTimeout(() => {
-      selectPaymentType(false)
       setReceiptInstance([])
     }, 200)
   }
@@ -102,32 +102,42 @@ const PaymentModal = (props) => {
       <ModalContent>
         <View style={styles.paymentModal}>
           <View style={styles.paymentModalInner}>
-            <Text style={styles.modalHeadingText}>{!!selectedPaymentType ? selectedPaymentType : 'ТИП ОПЛАТИ'}</Text>
-            {selectedPaymentType ? (
-              <View style={{ width: 130, justifyContent: 'space-between', flexDirection: 'row', }}>
-                <SharedButton
-                  onPress={() => selectPaymentType(false)}
-                  buttonSizes={{ width: 40, height: 40, }}
-                  iconSizes={{ width: 23, height: 23, }}
-                  source={require('@images/x_icon.png')} onStart
-                />
+            <Text style={styles.modalHeadingText}>ОПЛАТА</Text>
+            <View style={{ width: 130, justifyContent: 'space-between', flexDirection: 'row', }}>
+              {selectedPaymentType && !editSumMode ? (
                 <SharedButton
                   onPress={sendReceipt}
-                  buttonSizes={{ width: 40, height: 40, }}
+                  buttonSizes={{ width: 50, height: 40, }}
                   iconSizes={{ width: 27, height: 27, }}
                   source={require('@images/tick.png')} onStart
                 />
-              </View>
-            ) : (
+              ) : (
                 <SharedButton
-                  onPress={() => changePaymentModalState(false)}
+                  onPress={sendReceipt}
+                  buttonSizes={{ width: 50, height: 40, }}
+                  iconSizes={{ width: 27, height: 27, }}
+                  source={null} onStart
+                />
+              )}
+              
+              {editSumMode ? (
+                <SharedButton
+                  onPress={() => setEditSumMode(false)}
+                  buttonSizes={{ width: 40, height: 40, }}
+                  iconSizes={{ width: 15, height: 23, backgroundColor: 'red' }}
+                  source={require('@images/back_thin.png')} onStart
+                />
+              ) : (
+                <SharedButton
+                  onPress={() => setPaymentModalVisible(false)}
                   buttonSizes={{ width: 40, height: 40, }}
                   iconSizes={{ width: 23, height: 23, }}
                   source={require('@images/x_icon.png')} onStart
                 />
               )}
-          </View>
-          <View style={{ alignItems: 'center', position: 'absolute', top: 70, left: 0, width: '100%', zIndex: selectedPaymentType ? 2 : -1, backgroundColor: 'white', }}>
+            </View>
+        </View>
+          <View style={{ alignItems: 'center', position: 'absolute', top: 70, left: 0, width: '100%', zIndex: editSumMode ? 2 : -1, backgroundColor: 'white', }}>
             <View style={{ width: '100%', paddingHorizontal: 20, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
               <Text style={[styles.loginCaption, { width: 100, fontSize: 25, }]}>{initialReceiptSum - currentInput}₴</Text>
               <Text style={[styles.loginCaption, sumError && { color: '#EC2424' }]}>{currentInput}</Text>
@@ -169,11 +179,11 @@ const PaymentModal = (props) => {
             </View>
           </View>
 
-          <View style={{ backgroundColor: '#FFFFFF' }}>
+          <View style={{ height: '100%', backgroundColor: '#FFFFFF' }}>
             <View style={styles.paymentModalTypes}>
               <TouchableOpacity
                 style={styles.paymentModalType}
-                onPress={() => selectPaymentType('КАРТКА')}
+                onPress={() => selectPaymentType('картка')}
                 activeOpacity={1}
               >
                 <LinearGradient
@@ -188,7 +198,7 @@ const PaymentModal = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.paymentModalType}
-                onPress={() => selectPaymentType('ГОТІВКА')}
+                onPress={() => selectPaymentType('готівка')}
                 activeOpacity={1}
               >
                 <LinearGradient
@@ -201,7 +211,31 @@ const PaymentModal = (props) => {
                 </LinearGradient>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
+            <View style={styles.modalDetails}>
+              <View style={styles.detailsRow}>
+                <Text style={styles.detailsRowText}>Спосіб оплати</Text>
+                <Text style={styles.detailsRowText}>{selectedPaymentType}</Text>
+              </View>
+              <View style={styles.detailsRow}>
+                <Text style={styles.detailsRowText}>До сплати</Text>
+                <Text style={styles.detailsRowText}>{initialReceiptSum} грн</Text>
+              </View>
+              <View style={styles.detailsRow}>
+                <Text style={styles.detailsRowText}>Внесено</Text>
+                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                  <SharedButton
+                    onPress={() => setEditSumMode(true)}
+                    buttonSizes={{ width: 50, height: 50, marginBottom: 3, marginRight: 20, }}
+                    iconSizes={{ width: 20, height: 20, }}
+                    source={require('@images/edit_icon.png')} onStart
+                  />
+                  <Text style={styles.detailsRowText}>{currentInput} грн</Text>
+                </View>
+                
+              </View>
+            </View>
+            
+            {/* <TouchableOpacity
               style={styles.paymentModalNotice}
               onPress={() => noticeRef.current.focus()}
               activeOpacity={1}
@@ -216,7 +250,7 @@ const PaymentModal = (props) => {
                 multiline
                 blurOnSubmit
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
 				</View>

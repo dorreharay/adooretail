@@ -61,6 +61,8 @@ function SalesLayout({ navigation }) {
   }, [refreshedProducts])
 
   useEffect(() => {
+    validateSession()
+    loadProducts()
     navigation.addListener('didFocus', () => {
       loadProducts()
       validateSession()
