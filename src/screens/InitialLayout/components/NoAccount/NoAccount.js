@@ -36,8 +36,13 @@ function NoAccount(props) {
   }, [accounts])
 
   useEffect(() => {
-    if(_.isEmpty(currentAccount))
+    if(_.isEmpty(currentAccount)) {
       setConfigureAccountState(false)
+    } else {
+      if(sliderRef.current) {
+        sliderRef.current.scrollBy(1)
+      }
+    }
   }, [currentAccount])
 
   const addAccount = () => {

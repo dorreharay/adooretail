@@ -7,7 +7,8 @@ import styles from './styles'
 
 import { API_URL } from '../../../../../config/api';
 import { cashKeyboardLayout } from '../../../../../helpers/keyboards'
-import { setEmployees, setStartCash, setEndOfSessionStatus, setCurrentSession } from '../../../../../reducers/UserReducer'
+import { setEmployees, setStartCash, setCurrentSession } from '../../../../../reducers/UserReducer'
+import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer'
 
 import LoginLoader from '@shared/LoginLoader';
 
@@ -16,7 +17,7 @@ function InputCash(props) {
 
   const token = useSelector(state => state.user.token)
   const session_id = useSelector(state => state.user.currentSession._id)
-  const endOfSession = useSelector(state => state.user.endOfSession)
+  const endOfSession = useSelector(state => state.temp.endOfSession)
   const employees = useSelector(state => state.user.employees)
   const startCash = useSelector(state => state.user.startCash)
 
@@ -25,9 +26,6 @@ function InputCash(props) {
   const [currentInput, setCurrentInput] = useState('0')
   const [loading, setLoadingStatus] = useState(false)
 
-  useEffect(() => {
-    return () => {};
-  }, [])
 
   const handleKeyPress = (input) => {
     let newInput = currentInput;
@@ -71,7 +69,7 @@ function InputCash(props) {
         dispatch(setEndOfSessionStatus(false))
         dispatch(setCurrentSession({}))
 
-        // sliderRef.current.scrollBy(-1)
+        navigation.navigate('Login')
       } catch (e) {
         console.log(e.message)
       } finally {
@@ -91,7 +89,7 @@ function InputCash(props) {
       dispatch(setEmployees(employees))
       dispatch(setStartCash(currentInput))
 
-      sliderRef.current.scrollBy(1)
+      navigation.navigate('InputEmployee')
 
       setLoadingStatus(false)
     } catch (e) {
@@ -127,8 +125,8 @@ function InputCash(props) {
         </Ripple>
       </View>
       
-      {employees.length !== 0 && startCash !== 0 && (
-        <TouchableOpacity style={styles.backButton} onPress={() => sliderRef.current.scrollBy(1)} activeOpacity={1}>
+      {employees.length !== 0 && startCash !== 0 && !endOfSession && (
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputEmployee')} activeOpacity={1}>
           <Image style={{ width: 18, height: 18, }} source={require('@images/erase.png')} fadeDuration={0}></Image>
         </TouchableOpacity>
       )}

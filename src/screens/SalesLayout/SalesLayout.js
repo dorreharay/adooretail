@@ -86,7 +86,7 @@ function SalesLayout({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
-        <RetailScreen loadProducts={loadProducts} />
+        <RetailScreen loadProducts={loadProducts} navigation={navigation} />
         <EndOfSessionModal
           navigation={navigation}
           isVisible={isVisible}

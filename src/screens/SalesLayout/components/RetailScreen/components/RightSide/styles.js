@@ -82,21 +82,52 @@ const base = {
     height: '100%',
   },
   modal: {
-    width: 300,
-    height: 400,
+    width: 350,
+    height: 405,
+    borderRadius: 10,
   },
   modalItem: {
-    width: 300,
-    height: 60,
-    marginBottom: 2,
+    justifyContent: 'center',
+    width: 350,
+    height: 70,
+    paddingLeft: 30,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f1f1',
     backgroundColor: '#FFFFFF'
   },
+  withTopBorderRadius: {
+    paddingTop: 5,
+    height: 75,
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+  },
+  withBottomBorderRadius: {
+    paddingBottom: 0,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  modalItemText: {
+    color: '#414141',
+    fontSize: 25,
+    fontFamily: PROBA_REGULAR,
+  },
+  redText: {
+    color: '#E25B63'
+  },
   modalItemRed: {
-    width: 300,
-    height: 60,
-    marginTop: 9,
-    borderRadius: 3,
+    justifyContent: 'center',
+    width: 350,
+    height: 75,
+    paddingLeft: 30,
     backgroundColor: '#FFFFFF'
+  },
+  closeModal: {
+    alignSelf: 'flex-end',
+    marginBottom: 20,
+    width: 45,
+    height: 45,
+    borderRadius: 5,
+    backgroundColor: '#FFFFFF',
   }
 };
  

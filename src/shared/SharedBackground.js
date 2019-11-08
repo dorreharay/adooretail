@@ -4,14 +4,14 @@ import FastImage from 'react-native-fast-image'
 
 import LoginLoader from '@shared/LoginLoader';
 
-function SharedBackground({ source, children, loading, opacity, }) {
+function SharedBackground({ source, children, loading, opacity, mainWrapper, }) {
   const [loadEnd, setLoadEnd] = useState(false)
 
   const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
   return (
     <View style={styles.container}>
-      {loading && (
+      {loading && !mainWrapper && (
         <>
           {!loadEnd && <Animated.View style={[styles.wrapper, { opacity, backgroundColor: '#35302C' }]} />}
           <AnimatedFastImage

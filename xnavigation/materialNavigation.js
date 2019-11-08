@@ -3,6 +3,9 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation'
 
 import InitialLayout from '../src/screens/InitialLayout/InitialLayout'
+import Login from '../src/screens/InitialLayout/components/Login/Login'
+import InputCash from '../src/screens/InitialLayout/components/InputCash/InputCash';
+import InputEmployees from '../src/screens/InitialLayout/components/InputEmployees/InputEmployees';
 import SalesLayout from '../src/screens/SalesLayout/SalesLayout'
 
 const defaultTabBarOptions = {
@@ -25,7 +28,10 @@ const defaultTabBarOptions = {
 
 const materialNavigation = createMaterialTopTabNavigator (
   {
-    InitialLayout: { screen: InitialLayout },
+    // InitialLayout: { screen: InitialLayout },
+    Login: { screen: Login, },
+    InputCash: { screen: InputCash, },
+    InputEmployee: { screen: InputEmployees },
     SalesLayout: { screen: SalesLayout, },
   },
   {
@@ -42,7 +48,7 @@ const materialNavigation = createMaterialTopTabNavigator (
         duration: 0,
       },
     }),
-    initialRouteName: 'InitialLayout',
+    initialRouteName: 'Login',
   }
 );
 

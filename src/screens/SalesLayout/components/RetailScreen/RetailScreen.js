@@ -6,7 +6,7 @@ import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
 
 function RetailScreen(props) {
-  const { products, loadProducts, } = props;
+  const { products, loadProducts, navigation, } = props;
 
   const [receipts, setReceipts] = useState([[], [], [], []])
   const [selectedInstance, selectReceiptInstance] = useState(0)
@@ -24,6 +24,7 @@ function RetailScreen(props) {
         loadProducts={loadProducts}
         receipts={receipts}
         setReceipts={setReceipts}
+        navigation={navigation}
         selectedInstance={selectedInstance}
       />
     </View>

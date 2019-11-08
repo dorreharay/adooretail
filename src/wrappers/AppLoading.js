@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { View, Animated, } from 'react-native'
 import _ from 'lodash'
+import { setEndOfSessionStatus } from '../../reducers/TempReducer'
 import Orientation from 'react-native-orientation';
 
 function AppLoading({ children, }){
@@ -9,6 +10,8 @@ function AppLoading({ children, }){
 
   useEffect(() => {
     Orientation.lockToLandscape();
+
+    return () => dispatch(setEndOfSessionStatus(false))
   }, [])
 
   const changeInitialLoadingWrapperOpacity = (visible) => {

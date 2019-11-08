@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, TextInput, Alert, Animated, TouchableWithoutFeedback, } from 'react-native'
+import { Text, View, Image, TextInput, Alert, Animated, TouchableOpacity, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
 import Toast, { DURATION } from 'react-native-easy-toast'
@@ -14,13 +14,14 @@ import SharedButton from '@shared/SharedButton';
 import Products from './Products/Products'
 
 import { setLayout } from '../../../../../../../reducers/OrdersReducer'
+import { setEndOfSessionStatus } from '../../../../../../../reducers/TempReducer';
 
 const onlineIcon = require('@images/status_online.png')
 const offlineIcon = require('@images/status_offline.png')
 const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
-  const { products, loadProducts, receipts, setReceipts, selectedInstance, } = props;
+  const { products, loadProducts, receipts, setReceipts, selectedInstance, navigation, } = props;
 
   const toast = useRef(null)
   const inputRef = useRef(null)
@@ -30,6 +31,13 @@ function RightSide(props) {
   const layout = useSelector(state => state.orders.layout)
   const dispatch = useDispatch()
 
+  const [menuButtons] = useState([
+    { name: 'Історія замовлень', onPress: () => {} },
+    { name: 'Пристрої', onPress: () => {} },
+    { name: 'Транзакції', onPress: () => {} },
+    { name: 'Профіль', onPress: () => {} },
+    { name: 'Інкасації', onPress: () => {} },
+  ])
   const [searchTerm, setSearchTerm] = useState('')
   const [menuVisible, setMenuVisibility] = useState(false)
 
@@ -69,6 +77,13 @@ function RightSide(props) {
   const openMenu = () => setMenuVisibility(true)
 
   const closeMenu = () => setMenuVisibility(false)
+
+  const endSession = () => {
+    closeMenu()
+    dispatch(setEndOfSessionStatus(true))
+
+    navigation.navigate('InputCash')
+  }
 
   return (
     <View style={styles.container}>
@@ -122,7 +137,7 @@ function RightSide(props) {
           buttonSizes={{ width: styles.menu.width, height: styles.menu.height, }}
           iconSizes={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
           source={require('@images/menu.png')} scale={0.8}
-          backgroundColor={'#FFFFFF'} performOnStart
+          backgroundColor={'#FFFFFF'} onStart
         />
       </View>
       <Products
@@ -137,19 +152,37 @@ function RightSide(props) {
         modalAnimation={new FadeAnimation()}
         animationDuration={0}
         onSwipeOut={closeMenu}
-        swipeDirection={['up', 'down']}
         onTouchOutside={closeMenu}
-        modalStyle={{ position: 'relative', bottom: '26%', left: '34%', backgroundColor: '#FFFFFF00' }}
+        modalStyle={{ position: 'relative', bottom: '32.2%', left: '33.35%', backgroundColor: '#FFFFFF00' }}
         containerStyles={{ backgroundColor: '#FFFFFF00' }}
       >
         <ModalContent style={{ backgroundColor: '#FFFFFF00' }}>
+            <SharedButton
+              onPress={closeMenu}
+              buttonSizes={styles.closeModal}
+              iconSizes={{ width: styles.menu.width - 28, height: styles.menu.height - 28, }}
+              source={require('@images/x_icon.png')}
+              scale={0.9} backgroundColor={'#FFFFFF'} onStart
+            />
           <View style={styles.modal}>
-            <View style={styles.modalItem}></View>
-            <View style={styles.modalItem}></View>
-            <View style={styles.modalItem}></View>
-            <View style={styles.modalItem}></View>
+            {menuButtons.map((button, index) => (
+              <TouchableOpacity 
+                style={[styles.modalItem, index === 0 && styles.withTopBorderRadius]}
+                onPress={closeMenu}
+                activeOpacity={1}
+                key={index}
+              >
+                <Text style={styles.modalItemText}>{button.name}</Text>
+              </TouchableOpacity>
+            ))}
 
-            <View style={styles.modalItemRed}></View>
+            <TouchableOpacity
+              style={[styles.modalItemRed, styles.withBottomBorderRadius]}
+              onPress={endSession}
+              activeOpacity={1}
+            >
+              <Text style={[styles.modalItemText, styles.redText]}>Закінчити зміну</Text>
+            </TouchableOpacity>
           </View>
         </ModalContent>
       </Modal>

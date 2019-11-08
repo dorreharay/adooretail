@@ -12,7 +12,7 @@ import EmployeesList from "./components/EmployeesList";
 
 import { setCurrentSession, setEmployees, setStartCash, } from '../../../../../reducers/UserReducer';
 
-function InputEmployees({ sliderRef }) {
+function InputEmployees({ navigation }) {
 
   const { employees, startCash, token, } = useSelector(state => ({ 
     employees: state.user.employees,
@@ -60,6 +60,8 @@ function InputEmployees({ sliderRef }) {
 
       navigation.navigate('SalesLayout')
 
+      sliderRef.current.scrollBy(-2)
+
       setTimeout(() => {
         setLoadingStatus(false)
         setCheckedEmployees([])
@@ -85,7 +87,7 @@ function InputEmployees({ sliderRef }) {
         <View style={{ width: 10, height: 50, marginTop: 45, }}></View>
       )}
 
-      <TouchableOpacity style={styles.backButton} onPress={() => sliderRef.current.scrollBy(-1)} activeOpacity={1}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputCash')} activeOpacity={1}>
         <Image style={{ width: 18, height: 18, transform: [{ rotate: '180deg' }] }} source={require('@images/erase.png')} fadeDuration={0}></Image>
       </TouchableOpacity>
 

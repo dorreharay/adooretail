@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { View } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
-import { setInitialSlide } from '../../reducers/UserReducer'
 import _ from 'lodash'
+
+import { setForceSlide, setEndOfSessionStatus } from '../../reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
 
@@ -22,21 +23,17 @@ function AppSessions(props){
   useEffect(() => {
     if(initialLoading) {
       if(_.isEmpty(currentSession)) {
-        if(_.isEmpty(currentAccount)) {
-
-          // goes to <NoAccount />
-          dispatch(setInitialSlide(0))
-        } else {
-
-          // goes to <Login />
-          dispatch(setInitialSlide(1))
-        }
+        // if(_.isEmpty(currentAccount)) {
+        //   dispatch(setForceSlide(0))
+        // } else {
+        //   dispatch(setForceSlide(1))
+        // }
         
         setTimeout(() => {
           if(initialLoadingVisibility) {
             changeInitialLoadingWrapperOpacity(false)
           }
-        }, 700)
+        }, 200)
       } else {
         setTimeout(() => {
           NavigationService.setTopLevelNavigator(navigatorRef.current)
@@ -66,10 +63,17 @@ function AppSessions(props){
       loading={initialLoadingVisibility}
       opacity={initialLoadingOpacity}
       source={require('@images/background-adv3.png')}
+      mainWrapper
     >
-      <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
-        {withProps}
-      </View>
+      <SharedBackground
+        loading={initialLoadingVisibility}
+        opacity={initialLoadingOpacity}
+        source={require('@images/background-adv3.png')}
+      >
+        <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
+          {withProps}
+        </View>
+      </SharedBackground>
     </SharedBackground>
   )
 }
