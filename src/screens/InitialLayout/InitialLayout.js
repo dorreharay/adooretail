@@ -35,7 +35,7 @@ function InitialLayout({ navigation, screenProps }) {
     <View style={styles.container}>
       <SharedBackground
         loading={false}
-        source={require('@images/background-adv3.png')}
+        source={require('@images/background-adv1.png')}
       >
         <View style={styles.slider}>
           <Swiper

@@ -81,7 +81,20 @@ const base = {
     width: '100%',
     height: '100%',
   },
-  modal: {
+  modalWrapper: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#00000044'
+  },
+  modalContainer: {
+    position: 'absolute',
+    top: 15,
+    right: 25,
+  },
+  modal: { 
     width: 350,
     height: 405,
     borderRadius: 10,

@@ -22,19 +22,30 @@ function AppSessions(props){
 
   useEffect(() => {
     if(initialLoading) {
+      console.log('------------->', currentAccount)
+
+      if(_.isEmpty(currentAccount)) {
+        setTimeout(() => {
+          NavigationService.setTopLevelNavigator(navigatorRef.current)
+          setTimeout(() => {
+            NavigationService.navigate('NoAccount')
+            setTimeout(() => {
+              changeInitialLoadingWrapperOpacity(false)
+            }, 350)
+          }, 110)
+        }, 100)
+
+        return
+      }
+
       if(_.isEmpty(currentSession)) {
-        // if(_.isEmpty(currentAccount)) {
-        //   dispatch(setForceSlide(0))
-        // } else {
-        //   dispatch(setForceSlide(1))
-        // }
-        
         setTimeout(() => {
           if(initialLoadingVisibility) {
             changeInitialLoadingWrapperOpacity(false)
           }
-        }, 200)
+        }, 300)
       } else {
+        console.log('----------------------------------------------------->')
         setTimeout(() => {
           NavigationService.setTopLevelNavigator(navigatorRef.current)
           setTimeout(() => {

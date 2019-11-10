@@ -1,7 +1,10 @@
-import React, { Component, useState, } from "react";
+import React, { Component, useState, useRef } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch, } from 'react-redux';
 import axios from 'axios';
+import moment from 'moment-timezone'
+import { useNetInfo } from "@react-native-community/netinfo";
+import Toast, {DURATION} from 'react-native-easy-toast'
 import styles from './styles'
 
 import { API_URL } from '../../../../../config/api';
@@ -14,13 +17,16 @@ import { setCurrentSession, setEmployees, setStartCash, } from '../../../../../r
 
 function InputEmployees({ navigation }) {
 
-  const { employees, startCash, token, } = useSelector(state => ({ 
-    employees: state.user.employees,
+  const currentAccount = useSelector(state => state.user.currentAccount)
+  const employees = useSelector(state => state.user.currentAccount.employees)
+  const { startCash, } = useSelector(state => ({ 
     startCash: state.user.startCash,
-    token: state.user.token,
   }))
 
+  const toast = useRef(null)
+
   const dispatch = useDispatch();
+  const netInfo = useNetInfo();
 
   const [checked, setCheckedEmployees] = useState([])
   const [loading, setLoadingStatus] = useState(false)
@@ -34,6 +40,8 @@ function InputEmployees({ navigation }) {
   }
 
   const handleProceed = async () => {
+    const { token, } = currentAccount
+
     if(checked.length === 0) {
       return
     }
@@ -43,24 +51,29 @@ function InputEmployees({ navigation }) {
     try {
       const selectedEmployees = employees.filter((item, index) => checked.includes(index)).map(item => item.name)
 
-      const newSessionObj = {
+      let newSessionObj = {
         startSum: startCash,
         employees: selectedEmployees,
         incasations: [],
       }
 
-      await axios.post(`${API_URL}/user/session/init/${token}`, newSessionObj)
+      if(netInfo.isConnected && netInfo.isInternetReachable) {
+        await axios.post(`${API_URL}/user/session/init/${token}`, newSessionObj)
 
-      const { data } = await axios.get(`${API_URL}/user/session/${token}`)
-      const currentSession = data.current_session;
+        const { data } = await axios.get(`${API_URL}/user/session/${token}`)
+        newSessionObj = data.current_session;
+      } else {
+        newSessionObj = {
+          ...newSessionObj,
+          startTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
+        }
+      }
 
-      dispatch(setCurrentSession(currentSession))
+      dispatch(setCurrentSession(newSessionObj))
       dispatch(setEmployees([]))
       dispatch(setStartCash(0))
 
       navigation.navigate('SalesLayout')
-
-      sliderRef.current.scrollBy(-2)
 
       setTimeout(() => {
         setLoadingStatus(false)
@@ -68,6 +81,7 @@ function InputEmployees({ navigation }) {
       }, 400)
 
     } catch (e) {
+      toast.current.show(e.message, DURATION.LENGTH_LONG)
       console.log(e.message)
       setLoadingStatus(false)
     }
@@ -92,6 +106,7 @@ function InputEmployees({ navigation }) {
       </TouchableOpacity>
 
       <LoginLoader active={loading} />
+      <Toast ref={toast}/>
     </View>
   )
 }

@@ -2,8 +2,8 @@ import React, { Component, useState, useEffect, useRef, } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Easing, Alert, } from "react-native";
 import axios from 'axios';
 import _ from 'lodash';
-import { useDispatch } from 'react-redux';
-import LinearGradient from 'react-native-linear-gradient';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNetInfo } from "@react-native-community/netinfo";
 import Ripple from 'react-native-material-ripple';
 import DeviceInfo from 'react-native-device-info';
 import Toast, {DURATION} from 'react-native-easy-toast'
@@ -15,11 +15,11 @@ import { loginKeyboardLayout } from '../../../../../helpers/keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
 
-import { setAuthToken, setCurrentSession, } from '../../../../../reducers/UserReducer'
+import { setCurrentSession, } from '../../../../../reducers/UserReducer'
 import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer'
 
 function Login(props) {
-  const { navigation, sliderRef, } = props;
+  const { navigation, screenProps, } = props;
 
   const initialPassword = [
     { entered: false, },
@@ -30,6 +30,12 @@ function Login(props) {
     { entered: false, },
     { entered: false, },
   ]
+  
+  const dispatch = useDispatch();
+  const netInfo = useNetInfo();
+
+  const currentAccount = useSelector(state => state.user.currentAccount)
+  const currentSession = useSelector(state => state.user.currentSession)
 
   const toast = useRef(null)
   const [passwordArray, setPasswordArray] = useState(initialPassword)
@@ -38,8 +44,6 @@ function Login(props) {
   const [currentInput, setCurrentInput] = useState('')
 
   const [animatedValue] = useState(new Animated.Value(0))
-
-  const dispatch = useDispatch();
 
   const resetState = () => {
     setPasswordArray(initialPassword)
@@ -60,42 +64,50 @@ function Login(props) {
     ]).start();
   }
 
-  const validateDeviceID = async (deviceId) => {
+  const validateDeviceID = async (enteredPinCode) => {
+    const { registeredDeviceIds, pinCode: validPinCode, token, } = currentAccount
+
     setLoadingStatus(true)
 
     try {
-      const { data } = await axios.get(`${API_URL}/user/token/${deviceId}`)
-
-      if (data.token.length === 0) 
-        throw new Error('Device ID is incorrect')
+      if(enteredPinCode !== validPinCode) {
+        throw new Error('Не дійсний пін код')
+      }
       
-      const token = data.token[0]._id;
-      const serverIds = data.deviceUniqueId[0].deviceUniqueId;      
+      const deviceId = await DeviceInfo.getUniqueId();
 
-      const uniqueId = await DeviceInfo.getUniqueId();
-
-      // if (!serverIds.includes(uniqueId))
-      //   throw new Error('Device ID is incorrect')
+      if (!registeredDeviceIds.includes(deviceId)) {
+        throw new Error('Не правильний Device Id')
+      }
       
-      const currentSession = data.current_session[0].current_session;
-      
-      dispatch(setAuthToken(token))
+      if(netInfo.isConnected && netInfo.isInternetReachable) {
+        const { data } = await axios.get(`${API_URL}/user/session/${token}`)
 
-      dispatch(setCurrentSession(currentSession))
-      // dispatch(setEndOfSessionStatus(false))
+        if(!!data.current_session) {
+          navigation.navigate('SalesLayout')
+        } else {
+          navigation.navigate('InputCash')
+        }
 
-      if (_.isEmpty(currentSession)) {
-        navigation.navigate('InputCash')
+        dispatch(setCurrentSession(data.current_session))
+
+        return
       } else {
-        navigation.navigate('SalesLayout')
+        if (_.isEmpty(currentSession)) {
+          navigation.navigate('InputCash')
+        } else {
+          navigation.navigate('SalesLayout')
+        }
       }
 
       resetState()
     } catch (e) {
       toast.current.show(e.message, DURATION.LENGTH_LONG)
-      setLoadingStatus(false)
       handleAnimation()
       resetState()
+    } finally {
+      setLoadingStatus(false)
+      dispatch(setEndOfSessionStatus(false))
     }
   }
 

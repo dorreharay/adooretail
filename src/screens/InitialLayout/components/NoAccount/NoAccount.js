@@ -14,7 +14,7 @@ const successWhite = require('@images/success-white.png')
 const failWhite = require('@images/fail-white.png')
 
 function NoAccount(props) {
-  const { sliderRef, } = props
+  const { navigation, } = props
 
   const toast = useRef(null)
 
@@ -34,16 +34,6 @@ function NoAccount(props) {
     if(accounts.every(item => _.isEmpty(item)))
       setConfigureAccountState(true)
   }, [accounts])
-
-  useEffect(() => {
-    if(_.isEmpty(currentAccount)) {
-      setConfigureAccountState(false)
-    } else {
-      if(sliderRef.current) {
-        sliderRef.current.scrollBy(1)
-      }
-    }
-  }, [currentAccount])
 
   const addAccount = () => {
     setConfigureAccountState(true)
@@ -67,7 +57,8 @@ function NoAccount(props) {
         },
       ).start()
       setSuccessVisibility('success')
-      setTimeout(() => sliderRef.current.scrollBy(1), 1500)
+
+      setTimeout(() => navigation.navigate('Login'), 1000)
     }, 1000)
   }
 
@@ -130,7 +121,6 @@ function NoAccount(props) {
             <ConfigureAccount
               loading={loading}
               setLoadingStatus={setLoadingStatus}
-              sliderRef={sliderRef}
               invokeSuccessAnimation={invokeSuccessAnimation}
               invokeFailAnimation={invokeFailAnimation}
               setSuccessVisibility={setSuccessVisibility}
@@ -144,6 +134,7 @@ function NoAccount(props) {
               submitAccount={invokeSuccessAnimation}
               addAccount={addAccount}
               currentAccount={currentAccount}
+              navigation={navigation}
             />
           )}
         </Animated.View>

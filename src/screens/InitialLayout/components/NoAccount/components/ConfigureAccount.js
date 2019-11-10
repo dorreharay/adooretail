@@ -7,7 +7,7 @@ import { RNCamera } from 'react-native-camera';
 import styles from '../styles';
 
 function ConfigureAccount(props) {
-  const { setLoadingStatus, sliderRef, } = props
+  const { setLoadingStatus, navigation, } = props
 
   const inputRef = useRef(null)
   const [cameraVisible, setCameraVisibility] = useState(true)
@@ -57,7 +57,7 @@ function ConfigureAccount(props) {
                 buttonNegative: 'Відхилити',
               }}
               onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                setTimeout(() => sliderRef.current.snapToNext(), 250)
+                // setTimeout(() => navigation.navigate('Login'), 250)
               }}
             />
           </View>

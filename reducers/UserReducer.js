@@ -11,7 +11,38 @@ const initialState = {
   employees: [],
   initialLoading: true,
   accounts: [
-    { id: 1, businessName: 'Poilka Coffee', img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128', },
+    {
+      id: 1,
+      token: '5cb1ed89c6bf28192c152435',
+      businessName: 'Poilka Coffee',
+      img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
+      pinCode: '1111222',
+      registeredDeviceIds: [
+        '888f33dcebf0800b'
+      ],
+      employees : [ 
+        {
+            name : 'Ігор',
+            icon : '',
+        }, 
+        {
+            name : 'Іра',
+            icon : '',
+        }, 
+        {
+            name : 'Наташа',
+            icon : '',
+        }, 
+        {
+            name : 'Андрій',
+            icon : '',
+        }, 
+        {
+            name : 'Льоша',
+            icon : '',
+        }
+    ],
+    },
     {},
     {}
   ],

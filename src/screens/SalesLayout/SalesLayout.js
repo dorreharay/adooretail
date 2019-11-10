@@ -20,12 +20,14 @@ function SalesLayout({ navigation }) {
   const [refreshedProducts, setRefreshedProducts] = useState([])
   const products = useSelector(state => state.orders.products)
   const layout = useSelector(state => state.orders.layout)
-  const token = useSelector(state => state.user.token)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const currentSession = useSelector(state => state.user.currentSession)
 
   const dispatch = useDispatch()
 
   const loadProducts = async () => {
+    const { token } = currentAccount
+
     try {
       const { data } = await axios.get(`${API_URL}/user/products/${token}`)
       
@@ -69,7 +71,7 @@ function SalesLayout({ navigation }) {
     })
 
     return () => {}
-  }, [token, currentSession, layout])
+  }, [currentAccount.token, currentSession, layout])
 
   const validateSession = () => {
     const sessionStartTime = moment(currentSession.startTime).tz('Europe/Kiev')

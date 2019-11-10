@@ -12,6 +12,7 @@ import { PROBA_REGULAR } from '@fonts'
 import SharedButton from '@shared/SharedButton';
 
 import Products from './Products/Products'
+import Panel from './Panel/Panel'
 
 import { setLayout } from '../../../../../../../reducers/OrdersReducer'
 import { setEndOfSessionStatus } from '../../../../../../../reducers/TempReducer';
@@ -21,7 +22,12 @@ const offlineIcon = require('@images/status_offline.png')
 const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
-  const { products, loadProducts, receipts, setReceipts, selectedInstance, navigation, } = props;
+  const { 
+    products, loadProducts,
+    receipts, setReceipts, 
+    selectedInstance, navigation, 
+    openMenu, 
+  } = props;
 
   const toast = useRef(null)
   const inputRef = useRef(null)
@@ -31,15 +37,7 @@ function RightSide(props) {
   const layout = useSelector(state => state.orders.layout)
   const dispatch = useDispatch()
 
-  const [menuButtons] = useState([
-    { name: 'Історія замовлень', onPress: () => {} },
-    { name: 'Пристрої', onPress: () => {} },
-    { name: 'Транзакції', onPress: () => {} },
-    { name: 'Профіль', onPress: () => {} },
-    { name: 'Інкасації', onPress: () => {} },
-  ])
   const [searchTerm, setSearchTerm] = useState('')
-  const [menuVisible, setMenuVisibility] = useState(false)
 
   const loadProductsThrottled = useRef(_.throttle(() => loadProducts(), 5000))
 
@@ -72,17 +70,6 @@ function RightSide(props) {
     }
 
     dispatch(setLayout(newLayout))
-  }
-
-  const openMenu = () => setMenuVisibility(true)
-
-  const closeMenu = () => setMenuVisibility(false)
-
-  const endSession = () => {
-    closeMenu()
-    dispatch(setEndOfSessionStatus(true))
-
-    navigation.navigate('InputCash')
   }
 
   return (
@@ -136,7 +123,7 @@ function RightSide(props) {
           onPress={openMenu}
           buttonSizes={{ width: styles.menu.width, height: styles.menu.height, }}
           iconSizes={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
-          source={require('@images/menu.png')} scale={0.8}
+          source={require('@images/menu.png')} scale={0.9}
           backgroundColor={'#FFFFFF'} onStart
         />
       </View>
@@ -147,45 +134,6 @@ function RightSide(props) {
         selectedInstance={selectedInstance}
         searchTerm={searchTerm}
       />
-      <Modal
-        visible={menuVisible}
-        modalAnimation={new FadeAnimation()}
-        animationDuration={0}
-        onSwipeOut={closeMenu}
-        onTouchOutside={closeMenu}
-        modalStyle={{ position: 'relative', bottom: '32.2%', left: '33.35%', backgroundColor: '#FFFFFF00' }}
-        containerStyles={{ backgroundColor: '#FFFFFF00' }}
-      >
-        <ModalContent style={{ backgroundColor: '#FFFFFF00' }}>
-            <SharedButton
-              onPress={closeMenu}
-              buttonSizes={styles.closeModal}
-              iconSizes={{ width: styles.menu.width - 28, height: styles.menu.height - 28, }}
-              source={require('@images/x_icon.png')}
-              scale={0.9} backgroundColor={'#FFFFFF'} onStart
-            />
-          <View style={styles.modal}>
-            {menuButtons.map((button, index) => (
-              <TouchableOpacity 
-                style={[styles.modalItem, index === 0 && styles.withTopBorderRadius]}
-                onPress={closeMenu}
-                activeOpacity={1}
-                key={index}
-              >
-                <Text style={styles.modalItemText}>{button.name}</Text>
-              </TouchableOpacity>
-            ))}
-
-            <TouchableOpacity
-              style={[styles.modalItemRed, styles.withBottomBorderRadius]}
-              onPress={endSession}
-              activeOpacity={1}
-            >
-              <Text style={[styles.modalItemText, styles.redText]}>Закінчити зміну</Text>
-            </TouchableOpacity>
-          </View>
-        </ModalContent>
-      </Modal>
       <Toast
         ref={toast}
         opacity={1}

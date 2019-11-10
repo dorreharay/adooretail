@@ -2,33 +2,15 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation'
 
-import InitialLayout from '../src/screens/InitialLayout/InitialLayout'
+import NoAccount from '../src/screens/InitialLayout/components/NoAccount/NoAccount'
 import Login from '../src/screens/InitialLayout/components/Login/Login'
 import InputCash from '../src/screens/InitialLayout/components/InputCash/InputCash';
 import InputEmployees from '../src/screens/InitialLayout/components/InputEmployees/InputEmployees';
 import SalesLayout from '../src/screens/SalesLayout/SalesLayout'
 
-const defaultTabBarOptions = {
-  inactiveTintColor: '#8e8e93',
-  style: {
-    height: 60,
-    backgroundColor: '#FFFFFF',
-    borderTopWidth: 0.5,
-    borderTopColor: '#F1F1F1',
-  },
-  labelStyle: {
-    fontSize: 12,
-    // fontFamily: 'Circe-Regular',
-  },
-  tabStyle: {
-    alignItem: 'center',
-    flexDirection: 'column',
-  },
-}
-
 const materialNavigation = createMaterialTopTabNavigator (
   {
-    // InitialLayout: { screen: InitialLayout },
+    NoAccount: { screen: NoAccount },
     Login: { screen: Login, },
     InputCash: { screen: InputCash, },
     InputEmployee: { screen: InputEmployees },

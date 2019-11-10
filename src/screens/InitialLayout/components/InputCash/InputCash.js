@@ -15,7 +15,7 @@ import LoginLoader from '@shared/LoginLoader';
 function InputCash(props) {
   const { navigation, sliderRef, } = props;
 
-  const token = useSelector(state => state.user.token)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const session_id = useSelector(state => state.user.currentSession._id)
   const endOfSession = useSelector(state => state.temp.endOfSession)
   const employees = useSelector(state => state.user.employees)
@@ -60,6 +60,8 @@ function InputCash(props) {
   }
 
   const handleProceed = async () => {
+    const { token } = currentAccount
+
     if (endOfSession) {
       try {
         setLoadingStatus(true)
@@ -82,11 +84,6 @@ function InputCash(props) {
     try {
       setLoadingStatus(true)
 
-      const { data } = await axios.get(`${API_URL}/user/employees/${token}`)
-
-      const employees = data.employees;
-
-      dispatch(setEmployees(employees))
       dispatch(setStartCash(currentInput))
 
       navigation.navigate('InputEmployee')
