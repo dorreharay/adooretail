@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, } from 'react'
 import { View } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
 import _ from 'lodash'
+import SplashScreen from 'react-native-splash-screen'
 
 import { setForceSlide, setEndOfSessionStatus } from '../../reducers/TempReducer'
 
@@ -22,7 +23,7 @@ function AppSessions(props){
 
   useEffect(() => {
     if(initialLoading) {
-      console.log('------------->', currentAccount)
+      dispatch(setEndOfSessionStatus(false))
 
       if(_.isEmpty(currentAccount)) {
         setTimeout(() => {
@@ -45,13 +46,13 @@ function AppSessions(props){
           }
         }, 300)
       } else {
-        console.log('----------------------------------------------------->')
         setTimeout(() => {
           NavigationService.setTopLevelNavigator(navigatorRef.current)
           setTimeout(() => {
             NavigationService.navigate('SalesLayout')
             setTimeout(() => {
               changeInitialLoadingWrapperOpacity(false)
+              SplashScreen.hide();
             }, 250)
           }, 110)
         }, 100)

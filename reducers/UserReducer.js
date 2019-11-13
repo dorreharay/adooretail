@@ -6,7 +6,9 @@ const SET_EMPLOYEES = 'SET_EMPLOYEES';
 
 const initialState = {
   token: '',
-  currentSession: {},
+  currentSession: {
+    
+  },
   startCash: 0,
   employees: [],
   initialLoading: true,
@@ -18,7 +20,8 @@ const initialState = {
       img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
       pinCode: '1111222',
       registeredDeviceIds: [
-        '888f33dcebf0800b'
+        '888f33dcebf0800b',
+        '67CA2667-D89D-4951-8112-7EA50AF8DA94',
       ],
       employees : [ 
         {

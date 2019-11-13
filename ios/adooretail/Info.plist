@@ -66,6 +66,7 @@
 		<string>probapro_light.ttf</string>
 		<string>probapro_medium.ttf</string>
 		<string>probapro_regular.ttf</string>
+		<string>cerapro_regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

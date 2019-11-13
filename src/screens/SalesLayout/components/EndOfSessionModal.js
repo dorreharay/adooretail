@@ -33,7 +33,7 @@ function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
 				slideFrom: 'bottom',
 				animationDuration: 30,
 				useNativeDriver: true,
-			})}
+      })}
 		>
       <ModalContent>
         <View style={styles.modal}>

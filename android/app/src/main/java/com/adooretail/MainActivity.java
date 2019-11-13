@@ -1,7 +1,8 @@
 package com.adooretail;
 import android.os.Bundle;
 import android.view.View;
-
+import org.devio.rn.splashscreen.SplashScreen;
+import com.cboy.rn.splashscreen.SplashScreen;
 
 import com.facebook.react.ReactActivity;
 
@@ -11,6 +12,7 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideNavigationBar();
+        SplashScreen.show(this);
     }
 
   @Override

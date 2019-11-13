@@ -76,6 +76,8 @@ function Login(props) {
       
       const deviceId = await DeviceInfo.getUniqueId();
 
+      console.log(deviceId)
+
       if (!registeredDeviceIds.includes(deviceId)) {
         throw new Error('Не правильний Device Id')
       }
