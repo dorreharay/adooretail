@@ -60,18 +60,6 @@ const base = {
     textAlign: 'center',
     textAlignVertical :'center',
   },
-  backButton: {
-    position: 'absolute',
-    top: 30,
-    right: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#D2D2D233',
-    transform: [{ rotate: '180deg'}]
-  }
 };
  
 const styles = createStyles(

@@ -25,7 +25,7 @@ const base = {
   },
   backButton: {
     position: 'absolute',
-    top: 30,
+    top: '45%',
     left: 30,
     alignItems: 'center',
     justifyContent: 'center',
