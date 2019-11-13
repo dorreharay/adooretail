@@ -1,6 +1,8 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
+import { deviceWidth, deviceHeight } from '@dimensions';
+
 const toolsBarHeight = 45
 
 const base = {
@@ -41,12 +43,14 @@ const base = {
     alignItems: 'center',
     height: toolsBarHeight,
     paddingHorizontal: 20,
+    paddingTop: Platform.OS === 'ios' ? 2 : 0,
     marginRight: 10,
     borderRadius: 3,
     backgroundColor: '#FFFFFF',
   },
   connectionText: {
-    marginBottom: 2.5,
+    marginTop: Platform.OS === 'ios' ? 1 : 0,
+    paddingBottom: Platform.OS === 'android' ? 2.5 : 0,
     fontSize: 16,
     fontFamily: PROBA_REGULAR,
   },
@@ -141,7 +145,7 @@ const base = {
     height: 45,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
-  }
+  },
 };
  
 const styles = createStyles(

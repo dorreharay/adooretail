@@ -8,16 +8,9 @@ function SharedButton(props) {
     text, rotateOnPress, loadAgain, textStyles, key,
   } = props;
 
-  const timerToClearSomewhere = useRef(false)
-
   const [animatePress] = useState(new Animated.Value(1))
   const [updateIconAnimation] = useState(new Animated.Value(0))
   const [pressed, setPressedState] = useState(false)
-
-  function handleLongPress() {
-    onPress(true)
-    timerToClearSomewhere.current = setTimeout(handleLongPress, 100)
-  }
 
   const animateIn = () => {
     Animated.timing(animatePress, {
@@ -75,7 +68,6 @@ function SharedButton(props) {
       <TouchableWithoutFeedback
         onPressIn={animateIn}
         onPressOut={animateOut}
-        onLongPress={handleLongPress}
       >
         <Animated.View style={{
           ...styles.button,

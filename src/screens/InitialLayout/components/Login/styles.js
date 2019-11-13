@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, } from '@fonts'
+import { COMFORTAA_LIGHT, PROBA_LIGHT, FUTURA_LIGHT, } from '@fonts'
 
 const base = {
   container: {
@@ -37,7 +37,7 @@ const base = {
   loginCaption: {
     color: '#F7F7F7',
     fontSize: 13,
-    fontFamily: FUTURA_LIGHT,
+    fontFamily: PROBA_LIGHT,
     marginTop: 45,
   },
   lsNumpad: {

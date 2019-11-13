@@ -7,16 +7,7 @@ import SharedButton from '@shared/SharedButton';
 
 
 function Panel(props) {
-  const { endSession, modalOpacity, closeMenu, openMenu, } = props
-
-  const [menuVisible, setMenuVisibility] = useState(false)
-
-  const [menuButtons] = useState([
-    { name: 'Історія замовлень', onPress: () => {} },
-    { name: 'Пристрої', onPress: () => {} },
-    { name: 'Змінити аккаунт', onPress: () => {} },
-    { name: 'Інкасації', onPress: () => {} },
-  ])
+  const { endSession, modalOpacity, closeMenu, menuButtons = [], } = props
 
   return (
     <Animated.View
@@ -35,7 +26,7 @@ function Panel(props) {
           {menuButtons.map((button, index) => (
             <TouchableOpacity 
               style={[styles.modalItem, index === 0 && styles.withTopBorderRadius]}
-              onPress={closeMenu}
+              onPress={button.onPress}
               activeOpacity={1}
               key={index}
             >

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text, Animated, TouchableOpacity } from 'react-native'
+import { View, Image, StyleSheet, Text, Animated, Platform, } from 'react-native'
 import FastImage from 'react-native-fast-image'
 
 import LoginLoader from '@shared/LoginLoader';
@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: 110,
-    height: 110,
+    width: 70,
+    height: 70,
     paddingTop: 22,
     paddingLeft: 20,
-    borderBottomRightRadius: 1000,
-    backgroundColor: '#FFFFFF0D',
+    borderBottomRightRadius: 500,
+    backgroundColor: Platform.OS !== 'ios' ? '#FFFFFF0D' : '#FFFFFF00',
     zIndex: 50,
   },
   logo: {
