@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, TextInput, Alert, Animated, Easing, TouchableOpacity, } from 'react-native'
 import Modal, { FadeAnimation, ModalContent, } from 'react-native-modals';
-import styles from '../styles'
+import styles from '../../styles'
 
-import SharedButton from '@shared/SharedButton';
+import SharedButton from './node_modules/@shared/SharedButton';
 
 
 function Panel(props) {
@@ -19,7 +19,7 @@ function Panel(props) {
           onPress={closeMenu}
           buttonSizes={styles.closeModal}
           iconSizes={{ width: styles.menu.width - 24, height: styles.menu.height - 27,  }}
-          source={require('@images/menu.png')}
+          source={require('./node_modules/@images/menu.png')}
           scale={0.9} backgroundColor={'#FFFFFF'} onStart
         />
         <View style={styles.modal}>

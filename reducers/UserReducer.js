@@ -1,14 +1,13 @@
+import moment from 'moment-timezone'
+
 const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
-const SET_CURRENT_SESSION = 'SET_CURRENT_SESSION';
+const UPDATE_CURRENT_SESSIONS = 'UPDATE_CURRENT_SESSIONS';
 const SET_START_CASH = 'SET_START_CASH';
 const SET_EMPLOYEES = 'SET_EMPLOYEES';
 
 const initialState = {
   token: '',
-  currentSession: {
-    
-  },
   startCash: 0,
   employees: [],
   initialLoading: true,
@@ -47,8 +46,9 @@ const initialState = {
     ],
     },
     {},
-    {}
+    {},
   ],
+  localSessions: [],
   currentAccount: {},
 };
 
@@ -66,9 +66,9 @@ export function setAuthToken(payload) {
   }
 }
 
-export function setCurrentSession(payload) {
+export function updateCurrentSession(payload) {
   return {
-    type: SET_CURRENT_SESSION,
+    type: UPDATE_CURRENT_SESSIONS,
     payload
   }
 }
@@ -96,10 +96,38 @@ const ACTION_HANDLERS = {
   [SET_AUTH_TOKEN]: (state, action) => {
     return {...state, token: action.payload}
   },
-  [SET_CURRENT_SESSION]: (state, action) => {
-    const currentSession = !action.payload ? {} : action.payload
+  [UPDATE_CURRENT_SESSIONS]: (state, action) => {
+    const { status, newSessionProp } = action.payload
+    const { localSessions } = state
 
-    return {...state, currentSession}
+    let newSession = {}, updatedSessions = []
+
+    if(status === 'new') {
+      newSession = {
+        ...newSessionProp,
+        startTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
+      }
+
+      updatedSessions = [...localSessions, newSession]
+    } 
+    
+    if(status === 'end') {
+      const lastIndex = localSessions.length - 1
+      const currentSession = localSessions[lastIndex]
+
+      newSession = {
+        ...currentSession,
+        endTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
+      }
+
+      updatedSessions = localSessions.map((localSession, localIndex) => {
+        if(localIndex === localSessions.length - 1) { 
+          return newSession
+        }
+      })
+    }
+
+    return {...state, localSessions: updatedSessions,}
   },
   [SET_START_CASH]: (state, action) => {
     return {...state, startCash: action.payload}

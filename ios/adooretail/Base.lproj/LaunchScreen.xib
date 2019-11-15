@@ -11,18 +11,20 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleAspectFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="913" height="1032"/>
+        <view contentMode="center" semanticContentAttribute="playback" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="1004"/>
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" semanticContentAttribute="playback" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background-adv.png" highlightedImage="background-adv.png" id="Hx2-Zj-zLK" customClass="FFFastImageView">
-                    <rect key="frame" x="0.0" y="-12" width="913" height="1055"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottomRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background-adv.png" highlightedImage="background-adv.png" highlighted="YES" id="wzz-g8-BIk">
+                    <rect key="frame" x="0.0" y="-28" width="1469" height="1032"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="674.45095168374814" y="575.390625"/>
+            <point key="canvasLocation" x="644.8023426061493" y="441.796875"/>
         </view>
     </objects>
     <resources>

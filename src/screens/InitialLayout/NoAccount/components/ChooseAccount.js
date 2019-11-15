@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import FastImage from "react-native-fast-image";
 import styles from '../styles';
 
-import { changeAccount } from '../../../../../../reducers/UserReducer'
+import { changeAccount } from '../../../../../reducers/UserReducer'
 
 function ChooseAccount(props) {
   const {

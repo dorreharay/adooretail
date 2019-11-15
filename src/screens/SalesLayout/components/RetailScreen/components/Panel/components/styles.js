@@ -81,8 +81,7 @@ const base = {
     paddingHorizontal: 30,
   },
   receiptsListItem: {
-    paddingVertical: 40,
-    paddingBottom: 60,
+    paddingVertical: 30,
     width: '100%',
     borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
@@ -93,14 +92,13 @@ const base = {
   },
   receiptsListItemBlockTextMain: {
     marginRight: 15,
-    marginBottom: 2,
     color: '#000000',
     fontSize: 18,
     fontFamily: PROBA_REGULAR,
   },
   receiptsListItemBlockTextSecondary: {
     color: '#000000',
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: PROBA_REGULAR,
   }
 };

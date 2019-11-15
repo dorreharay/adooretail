@@ -11,7 +11,7 @@ function AppLoading({ children, }){
   useEffect(() => {
     Orientation.lockToLandscape();
 
-    return () => dispatch(setEndOfSessionStatus(false))
+    // return () => dispatch(setEndOfSessionStatus(false))
   }, [])
 
   const changeInitialLoadingWrapperOpacity = (visible) => {

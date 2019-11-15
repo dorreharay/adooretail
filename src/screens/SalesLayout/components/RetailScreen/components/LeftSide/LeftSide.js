@@ -173,16 +173,6 @@ function LeftSide(props) {
           <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
         </LinearGradient>
       </SharedButton>
-
-      <PaymentModal
-        paymentModalVisible={paymentModalVisible}
-        changePaymentModalState={changePaymentModalState}
-        setPaymentModalVisible={setPaymentModalVisible}
-        paymentNotice={paymentNotice}
-        setPaymentNotice={setPaymentNotice}
-        initialReceiptSum={receiptSum}
-        setReceiptInstance={setReceiptInstance}
-      />
     </View>
   )
 }

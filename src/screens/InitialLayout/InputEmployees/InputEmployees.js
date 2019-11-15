@@ -7,13 +7,13 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import Toast, {DURATION} from 'react-native-easy-toast'
 import styles from './styles'
 
-import { API_URL } from '../../../../../config/api';
+import { API_URL } from '../../../../config/api';
 
 import LoginLoader from '@shared/LoginLoader';
 
 import EmployeesList from "./components/EmployeesList";
 
-import { setCurrentSession, setEmployees, setStartCash, } from '../../../../../reducers/UserReducer';
+import { updateCurrentSession, setEmployees, setStartCash, } from '../../../../reducers/UserReducer';
 
 function InputEmployees({ navigation }) {
 
@@ -51,25 +51,24 @@ function InputEmployees({ navigation }) {
     try {
       const selectedEmployees = employees.filter((item, index) => checked.includes(index)).map(item => item.name)
 
-      let newSessionObj = {
+      let newSession = {
         startSum: startCash,
         employees: selectedEmployees,
         incasations: [],
       }
 
-      if(netInfo.isConnected && netInfo.isInternetReachable) {
-        await axios.post(`${API_URL}/user/session/init/${token}`, newSessionObj)
+      // if(netInfo.isConnected && netInfo.isInternetReachable) {
+      //   await axios.post(`${API_URL}/user/session/init/${token}`, newSessionObj)
 
-        const { data } = await axios.get(`${API_URL}/user/session/${token}`)
-        newSessionObj = data.current_session;
-      } else {
-        newSessionObj = {
-          ...newSessionObj,
-          startTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
-        }
-      }
+      //   const { data } = await axios.get(`${API_URL}/user/session/${token}`)
+      //   newSessionObj = data.current_session;
+      // } else {
+      //   newSessionObj = {
+      //     ...newSessionObj,
+      //   }
+      // }
 
-      dispatch(setCurrentSession(newSessionObj))
+      dispatch(updateCurrentSession({ status: 'new', newSessionProp: newSession }))
       dispatch(setEmployees([]))
       dispatch(setStartCash(0))
 

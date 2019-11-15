@@ -8,6 +8,7 @@ moment.locale('uk');
 
 import { API_URL } from '@api'
 import { PROBA_REGULAR } from '@fonts'
+import { currentSessionSelector } from '@selectors'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
 import EndOfSessionModal from './components/EndOfSessionModal'
@@ -21,7 +22,7 @@ function SalesLayout({ navigation }) {
   const products = useSelector(state => state.orders.products)
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
-  const currentSession = useSelector(state => state.user.currentSession)
+  const currentSession = useSelector(currentSessionSelector)
 
   const dispatch = useDispatch()
 
@@ -71,12 +72,14 @@ function SalesLayout({ navigation }) {
     })
 
     return () => {}
-  }, [currentAccount.token, currentSession, layout])
+  }, [currentAccount.token, layout])
 
   const validateSession = () => {
     const sessionStartTime = moment(currentSession.startTime).tz('Europe/Kiev')
     const startOfDay = moment(Date.now()).tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
     const endOfDay = moment(Date.now()).tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
+
+    console.log(currentSession)
 
     const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
 

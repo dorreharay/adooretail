@@ -4,6 +4,7 @@ import { useSelector, useDispatch, } from 'react-redux';
 import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen'
 
+import { currentSessionSelector } from '@selectors'
 import { setForceSlide, setEndOfSessionStatus } from '../../reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
@@ -17,13 +18,13 @@ function AppSessions(props){
 
   const dispatch = useDispatch()
 
-  const initialLoading = useSelector(state => state.user.initialLoading)
-  const currentSession = useSelector(state => state.user.currentSession)
+  const currentSession = useSelector(currentSessionSelector)
+
   const currentAccount = useSelector(state => state.user.currentAccount)
 
   useEffect(() => {
-    if(initialLoading) {
-      dispatch(setEndOfSessionStatus(false))
+    if(initialLoadingVisibility) {
+      console.log('initialLoadingOpacity', initialLoadingOpacity)
 
       if(_.isEmpty(currentAccount)) {
         setTimeout(() => {
@@ -32,6 +33,7 @@ function AppSessions(props){
             NavigationService.navigate('NoAccount')
             setTimeout(() => {
               changeInitialLoadingWrapperOpacity(false)
+              SplashScreen.hide();
             }, 350)
           }, 110)
         }, 100)
@@ -39,10 +41,12 @@ function AppSessions(props){
         return
       }
 
-      if(_.isEmpty(currentSession)) {
+      if(currentSession.endTime) {
+        // dispatch(setEndOfSessionStatus(false))
         setTimeout(() => {
           if(initialLoadingVisibility) {
             changeInitialLoadingWrapperOpacity(false)
+            SplashScreen.hide();
           }
         }, 300)
       } else {
@@ -58,7 +62,7 @@ function AppSessions(props){
         }, 100)
       }
     }
-  }, [navigatorRef, initialLoading, currentSession, currentAccount])
+  }, [navigatorRef, currentSession, initialLoadingVisibility, currentAccount])
 
   const screenProps = {
     initialLoadingVisibility,

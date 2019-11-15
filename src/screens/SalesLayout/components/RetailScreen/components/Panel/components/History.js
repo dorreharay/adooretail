@@ -57,7 +57,7 @@ function History() {
                 onPress={() => setExpandedIndex(expandedIndex === index ? false : index)}
                 activeOpacity={1}
               >
-                <View style={{ width: '100%', flexDirection: 'row' }}>
+                <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', }}>
                   <View style={styles.receiptsListItemBlock}>
                     <Text style={styles.receiptsListItemBlockTextMain}>Час:</Text>
                     <Text style={styles.receiptsListItemBlockTextSecondary}>15:31 </Text>
@@ -70,7 +70,7 @@ function History() {
                     <Text style={styles.receiptsListItemBlockTextMain}>К-сть товарів у чеку:</Text>
                     <Text style={styles.receiptsListItemBlockTextSecondary}>4 шт</Text>
                   </View>
-                  <FastImage style={{ width: 10, height: 20, transform: [{ rotate: '270deg' }] }} source={require('@images/back_thin.png')} />
+                  <FastImage style={{ width: 7, height: 14, transform: [{ rotate: expandedIndex === index ? '40deg' : '270deg' }] }} source={require('@images/back_thin.png')} />
                 </View>
                 {/* <View style={{ width: '100%', flexDirection: 'row',  }}>
                   <FastImage style={{ width: 10, height: 20, transform: [{ rotate: '270deg' }] }} source={require('@images/back_thin.png')} />

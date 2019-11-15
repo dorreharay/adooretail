@@ -10,13 +10,14 @@ import Toast, {DURATION} from 'react-native-easy-toast'
 import Svg, { Circle } from 'react-native-svg';
 import styles from './styles';
 
-import { API_URL } from '../../../../../config/api';
-import { loginKeyboardLayout } from '../../../../../helpers/keyboards'
+import { API_URL } from '@api';
+import { currentSessionSelector } from '@selectors'
+import { loginKeyboardLayout } from '../../../../helpers/keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
 
-import { setCurrentSession, } from '../../../../../reducers/UserReducer'
-import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer'
+import { setCurrentSession, } from '../../../../reducers/UserReducer'
+import { setEndOfSessionStatus } from '../../../../reducers/TempReducer'
 
 function Login(props) {
   const { navigation, screenProps, } = props;
@@ -35,7 +36,7 @@ function Login(props) {
   const netInfo = useNetInfo();
 
   const currentAccount = useSelector(state => state.user.currentAccount)
-  const currentSession = useSelector(state => state.user.currentSession)
+  const currentSession = useSelector(currentSessionSelector)
 
   const toast = useRef(null)
   const [passwordArray, setPasswordArray] = useState(initialPassword)
@@ -95,7 +96,7 @@ function Login(props) {
 
         return
       } else {
-        if (_.isEmpty(currentSession)) {
+        if (currentSession.endTime) {
           navigation.navigate('InputCash')
         } else {
           navigation.navigate('SalesLayout')

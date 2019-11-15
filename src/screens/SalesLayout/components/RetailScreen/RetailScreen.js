@@ -11,6 +11,7 @@ import PanelInstance from './components/RightSide/Panel/components/PanelInstance
 
 import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer';
 import History from './components/RightSide/Panel/components/History';
+import PaymentModal from './components/LeftSide/components/PaymentModal';
 
 function RetailScreen(props) {
   const { products, loadProducts, navigation, } = props;

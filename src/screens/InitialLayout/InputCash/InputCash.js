@@ -5,10 +5,10 @@ import axios from 'axios';
 import Ripple from 'react-native-material-ripple';
 import styles from './styles'
 
-import { API_URL } from '../../../../../config/api';
-import { cashKeyboardLayout } from '../../../../../helpers/keyboards'
-import { setEmployees, setStartCash, setCurrentSession } from '../../../../../reducers/UserReducer'
-import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer'
+import { API_URL } from '../../../../config/api';
+import { cashKeyboardLayout } from '../../../../helpers/keyboards'
+import { setEmployees, setStartCash, updateCurrentSession } from '../../../../reducers/UserReducer'
+import { setEndOfSessionStatus } from '../../../../reducers/TempReducer'
 
 import LoginLoader from '@shared/LoginLoader';
 
@@ -16,7 +16,6 @@ function InputCash(props) {
   const { navigation, sliderRef, } = props;
 
   const currentAccount = useSelector(state => state.user.currentAccount)
-  const session_id = useSelector(state => state.user.currentSession._id)
   const endOfSession = useSelector(state => state.temp.endOfSession)
   const employees = useSelector(state => state.user.employees)
   const startCash = useSelector(state => state.user.startCash)
@@ -66,10 +65,10 @@ function InputCash(props) {
       try {
         setLoadingStatus(true)
 
-        await axios.post(`${API_URL}/user/session/terminate/${token}`, { session_id, endSum: currentInput })
+        // await axios.post(`${API_URL}/user/session/terminate/${token}`, { session_id, endSum: currentInput })
 
         dispatch(setEndOfSessionStatus(false))
-        dispatch(setCurrentSession({}))
+        dispatch(updateCurrentSession({ status: 'end' }))
 
         navigation.navigate('Login')
       } catch (e) {
