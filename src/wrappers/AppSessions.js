@@ -24,10 +24,8 @@ function AppSessions(props){
 
   useEffect(() => {
     if(initialLoadingVisibility) {
-      console.log('initialLoadingOpacity', initialLoadingOpacity)
-
       if(_.isEmpty(currentAccount)) {
-        setTimeout(() => {
+        const outer = setTimeout(() => {
           NavigationService.setTopLevelNavigator(navigatorRef.current)
           setTimeout(() => {
             NavigationService.navigate('NoAccount')
@@ -38,19 +36,37 @@ function AppSessions(props){
           }, 110)
         }, 100)
 
-        return
+        return () => {
+          clearTimeout(outer)
+        }
       }
 
-      if(currentSession.endTime) {
-        // dispatch(setEndOfSessionStatus(false))
-        setTimeout(() => {
+      if(currentSession.length === 0) {
+        const outer = setTimeout(() => {
           if(initialLoadingVisibility) {
             changeInitialLoadingWrapperOpacity(false)
             SplashScreen.hide();
           }
         }, 300)
+
+        return () => {
+          clearTimeout(outer)
+        }
+      }
+
+      if(currentSession.endTime) {
+        const outer = setTimeout(() => {
+          if(initialLoadingVisibility) {
+            changeInitialLoadingWrapperOpacity(false)
+            SplashScreen.hide();
+          }
+        }, 300)
+
+        return () => {
+          clearTimeout(outer)
+        }
       } else {
-        setTimeout(() => {
+        const outer = setTimeout(() => {
           NavigationService.setTopLevelNavigator(navigatorRef.current)
           setTimeout(() => {
             NavigationService.navigate('SalesLayout')
@@ -60,6 +76,10 @@ function AppSessions(props){
             }, 250)
           }, 110)
         }, 100)
+
+        return () => {
+          clearTimeout(outer)
+        }
       }
     }
   }, [navigatorRef, currentSession, initialLoadingVisibility, currentAccount])

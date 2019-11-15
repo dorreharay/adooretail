@@ -39,7 +39,7 @@ function ChooseAccount(props) {
               onPress={() => selectTabletAccount(item)}
               activeOpacity={1} key={index}
             >
-              <View style={[styles.accountItem, { borderWidth: 4, borderColor: (selectedAccount.id === item.id) ? '#E46162' : '#E4616200' }]}>
+              <View style={[styles.accountItem, { borderWidth: 4, borderRadius: 20, borderColor: (selectedAccount.id === item.id) ? '#E46162' : '#E4616200' }]}>
                 <View style={[styles.accountItem,]}>
                   <View style={styles.accountItemContent}>
                     <Text style={styles.accountItemBusinessName}>{item.businessName}</Text>
@@ -50,7 +50,7 @@ function ChooseAccount(props) {
                 {item.id && <View style={styles.imageCover} />}
                 {item.id ? (
                   <FastImage
-                    style={{ flex: 1, borderRadius: 300, }}
+                    style={{ flex: 1, borderRadius: 10, }}
                     source={{ uri: item.img_url }}
                   />
                 ) : (
@@ -70,7 +70,7 @@ function ChooseAccount(props) {
         {selectedAccount.id ? (
           <>
             <TouchableOpacity
-              style={[styles.loginCaption, { width: 50, borderRadius: 50, backgroundColor: '#FFFFFF1A', }]}
+              style={[styles.loginCaption, { width: 50, borderRadius: 200, backgroundColor: '#FFFFFF1A', }]}
               onPress={() => submitAccount(() => changeCurrentAccount(selectedAccount))}
               activeOpacity={1}
             >
@@ -79,7 +79,7 @@ function ChooseAccount(props) {
           </>
         ) : (
           <TouchableOpacity
-            style={styles.loginCaption}
+            style={[styles.loginCaption, { width: 50, borderRadius: 200, borderWidth: 2, borderColor: '#FFFFFF1A', backgroundColor: '#FFFFFF00', }]}
             onPress={() => {}}
             activeOpacity={1}
           >

@@ -12,7 +12,6 @@ import { PROBA_REGULAR } from '@fonts'
 import SharedButton from '@shared/SharedButton';
 
 import Products from './Products/Products'
-import Panel from './Panel/Panel'
 
 import { setLayout } from '../../../../../../../reducers/OrdersReducer'
 import { setEndOfSessionStatus } from '../../../../../../../reducers/TempReducer';

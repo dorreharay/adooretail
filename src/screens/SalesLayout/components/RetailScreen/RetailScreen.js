@@ -6,11 +6,11 @@ import styles from './styles'
 
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
-import Panel from './components/RightSide/Panel/Panel';
-import PanelInstance from './components/RightSide/Panel/components/PanelInstance'
+import Panel from './components/Panel/Panel';
+import PanelInstance from './components/Panel/components/PanelInstance'
 
 import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer';
-import History from './components/RightSide/Panel/components/History';
+import History from './components/Panel/components/History';
 import PaymentModal from './components/LeftSide/components/PaymentModal';
 
 function RetailScreen(props) {

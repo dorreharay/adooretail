@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, TextInput, Alert, Animated, Easing, TouchableOpacity, } from 'react-native'
 import Modal, { FadeAnimation, ModalContent, } from 'react-native-modals';
-import styles from '../../styles'
+import styles from '../RightSide/styles'
 
 import SharedButton from '@shared/SharedButton';
 

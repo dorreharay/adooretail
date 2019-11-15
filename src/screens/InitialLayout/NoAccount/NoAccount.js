@@ -140,7 +140,6 @@ function NoAccount(props) {
         </Animated.View>
       )}
      
-      
       <LoginLoader active={loading} />
       <Toast ref={toast}/>
     </View>

@@ -2,10 +2,10 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation'
 
-import NoAccount from '../src/screens/InitialLayout/components/NoAccount/NoAccount'
-import Login from '../src/screens/InitialLayout/components/Login/Login'
-import InputCash from '../src/screens/InitialLayout/components/InputCash/InputCash';
-import InputEmployees from '../src/screens/InitialLayout/components/InputEmployees/InputEmployees';
+import NoAccount from '../src/screens/InitialLayout/NoAccount/NoAccount'
+import Login from '../src/screens/InitialLayout/Login/Login'
+import InputCash from '../src/screens/InitialLayout/InputCash/InputCash';
+import InputEmployees from '../src/screens/InitialLayout/InputEmployees/InputEmployees';
 import SalesLayout from '../src/screens/SalesLayout/SalesLayout'
 
 const materialNavigation = createMaterialTopTabNavigator (

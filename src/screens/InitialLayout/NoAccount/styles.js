@@ -48,7 +48,7 @@ const base = {
     flexDirection: 'row',
     width: deviceWidth * 0.6,
     height: '30%',
-    marginLeft: '1.5%',
+    // marginLeft: '1.5%',
     marginVertical: 70,
   },
   account: {
@@ -60,7 +60,7 @@ const base = {
   accountItem: {
     width: '100%',
     height: '100%',
-    borderRadius: 300,
+    borderRadius: 10,
     zIndex: 100,
   },
   imageContainer: {
@@ -69,7 +69,7 @@ const base = {
     left: '6%',
     width: '88%',
     height: '88%',
-    borderRadius: 300,
+    borderRadius: 10,
   },
   imageCover: {
     position: 'absolute',
@@ -77,7 +77,7 @@ const base = {
     left: 0,
     width: '100%',
     height: '100%',
-    borderRadius: 300,
+    borderRadius: 10,
     backgroundColor: '#12294666',
     zIndex: 1,
   },
