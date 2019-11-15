@@ -29,16 +29,18 @@ function RetailScreen(props) {
   const [modalOpacity] = useState(new Animated.Value(0))
 
   const [menuButtons] = useState([
-    { 
-      name: 'Історія замовлень', 
+    {
+      name: 'Історія замовлень',
       onPress: () => openPanelInstance('history', 'ІСТОРІЯ ЗАМОВЛЕНЬ'),
     },
     { name: 'Пристрої', onPress: () => openPanelInstance('devices', 'ПРИСТРОЇ') },
     { name: 'Транзакції', onPress: () => openPanelInstance('transactions', 'ТРАНЗАКЦІЇ') },
-    { name: 'Змінити аккаунт', onPress: () => {}},
+    { name: 'Налаштування', onPress: () => openPanelInstance('transactions', 'НАЛАШТУВАННЯ') },
+    { name: 'Змінити аккаунт', onPress: () => { } },
   ])
 
   const openPanelInstance = (instanceName, title) => {
+    setMenuVisibility(false)
     setPanelScreenState({ ...initialPanelScreens, [instanceName]: title })
   }
 
@@ -66,10 +68,10 @@ function RetailScreen(props) {
 
   const handleModalAnimation = () => {
     Animated.timing(
-      modalOpacity, 
-      { 
-        toValue: modalOpacity._value === 1 ? 0 : 1, 
-        duration: 150, 
+      modalOpacity,
+      {
+        toValue: modalOpacity._value === 1 ? 0 : 1,
+        duration: 150,
         easing: Easing.ease
       }
     ).start();
@@ -100,7 +102,7 @@ function RetailScreen(props) {
         openMenu={openMenu}
       />
       {menuVisible && (
-        <Panel 
+        <Panel
           openMenu={openMenu}
           closeMenu={closeMenu}
           endSession={endSession}
@@ -110,27 +112,29 @@ function RetailScreen(props) {
         />
       )}
 
-      <PanelInstance
-        isVisible={!_.isEqual(panelScreenState, initialPanelScreens)}
-        closePanelInstance={closePanelInstance}
-        panelScreenState={panelScreenState}
-      >
-        <View style={styles.panelContent}>
-          {panelScreenState.history && (
-            <History />
-          )}
-          {panelScreenState.devices && (
-            <View>
+      {!_.isEqual(panelScreenState, initialPanelScreens) && (
+        <PanelInstance
+          closePanelInstance={closePanelInstance}
+          panelScreenState={panelScreenState}
+        >
+          <View style={styles.panelContent}>
+            {panelScreenState.history && (
+              <History />
+            )}
+            {panelScreenState.devices && (
+              <View>
 
-            </View>
-          )}
-          {panelScreenState.transactions && (
-            <View>
-              
-            </View>
-          )}
-        </View>
-      </PanelInstance>
+              </View>
+            )}
+            {panelScreenState.transactions && (
+              <View>
+
+              </View>
+            )}
+          </View>
+        </PanelInstance>
+      )}
+
     </View>
   )
 }

@@ -71,23 +71,23 @@ const base = {
   },
   categoryTitleText3: {
     marginBottom: 2.5,
-    color: '#3E3E3E',
+    color: '#565656',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_MEDIUM,
     lineHeight: 30,
   },
   categoryTitleText4: {
     marginBottom: 2.5,
-    color: '#3E3E3E',
+    color: '#565656',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_MEDIUM,
     lineHeight: 30,
   },
   categoryTitleText5: {
     marginBottom: 0,
-    color: '#3E3E3E',
+    color: '#565656',
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_MEDIUM,
     lineHeight: 20,
   },
   variant: {
@@ -104,7 +104,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 30,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_MEDIUM,
   },
   variantText4: {
     position: 'absolute',
@@ -114,7 +114,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 24,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_MEDIUM,
     lineHeight: 30,
   },
   variantText5: {
@@ -125,7 +125,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_MEDIUM,
     lineHeight: 20,
   },
   variantPrice: {

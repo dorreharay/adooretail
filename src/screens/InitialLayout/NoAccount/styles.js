@@ -79,7 +79,7 @@ const base = {
     height: '100%',
     borderRadius: 10,
     backgroundColor: '#12294666',
-    zIndex: 1,
+    zIndex: 2,
   },
   accountItemContent: {
     flex: 1,

@@ -46,7 +46,7 @@ function NoAccount(props) {
         toValue: 0,
         duration: 600,
       },
-    ).start(() => callback())
+    ).start()
     setTimeout(() => {
       setContentVisibility(false)
       Animated.timing(
@@ -58,7 +58,10 @@ function NoAccount(props) {
       ).start()
       setSuccessVisibility('success')
 
-      setTimeout(() => navigation.navigate('Login'), 1000)
+      setTimeout(() => {
+        navigation.navigate('Login')
+        callback()
+      }, 1000)
     }, 1000)
   }
 

@@ -34,10 +34,14 @@ function ConfigureAccount(props) {
 
   const invokeAnimation = (success) => {
     if(success) {
-      props.invokeSuccessAnimation()
+      props.invokeSuccessAnimation(gotoLogin)
     } else {
       props.invokeFailAnimation()
     }
+  }
+
+  const gotoLogin = () => {
+    navigation.navigate('Login')
   }
 
   return (

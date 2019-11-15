@@ -55,10 +55,10 @@ function ChooseAccount(props) {
                   />
                 ) : (
                   <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', }}>
-                    <FastImage
+                    {/* <FastImage
                       style={{ width: 40, height: 40, }}
                       source={require('@images/plus_icon.png')}
-                    />
+                    /> */}
                   </View>
                 )}
               </View>

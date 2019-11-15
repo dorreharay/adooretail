@@ -4,24 +4,37 @@ import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM
 import { deviceWidth, deviceHeight } from '@dimensions';
 
 const base = {
+  panelWrapper: {
+    position: 'absolute',
+    alignSelf: 'center',
+    alignItems: 'center',
+    width: deviceWidth,
+    height: deviceHeight,
+    backgroundColor: '#00000088'
+  },
   panelContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
     alignItems: 'center',
     width: deviceWidth * 0.8,
     height: deviceHeight * 0.8,
+    marginTop: deviceHeight * 0.1,
+    marginLeft: deviceWidth * 0.1,
+    backgroundColor: '#FFFFFF'
   },
   panelContent: {
     width: '100%',
     height: '88%',
     marginTop: '1%',
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#FFFFFF'
   },
   panelHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: 30,
+    paddingHorizontal: 35,
   },
   panelHeading: {
     
@@ -37,9 +50,8 @@ const base = {
   },
   receiptsHistoryContainer: {
     flexDirection: 'row',
-    width: deviceWidth * 0.83,
+    width: '100%',
     height: '90%',
-    marginTop: '2%',
   },
   daysList: {
     width: '30%',
@@ -98,7 +110,7 @@ const base = {
   },
   receiptsListItemBlockTextSecondary: {
     color: '#000000',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: PROBA_REGULAR,
   }
 };
