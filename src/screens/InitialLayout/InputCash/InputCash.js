@@ -17,7 +17,7 @@ function InputCash(props) {
 
   const currentAccount = useSelector(state => state.user.currentAccount)
   const endOfSession = useSelector(state => state.temp.endOfSession)
-  const employees = useSelector(state => state.user.employees)
+  const employees = useSelector(state => state.user.currentAccount.employees)
   const startCash = useSelector(state => state.user.startCash)
 
   const dispatch = useDispatch();
@@ -120,12 +120,6 @@ function InputCash(props) {
           <Image style={{ width: 34, height: 28, marginRight: 5, }} source={require('@images/erase.png')} fadeDuration={0} />
         </Ripple>
       </View>
-      
-      {employees.length !== 0 && startCash !== 0 && !endOfSession && (
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputEmployee')} activeOpacity={1}>
-          <Image style={{ width: 18, height: 18, }} source={require('@images/erase.png')} fadeDuration={0}></Image>
-        </TouchableOpacity>
-      )}
       <LoginLoader active={loading} />
     </View>
   )

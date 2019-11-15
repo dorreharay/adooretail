@@ -85,6 +85,7 @@ function AppSessions(props){
         loading={initialLoadingVisibility}
         opacity={initialLoadingOpacity}
         source={require('@images/background-adv3.png')}
+        navigation={NavigationService}
       >
         <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
           {withProps}

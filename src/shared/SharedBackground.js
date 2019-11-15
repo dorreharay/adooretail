@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image'
 
 import LoginLoader from '@shared/LoginLoader';
 
-function SharedBackground({ source, children, loading, opacity, mainWrapper, }) {
+function SharedBackground({ source, children, loading, opacity, mainWrapper, navigation, }) {
   const [loadEnd, setLoadEnd] = useState(false)
   const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
@@ -33,6 +33,17 @@ function SharedBackground({ source, children, loading, opacity, mainWrapper, }) 
           source={require('@images/logo-big.png')}
         />
       </Animated.View>
+
+      {/* {true && (
+        <View style={styles.navButtons}>
+          <TouchableOpacity style={styles.forwardButton} onPress={() => navigation.navigate('InputEmployee')} activeOpacity={1}>
+            <Image style={{ width: 18, height: 18, }} source={require('@images/erase.png')} fadeDuration={0}></Image>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputEmployee')} activeOpacity={1}>
+            <Image style={{ width: 18, height: 18, }} source={require('@images/erase.png')} fadeDuration={0}></Image>
+          </TouchableOpacity>
+        </View>
+      )} */}
     </View>
   )
 }
@@ -71,6 +82,33 @@ const styles = StyleSheet.create({
   logo: {
     width: 37,
     height: 37,
+  },
+  navButtons: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    width: 105,
+    zIndex: 50,
+  },
+  forwardButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#D2D2D226',
+  },
+  backButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#D2D2D226',
+    transform: [{ rotate: '180deg'}]
   }
 })
 

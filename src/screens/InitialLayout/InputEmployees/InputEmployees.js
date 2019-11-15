@@ -97,12 +97,12 @@ function InputEmployees({ navigation }) {
           <Image style={{ width: 20, height: 15, }} source={require('@images/tick_light.png')} fadeDuration={0}></Image>
         </TouchableOpacity>
       ) : (
-        <View style={{ width: 10, height: 50, marginTop: 45, }}></View>
+        <View style={{ width: 50, height: 50, borderRadius: 100, borderWidth: 2, borderColor: '#D2D2D226', marginTop: 45, }}></View>
       )}
 
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputCash')} activeOpacity={1}>
+      {/* <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputCash')} activeOpacity={1}>
         <Image style={{ width: 18, height: 18, transform: [{ rotate: '180deg' }] }} source={require('@images/erase.png')} fadeDuration={0}></Image>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <LoginLoader active={loading} />
       <Toast ref={toast}/>
