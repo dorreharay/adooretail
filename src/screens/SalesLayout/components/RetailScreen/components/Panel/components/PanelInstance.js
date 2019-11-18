@@ -13,27 +13,26 @@ function PanelInstance(props) {
   } = props
 
   return (
-    <View style={styles.panelWrapper}>
-      <View style={styles.panelContainer}>
-        <View style={styles.panelHeader}>
-          <View style={styles.panelHeading}>
-            <Text style={styles.panelHeadingText}>
-              {panelScreenState.history && panelScreenState.history}
-              {panelScreenState.devices && panelScreenState.devices}
-              {panelScreenState.transactions && panelScreenState.transactions}
-            </Text>
-          </View>
-          <SharedButton
-            buttonSizes={styles.closePanelInstanceButton}
-            iconSizes={{ width: styles.closePanelInstanceButton.width - 30, height: styles.closePanelInstanceButton.height - 30, }}
-            source={require('@images/x_icon.png')}
-            onPress={closePanelInstance}
-            backgroundColor={'#F6F6F600'}
-            borderRadius={50}
-            scale={0.9} onStart
-          />
+    <View style={styles.panelContainer}>
+      <View style={styles.panelHeader}>
+        <View style={styles.panelHeading}>
+          <Text style={styles.panelHeadingText}>
+            {panelScreenState.history && panelScreenState.history}
+            {panelScreenState.devices && panelScreenState.devices}
+            {panelScreenState.transactions && panelScreenState.transactions}
+          </Text>
         </View>
-
+        <SharedButton
+          buttonSizes={styles.closePanelInstanceButton}
+          iconSizes={{ width: styles.closePanelInstanceButton.width - 30, height: styles.closePanelInstanceButton.height - 30, }}
+          source={require('@images/x_icon.png')}
+          onPress={closePanelInstance}
+          backgroundColor={'#F6F6F600'}
+          borderRadius={50}
+          scale={0.9} onStart
+        />
+      </View>
+      <View style={styles.panelContent}>
         {children}
       </View>
     </View>

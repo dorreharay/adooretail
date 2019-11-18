@@ -117,21 +117,19 @@ function RetailScreen(props) {
           closePanelInstance={closePanelInstance}
           panelScreenState={panelScreenState}
         >
-          <View style={styles.panelContent}>
-            {panelScreenState.history && (
-              <History />
-            )}
-            {panelScreenState.devices && (
-              <View>
+          {panelScreenState.history && (
+            <History />
+          )}
+          {panelScreenState.devices && (
+            <View>
 
-              </View>
-            )}
-            {panelScreenState.transactions && (
-              <View>
+            </View>
+          )}
+          {panelScreenState.transactions && (
+            <View>
 
-              </View>
-            )}
-          </View>
+            </View>
+          )}
         </PanelInstance>
       )}
 

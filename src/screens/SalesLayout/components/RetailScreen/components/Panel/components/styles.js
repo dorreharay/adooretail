@@ -4,37 +4,27 @@ import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM
 import { deviceWidth, deviceHeight } from '@dimensions';
 
 const base = {
-  panelWrapper: {
+  panelContainer: {
     position: 'absolute',
     alignSelf: 'center',
     alignItems: 'center',
     width: deviceWidth,
     height: deviceHeight,
-    backgroundColor: '#00000088'
-  },
-  panelContainer: {
-    position: 'absolute',
-    alignSelf: 'center',
-    alignItems: 'center',
-    width: deviceWidth * 0.8,
-    height: deviceHeight * 0.8,
-    marginTop: deviceHeight * 0.1,
-    marginLeft: deviceWidth * 0.1,
+    paddingTop: '7%',
+    padding: '10%',
     backgroundColor: '#FFFFFF'
   },
   panelContent: {
     width: '100%',
-    height: '88%',
-    marginTop: '1%',
-    backgroundColor: '#FFFFFF'
+    height: '100%',
   },
   panelHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    paddingVertical: 30,
-    paddingHorizontal: 35,
+    paddingHorizontal: 5,
+    paddingBottom: 40,
   },
   panelHeading: {
     
@@ -49,23 +39,23 @@ const base = {
     height: 55,
   },
   receiptsHistoryContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '100%',
-    height: '90%',
   },
   daysList: {
-    width: '30%',
-    height: '100%',
-    borderRightWidth: 1,
-    borderRightColor: '#F0F0F0',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
   },
   historyDay: {
-    paddingHorizontal: 30,
-    paddingVertical: 30,
-    width: '100%',
-    height: 140,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 30,
+    paddingBottom: 15,
+    marginRight: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    backgroundColor: '#FBFBFB',
   },
   historyDayHeadingText: {
     marginBottom: 14,

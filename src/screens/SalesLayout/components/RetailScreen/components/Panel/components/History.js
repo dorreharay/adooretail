@@ -20,72 +20,74 @@ function History() {
 
   return (
     <View style={styles.receiptsHistoryContainer}>
-      <ScrollView
-        style={styles.daysList}
-        showsVerticalScrollIndicator={false}
-      >
-        <TouchableOpacity activeOpacity={1}>
-          {days.map((day, index) => (
-            <LinearGradient
-              style={styles.historyDay}
-              start={{ x: -1, y: -1 }}
-              end={{ x: 1, y: 1 }}
-              colors={selectedReceipt === index ? ['#FF7675', '#FD9C6C'] : ['#FFFFFF00', '#FFFFFF00']}
+      <View style={styles.daysList}>
+        {days.map((day, index) => (
+          <LinearGradient
+            style={styles.historyDay}
+            start={{ x: -1, y: -1 }}
+            end={{ x: 1, y: 1 }}
+            colors={selectedReceipt === index ? ['#FF7675', '#FD9C6C'] : ['#FFFFFF00', '#FFFFFF00']}
+          >
+            <TouchableOpacity
+              style={{ width: '100%', }}
+              onPress={() => selectReceipt(index)}
+              activeOpacity={1} key={index}
             >
-              <TouchableOpacity
-                style={{ width: '100%', height: 140, }}
-                onPress={() => selectReceipt(index)}
-                activeOpacity={1} key={index}
-              >
-                <Text style={[styles.historyDayHeadingText, selectedReceipt === index && styles.headingSelected]}>
-                  {day.date}
+              <Text style={[styles.historyDayHeadingText, selectedReceipt === index && styles.headingSelected]}>
+                {day.date}
+              </Text>
+              <Text style={[styles.historyDayCaptionText, selectedReceipt === index && styles.captionSelected]}>
+                {day.total} грн
                 </Text>
-                <Text style={[styles.historyDayCaptionText, selectedReceipt === index && styles.captionSelected]}>
-                  {day.total} грн
-                </Text>
-              </TouchableOpacity>
-            </LinearGradient>
-          ))}
-        </TouchableOpacity>
-      </ScrollView>
-      <ScrollView style={styles.receiptsList}>
-        <View style={{ flex: 1, }} activeOpacity={1}>
-          {days[selectedReceipt].receipts.map((day, index) => (
-            <>
-              <TouchableOpacity
-                style={styles.receiptsListItem}
-                onPress={() => setExpandedIndex(expandedIndex === index ? false : index)}
-                activeOpacity={1}
-              >
-                <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', }}>
-                  <View style={styles.receiptsListItemBlock}>
-                    <Text style={styles.receiptsListItemBlockTextMain}>Час:</Text>
-                    <Text style={styles.receiptsListItemBlockTextSecondary}>15:31 </Text>
-                  </View>
-                  <View style={styles.receiptsListItemBlock}>
-                    <Text style={styles.receiptsListItemBlockTextMain}>Сума:</Text>
-                    <Text style={styles.receiptsListItemBlockTextSecondary}>75 грн </Text>
-                  </View>
-                  <View style={styles.receiptsListItemBlock}>
-                    <Text style={styles.receiptsListItemBlockTextMain}>К-сть товарів у чеку:</Text>
-                    <Text style={styles.receiptsListItemBlockTextSecondary}>4 шт</Text>
-                  </View>
-                  <FastImage style={{ width: 7, height: 14, transform: [{ rotate: expandedIndex === index ? '40deg' : '270deg' }] }} source={require('@images/back_thin.png')} />
-                </View>
-                {/* <View style={{ width: '100%', flexDirection: 'row',  }}>
-                  <FastImage style={{ width: 10, height: 20, transform: [{ rotate: '270deg' }] }} source={require('@images/back_thin.png')} />
-                </View> */}
-              </TouchableOpacity>
-              <Collapsible collapsed={expandedIndex !== index} key={index}>
-                <View style={{ width: '100%', height: 400, borderBottomWidth: 1, borderBottomColor: '#F0F0F0', }}></View>
-              </Collapsible>
-            </>
-          ))}
-        </View>
-      </ScrollView>
-
+            </TouchableOpacity>
+          </LinearGradient>
+        ))}
+      </View>
     </View>
   )
 }
 
 export default History
+
+
+
+
+
+
+
+
+  // < ScrollView style = { styles.receiptsList } >
+  //   <View style={{ flex: 1, }} activeOpacity={1}>
+  //     {days[selectedReceipt].receipts.map((day, index) => (
+  //       <>
+  //         <TouchableOpacity
+  //           style={styles.receiptsListItem}
+  //           onPress={() => setExpandedIndex(expandedIndex === index ? false : index)}
+  //           activeOpacity={1}
+  //         >
+  //           <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', }}>
+  //             <View style={styles.receiptsListItemBlock}>
+  //               <Text style={styles.receiptsListItemBlockTextMain}>Час:</Text>
+  //               <Text style={styles.receiptsListItemBlockTextSecondary}>15:31 </Text>
+  //             </View>
+  //             <View style={styles.receiptsListItemBlock}>
+  //               <Text style={styles.receiptsListItemBlockTextMain}>Сума:</Text>
+  //               <Text style={styles.receiptsListItemBlockTextSecondary}>75 грн </Text>
+  //             </View>
+  //             <View style={styles.receiptsListItemBlock}>
+  //               <Text style={styles.receiptsListItemBlockTextMain}>К-сть товарів у чеку:</Text>
+  //               <Text style={styles.receiptsListItemBlockTextSecondary}>4 шт</Text>
+  //             </View>
+  //             <FastImage style={{ width: 7, height: 14, transform: [{ rotate: expandedIndex === index ? '40deg' : '270deg' }] }} source={require('@images/back_thin.png')} />
+  //           </View>
+  //           {/* <View style={{ width: '100%', flexDirection: 'row',  }}>
+  //                 <FastImage style={{ width: 10, height: 20, transform: [{ rotate: '270deg' }] }} source={require('@images/back_thin.png')} />
+  //               </View> */}
+  //         </TouchableOpacity>
+  //         <Collapsible collapsed={expandedIndex !== index} key={index}>
+  //           <View style={{ width: '100%', height: 400, borderBottomWidth: 1, borderBottomColor: '#F0F0F0', }}></View>
+  //         </Collapsible>
+  //       </>
+  //     ))}
+  //   </View>
+  // </ScrollView >
