@@ -75,8 +75,6 @@ const styles = StyleSheet.create({
     height: 70,
     paddingTop: 22,
     paddingLeft: 20,
-    borderBottomRightRadius: 500,
-    backgroundColor: Platform.OS !== 'ios' ? '#FFFFFF0D' : '#FFFFFF00',
     zIndex: 50,
   },
   logo: {

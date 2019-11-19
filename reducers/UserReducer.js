@@ -15,7 +15,7 @@ const initialState = {
     {
       id: 1,
       token: '5cb1ed89c6bf28192c152435',
-      businessName: 'Poilka Coffee',
+      businessName: 'Poilka Coffee Бариста 1',
       img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
       pinCode: '1111222',
       registeredDeviceIds: [

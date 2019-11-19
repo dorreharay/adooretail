@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 import { deviceWidth } from '@dimensions';
 
 const base = {
@@ -71,23 +71,23 @@ const base = {
   },
   categoryTitleText3: {
     marginBottom: 2.5,
-    color: '#565656',
+    color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: PROBA_REGULAR,
     lineHeight: 30,
   },
   categoryTitleText4: {
     marginBottom: 2.5,
-    color: '#565656',
+    color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: FUTURA_REGULAR,
     lineHeight: 30,
   },
   categoryTitleText5: {
     marginBottom: 0,
-    color: '#565656',
+    color: '#343434',
     fontSize: 16,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: PROBA_REGULAR,
     lineHeight: 20,
   },
   variant: {

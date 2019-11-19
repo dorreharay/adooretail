@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 import { deviceWidth, deviceHeight } from '@dimensions';
 
@@ -63,13 +63,13 @@ const base = {
     paddingHorizontal: 30,
     paddingVertical: 30,
     width: '100%',
-    height: 140,
+    height: 130,
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
   },
   historyDayHeadingText: {
-    marginBottom: 14,
-    color: '#000000',
+    marginBottom: 5,
+    color: '#343434',
     fontSize: 25,
     fontFamily: PROBA_REGULAR,
   },
@@ -79,7 +79,7 @@ const base = {
   },
   historyDayCaptionText: {
     marginBottom: 14,
-    color: '#000000',
+    color: '#343434',
     fontSize: 22,
     fontFamily: PROBA_LIGHT,
   },
@@ -90,28 +90,71 @@ const base = {
   receiptsList: {
     width: '70%',
     height: '100%',
-    paddingHorizontal: 30,
+    backgroundColor: '#F9F9F9',
   },
   receiptsListItem: {
+    justifyContent: 'space-between',
+    paddingHorizontal: 50,
     paddingVertical: 30,
     width: '100%',
-    borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
+    borderBottomWidth: 1, 
+    borderBottomColor: '#F0F0F0',
+    backgroundColor: '#FFFFFF',
   },
   receiptsListItemBlock: {
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
-    marginRight: 52,
   },
   receiptsListItemBlockTextMain: {
     marginRight: 15,
-    color: '#000000',
+    color: '#343434',
     fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: FUTURA_REGULAR,
   },
   receiptsListItemBlockTextSecondary: {
-    color: '#000000',
+    color: '#343434',
     fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: FUTURA_REGULAR,
+  },
+  receiptDetails: {
+    width: '100%',
+    paddingVertical: 20,
+    paddingBottom: 30,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  receiptDetailsBlock: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 50,
+    paddingVertical: 20,
+  },
+  receiptDetailsBlockText1: {
+    width: '40%',
+    color: '#343434',
+    fontSize: 20,
+    fontFamily: FUTURA_REGULAR,
+  },
+  receiptDetailsBlockText2: {
+    width: '30%',
+    color: '#343434',
+    fontSize: 20,
+    fontFamily: FUTURA_REGULAR,
+    textAlign: 'center'
+  },
+  receiptDetailsBlockText3: {
+    width: '30%',
+    color: '#343434',
+    fontSize: 20,
+    fontFamily: FUTURA_REGULAR,
+    textAlign: 'right'
+  },
+  detailsHeading: {
+    color: '#525252',
+    fontSize: 18,
+    fontFamily: FUTURA_LIGHT,
   }
 };
  

@@ -128,6 +128,7 @@ function NoAccount(props) {
               invokeFailAnimation={invokeFailAnimation}
               setSuccessVisibility={setSuccessVisibility}
               setContentVisibility={setContentVisibility}
+              navigation={navigation}
             />
           ) : (
             <ChooseAccount

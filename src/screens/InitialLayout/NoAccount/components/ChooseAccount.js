@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, } from "react-native";
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import FastImage from "react-native-fast-image";
+import LinearGradient from 'react-native-linear-gradient'
 import styles from '../styles';
 
 import { changeAccount } from '../../../../../reducers/UserReducer'
@@ -29,7 +30,7 @@ function ChooseAccount(props) {
 
   return (
       <>
-        <Text style={styles.loginHeading}>{_.isEmpty(currentAccount) ? 'Оберіть вільний аккаунт' : 'Зміна робочого аккаунту'}</Text>
+        <Text style={styles.loginHeading}>{_.isEmpty(currentAccount) ? 'Підключені аккаунти' : 'Зміна робочого аккаунту'}</Text>
         <Text style={styles.loginHeadingCaption}>Оберіть доступну клітинку</Text>
 
         <View style={styles.accountsContainer}>
@@ -46,19 +47,22 @@ function ChooseAccount(props) {
                   </View>
                 </View>
               </View>
-              <View style={[styles.imageContainer, !item.id && { backgroundColor: '#ACACAC1A' }]}>
-                {item.id && <View style={styles.imageCover} />}
+              <View style={[styles.imageContainer, { backgroundColor: '#ACACAC1A' }]}>
                 {item.id ? (
-                  <FastImage
-                    style={{ flex: 1, borderRadius: 10, }}
-                    source={{ uri: item.img_url }}
-                  />
+                  <>
+                    <LinearGradient
+                      start={{ x: -2, y: -1 }}
+                      end={{ x: 1, y: 1 }}
+                      colors={['#EFFF3366', '#00000000']}
+                      style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', borderRadius: 5, }}
+                    />
+                  </>
                 ) : (
                   <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', }}>
-                    {/* <FastImage
+                    <FastImage
                       style={{ width: 40, height: 40, }}
                       source={require('@images/plus_icon.png')}
-                    /> */}
+                    />
                   </View>
                 )}
               </View>

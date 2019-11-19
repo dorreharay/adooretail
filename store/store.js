@@ -23,7 +23,7 @@ export default createStore = (initialState = {}) => {
 
   let persistor = persistStore(store)
 
-  // persistor.purge()
+  // persistor.purge()  
 
   return { store, persistor }
 }

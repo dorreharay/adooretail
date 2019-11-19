@@ -18,8 +18,9 @@ const base = {
     borderBottomColor: '#F4F4F4',
   },
   timeText: {
-    fontSize: 15,
-    fontFamily: PROBA_LIGHT,
+    color: '#343434',
+    fontSize: 17,
+    fontFamily: PROBA_REGULAR,
   },
   receiptButtonText: {
     color: '#343434',
@@ -48,8 +49,8 @@ const base = {
   },
   lsproceedButtonText: {
     color: 'white',
-    fontSize: 22,
-    fontFamily: FUTURA_REGULAR,
+    fontSize: 24,
+    fontFamily: PROBA_MEDIUM,
     letterSpacing: 0.7,
   },
   receiptItem: {
