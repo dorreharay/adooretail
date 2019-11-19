@@ -1,11 +1,10 @@
 import React, { useState, } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, TouchableWithoutFeedback, } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import Collapsible from 'react-native-collapsible';
-import styles from './styles'
-import FastImage from 'react-native-fast-image';
+import styles from '../styles'
 
-function History() {
+import DatesList from './DatesList'
+
+function History({ selectedDate, handleNewDate, }) {
   const [days, setDays] = useState([
     { date: 'Сьогодні 02.11.19', total: '2034', receipts: [{}, {}, {}, {}] },
     { date: 'Вівторок 03.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {}] },
@@ -13,36 +12,28 @@ function History() {
     { date: 'Четвер 05.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {},] },
     { date: 'Пятниця 06.11.19', total: '2034', receipts: [{}, {}, {}, {}] },
     { date: 'Субота 07.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {}] },
+    { date: 'Понеділок 09.11.19', total: '2034', receipts: [{}, {}, {}, {}] },
+    { date: 'Вівторок 10.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {}] },
+    { date: 'Середа 11.11.19', total: '2034', receipts: [{}, {}, {}, {},] },
+    { date: 'Четвер 12.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {},] },
+    { date: 'Пятниця 13.11.19', total: '2034', receipts: [{}, {}, {}, {}] },
+    { date: 'Субота 14.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {}] },
+    { date: 'Понеділок 16.11.19', total: '2034', receipts: [{}, {}, {}, {}] },
+    { date: 'Вівторок 17.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {}] },
+    { date: 'Середа 18.11.19', total: '2034', receipts: [{}, {}, {}, {},] },
+    { date: 'Четвер 19.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {},] },
+    { date: 'Пятниця 20.11.19', total: '2034', receipts: [{}, {}, {}, {}] },
+    { date: 'Субота 21.11.19', total: '2034', receipts: [{}, {}, {}, {}, {}, {}, {}, {}] },
   ])
-
-  const [selectedReceipt, selectReceipt] = useState(0)
-  const [expandedIndex, setExpandedIndex] = useState(false)
 
   return (
     <View style={styles.receiptsHistoryContainer}>
-      <View style={styles.daysList}>
-        {days.map((day, index) => (
-          <LinearGradient
-            style={styles.historyDay}
-            start={{ x: -1, y: -1 }}
-            end={{ x: 1, y: 1 }}
-            colors={selectedReceipt === index ? ['#FF7675', '#FD9C6C'] : ['#FFFFFF00', '#FFFFFF00']}
-          >
-            <TouchableOpacity
-              style={{ width: '100%', }}
-              onPress={() => selectReceipt(index)}
-              activeOpacity={1} key={index}
-            >
-              <Text style={[styles.historyDayHeadingText, selectedReceipt === index && styles.headingSelected]}>
-                {day.date}
-              </Text>
-              <Text style={[styles.historyDayCaptionText, selectedReceipt === index && styles.captionSelected]}>
-                {day.total} грн
-                </Text>
-            </TouchableOpacity>
-          </LinearGradient>
-        ))}
-      </View>
+      {!selectedDate && (
+        <DatesList
+          days={days}
+          handleNewDate={handleNewDate}
+        />
+      )}
     </View>
   )
 }

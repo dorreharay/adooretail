@@ -1,10 +1,16 @@
-export const currentSessionSelector = state => {
-  const localSessions = state.user.localSessions
-  const lastIndex = localSessions ? localSessions.length - 1 : null
+import { createSelector } from 'reselect'
 
-  if(lastIndex === null) return {}
+const selectSessions = state => state.user.localSessions
 
-  const currentSession = localSessions[lastIndex] ? localSessions[lastIndex] : []
+export const currentSessionSelector = createSelector(
+  selectSessions,
+  localSessions => {
+    const lastIndex = localSessions ? localSessions.length - 1 : null
 
-  return currentSession
-}
+    if(lastIndex === null) return {}
+
+    const currentSession = localSessions[lastIndex] ? localSessions[lastIndex] : []
+
+    return currentSession
+  }
+)

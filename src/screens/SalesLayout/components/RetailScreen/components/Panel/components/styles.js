@@ -27,12 +27,13 @@ const base = {
     paddingBottom: 40,
   },
   panelHeading: {
-    
+    flexDirection: 'row'
   },
   panelHeadingText: {
     color: '#414141',
     fontSize: 35,
     fontFamily: PROBA_REGULAR,
+    lineHeight: 40,
   },
   closePanelInstanceButton: {
     width: 55,
@@ -43,25 +44,32 @@ const base = {
     width: '100%',
   },
   daysList: {
+    width: '102%',
+    height: '90%',
+    paddingRight: '1%',
+  },
+  daysListScrollContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: '100%',
+    paddingBottom: 100,
   },
   historyDay: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: '24%',
     padding: 30,
     paddingBottom: 15,
-    marginRight: 10,
+    marginRight: '1%',
     marginBottom: 10,
     borderRadius: 5,
     backgroundColor: '#FBFBFB',
   },
   historyDayHeadingText: {
-    marginBottom: 14,
+    marginBottom: 10,
     color: '#000000',
     fontSize: 25,
     fontFamily: PROBA_REGULAR,
+    lineHeight: 30,
   },
   headingSelected: {
     color: '#FFFFFF',

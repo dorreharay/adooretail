@@ -10,7 +10,7 @@ import Panel from './components/Panel/Panel';
 import PanelInstance from './components/Panel/components/PanelInstance'
 
 import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer';
-import History from './components/Panel/components/History';
+import History from './components/Panel/components/History/History';
 import PaymentModal from './components/LeftSide/components/PaymentModal';
 
 function RetailScreen(props) {
@@ -20,6 +20,11 @@ function RetailScreen(props) {
 
   const [receipts, setReceipts] = useState([[], [], [], []])
   const [selectedInstance, selectReceiptInstance] = useState(0)
+  const [selectedDate, selectDate] = useState(false)
+
+  const handleNewDate = (newDate) => {
+    selectDate(newDate)
+  }
 
   const initialPanelScreens = { history: false, devices: false, transactions: false, }
 
@@ -114,11 +119,16 @@ function RetailScreen(props) {
 
       {!_.isEqual(panelScreenState, initialPanelScreens) && (
         <PanelInstance
+          selectedDate={selectedDate} selectDate={selectDate}
+          handleNewDate={handleNewDate}
           closePanelInstance={closePanelInstance}
           panelScreenState={panelScreenState}
         >
           {panelScreenState.history && (
-            <History />
+            <History
+              selectedDate={selectedDate}
+              handleNewDate={handleNewDate}
+            />
           )}
           {panelScreenState.devices && (
             <View>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
-import Modal, { FadeAnimation, ModalContent, } from 'react-native-modals';
+import FastImage from 'react-native-fast-image';
 import styles from './styles'
 
 import { deviceWidth, deviceHeight } from '@dimensions';
@@ -9,7 +9,7 @@ import SharedButton from '@shared/SharedButton';
 function PanelInstance(props) {
   const {
     children, isVisible, closePanelInstance,
-    panelScreenState,
+    panelScreenState, selectedDate, handleNewDate,
   } = props
 
   return (
@@ -21,6 +21,18 @@ function PanelInstance(props) {
             {panelScreenState.devices && panelScreenState.devices}
             {panelScreenState.transactions && panelScreenState.transactions}
           </Text>
+          {selectedDate && (
+            <TouchableOpacity
+              style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 50, }}
+              onPress={() => handleNewDate(false)}
+              activeOpacity={1}
+            >
+              <Text style={[styles.panelHeadingText, { fontSize: 25 }]}>
+                {selectedDate.date}
+              </Text>
+              <FastImage style={{ width: 16, height: 16, marginLeft: 15, marginBottom: 2, }} source={require('@images/split_orders.png')} />
+            </TouchableOpacity>
+          )}          
         </View>
         <SharedButton
           buttonSizes={styles.closePanelInstanceButton}
