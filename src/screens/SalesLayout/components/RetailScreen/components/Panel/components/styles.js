@@ -4,74 +4,72 @@ import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGUL
 import { deviceWidth, deviceHeight } from '@dimensions';
 
 const base = {
-  panelWrapper: {
+  panelContainer: {
     position: 'absolute',
     alignSelf: 'center',
     alignItems: 'center',
     width: deviceWidth,
     height: deviceHeight,
-    backgroundColor: '#00000088'
-  },
-  panelContainer: {
-    position: 'absolute',
-    alignSelf: 'center',
-    alignItems: 'center',
-    width: deviceWidth * 0.8,
-    height: deviceHeight * 0.8,
-    marginTop: deviceHeight * 0.1,
-    marginLeft: deviceWidth * 0.1,
+    paddingTop: '7%',
+    padding: '10%',
     backgroundColor: '#FFFFFF'
   },
   panelContent: {
     width: '100%',
-    height: '88%',
-    marginTop: '1%',
-    backgroundColor: '#FFFFFF'
+    height: '100%',
   },
   panelHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    paddingVertical: 30,
-    paddingHorizontal: 35,
+    paddingHorizontal: 5,
+    paddingBottom: 40,
   },
   panelHeading: {
-    
+    flexDirection: 'row'
   },
   panelHeadingText: {
     color: '#414141',
     fontSize: 35,
     fontFamily: PROBA_REGULAR,
+    lineHeight: 40,
   },
   closePanelInstanceButton: {
     width: 55,
     height: 55,
   },
   receiptsHistoryContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '100%',
-    height: '90%',
   },
   daysList: {
-    width: '30%',
-    height: '100%',
-    borderRightWidth: 1,
-    borderRightColor: '#F0F0F0',
+    width: '102%',
+    height: '90%',
+    paddingRight: '1%',
+  },
+  daysListScrollContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingBottom: 100,
   },
   historyDay: {
-    paddingHorizontal: 30,
-    paddingVertical: 30,
-    width: '100%',
-    height: 130,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '24%',
+    padding: 30,
+    paddingBottom: 15,
+    marginRight: '1%',
+    marginBottom: 10,
+    borderRadius: 5,
+    backgroundColor: '#FBFBFB',
   },
   historyDayHeadingText: {
-    marginBottom: 5,
-    color: '#343434',
+    marginBottom: 10,
+    color: '#000000',
     fontSize: 25,
     fontFamily: PROBA_REGULAR,
+    lineHeight: 30,
   },
   headingSelected: {
     color: '#FFFFFF',
