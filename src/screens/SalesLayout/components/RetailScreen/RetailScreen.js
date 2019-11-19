@@ -36,11 +36,11 @@ function RetailScreen(props) {
   const [menuButtons] = useState([
     {
       name: 'Історія замовлень',
-      onPress: () => openPanelInstance('history', 'ІСТОРІЯ ЗАМОВЛЕНЬ'),
+      onPress: () => openPanelInstance('history', 'Історія замовлень'),
     },
-    { name: 'Пристрої', onPress: () => openPanelInstance('devices', 'ПРИСТРОЇ') },
-    { name: 'Транзакції', onPress: () => openPanelInstance('transactions', 'ТРАНЗАКЦІЇ') },
-    { name: 'Налаштування', onPress: () => openPanelInstance('transactions', 'НАЛАШТУВАННЯ') },
+    { name: 'Пристрої', onPress: () => openPanelInstance('devices', 'Пристрої') },
+    { name: 'Транзакції', onPress: () => openPanelInstance('transactions', 'Транзакції') },
+    { name: 'Налаштування', onPress: () => openPanelInstance('transactions', 'Налаштування') },
     { name: 'Змінити аккаунт', onPress: () => { } },
   ])
 

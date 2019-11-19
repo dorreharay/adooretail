@@ -30,7 +30,7 @@ function PanelInstance(props) {
               <Text style={[styles.panelHeadingText, { fontSize: 25 }]}>
                 {selectedDate.date}
               </Text>
-              <FastImage style={{ width: 16, height: 16, marginLeft: 15, marginBottom: 2, }} source={require('@images/split_orders.png')} />
+              <FastImage style={{ width: 16, height: 16, marginLeft: 15, }} source={require('@images/split_orders.png')} />
             </TouchableOpacity>
           )}          
         </View>
