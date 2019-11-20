@@ -101,6 +101,7 @@ const base = {
     marginHorizontal: 3,
   },
   sortButton: {
+    height: 40,
     marginLeft: 15,
     borderWidth: 1,
     borderColor: '#E0E0E0',
@@ -118,7 +119,7 @@ const base = {
     color: '#343434',
     fontSize: 18,
     fontFamily: PROBA_REGULAR,
-    lineHeight: 25,
+    lineHeight: 20,
   },
   receiptsList: {
     width: '100%',

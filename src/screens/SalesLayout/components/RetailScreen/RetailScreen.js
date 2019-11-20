@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { useDispatch } from 'react-redux'
-import { Text, View, Image, StyleSheet, Animated, Easing } from 'react-native'
+import { Text, View, Image, StyleSheet, Animated, Easing, TouchableOpacity, } from 'react-native'
 import _ from 'lodash'
 import styles from './styles'
 
@@ -29,6 +29,7 @@ function RetailScreen(props) {
   const initialPanelScreens = { history: false, devices: false, transactions: false, }
 
   const [panelScreenState, setPanelScreenState] = useState(initialPanelScreens)
+  const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
 
   const [menuVisible, setMenuVisibility] = useState(false)
   const [modalOpacity] = useState(new Animated.Value(0))
@@ -96,6 +97,7 @@ function RetailScreen(props) {
         setReceipts={setReceipts}
         selectedInstance={selectedInstance}
         selectReceiptInstance={selectReceiptInstance}
+        setPaymentModalVisibility={setPaymentModalVisibility}
       />
       <RightSide
         products={products}
@@ -141,6 +143,20 @@ function RetailScreen(props) {
             </View>
           )}
         </PanelInstance>
+      )}
+
+      {paymentModalVisible && (
+        <View style={styles.paymentWrapperContainer}>
+          <View style={styles.paymentModal}>
+
+          </View>
+          <TouchableOpacity
+            onPress={() => setPaymentModalVisibility(false)}
+            style={styles.paymentWrapper}
+            activeOpacity={1}
+          >
+          </TouchableOpacity>
+        </View>
       )}
 
     </View>

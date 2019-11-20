@@ -18,7 +18,7 @@ const headerButtonSizes = { width: headerHeight, height: headerHeight, }
 const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
 
 function LeftSide(props) {
-  const { receipts, setReceipts, selectedInstance, selectReceiptInstance, } = props;
+  const { receipts, setReceipts, selectedInstance, selectReceiptInstance, setPaymentModalVisibility, } = props;
 
   const receiptsRef = useRef(null)
 
@@ -86,7 +86,7 @@ function LeftSide(props) {
   const changePaymentModalState = (status) => {
     if(status && receipts[selectedInstance].length === 0) return
 
-    setPaymentModalVisible(status)
+    setPaymentModalVisibility(status)
   }
 
   return (
