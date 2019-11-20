@@ -1,6 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
-import { deviceWidth } from '@dimensions';
 
 const base = {
   container: {
@@ -17,21 +16,18 @@ const base = {
   },
   colsProduct3: {
     width: '32.5%',
-    height: deviceWidth * 0.2,
     marginLeft: '2%',
     marginBottom: 20,
     borderRadius: 5,
   },
   colsProduct4: {
     width: '23.5%',
-    height: deviceWidth * 0.15,
     marginLeft: '2%',
     marginBottom: 20,
     borderRadius: 5,
   },
   colsProduct5: {
     width: '18.5%',
-    height: deviceWidth * 0.12,
     marginLeft: '1.9%',
     marginBottom: 20,
     borderRadius: 5,

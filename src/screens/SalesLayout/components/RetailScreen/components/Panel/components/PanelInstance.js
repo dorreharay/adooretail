@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, } from 'react-native'
 import FastImage from 'react-native-fast-image';
 import styles from './styles'
 
-import { deviceWidth, deviceHeight } from '@dimensions';
 import SharedButton from '@shared/SharedButton';
 
 function PanelInstance(props) {

@@ -1,8 +1,6 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
-import { deviceWidth, deviceHeight } from '@dimensions';
-
 const toolsBarHeight = 45
 
 const base = {

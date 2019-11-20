@@ -1,12 +1,26 @@
+
+
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
+const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
 
 const initialState = {
   endOfSession: false,
+  dimensions: {
+    deviceWidth: 0,
+    deviceHeight: 0,
+  }
 };
 
 export function setEndOfSessionStatus(payload) {
   return {
     type: SET_END_OF_SESSION_STATUS,
+    payload 
+  }
+}
+
+export function setOrientationDimensions(payload) {
+  return {
+    type: SET_ORIENTATION_DIMENSIONS,
     payload
   }
 }
@@ -14,6 +28,9 @@ export function setEndOfSessionStatus(payload) {
 const ACTION_HANDLERS = {
   [SET_END_OF_SESSION_STATUS]: (state, action) => {
     return {...state, endOfSession: action.payload}
+  },
+  [SET_ORIENTATION_DIMENSIONS]: (state, action) => {
+    return {...state, dimensions: action.payload}
   },
 };
 

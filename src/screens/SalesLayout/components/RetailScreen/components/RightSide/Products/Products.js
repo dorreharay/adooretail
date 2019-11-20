@@ -14,6 +14,7 @@ function Products(props) {
 
   const layout = useSelector(state => state.orders.layout)
   const products = useSelector(state => state.orders.products)
+  const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const scrollView = useRef(null)
   const debounce = useRef(_.debounce((callback) => callback(), 300))
@@ -126,6 +127,18 @@ function Products(props) {
     setActiveCategory(null)
   }
 
+  const calculateColHeight = (appliedLayout) => {
+    if(appliedLayout === 3) {
+      return deviceWidth * 0.2
+    }
+    if(appliedLayout === 4) {
+      return deviceWidth * 0.15
+    }
+    if(appliedLayout === 5) {
+      return deviceWidth * 0.12
+    }
+  }
+
   return (
     <ScrollView
       ref={scrollView}
@@ -145,7 +158,7 @@ function Products(props) {
           <View style={styles.row} key={index}>
             {row.map((rowItem, key) => (
               <TouchableOpacity
-                style={[styles[`colsProduct${layout}`], key === 0 && { marginLeft: 0, }]}
+                style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                 onPress={() => changeActiveCategory(index, key)}
                 activeOpacity={1} key={key}
               >
@@ -167,7 +180,7 @@ function Products(props) {
                 {row.map((rowItem, key) => (
                   rowItem.title === 'back' ? (
                     <TouchableOpacity
-                      style={[styles[`colsProduct${layout}`], { alignItems: 'center', justifyContent: 'center', }, { marginLeft: 0, backgroundColor: 'white' }]}
+                      style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, { alignItems: 'center', justifyContent: 'center', }, { marginLeft: 0, backgroundColor: 'white' }]}
                       onPress={resetCategory}
                       activeOpacity={1}
                       key={key}
@@ -180,7 +193,7 @@ function Products(props) {
                   ) : (
                     <SharedButton
                       onPress={(force) => addProductQuantity(rowItem)(force)}
-                      forceStyles={[styles[`colsProduct${layout}`], key === 0 && { marginLeft: 0, }]}
+                      forceStyles={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                       buttonSizes={{ flex: 1, width: '100%', }}
                       scale={0.95} onStart key={key}
                     >

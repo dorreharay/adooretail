@@ -150,6 +150,4 @@ function NoAccount(props) {
   )
 }
 
-
-
 export default NoAccount;

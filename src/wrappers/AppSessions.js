@@ -1,21 +1,23 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { View } from 'react-native'
+import { View, Dimensions } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
 import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen'
+import Orientation from 'react-native-orientation'
 
 import { currentSessionSelector } from '@selectors'
-import { setForceSlide, setEndOfSessionStatus } from '../../reducers/TempReducer'
+import { setForceSlide, setEndOfSessionStatus, setOrientationDimensions, } from '../../reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
 
-function AppSessions(props){
-  const { 
+function AppSessions(props) {
+  const {
     children, navigatorRef, NavigationService,
-    changeInitialLoadingWrapperOpacity, 
+    changeInitialLoadingWrapperOpacity,
     initialLoadingOpacity, initialLoadingVisibility,
   } = props
 
+  
   const dispatch = useDispatch()
 
   const currentSession = useSelector(currentSessionSelector)
@@ -23,8 +25,8 @@ function AppSessions(props){
   const currentAccount = useSelector(state => state.user.currentAccount)
 
   useEffect(() => {
-    if(initialLoadingVisibility) {
-      if(_.isEmpty(currentAccount)) {
+    if (initialLoadingVisibility) {
+      if (_.isEmpty(currentAccount)) {
         const outer = setTimeout(() => {
           NavigationService.setTopLevelNavigator(navigatorRef.current)
           setTimeout(() => {
@@ -41,9 +43,9 @@ function AppSessions(props){
         }
       }
 
-      if(currentSession.length === 0) {
+      if (currentSession.length === 0) {
         const outer = setTimeout(() => {
-          if(initialLoadingVisibility) {
+          if (initialLoadingVisibility) {
             changeInitialLoadingWrapperOpacity(false)
             SplashScreen.hide();
           }
@@ -54,9 +56,9 @@ function AppSessions(props){
         }
       }
 
-      if(currentSession.endTime) {
+      if (currentSession.endTime) {
         const outer = setTimeout(() => {
-          if(initialLoadingVisibility) {
+          if (initialLoadingVisibility) {
             changeInitialLoadingWrapperOpacity(false)
             SplashScreen.hide();
           }
@@ -83,6 +85,31 @@ function AppSessions(props){
       }
     }
   }, [navigatorRef, currentSession, initialLoadingVisibility, currentAccount])
+
+  const onOrientationChange = (orientation) => {
+    if(orientation === 'PORTRAIT') {
+      Orientation.lockToLandscape()
+    }
+  }
+
+  useEffect(() => {
+    Orientation.getOrientation((err, orientation) => {
+      
+      if(orientation === 'PORTRAIT') {
+        Orientation.lockToLandscape()
+      } else {
+        let deviceWidth = Dimensions.get('screen').width
+        let deviceHeight = Dimensions.get('screen').height
+    
+        dispatch(setOrientationDimensions({ deviceWidth, deviceHeight }))
+      }
+    });
+    
+    onOrientationChange()
+    Orientation.addOrientationListener(onOrientationChange);
+
+    return () => Orientation.removeOrientationListener(onOrientationChange);
+  }, [])
 
   const screenProps = {
     initialLoadingVisibility,
