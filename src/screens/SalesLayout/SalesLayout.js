@@ -112,7 +112,7 @@ function SalesLayout({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Swiper style={styles.wrapper} showsButtons={accountWrapperVisibile} showsPagination={false}>
+      <Swiper style={styles.wrapper} showsButtons={accountWrapperVisibile} showsPagination={false} emoveClippedSubviews={false}>
         <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
           <RetailScreen loadProducts={loadProducts} navigation={navigation} openChangeAccountOverview={openChangeAccountOverview} />
           <EndOfSessionModal
