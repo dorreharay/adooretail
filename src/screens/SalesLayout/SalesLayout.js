@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useMemo, } from 'react';
-import { Text, View, Image, StyleSheet, Alert, } from 'react-native';
+import { Text, View, Image, StyleSheet, Alert, Animated, Easing, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
 import Toast, {DURATION} from 'react-native-easy-toast';
@@ -19,6 +19,7 @@ function SalesLayout({ navigation }) {
   const toastRef = useRef(null)
   const [isVisible, setModalVisibility] = useState(false)
   const [refreshedProducts, setRefreshedProducts] = useState([])
+  const [animatedScale] = useState(new Animated.Value(1))
   const products = useSelector(state => state.orders.products)
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
@@ -88,16 +89,36 @@ function SalesLayout({ navigation }) {
     }
   }
 
+  const animate = () => {
+    Animated.parallel([
+      Animated.timing(animatedScale, {
+        toValue: animatedScale._value === 0.7 ? 1 : 0.7,
+        duration: 100,
+        easing: Easing.linear
+      }),
+    ]).start()
+  }
+
+  const togglechangeAccount = () => {
+    animate()
+  }
+
+  useEffect(() => {
+    // setInterval(() => {
+    //   animate()
+    // }, 2000)
+  }, [])
+
   return (
     <View style={styles.container}>
-      <View style={styles.slider}>
-        <RetailScreen loadProducts={loadProducts} navigation={navigation} />
+      <Animated.View style={[styles.slider, { transform: [{ scale: animatedScale }] }]}>
+        <RetailScreen loadProducts={loadProducts} navigation={navigation} togglechangeAccount={togglechangeAccount} />
         <EndOfSessionModal
           navigation={navigation}
           isVisible={isVisible}
           setModalVisibility={setModalVisibility}
         />
-      </View>
+      </Animated.View>
       <Toast
         ref={toastRef}
         opacity={1}
