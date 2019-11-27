@@ -26,6 +26,7 @@ function SalesLayout({ navigation }) {
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
   const currentSession = useSelector(currentSessionSelector)
+  const accounts = useSelector(state => state.user.accounts)
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const dispatch = useDispatch()
@@ -112,37 +113,31 @@ function SalesLayout({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Swiper style={styles.wrapper} showsButtons={accountWrapperVisibile} showsPagination={false} emoveClippedSubviews={false}>
-        <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
-          <RetailScreen loadProducts={loadProducts} navigation={navigation} openChangeAccountOverview={openChangeAccountOverview} />
-          <EndOfSessionModal
-            navigation={navigation}
-            isVisible={isVisible}
-            setModalVisibility={setModalVisibility}
-          />
-          {accountWrapperVisibile && (
-            <TouchableOpacity
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
-              onPress={closeChangeAccountOverview}
-              activeOpacity={1}
+      <Swiper 
+        style={styles.wrapper}
+        showsButtons={accountWrapperVisibile}
+        showsPagination={false}
+        bounces={false} loop={false}
+        removeClippedSubviews={false}
+        scrollEnabled={accountWrapperVisibile}
+      >
+        {accounts.map(account => (
+          <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
+            <RetailScreen loadProducts={loadProducts} navigation={navigation} openChangeAccountOverview={openChangeAccountOverview} />
+            <EndOfSessionModal
+              navigation={navigation}
+              isVisible={isVisible}
+              setModalVisibility={setModalVisibility}
             />
-          )}
-        </Animated.View>
-        <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
-          <RetailScreen loadProducts={loadProducts} navigation={navigation} openChangeAccountOverview={openChangeAccountOverview} />
-          <EndOfSessionModal
-            navigation={navigation}
-            isVisible={isVisible}
-            setModalVisibility={setModalVisibility}
-          />
-          {accountWrapperVisibile && (
-            <TouchableOpacity
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
-              onPress={closeChangeAccountOverview}
-              activeOpacity={1}
-            />
-          )}
-        </Animated.View>
+            {accountWrapperVisibile && (
+              <TouchableOpacity
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
+                onPress={closeChangeAccountOverview}
+                activeOpacity={1}
+              />
+            )}
+          </Animated.View>
+        ))}
       </Swiper>
       <Toast
         ref={toastRef}
