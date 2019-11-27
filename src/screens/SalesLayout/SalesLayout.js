@@ -14,6 +14,8 @@ import { currentSessionSelector } from '@selectors'
 import RetailScreen from './components/RetailScreen/RetailScreen';
 import EndOfSessionModal from './components/EndOfSessionModal'
 
+import { currentAccountSelector } from '@selectors'
+import { saveCurrentAccountIndex } from '../../../reducers/UserReducer'
 import { setProducts, setLayout, } from '../../../reducers/OrdersReducer'
 
 function SalesLayout({ navigation }) {
@@ -24,7 +26,8 @@ function SalesLayout({ navigation }) {
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
   const products = useSelector(state => state.orders.products)
   const layout = useSelector(state => state.orders.layout)
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const currentAccount = useSelector(currentAccountSelector)
+  console.log('-------------->', currentAccount)
   const currentSession = useSelector(currentSessionSelector)
   const accounts = useSelector(state => state.user.accounts)
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
@@ -58,55 +61,6 @@ function SalesLayout({ navigation }) {
 
     dispatch(setProducts(newProducts))
   }
-
-  const animateIn = () => {
-    Animated.parallel([
-      Animated.timing(topAnimated, {
-        toValue: 100,
-        duration: 500
-      }),
-      Animated.timing(leftAnimated, {
-        toValue: 100,
-        duration: 500
-      }),
-      Animated.timing(widthAnimated, {
-        toValue: deviceWidth - 200,
-        duration: 500
-      }),
-      Animated.timing(heightAnimated, {
-        toValue: deviceHeight - 200,
-        duration: 500
-      })
-    ]).start()
-  }
-
-  const animateOut = () => {
-    Animated.parallel([
-      Animated.timing(topAnimated, {
-        toValue: 0,
-        duration: 500
-      }),
-      Animated.timing(leftAnimated, {
-        toValue: 0,
-        duration: 500
-      }),
-      Animated.timing(widthAnimated, {
-        toValue: deviceWidth,
-        duration: 500
-      }),
-      Animated.timing(heightAnimated, {
-        toValue: deviceHeight,
-        duration: 500
-      })
-    ]).start()
-  }
-
-  useEffect(() => {
-    setTimeout(() => {
-      animateIn()
-      setTimeout(() => animateOut(), 2000)
-    }, 2000)
-  }, [])
 
   useMemo(() => {
     updateLayout(products.flat(), layout)
@@ -155,8 +109,9 @@ function SalesLayout({ navigation }) {
     setAccountWrapperVisibility(true)
   }
 
-  const closeChangeAccountOverview = () => {
+  const closeChangeAccountOverview = (sessionId) => {
     animate()
+    dispatch(saveCurrentAccountIndex(sessionId))
     setAccountWrapperVisibility(false)
   }
 
@@ -170,9 +125,13 @@ function SalesLayout({ navigation }) {
         removeClippedSubviews={false}
         scrollEnabled={accountWrapperVisibile}
       >
-        {accounts.map(account => (
+        {accounts.map((account, index) => (
           <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
-            <RetailScreen loadProducts={loadProducts} navigation={navigation} openChangeAccountOverview={openChangeAccountOverview} />
+            <RetailScreen 
+              loadProducts={loadProducts}
+              navigation={navigation}
+              openChangeAccountOverview={openChangeAccountOverview}
+            />
             <EndOfSessionModal
               navigation={navigation}
               isVisible={isVisible}
@@ -181,7 +140,7 @@ function SalesLayout({ navigation }) {
             {accountWrapperVisibile && (
               <TouchableOpacity
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
-                onPress={closeChangeAccountOverview}
+                onPress={() => closeChangeAccountOverview(index)}
                 activeOpacity={1}
               />
             )}
@@ -212,6 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   slider: {
+    borderRadius: 50,
     zIndex: 1000,
   },
   goBack: {

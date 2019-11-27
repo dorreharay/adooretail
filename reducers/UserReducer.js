@@ -5,15 +5,16 @@ const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
 const UPDATE_CURRENT_SESSIONS = 'UPDATE_CURRENT_SESSIONS';
 const SET_START_CASH = 'SET_START_CASH';
 const SET_EMPLOYEES = 'SET_EMPLOYEES';
+const SAVE_CURRENT_ACCOUNT_INDEX = 'SAVE_CURRENT_ACCOUNT_INDEX';
 
 const initialState = {
   token: '',
   startCash: 0,
-  employees: [],
   initialLoading: true,
+  currentAccountIndex: 0,
   accounts: [
     {
-      id: 1,
+      id: '4sd3fsgu76fg55akgjsd54jadfnu343',
       token: '5cb1ed89c6bf28192c152435',
       businessName: 'Poilka Coffee Бариста 1',
       img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
@@ -22,35 +23,73 @@ const initialState = {
         '888f33dcebf0800b',
         '67CA2667-D89D-4951-8112-7EA50AF8DA94',
       ],
-      employees : [ 
+      employees: [
         {
-            name : 'Ігор',
-            icon : '',
-        }, 
+          name: 'Ігор',
+          icon: '',
+        },
         {
-            name : 'Іра',
-            icon : '',
-        }, 
+          name: 'Іра',
+          icon: '',
+        },
         {
-            name : 'Наташа',
-            icon : '',
-        }, 
+          name: 'Наташа',
+          icon: '',
+        },
         {
-            name : 'Андрій',
-            icon : '',
-        }, 
+          name: 'Андрій',
+          icon: '',
+        },
         {
-            name : 'Льоша',
-            icon : '',
+          name: 'Льоша',
+          icon: '',
         }
-    ],
+      ],
+      localSessions: [],
     },
-    {},
-    {},
+    {
+      id: '4sd3fsgu76fg55akgjsd54jadfnu343',
+      token: '5cb1ed89c6bf28192c152374',
+      businessName: 'Poilka Coffee Бариста 1',
+      img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
+      pinCode: '0000111',
+      registeredDeviceIds: [
+        '888f33dcebf0800b',
+        '67CA2667-D89D-4951-8112-7EA50AF8DA94',
+      ],
+      employees: [
+        {
+          name: 'Ігор',
+          icon: '',
+        },
+        {
+          name: 'Іра',
+          icon: '',
+        },
+        {
+          name: 'Наташа',
+          icon: '',
+        },
+        {
+          name: 'Андрій',
+          icon: '',
+        },
+        {
+          name: 'Льоша',
+          icon: '',
+        }
+      ],
+      localSessions: [],
+    },
   ],
-  localSessions: [],
-  currentAccount: {},
 };
+
+export function saveCurrentAccountIndex(payload) {
+  return {
+    type: SAVE_CURRENT_ACCOUNT_INDEX,
+    payload
+  }
+}
 
 export function changeAccount(payload) {
   return {
@@ -91,27 +130,32 @@ export function setEmployees(payload) {
 
 const ACTION_HANDLERS = {
   [CHANGE_ACCOUNT]: (state, action) => {
-    return {...state, currentAccount: action.payload}
+    return { ...state, currentAccount: action.payload }
   },
   [SET_AUTH_TOKEN]: (state, action) => {
-    return {...state, token: action.payload}
+    return { ...state, token: action.payload }
+  },
+  [SAVE_CURRENT_ACCOUNT_INDEX]: (state, action) => {
+    return { ...state, currentAccountIndex: action.payload }
   },
   [UPDATE_CURRENT_SESSIONS]: (state, action) => {
     const { status, newSessionProp } = action.payload
-    const { localSessions } = state
+    const { accounts, currentAccountIndex } = state
+
+    const localSessions = accounts[currentAccountIndex].localSessions
 
     let newSession = {}, updatedSessions = []
 
-    if(status === 'new') {
+    if (status === 'new') {
       newSession = {
         ...newSessionProp,
         startTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
       }
 
       updatedSessions = [...localSessions, newSession]
-    } 
-    
-    if(status === 'end') {
+    }
+
+    if (status === 'end') {
       const lastIndex = localSessions.length - 1
       const currentSession = localSessions[lastIndex]
 
@@ -121,19 +165,21 @@ const ACTION_HANDLERS = {
       }
 
       updatedSessions = localSessions.map((localSession, localIndex) => {
-        if(localIndex === localSessions.length - 1) { 
+        if (localIndex === localSessions.length - 1) {
           return newSession
         }
       })
     }
 
-    return {...state, localSessions: updatedSessions,}
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, localSessions: updatedSessions }) : item)
+
+    return { ...state, accounts: newAccounts, }
   },
   [SET_START_CASH]: (state, action) => {
-    return {...state, startCash: action.payload}
+    return { ...state, startCash: action.payload }
   },
   [SET_EMPLOYEES]: (state, action) => {
-    return {...state, employees: action.payload}
+    return { ...state, employees: action.payload }
   },
 };
 

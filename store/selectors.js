@@ -1,10 +1,17 @@
 import { createSelector } from 'reselect'
 
-const selectSessions = state => state.user.localSessions
+const selectSessions = state => ({ 
+  accounts: state.user.accounts,
+  currentAccountIndex: state.user.currentAccountIndex,
+})
 
 export const currentSessionSelector = createSelector(
   selectSessions,
-  localSessions => {
+  ({ accounts, currentAccountIndex }) => {
+    const localSessions = accounts[currentAccountIndex].localSessions
+
+    console.log('aaaa', localSessions)
+
     const lastIndex = localSessions ? localSessions.length - 1 : null
 
     if(lastIndex === null) return {}
@@ -13,4 +20,14 @@ export const currentSessionSelector = createSelector(
 
     return currentSession
   }
+)
+
+const selectIndexAndAccounts = state => ({ 
+  accounts: state.user.accounts,
+  currentAccountIndex: state.user.currentAccountIndex,
+})
+
+export const currentAccountSelector = createSelector(
+  selectIndexAndAccounts,
+  ({ accounts, currentAccountIndex }) => accounts[currentAccountIndex]
 )

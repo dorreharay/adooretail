@@ -11,7 +11,7 @@ import Svg, { Circle } from 'react-native-svg';
 import styles from './styles';
 
 import { API_URL } from '@api';
-import { currentSessionSelector } from '@selectors'
+import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { loginKeyboardLayout } from '../../../../helpers/keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
@@ -35,7 +35,7 @@ function Login(props) {
   const dispatch = useDispatch();
   const netInfo = useNetInfo();
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const currentAccount = useSelector(currentAccountSelector)
   const currentSession = useSelector(currentSessionSelector)
 
   const toast = useRef(null)

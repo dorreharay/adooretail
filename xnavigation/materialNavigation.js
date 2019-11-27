@@ -10,7 +10,6 @@ import SalesLayout from '../src/screens/SalesLayout/SalesLayout'
 
 const materialNavigation = createMaterialTopTabNavigator (
   {
-    NoAccount: { screen: NoAccount },
     Login: { screen: Login, },
     InputCash: { screen: InputCash, },
     InputEmployee: { screen: InputEmployees },

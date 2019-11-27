@@ -17,58 +17,15 @@ function AppSessions(props) {
     initialLoadingOpacity, initialLoadingVisibility,
   } = props
 
-  
-  const dispatch = useDispatch()
-
   const currentSession = useSelector(currentSessionSelector)
-
   const currentAccount = useSelector(state => state.user.currentAccount)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (initialLoadingVisibility) {
-      if (_.isEmpty(currentAccount)) {
-        const outer = setTimeout(() => {
-          NavigationService.setTopLevelNavigator(navigatorRef.current)
-          setTimeout(() => {
-            NavigationService.navigate('NoAccount')
-            setTimeout(() => {
-              changeInitialLoadingWrapperOpacity(false)
-              SplashScreen.hide();
-            }, 350)
-          }, 110)
-        }, 100)
-
-        return () => {
-          clearTimeout(outer)
-        }
-      }
-
-      if (currentSession.length === 0) {
-        const outer = setTimeout(() => {
-          if (initialLoadingVisibility) {
-            changeInitialLoadingWrapperOpacity(false)
-            SplashScreen.hide();
-          }
-        }, 300)
-
-        return () => {
-          clearTimeout(outer)
-        }
-      }
-
-      if (currentSession.endTime) {
-        const outer = setTimeout(() => {
-          if (initialLoadingVisibility) {
-            changeInitialLoadingWrapperOpacity(false)
-            SplashScreen.hide();
-          }
-        }, 300)
-
-        return () => {
-          clearTimeout(outer)
-        }
-      } else {
-        const outer = setTimeout(() => {
+      if (!currentSession.endTime && currentSession.length !== 0) {
+        setTimeout(() => {
           NavigationService.setTopLevelNavigator(navigatorRef.current)
           setTimeout(() => {
             NavigationService.navigate('SalesLayout')
@@ -78,33 +35,32 @@ function AppSessions(props) {
             }, 250)
           }, 110)
         }, 100)
-
-        return () => {
-          clearTimeout(outer)
-        }
+      } else {
+        changeInitialLoadingWrapperOpacity(false)
+        SplashScreen.hide();
       }
     }
   }, [navigatorRef, currentSession, initialLoadingVisibility, currentAccount])
 
   const onOrientationChange = (orientation) => {
-    if(orientation === 'PORTRAIT') {
+    if (orientation === 'PORTRAIT') {
       Orientation.lockToLandscape()
     }
   }
 
   useEffect(() => {
     Orientation.getOrientation((err, orientation) => {
-      
-      if(orientation === 'PORTRAIT') {
+
+      if (orientation === 'PORTRAIT') {
         Orientation.lockToLandscape()
       } else {
         let deviceWidth = Dimensions.get('screen').width
         let deviceHeight = Dimensions.get('screen').height
-    
+
         dispatch(setOrientationDimensions({ deviceWidth, deviceHeight }))
       }
     });
-    
+
     onOrientationChange()
     Orientation.addOrientationListener(onOrientationChange);
 
@@ -125,13 +81,13 @@ function AppSessions(props) {
     <SharedBackground
       loading={initialLoadingVisibility}
       opacity={initialLoadingOpacity}
-      source={require('@images/background-adv3.png')}
+      source={require('@images/background-adv5.png')}
       mainWrapper
     >
       <SharedBackground
         loading={initialLoadingVisibility}
         opacity={initialLoadingOpacity}
-        source={require('@images/background-adv3.png')}
+        source={require('@images/background-adv5.png')}
         navigation={NavigationService}
       >
         <View style={{ width: '100%', height: '100%', zIndex: 10 }}>

@@ -33,12 +33,18 @@ function RightSide(props) {
 
   const netInfo = useNetInfo();
 
+  const currentAccountIndex = useSelector(state => state.user.currentAccountIndex)
   const layout = useSelector(state => state.orders.layout)
   const dispatch = useDispatch()
 
   const [searchTerm, setSearchTerm] = useState('')
 
   const loadProductsThrottled = useRef(_.throttle(() => loadProducts(), 5000))
+
+  useEffect(() => {
+    loadAgain()
+    console.log('-------->(')
+  }, [currentAccountIndex])
 
   const loadAgain = () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {

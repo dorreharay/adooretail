@@ -13,12 +13,13 @@ import LoginLoader from '@shared/LoginLoader';
 
 import EmployeesList from "./components/EmployeesList";
 
+import { currentAccountSelector } from '@selectors'
 import { updateCurrentSession, setEmployees, setStartCash, } from '../../../../reducers/UserReducer';
 
 function InputEmployees({ navigation }) {
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
-  const employees = useSelector(state => state.user.currentAccount.employees)
+  const currentAccount = useSelector(currentAccountSelector)
+  const employees = currentAccount.employees
   const { startCash, } = useSelector(state => ({ 
     startCash: state.user.startCash,
   }))

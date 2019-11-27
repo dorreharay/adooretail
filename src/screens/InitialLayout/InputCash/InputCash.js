@@ -7,6 +7,8 @@ import styles from './styles'
 
 import { API_URL } from '../../../../config/api';
 import { cashKeyboardLayout } from '../../../../helpers/keyboards'
+
+import { currentAccountSelector } from '@selectors'
 import { setEmployees, setStartCash, updateCurrentSession } from '../../../../reducers/UserReducer'
 import { setEndOfSessionStatus } from '../../../../reducers/TempReducer'
 
@@ -15,9 +17,8 @@ import LoginLoader from '@shared/LoginLoader';
 function InputCash(props) {
   const { navigation, sliderRef, } = props;
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const currentAccount = useSelector(currentAccountSelector)
   const endOfSession = useSelector(state => state.temp.endOfSession)
-  const employees = useSelector(state => state.user.currentAccount.employees)
   const startCash = useSelector(state => state.user.startCash)
 
   const dispatch = useDispatch();
