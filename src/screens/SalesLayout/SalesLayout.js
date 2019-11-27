@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect, useMemo, } from 'react';
-import { Text, View, Image, StyleSheet, Alert, Animated, } from 'react-native';
+import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacity, ScrollView, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
-import Toast, { DURATION } from 'react-native-easy-toast';
+import Toast, {DURATION} from 'react-native-easy-toast';
+import Swiper from 'react-native-swiper'
 let moment = require('moment-timezone');
 moment.locale('uk');
 
@@ -17,18 +18,16 @@ import { setProducts, setLayout, } from '../../../reducers/OrdersReducer'
 
 function SalesLayout({ navigation }) {
   const toastRef = useRef(null)
+  const [isVisible, setModalVisibility] = useState(false)
+  const [refreshedProducts, setRefreshedProducts] = useState([])
+  const [animatedScale] = useState(new Animated.Value(1))
+  const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
   const products = useSelector(state => state.orders.products)
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
   const currentSession = useSelector(currentSessionSelector)
-  const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
-
-  const [isVisible, setModalVisibility] = useState(false)
-  const [refreshedProducts, setRefreshedProducts] = useState([])
-  const [topAnimated] = useState(new Animated.Value(0))
-  const [leftAnimated] = useState(new Animated.Value(0))
-  const [widthAnimated] = useState(new Animated.Value(deviceWidth))
-  const [heightAnimated] = useState(new Animated.Value(deviceHeight))
+  const accounts = useSelector(state => state.user.accounts)
+  const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const dispatch = useDispatch()
 
@@ -141,18 +140,54 @@ function SalesLayout({ navigation }) {
     }
   }
 
+  const animate = () => {
+    Animated.parallel([
+      Animated.timing(animatedScale, {
+        toValue: animatedScale._value === 0.7 ? 1 : 0.7,
+        duration: 100,
+        easing: Easing.linear
+      }),
+    ]).start()
+  }
+
+  const openChangeAccountOverview = () => {
+    animate()
+    setAccountWrapperVisibility(true)
+  }
+
+  const closeChangeAccountOverview = () => {
+    animate()
+    setAccountWrapperVisibility(false)
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.slider}>
-        <Animated.View style={{ position: 'absolute', top: topAnimated, left: leftAnimated, width: widthAnimated, height: heightAnimated, }}>
-          <RetailScreen loadProducts={loadProducts} navigation={navigation} />
-          <EndOfSessionModal
-            navigation={navigation}
-            isVisible={isVisible}
-            setModalVisibility={setModalVisibility}
-          />
-        </Animated.View>
-      </View>
+      <Swiper 
+        style={styles.wrapper}
+        showsButtons={accountWrapperVisibile}
+        showsPagination={false}
+        bounces={false} loop={false}
+        removeClippedSubviews={false}
+        scrollEnabled={accountWrapperVisibile}
+      >
+        {accounts.map(account => (
+          <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
+            <RetailScreen loadProducts={loadProducts} navigation={navigation} openChangeAccountOverview={openChangeAccountOverview} />
+            <EndOfSessionModal
+              navigation={navigation}
+              isVisible={isVisible}
+              setModalVisibility={setModalVisibility}
+            />
+            {accountWrapperVisibile && (
+              <TouchableOpacity
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
+                onPress={closeChangeAccountOverview}
+                activeOpacity={1}
+              />
+            )}
+          </Animated.View>
+        ))}
+      </Swiper>
       <Toast
         ref={toastRef}
         opacity={1}
@@ -177,7 +212,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   slider: {
-    flex: 1,
     zIndex: 1000,
   },
   goBack: {

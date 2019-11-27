@@ -14,7 +14,7 @@ import History from './components/Panel/components/History/History';
 import PaymentModal from './components/LeftSide/components/PaymentModal';
 
 function RetailScreen(props) {
-  const { products, loadProducts, navigation, } = props;
+  const { products, loadProducts, navigation, openChangeAccountOverview, } = props;
 
   const dispatch = useDispatch()
 
@@ -42,7 +42,7 @@ function RetailScreen(props) {
     { name: 'Пристрої', onPress: () => openPanelInstance('devices', 'Пристрої') },
     { name: 'Транзакції', onPress: () => openPanelInstance('transactions', 'Транзакції') },
     { name: 'Налаштування', onPress: () => openPanelInstance('transactions', 'Налаштування') },
-    { name: 'Змінити аккаунт', onPress: () => { } },
+    { name: 'Змінити аккаунт', onPress: openChangeAccountOverview },
   ])
 
   const openPanelInstance = (instanceName, title) => {
