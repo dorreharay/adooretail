@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect, useMemo, } from 'react';
-import { Text, View, Image, StyleSheet, Alert, } from 'react-native';
+import { Text, View, Image, StyleSheet, Alert, Animated, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
-import Toast, {DURATION} from 'react-native-easy-toast';
+import Toast, { DURATION } from 'react-native-easy-toast';
 let moment = require('moment-timezone');
 moment.locale('uk');
 
@@ -17,12 +17,18 @@ import { setProducts, setLayout, } from '../../../reducers/OrdersReducer'
 
 function SalesLayout({ navigation }) {
   const toastRef = useRef(null)
-  const [isVisible, setModalVisibility] = useState(false)
-  const [refreshedProducts, setRefreshedProducts] = useState([])
   const products = useSelector(state => state.orders.products)
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
   const currentSession = useSelector(currentSessionSelector)
+  const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
+
+  const [isVisible, setModalVisibility] = useState(false)
+  const [refreshedProducts, setRefreshedProducts] = useState([])
+  const [topAnimated] = useState(new Animated.Value(0))
+  const [leftAnimated] = useState(new Animated.Value(0))
+  const [widthAnimated] = useState(new Animated.Value(deviceWidth))
+  const [heightAnimated] = useState(new Animated.Value(deviceHeight))
 
   const dispatch = useDispatch()
 
@@ -31,7 +37,7 @@ function SalesLayout({ navigation }) {
 
     try {
       const { data } = await axios.get(`${API_URL}/user/products/${token}`)
-      
+
       setRefreshedProducts(data.products)
     } catch (error) {
       toastRef.current.show("Помилка мережі", 1000);
@@ -39,13 +45,13 @@ function SalesLayout({ navigation }) {
   }
 
   const updateLayout = (products, cardsPerRow) => {
-    function chunkArray(myArray, chunk_size){
+    function chunkArray(myArray, chunk_size) {
       var results = [];
-      
+
       while (myArray.length) {
         results.push(myArray.splice(0, chunk_size));
       }
-      
+
       return results;
     }
 
@@ -54,12 +60,61 @@ function SalesLayout({ navigation }) {
     dispatch(setProducts(newProducts))
   }
 
+  const animateIn = () => {
+    Animated.parallel([
+      Animated.timing(topAnimated, {
+        toValue: 100,
+        duration: 500
+      }),
+      Animated.timing(leftAnimated, {
+        toValue: 100,
+        duration: 500
+      }),
+      Animated.timing(widthAnimated, {
+        toValue: deviceWidth - 200,
+        duration: 500
+      }),
+      Animated.timing(heightAnimated, {
+        toValue: deviceHeight - 200,
+        duration: 500
+      })
+    ]).start()
+  }
+
+  const animateOut = () => {
+    Animated.parallel([
+      Animated.timing(topAnimated, {
+        toValue: 0,
+        duration: 500
+      }),
+      Animated.timing(leftAnimated, {
+        toValue: 0,
+        duration: 500
+      }),
+      Animated.timing(widthAnimated, {
+        toValue: deviceWidth,
+        duration: 500
+      }),
+      Animated.timing(heightAnimated, {
+        toValue: deviceHeight,
+        duration: 500
+      })
+    ]).start()
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      animateIn()
+      setTimeout(() => animateOut(), 2000)
+    }, 2000)
+  }, [])
+
   useMemo(() => {
     updateLayout(products.flat(), layout)
   }, [layout])
 
   useEffect(() => {
-    if(refreshedProducts.length !== 0)
+    if (refreshedProducts.length !== 0)
       updateLayout(refreshedProducts, layout)
   }, [refreshedProducts])
 
@@ -71,7 +126,7 @@ function SalesLayout({ navigation }) {
       validateSession()
     })
 
-    return () => {}
+    return () => { }
   }, [currentAccount.token, layout])
 
   const validateSession = () => {
@@ -79,11 +134,9 @@ function SalesLayout({ navigation }) {
     const startOfDay = moment(Date.now()).tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
     const endOfDay = moment(Date.now()).tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
 
-    console.log(currentSession)
-
     const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
 
-    if(!isValid) {
+    if (!isValid) {
       setModalVisibility(true)
     }
   }
@@ -91,17 +144,19 @@ function SalesLayout({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
-        <RetailScreen loadProducts={loadProducts} navigation={navigation} />
-        <EndOfSessionModal
-          navigation={navigation}
-          isVisible={isVisible}
-          setModalVisibility={setModalVisibility}
-        />
+        <Animated.View style={{ position: 'absolute', top: topAnimated, left: leftAnimated, width: widthAnimated, height: heightAnimated, }}>
+          <RetailScreen loadProducts={loadProducts} navigation={navigation} />
+          <EndOfSessionModal
+            navigation={navigation}
+            isVisible={isVisible}
+            setModalVisibility={setModalVisibility}
+          />
+        </Animated.View>
       </View>
       <Toast
         ref={toastRef}
         opacity={1}
-        style={{ paddingHorizontal: 20, backgroundColor:'#00000066'}}
+        style={{ paddingHorizontal: 20, backgroundColor: '#00000066' }}
         position='bottom'
         positionValue={50}
         textStyle={{
