@@ -14,7 +14,7 @@ import History from './components/Panel/components/History/History';
 import PaymentModal from './components/LeftSide/components/PaymentModal';
 
 function RetailScreen(props) {
-  const { products, loadProducts, navigation, openChangeAccountOverview, } = props;
+  const { products, loadProducts, navigation, openChangeAccountOverview, account, } = props;
 
   const dispatch = useDispatch()
 
@@ -107,6 +107,7 @@ function RetailScreen(props) {
         navigation={navigation}
         selectedInstance={selectedInstance}
         openMenu={openMenu}
+        account={account}
       />
       {menuVisible && (
         <Panel

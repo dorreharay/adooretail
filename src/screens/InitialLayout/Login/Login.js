@@ -37,6 +37,7 @@ function Login(props) {
 
   const currentAccount = useSelector(currentAccountSelector)
   const currentSession = useSelector(currentSessionSelector)
+  const { pinCode: validPinCode } = useSelector(state => state.user)
 
   const toast = useRef(null)
   const [passwordArray, setPasswordArray] = useState(initialPassword)
@@ -66,9 +67,11 @@ function Login(props) {
   }
 
   const validateDeviceID = async (enteredPinCode) => {
-    const { registeredDeviceIds, pinCode: validPinCode, token, } = currentAccount
+    const { registeredDeviceIds, token, } = currentAccount
 
     setLoadingStatus(true)
+
+    console.log(validPinCode)
 
     try {
       if(enteredPinCode !== validPinCode) {

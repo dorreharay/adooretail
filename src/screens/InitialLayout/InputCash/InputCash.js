@@ -60,7 +60,7 @@ function InputCash(props) {
   }
 
   const handleProceed = async () => {
-    const { token } = currentAccount
+    // const { token } = currentAccount
 
     if (endOfSession) {
       try {

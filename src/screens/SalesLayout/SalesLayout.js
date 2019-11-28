@@ -8,39 +8,38 @@ let moment = require('moment-timezone');
 moment.locale('uk');
 
 import { API_URL } from '@api'
-import { PROBA_REGULAR } from '@fonts'
+import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
 import { currentSessionSelector } from '@selectors'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
 import EndOfSessionModal from './components/EndOfSessionModal'
 
 import { currentAccountSelector } from '@selectors'
-import { saveCurrentAccountIndex } from '../../../reducers/UserReducer'
-import { setProducts, setLayout, } from '../../../reducers/OrdersReducer'
+import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
+import { setLayout, } from '../../../reducers/OrdersReducer'
 
 function SalesLayout({ navigation }) {
   const toastRef = useRef(null)
   const [isVisible, setModalVisibility] = useState(false)
-  const [refreshedProducts, setRefreshedProducts] = useState([])
   const [animatedScale] = useState(new Animated.Value(1))
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
-  const products = useSelector(state => state.orders.products)
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
-  console.log('-------------->', currentAccount)
+  const products = currentAccount.products
+  const token = useSelector(state => state.user.currentAccountToken)
   const currentSession = useSelector(currentSessionSelector)
   const accounts = useSelector(state => state.user.accounts)
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const dispatch = useDispatch()
 
-  const loadProducts = async () => {
-    const { token } = currentAccount
 
+
+  const loadProducts = async () => {
     try {
       const { data } = await axios.get(`${API_URL}/user/products/${token}`)
 
-      setRefreshedProducts(data.products)
+      updateLayout(data.products, layout)
     } catch (error) {
       toastRef.current.show("Помилка мережі", 1000);
     }
@@ -67,20 +66,17 @@ function SalesLayout({ navigation }) {
   }, [layout])
 
   useEffect(() => {
-    if (refreshedProducts.length !== 0)
-      updateLayout(refreshedProducts, layout)
-  }, [refreshedProducts])
+    loadProducts()
+  }, [token])  
 
   useEffect(() => {
     validateSession()
-    loadProducts()
     navigation.addListener('didFocus', () => {
-      loadProducts()
       validateSession()
     })
 
     return () => { }
-  }, [currentAccount.token, layout])
+  }, [layout])
 
   const validateSession = () => {
     const sessionStartTime = moment(currentSession.startTime).tz('Europe/Kiev')
@@ -109,14 +105,15 @@ function SalesLayout({ navigation }) {
     setAccountWrapperVisibility(true)
   }
 
-  const closeChangeAccountOverview = (sessionId) => {
+  const closeChangeAccountOverview = (sessionId, token) => {
     animate()
     dispatch(saveCurrentAccountIndex(sessionId))
+    dispatch(saveCurrentAccountToken(token))
     setAccountWrapperVisibility(false)
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container}>      
       <Swiper 
         style={styles.wrapper}
         showsButtons={accountWrapperVisibile}
@@ -126,11 +123,15 @@ function SalesLayout({ navigation }) {
         scrollEnabled={accountWrapperVisibile}
       >
         {accounts.map((account, index) => (
-          <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
+          <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]} key={index}>
+            <View style={{ position: 'absolute', top: -60 }}>
+              <Text style={styles.accountHeading}>{account.businessName}</Text>
+            </View>
             <RetailScreen 
               loadProducts={loadProducts}
               navigation={navigation}
               openChangeAccountOverview={openChangeAccountOverview}
+              account={account}
             />
             <EndOfSessionModal
               navigation={navigation}
@@ -140,7 +141,7 @@ function SalesLayout({ navigation }) {
             {accountWrapperVisibile && (
               <TouchableOpacity
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
-                onPress={() => closeChangeAccountOverview(index)}
+                onPress={() => closeChangeAccountOverview(index, account.token)}
                 activeOpacity={1}
               />
             )}
@@ -180,6 +181,11 @@ const styles = StyleSheet.create({
     top: 40,
     width: 50,
     height: 50,
+  },
+  accountHeading: {
+    color: '#FFFFFF',
+    fontSize: 30,
+    fontFamily: PROBA_MEDIUM,
   }
 })
 

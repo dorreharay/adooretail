@@ -6,23 +6,26 @@ const UPDATE_CURRENT_SESSIONS = 'UPDATE_CURRENT_SESSIONS';
 const SET_START_CASH = 'SET_START_CASH';
 const SET_EMPLOYEES = 'SET_EMPLOYEES';
 const SAVE_CURRENT_ACCOUNT_INDEX = 'SAVE_CURRENT_ACCOUNT_INDEX';
+const SAVE_CURRENT_ACCOUNT_TOKEN = 'SAVE_CURRENT_ACCOUNT_TOKEN';
+const SET_PRODUCTS = 'SET_PRODUCTS';
 
 const initialState = {
   token: '',
   startCash: 0,
   initialLoading: true,
   currentAccountIndex: 0,
+  currentAccountToken: '5cb1ed89c6bf28192c152435',
+  pinCode: '1111222',
   accounts: [
     {
       id: '4sd3fsgu76fg55akgjsd54jadfnu343',
       token: '5cb1ed89c6bf28192c152435',
       businessName: 'Poilka Coffee Бариста 1',
-      img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
-      pinCode: '1111222',
       registeredDeviceIds: [
         '888f33dcebf0800b',
         '67CA2667-D89D-4951-8112-7EA50AF8DA94',
       ],
+      img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
       employees: [
         {
           name: 'Ігор',
@@ -45,14 +48,14 @@ const initialState = {
           icon: '',
         }
       ],
+      products: [],
       localSessions: [],
     },
     {
       id: '4sd3fsgu76fg55akgjsd54jadfnu343',
       token: '5cb1ed89c6bf28192c152374',
-      businessName: 'Poilka Coffee Бариста 1',
+      businessName: 'Poilka Coffee Бариста 2',
       img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
-      pinCode: '0000111',
       registeredDeviceIds: [
         '888f33dcebf0800b',
         '67CA2667-D89D-4951-8112-7EA50AF8DA94',
@@ -79,14 +82,30 @@ const initialState = {
           icon: '',
         }
       ],
+      products: [],
       localSessions: [],
     },
   ],
 };
 
+export function setProducts(payload) {
+  return {
+    type: SET_PRODUCTS,
+    payload
+  }
+}
+
+
 export function saveCurrentAccountIndex(payload) {
   return {
     type: SAVE_CURRENT_ACCOUNT_INDEX,
+    payload
+  }
+}
+
+export function saveCurrentAccountToken(payload) {
+  return {
+    type: SAVE_CURRENT_ACCOUNT_TOKEN,
     payload
   }
 }
@@ -129,6 +148,14 @@ export function setEmployees(payload) {
 
 
 const ACTION_HANDLERS = {
+  [SET_PRODUCTS]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+    const newProducts = action.payload
+
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, products: newProducts }) : item)
+
+    return { ...state, accounts: newAccounts, }
+  },
   [CHANGE_ACCOUNT]: (state, action) => {
     return { ...state, currentAccount: action.payload }
   },
@@ -137,6 +164,9 @@ const ACTION_HANDLERS = {
   },
   [SAVE_CURRENT_ACCOUNT_INDEX]: (state, action) => {
     return { ...state, currentAccountIndex: action.payload }
+  },
+  [SAVE_CURRENT_ACCOUNT_TOKEN]: (state, action) => {
+    return { ...state, currentAccountToken: action.payload }
   },
   [UPDATE_CURRENT_SESSIONS]: (state, action) => {
     const { status, newSessionProp } = action.payload

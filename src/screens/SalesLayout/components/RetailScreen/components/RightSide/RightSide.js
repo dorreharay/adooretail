@@ -25,7 +25,7 @@ function RightSide(props) {
     products, loadProducts,
     receipts, setReceipts, 
     selectedInstance, navigation, 
-    openMenu, 
+    openMenu, account,
   } = props;
 
   const toast = useRef(null)
@@ -33,18 +33,13 @@ function RightSide(props) {
 
   const netInfo = useNetInfo();
 
-  const currentAccountIndex = useSelector(state => state.user.currentAccountIndex)
+  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const layout = useSelector(state => state.orders.layout)
   const dispatch = useDispatch()
 
   const [searchTerm, setSearchTerm] = useState('')
 
   const loadProductsThrottled = useRef(_.throttle(() => loadProducts(), 5000))
-
-  useEffect(() => {
-    loadAgain()
-    console.log('-------->(')
-  }, [currentAccountIndex])
 
   const loadAgain = () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
@@ -133,7 +128,7 @@ function RightSide(props) {
         />
       </View>
       <Products
-        products={products}
+        products={account.products}
         receipts={receipts}
         setReceipts={setReceipts}
         selectedInstance={selectedInstance}

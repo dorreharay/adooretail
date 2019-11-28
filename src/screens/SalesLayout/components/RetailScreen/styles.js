@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_MEDIUM } from '@fonts'
 
 const base = {
   container: {

@@ -6,14 +6,15 @@ import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
+import { currentProductsSelector } from '@selectors'
+
 import SharedButton from '@shared/SharedButton';
 import SearchResult from './SearchResult'
 
 function Products(props) {
-  const { receipts, setReceipts, selectedInstance, searchTerm, } = props;
+  const { receipts, products, setReceipts, selectedInstance, searchTerm, } = props;
 
   const layout = useSelector(state => state.orders.layout)
-  const products = useSelector(state => state.orders.products)
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const scrollView = useRef(null)
