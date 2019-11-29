@@ -86,25 +86,25 @@ function Login(props) {
         throw new Error('Не правильний Device Id')
       }
       
-      if(netInfo.isConnected && netInfo.isInternetReachable) {
-        const { data } = await axios.get(`${API_URL}/user/session/${token}`)
+      // if(netInfo.isConnected && netInfo.isInternetReachable) {
+      //   const { data } = await axios.get(`${API_URL}/user/session/${token}`)
 
-        if(!!data.current_session) {
+      //   if(!!data.current_session) {
+      //     navigation.navigate('SalesLayout')
+      //   } else {
+      //     navigation.navigate('InputCash')
+      //   }
+
+      //   dispatch(setCurrentSession(data.current_session))
+
+      //   return
+      // } else {
+        if (!currentSession.endTime && currentSession.length !== 0) {
           navigation.navigate('SalesLayout')
         } else {
           navigation.navigate('InputCash')
         }
-
-        dispatch(setCurrentSession(data.current_session))
-
-        return
-      } else {
-        if (currentSession.endTime) {
-          navigation.navigate('InputCash')
-        } else {
-          navigation.navigate('SalesLayout')
-        }
-      }
+      // }
 
       resetState()
     } catch (e) {

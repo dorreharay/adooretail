@@ -9,20 +9,20 @@ moment.locale('uk');
 
 import { API_URL } from '@api'
 import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
-import { currentSessionSelector } from '@selectors'
+import { currentAccountSessionSelector } from '@selectors'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
 import EndOfSessionModal from './components/EndOfSessionModal'
 
-import { currentAccountSelector } from '@selectors'
+import { currentAccountSelector, currentSessionSelector } from '@selectors'
 import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
 import { setLayout, } from '../../../reducers/OrdersReducer'
 
 function SalesLayout({ navigation }) {
   const toastRef = useRef(null)
-  const [isVisible, setModalVisibility] = useState(false)
   const [animatedScale] = useState(new Animated.Value(1))
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
+  const [invalidSessions, setInvalidSessions] = useState([false, false])
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
   const products = currentAccount.products
@@ -32,8 +32,6 @@ function SalesLayout({ navigation }) {
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const dispatch = useDispatch()
-
-
 
   const loadProducts = async () => {
     try {
@@ -69,25 +67,25 @@ function SalesLayout({ navigation }) {
     loadProducts()
   }, [token])  
 
-  useEffect(() => {
-    validateSession()
-    navigation.addListener('didFocus', () => {
-      validateSession()
+  const validateSession = () => {
+    if(!accounts) return
+
+    let newInvalidSessions = accounts.map((account, index) => {
+      const sessions = account.localSessions
+
+      if(!sessions[sessions.length - 1]) return true
+
+      const currentAccountSession = sessions[sessions.length - 1]
+      const sessionStartTime = moment(currentAccountSession.startTime).tz('Europe/Kiev')
+      const startOfDay = moment(Date.now()).tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
+      const endOfDay = moment(Date.now()).tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
+  
+      const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
+
+      return !isValid
     })
 
-    return () => { }
-  }, [layout])
-
-  const validateSession = () => {
-    const sessionStartTime = moment(currentSession.startTime).tz('Europe/Kiev')
-    const startOfDay = moment(Date.now()).tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
-    const endOfDay = moment(Date.now()).tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
-
-    const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
-
-    if (!isValid) {
-      setModalVisibility(true)
-    }
+    setInvalidSessions(newInvalidSessions)
   }
 
   const animate = () => {
@@ -109,11 +107,13 @@ function SalesLayout({ navigation }) {
     animate()
     dispatch(saveCurrentAccountIndex(sessionId))
     dispatch(saveCurrentAccountToken(token))
+
+    validateSession()
     setAccountWrapperVisibility(false)
   }
 
   return (
-    <View style={styles.container}>      
+    <View style={styles.container}>
       <Swiper 
         style={styles.wrapper}
         showsButtons={accountWrapperVisibile}
@@ -135,8 +135,11 @@ function SalesLayout({ navigation }) {
             />
             <EndOfSessionModal
               navigation={navigation}
-              isVisible={isVisible}
-              setModalVisibility={setModalVisibility}
+              isVisible={invalidSessions[index]}
+              invalidSessions={invalidSessions}
+              setInvalidSessions={setInvalidSessions}
+              index={index}
+              noSessionCreated={account.localSessions.length === 0}
             />
             {accountWrapperVisibile && (
               <TouchableOpacity

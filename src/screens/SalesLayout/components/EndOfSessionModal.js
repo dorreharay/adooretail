@@ -12,7 +12,7 @@ import SharedButton from '@shared/SharedButton';
 import { setInitialSlide, setEmployees, setStartCash, } from '../../../../reducers/UserReducer'
 import { setEndOfSessionStatus } from '../../../../reducers/TempReducer'
 
-function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
+function EndOfSessionModal({ navigation, isVisible, invalidSessions, setInvalidSessions, index, noSessionCreated, }) {
   const dispatch = useDispatch()
 
   const [loading, setLoadingStatus] = useState(false)
@@ -21,46 +21,78 @@ function EndOfSessionModal({ navigation, isVisible, setModalVisibility, }) {
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
-    setModalVisibility(false)
+    setInvalidSessions(invalidSessions.map((item, key) => index === key ? false : item))
 
     navigation.navigate('InputCash')
   }
 
   return (
     <Modal
-			visible={isVisible}
-			modalAnimation={new SlideAnimation({
-				slideFrom: 'bottom',
-				animationDuration: 30,
-				useNativeDriver: true,
+      visible={isVisible}
+      modalAnimation={new SlideAnimation({
+        slideFrom: 'bottom',
+        animationDuration: 30,
+        useNativeDriver: true,
       })}
-		>
+    >
       <ModalContent>
         <View style={styles.modal}>
-          <Text style={styles.modalHeading}>Зміну завершено</Text>
-          <Text style={styles.modalCaption}>Розпочніть нову</Text>
-          <Image style={{ width: 180, height: 160, marginTop: 50, }} source={require('@images/sprint.png')}></Image>
-          <SharedButton
-            onPress={endSession}
-            forceStyles={styles.linearButton}
-            buttonSizes={{ width: '100%', }}
-            scale={0.92} onStart
-          >
-            <LinearGradient
-              style={styles.linearButtonGradient}
-              start={{x: -1, y: -1}} end={{x: 1, y: 1}}
-              colors={['#FF7675', '#FD9C6C']}
-            >
-              {loading ? (
-                <Progress.Circle
-                  endAngle={0.9} size={25} color={'#FFFFFF'} 
-                  borderWidth={2} indeterminate={true} 
-                />
-              ) : (
-                <Text style={styles.linearButtonText}>ЗАКІНЧИТИ ЗМІНУ</Text>
-              )}
-            </LinearGradient>
-          </SharedButton>
+          {noSessionCreated ? (
+            <>
+              <Text style={styles.modalCaption}>Сессія не створена</Text>
+              <Text style={styles.modalCaption}>розпочніть нову</Text>
+              <SharedButton
+                onPress={endSession}
+                forceStyles={styles.linearButton}
+                buttonSizes={{ width: '100%', }}
+                scale={0.92} onStart
+              >
+                <LinearGradient
+                  style={styles.linearButtonGradient}
+                  start={{ x: -1, y: -1 }} end={{ x: 1, y: 1 }}
+                  colors={['#FF7675', '#FD9C6C']}
+                >
+                  {loading ? (
+                    <Progress.Circle
+                      endAngle={0.9} size={25} color={'#FFFFFF'}
+                      borderWidth={2} indeterminate={true}
+                    />
+                  ) : (
+                      <Text style={styles.linearButtonText}>РОЗПОЧАТИ ЗМІНУ</Text>
+                    )}
+                </LinearGradient>
+              </SharedButton>
+
+            </>
+          ) : (
+              <>
+                <Text style={styles.modalHeading}>Зміну завершено</Text>
+                <Text style={styles.modalCaption}>Розпочніть нову</Text>
+                <Image style={{ width: 180, height: 160, marginTop: 50, }} source={require('@images/sprint.png')}></Image>
+                <SharedButton
+                  onPress={endSession}
+                  forceStyles={styles.linearButton}
+                  buttonSizes={{ width: '100%', }}
+                  scale={0.92} onStart
+                >
+                  <LinearGradient
+                    style={styles.linearButtonGradient}
+                    start={{ x: -1, y: -1 }} end={{ x: 1, y: 1 }}
+                    colors={['#FF7675', '#FD9C6C']}
+                  >
+                    {loading ? (
+                      <Progress.Circle
+                        endAngle={0.9} size={25} color={'#FFFFFF'}
+                        borderWidth={2} indeterminate={true}
+                      />
+                    ) : (
+                        <Text style={styles.linearButtonText}>ЗАКІНЧИТИ ЗМІНУ</Text>
+                      )}
+                  </LinearGradient>
+                </SharedButton>
+              </>
+            )}
+
         </View>
       </ModalContent>
     </Modal>
@@ -83,7 +115,7 @@ const styles = StyleSheet.create({
     fontFamily: FUTURA_LIGHT,
   },
   modalCaption: {
-    marginTop: 20,
+    marginTop: 25,
     color: '#000000',
     fontSize: 27,
     fontFamily: FUTURA_LIGHT,
