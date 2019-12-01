@@ -21,7 +21,7 @@ function EmployeesList({ employees, checked, handleCheck, }) {
               activeOpacity={1} key={index}
             >
               <LinearGradient
-                start={{x: 0, y: 0}} end={{x: 2, y: 0}}
+                start={{x: 0, y: 2}} end={{x: 2, y: 0}}
                 colors={['#FF7675', '#FD9C6C']}
                 style={[
                   styles.employee,

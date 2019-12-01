@@ -10,7 +10,8 @@ const base = {
     alignItems: 'center',
     width: deviceWidth,
     height: deviceHeight,
-    paddingTop: '7%',
+    paddingTop: '4%',
+    paddingBottom: 0,
     padding: '10%',
     backgroundColor: '#FFFFFF'
   },

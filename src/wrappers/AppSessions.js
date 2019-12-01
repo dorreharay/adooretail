@@ -81,13 +81,13 @@ function AppSessions(props) {
     <SharedBackground
       loading={initialLoadingVisibility}
       opacity={initialLoadingOpacity}
-      source={require('@images/background-adv6.png')}
+      source={require('@images/background-adv7.png')}
       mainWrapper
     >
       <SharedBackground
         loading={initialLoadingVisibility}
         opacity={initialLoadingOpacity}
-        source={require('@images/background-adv6.png')}
+        source={require('@images/background-adv7.png')}
         navigation={NavigationService}
       >
         <View style={{ width: '100%', height: '100%', zIndex: 10 }}>

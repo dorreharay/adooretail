@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useMemo, } from 'react';
 import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacity, ScrollView, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
-import Toast, {DURATION} from 'react-native-easy-toast';
+import Toast, { DURATION } from 'react-native-easy-toast';
 import Swiper from 'react-native-swiper'
 let moment = require('moment-timezone');
 moment.locale('uk');
@@ -12,15 +12,18 @@ import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
 import { currentAccountSessionSelector } from '@selectors'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
-import EndOfSessionModal from './components/EndOfSessionModal'
+import SessionModal from './components/SessionModal'
 
 import { currentAccountSelector, currentSessionSelector } from '@selectors'
 import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
 import { setLayout, } from '../../../reducers/OrdersReducer'
+import LinearGradient from 'react-native-linear-gradient';
+import FastImage from 'react-native-fast-image';
 
 function SalesLayout({ navigation }) {
   const toastRef = useRef(null)
   const [animatedScale] = useState(new Animated.Value(1))
+  const [activeIndex, setActiveIndex] = useState(0)
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
   const [invalidSessions, setInvalidSessions] = useState([false, false])
   const layout = useSelector(state => state.orders.layout)
@@ -32,6 +35,8 @@ function SalesLayout({ navigation }) {
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const dispatch = useDispatch()
+
+  const swiperRef = useRef(null)
 
   const loadProducts = async () => {
     try {
@@ -65,21 +70,21 @@ function SalesLayout({ navigation }) {
 
   useEffect(() => {
     loadProducts()
-  }, [token])  
+  }, [token])
 
   const validateSession = () => {
-    if(!accounts) return
+    if (!accounts) return
 
     let newInvalidSessions = accounts.map((account, index) => {
       const sessions = account.localSessions
 
-      if(!sessions[sessions.length - 1]) return true
+      if (!sessions[sessions.length - 1]) return true
 
       const currentAccountSession = sessions[sessions.length - 1]
       const sessionStartTime = moment(currentAccountSession.startTime).tz('Europe/Kiev')
       const startOfDay = moment(Date.now()).tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
       const endOfDay = moment(Date.now()).tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
-  
+
       const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
 
       return !isValid
@@ -114,43 +119,67 @@ function SalesLayout({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Swiper 
+      <Swiper
+        ref={swiperRef}
         style={styles.wrapper}
         showsButtons={accountWrapperVisibile}
         showsPagination={false}
         bounces={false} loop={false}
         removeClippedSubviews={false}
         scrollEnabled={accountWrapperVisibile}
+        buttonWrapperStyle={{ paddingHorizontal: 0, paddingVertical: 0, }}
+        showsButtons={false}
+        onIndexChanged={(index) => setActiveIndex(index)}
       >
         {accounts.map((account, index) => (
-          <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]} key={index}>
-            <View style={{ position: 'absolute', top: -60 }}>
-              <Text style={styles.accountHeading}>{account.businessName}</Text>
-            </View>
-            <RetailScreen 
-              loadProducts={loadProducts}
-              navigation={navigation}
-              openChangeAccountOverview={openChangeAccountOverview}
-              account={account}
-            />
-            <EndOfSessionModal
-              navigation={navigation}
-              isVisible={invalidSessions[index]}
-              invalidSessions={invalidSessions}
-              setInvalidSessions={setInvalidSessions}
-              index={index}
-              noSessionCreated={account.localSessions.length === 0}
-            />
-            {accountWrapperVisibile && (
-              <TouchableOpacity
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
-                onPress={() => closeChangeAccountOverview(index, account.token)}
-                activeOpacity={1}
+          <>
+            <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]} key={index}>
+              <View style={{ position: 'absolute', top: -60 }}>
+                <Text style={styles.accountHeading}>{account.businessName}</Text>
+              </View>
+              <RetailScreen
+                loadProducts={loadProducts}
+                navigation={navigation}
+                openChangeAccountOverview={openChangeAccountOverview}
+                account={account}
               />
-            )}
-          </Animated.View>
+              <SessionModal
+                navigation={navigation}
+                isVisible={invalidSessions[index]}
+                invalidSessions={invalidSessions}
+                setInvalidSessions={setInvalidSessions}
+                index={index}
+                noSessionCreated={account.localSessions.length === 0}
+              />
+              {accountWrapperVisibile && (
+                <TouchableOpacity
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  onPress={() => closeChangeAccountOverview(index, account.token)}
+                  activeOpacity={1}
+                />
+              )}
+            </Animated.View>
+          </>
         ))}
       </Swiper>
+      {accountWrapperVisibile && activeIndex !== accounts.length - 1 && (
+        <TouchableOpacity
+          style={[styles.arrow, { transform: [{ rotate: '180deg' }] }]}
+          onPress={() => swiperRef.current.scrollBy(1)}
+          activeOpacity={1}
+        >
+          <FastImage style={{ width: 20, height: 20, }} source={require('@images/erase.png')} />
+        </TouchableOpacity>
+      )}
+      {accountWrapperVisibile && activeIndex !== 0 && (
+        <TouchableOpacity
+          style={[styles.arrow, { left: 40 }]}
+          onPress={() => swiperRef.current.scrollBy(-1)}
+          activeOpacity={1}
+        >
+          <FastImage style={{ width: 20, height: 20, }} source={require('@images/erase.png')} />
+        </TouchableOpacity>
+      )}
       <Toast
         ref={toastRef}
         opacity={1}
@@ -189,6 +218,17 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 30,
     fontFamily: PROBA_MEDIUM,
+  },
+  arrow: {
+    position: 'absolute',
+    right: 40,
+    bottom: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: '#FFFFFF26',
   }
 })
 

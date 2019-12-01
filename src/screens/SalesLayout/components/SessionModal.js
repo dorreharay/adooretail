@@ -12,7 +12,7 @@ import SharedButton from '@shared/SharedButton';
 import { setInitialSlide, setEmployees, setStartCash, } from '../../../../reducers/UserReducer'
 import { setEndOfSessionStatus } from '../../../../reducers/TempReducer'
 
-function EndOfSessionModal({ navigation, isVisible, invalidSessions, setInvalidSessions, index, noSessionCreated, }) {
+function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessions, index, noSessionCreated, }) {
   const dispatch = useDispatch()
 
   const [loading, setLoadingStatus] = useState(false)
@@ -21,6 +21,14 @@ function EndOfSessionModal({ navigation, isVisible, invalidSessions, setInvalidS
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
+    setInvalidSessions(invalidSessions.map((item, key) => index === key ? false : item))
+
+    navigation.navigate('InputCash')
+  }
+
+  const startSession = () => {
+    dispatch(setEmployees([]))
+    dispatch(setStartCash(0))
     setInvalidSessions(invalidSessions.map((item, key) => index === key ? false : item))
 
     navigation.navigate('InputCash')
@@ -42,7 +50,7 @@ function EndOfSessionModal({ navigation, isVisible, invalidSessions, setInvalidS
               <Text style={styles.modalCaption}>Сессія не створена</Text>
               <Text style={styles.modalCaption}>розпочніть нову</Text>
               <SharedButton
-                onPress={endSession}
+                onPress={startSession}
                 forceStyles={styles.linearButton}
                 buttonSizes={{ width: '100%', }}
                 scale={0.92} onStart
@@ -141,4 +149,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default EndOfSessionModal
+export default SessionModal
