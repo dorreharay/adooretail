@@ -42,6 +42,7 @@ function RightSide(props) {
   const loadProductsThrottled = useRef(_.throttle(() => loadProducts(), 5000))
 
   const loadAgain = () => {
+    return
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
       toast.current.show("Потрібне інтернет з'єднання", 1000);
 

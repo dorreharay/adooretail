@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, Fragment, } from 'react';
+import React, { useRef, useState, useEffect, useMemo, } from 'react';
 import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacity, ScrollView, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
@@ -16,9 +16,7 @@ import SessionModal from './components/SessionModal'
 
 import { currentAccountSelector, currentSessionSelector } from '@selectors'
 import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
-import { setLayout, } from '../../../reducers/OrdersReducer'
-import LinearGradient from 'react-native-linear-gradient';
-import FastImage from 'react-native-fast-image';
+import Pagination from './components/Pagination'
 
 function SalesLayout({ navigation }) {
   const toastRef = useRef(null)
@@ -38,10 +36,9 @@ function SalesLayout({ navigation }) {
 
   const swiperRef = useRef(null)
 
-  const loadProducts = async (newToken) => {
+  const loadProducts = async () => {
     try {
-      toastRef.current.show("Синхронізація", 1000);
-      const { data } = await axios.get(`${API_URL}/user/products/${newToken ? newToken : token}`)
+      const { data } = await axios.get(`${API_URL}/user/products/${token}`)
 
       updateLayout(data.products, layout)
     } catch (error) {
@@ -70,7 +67,7 @@ function SalesLayout({ navigation }) {
   }, [layout])
 
   useEffect(() => {
-    loadProducts(token)
+    loadProducts()
   }, [token])
 
   const validateSession = () => {
@@ -124,19 +121,28 @@ function SalesLayout({ navigation }) {
         ref={swiperRef}
         style={styles.wrapper}
         showsButtons={accountWrapperVisibile}
-        showsPagination={false}
         bounces={false} loop={false}
         removeClippedSubviews={false}
         scrollEnabled={accountWrapperVisibile}
         buttonWrapperStyle={{ paddingHorizontal: 0, paddingVertical: 0, }}
         showsButtons={false}
         onIndexChanged={(index) => setActiveIndex(index)}
+        renderPagination={(index, total) => {
+          return (
+            <Pagination
+              swiperRef={swiperRef}
+              accountWrapperVisibile={accountWrapperVisibile}
+              total={total}
+              index={index}
+            />
+          )
+        }}
       >
         {accounts.map((account, index) => (
-          <Fragment key={index}>
+          <>
             <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]} key={index}>
               <View style={{ position: 'absolute', top: -60 }}>
-                <Text style={styles.accountHeading}>{account.token}</Text>
+                <Text style={styles.accountHeading}>{account.businessName}</Text>
               </View>
               <RetailScreen
                 loadProducts={loadProducts}
@@ -160,27 +166,9 @@ function SalesLayout({ navigation }) {
                 />
               )}
             </Animated.View>
-          </Fragment>
+          </>
         ))}
       </Swiper>
-      {accountWrapperVisibile && activeIndex !== accounts.length - 1 && (
-        <TouchableOpacity
-          style={[styles.arrow, { transform: [{ rotate: '180deg' }] }]}
-          onPress={() => swiperRef.current.scrollBy(1)}
-          activeOpacity={1}
-        >
-          <FastImage style={{ width: 20, height: 20, }} source={require('@images/erase.png')} />
-        </TouchableOpacity>
-      )}
-      {accountWrapperVisibile && activeIndex !== 0 && (
-        <TouchableOpacity
-          style={[styles.arrow, { left: 40 }]}
-          onPress={() => swiperRef.current.scrollBy(-1)}
-          activeOpacity={1}
-        >
-          <FastImage style={{ width: 20, height: 20, }} source={require('@images/erase.png')} />
-        </TouchableOpacity>
-      )}
       <Toast
         ref={toastRef}
         opacity={1}
@@ -220,17 +208,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: PROBA_MEDIUM,
   },
-  arrow: {
-    position: 'absolute',
-    right: 40,
-    bottom: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    backgroundColor: '#FFFFFF26',
-  }
 })
 
 export default SalesLayout
