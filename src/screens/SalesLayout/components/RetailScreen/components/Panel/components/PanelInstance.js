@@ -35,7 +35,7 @@ function PanelInstance(props) {
         </View>
         <SharedButton
           buttonSizes={styles.closePanelInstanceButton}
-          iconSizes={{ width: styles.closePanelInstanceButton.width - 30, height: styles.closePanelInstanceButton.height - 30, }}
+          iconSizes={{ width: styles.closePanelInstanceButton.width - 35, height: styles.closePanelInstanceButton.height - 35, }}
           source={require('@images/x_icon.png')}
           onPress={closePanelInstance}
           backgroundColor={'#F6F6F600'}

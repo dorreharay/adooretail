@@ -22,14 +22,16 @@ function ReceiptsList(props) {
   }
 
   const handleExpand = (index) => {
-    scrollRef.current.scrollTo({ x: 0, y: ((index) * 70) + (index * 14) })
-
+    if(expandedIndex !== index) {
+      scrollRef.current.scrollTo({ x: 0, y: ((index) * 70) + (index * 10) })
+    }
+    
     setExpandedIndex(expandedIndex === index ? false : index)
   }
 
   return (
     <View style={styles.receiptsHistoryContent}>
-      <Collapsible collapsed={expandedIndex !== false}>
+      <Collapsible collapsed={false}>
         <View style={styles.receiptsHistoryHeader}>
           <Text style={styles.sortingHeadingText}>Сортування:</Text>
           {availableSortTypes.map((sortType, index) => (
@@ -48,7 +50,6 @@ function ReceiptsList(props) {
                 <Text style={[styles.sortButtonText, activeSortIndex === index && { color: '#FFFFFF', }]}>
                   {activeSortIndex === index && individualSortingIndex === 0 ? sortType.main : sortType.reverse}
                 </Text>
-                <FastImage style={{ width: 15, height: 14, marginLeft: 5, }} source={require('@images/recent_arrow.png')} />
               </LinearGradient>
             </SharedButton>
           ))}

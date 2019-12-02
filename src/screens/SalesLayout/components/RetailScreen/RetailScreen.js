@@ -13,18 +13,15 @@ import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer';
 import History from './components/Panel/components/History/History';
 import PaymentModal from './components/LeftSide/components/PaymentModal';
 
+
 function RetailScreen(props) {
-  const { products, loadProducts, navigation, openChangeAccountOverview, account, } = props;
+  const { products, loadProducts, navigation, openChangeAccountOverview, account, changedToken, token, } = props;
 
   const dispatch = useDispatch()
 
   const [receipts, setReceipts] = useState([[], [], [], []])
   const [selectedInstance, selectReceiptInstance] = useState(0)
   const [selectedDate, selectDate] = useState(false)
-
-  const handleNewDate = (newDate) => {
-    selectDate(newDate)
-  }
 
   const initialPanelScreens = { history: false, devices: false, transactions: false, }
 
@@ -37,13 +34,17 @@ function RetailScreen(props) {
   const [menuButtons] = useState([
     {
       name: 'Історія замовлень',
-      onPress: () => openPanelInstance('history', 'Історія замовлень'),
+      onPress: () => openPanelInstance('history', 'ІСТОРІЯ ЗАМОВЛЕНЬ'),
     },
     { name: 'Пристрої', onPress: () => openPanelInstance('devices', 'Пристрої') },
     { name: 'Транзакції', onPress: () => openPanelInstance('transactions', 'Транзакції') },
     { name: 'Налаштування', onPress: () => openPanelInstance('transactions', 'Налаштування') },
     { name: 'Змінити аккаунт', onPress: openChangeAccountOverview },
   ])
+
+  const handleNewDate = (newDate) => {
+    selectDate(newDate)
+  }
 
   const openPanelInstance = (instanceName, title) => {
     setMenuVisibility(false)

@@ -13,7 +13,7 @@ const base = {
     paddingTop: '4%',
     paddingBottom: 0,
     padding: '10%',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FAF8F8'
   },
   panelContent: {
     width: '100%',
@@ -25,14 +25,14 @@ const base = {
     justifyContent: 'space-between',
     width: '100%',
     paddingHorizontal: 5,
-    paddingBottom: 30,
+    paddingBottom: 10,
   },
   panelHeading: {
     flexDirection: 'row'
   },
   panelHeadingText: {
     color: '#414141',
-    fontSize: 35,
+    fontSize: 40,
     fontFamily: PROBA_REGULAR,
     lineHeight: 40,
   },
@@ -56,16 +56,16 @@ const base = {
     width: '23.5%',
     padding: 30,
     paddingTop: 20,
-    paddingBottom: 10,
+    paddingBottom: 30,
     marginRight: '1.5%',
     marginBottom: '2%',
     borderRadius: 5,
-    backgroundColor: '#F4F4F4'
+    backgroundColor: '#FFFFFF'
   },
   historyDayHeadingText: {
     marginBottom: 10,
     color: '#000000',
-    fontSize: 25,
+    fontSize: 22,
     fontFamily: PROBA_REGULAR,
     lineHeight: 30,
   },
@@ -82,7 +82,7 @@ const base = {
   sortingHeadingText: {
     marginRight: 10,
     color: '#343434',
-    fontSize: 30,
+    fontSize: 20,
     fontFamily: PROBA_REGULAR,
   },
   receiptsHistoryContainer: {
@@ -95,13 +95,15 @@ const base = {
     height: '100%',
   },
   receiptsHistoryHeader: {
+    alignItems: 'center',
     flexDirection: 'row',
     width: '100%',
     height: 50,
-    marginBottom: 30,
+    marginBottom: 20,
     marginHorizontal: 3,
   },
   sortButton: {
+    width: 180,
     height: 40,
     marginLeft: 15,
     borderWidth: 1,
@@ -109,9 +111,11 @@ const base = {
     borderRadius: 100,
   },
   sortButtonGradient: {
+    width: 180,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 40,
     paddingHorizontal: 30,
     paddingVertical: 10,
     borderRadius: 100,
@@ -132,9 +136,9 @@ const base = {
     flex: 1,
     height: 70,
     paddingHorizontal: 40,
-    marginBottom: 14,
+    marginBottom: 10,
     borderWidth: 1, 
-    borderColor: '#E0E0E0',
+    borderColor: '#F2F2F2',
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
   },
@@ -162,8 +166,9 @@ const base = {
     height: 70,
     marginLeft: 14,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: '#F2F2F2',
     borderRadius: 5,
+    backgroundColor: '#FFFFFF',
   },
   receiptDetails: {
     width: '100%',

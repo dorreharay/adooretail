@@ -11,7 +11,7 @@ function DatesList({ days, handleNewDate, loading, }) {
         <View style={{ width: 70, height: 70, }}>
           <Progress.Circle
             endAngle={0.3} size={70} color={'#000000'}
-            borderWidth={2} indeterminate={true}
+            borderWidth={1} indeterminate={true}
           />
         </View>
       </View>

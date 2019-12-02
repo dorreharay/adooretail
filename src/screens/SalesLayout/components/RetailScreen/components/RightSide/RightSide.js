@@ -47,11 +47,7 @@ function RightSide(props) {
 
       return
     }
-
-    if (toast.current) {
-      toast.current.show("Оновлення списку", 1000)
-      loadProductsThrottled.current()
-    }
+    loadProductsThrottled.current()
   }
 
   const changeLayout = () => {

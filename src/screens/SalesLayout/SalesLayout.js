@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, } from 'react';
+import React, { useRef, useState, useEffect, useMemo, Fragment, } from 'react';
 import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacity, ScrollView, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
@@ -38,9 +38,10 @@ function SalesLayout({ navigation }) {
 
   const swiperRef = useRef(null)
 
-  const loadProducts = async () => {
+  const loadProducts = async (newToken) => {
     try {
-      const { data } = await axios.get(`${API_URL}/user/products/${token}`)
+      toastRef.current.show("Синхронізація", 1000);
+      const { data } = await axios.get(`${API_URL}/user/products/${newToken ? newToken : token}`)
 
       updateLayout(data.products, layout)
     } catch (error) {
@@ -69,7 +70,7 @@ function SalesLayout({ navigation }) {
   }, [layout])
 
   useEffect(() => {
-    loadProducts()
+    loadProducts(token)
   }, [token])
 
   const validateSession = () => {
@@ -132,10 +133,10 @@ function SalesLayout({ navigation }) {
         onIndexChanged={(index) => setActiveIndex(index)}
       >
         {accounts.map((account, index) => (
-          <>
+          <Fragment key={index}>
             <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]} key={index}>
               <View style={{ position: 'absolute', top: -60 }}>
-                <Text style={styles.accountHeading}>{account.businessName}</Text>
+                <Text style={styles.accountHeading}>{account.token}</Text>
               </View>
               <RetailScreen
                 loadProducts={loadProducts}
@@ -159,7 +160,7 @@ function SalesLayout({ navigation }) {
                 />
               )}
             </Animated.View>
-          </>
+          </Fragment>
         ))}
       </Swiper>
       {accountWrapperVisibile && activeIndex !== accounts.length - 1 && (
