@@ -14,7 +14,7 @@ function Pagination(props) {
   return (
     <View style={[styles.paginationContainer, { left: (deviceWidth / 2) - 55, }]}>
       {accountWrapperVisibile && (
-        index === 0 ? (
+        index !== (total - 1) ? (
           <TouchableOpacity
             style={styles.arrow}
             onPress={() => swiperRef.current.scrollBy(1)}
@@ -33,7 +33,7 @@ function Pagination(props) {
           )
       )}
       {accountWrapperVisibile && (
-        index === total - 1 ? (
+        index !== 0 ? (
           <TouchableOpacity
             style={[styles.arrow, { transform: [{ rotate: '180deg' }] }]}
             onPress={() => swiperRef.current.scrollBy(-1)}
