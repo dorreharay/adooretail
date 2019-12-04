@@ -105,7 +105,6 @@ const base = {
     marginHorizontal: 3,
   },
   sortButton: {
-    width: 180,
     height: 40,
     marginLeft: 15,
     borderRadius: 100,
@@ -113,12 +112,12 @@ const base = {
     elevation: 1,
   },
   sortButtonGradient: {
-    width: 180,
+    // width: 180,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 40,
-    paddingHorizontal: 30,
+    paddingHorizontal: 50,
     paddingVertical: 10,
     borderRadius: 100,
   },

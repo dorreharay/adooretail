@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Text, View, Image, StyleSheet, Animated, Easing, TouchableOpacity, } from 'react-native'
 import _ from 'lodash'
+import axios from 'axios'
 import styles from './styles'
+import { API_URL } from '@api'
 
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
@@ -15,7 +17,7 @@ import PaymentModal from './components/LeftSide/components/PaymentModal';
 
 
 function RetailScreen(props) {
-  const { products, loadProducts, navigation, openChangeAccountOverview, account, changedToken, token, } = props;
+  const { products, navigation, openChangeAccountOverview, account, updateLayout, toastRef, layout, } = props;
 
   const dispatch = useDispatch()
 
@@ -41,6 +43,22 @@ function RetailScreen(props) {
     { name: 'Налаштування', onPress: () => openPanelInstance('transactions', 'Налаштування') },
     { name: 'Змінити аккаунт', onPress: openChangeAccountOverview },
   ])
+
+  const loadProducts = async (token) => {
+    try {
+      console.log('Fetch products', token)
+      toastRef.current.show("Синхронізація", 1000);
+
+      const { data } = await axios.get(`${API_URL}/user/products/${token}`)
+
+      console.log('Fetch succeded')
+
+      updateLayout(data.products, layout)
+    } catch (error) {
+      console.error('Failed to fetch products', error)
+      toastRef.current.show("Помилка мережі", 1000);
+    }
+  }
 
   const handleNewDate = (newDate) => {
     selectDate(newDate)
@@ -78,7 +96,7 @@ function RetailScreen(props) {
       modalOpacity,
       {
         toValue: modalOpacity._value === 1 ? 0 : 1,
-        duration: 150,
+        duration: 50,
         easing: Easing.ease
       }
     ).start();

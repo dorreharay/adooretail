@@ -37,7 +37,7 @@ function ReceiptsList(props) {
           {availableSortTypes.map((sortType, index) => (
             <SharedButton
               onPress={() => handleSortPick(index)}
-              forceStyles={[styles.sortButton, activeSortIndex === index && { borderColor: '#FFFFFF', }]}
+              forceStyles={[styles.sortButton, activeSortIndex === index && { backgroundColor: '#FFFFFF00', elevation: 0 }]}
               scale={0.95} duration={100}
               key={index} onStart
             >
@@ -48,7 +48,7 @@ function ReceiptsList(props) {
                 colors={activeSortIndex === index ? ['#DB3E69', '#EF9058'] : ['#DB3E6900', '#EF905800']}
               >
                 <Text style={[styles.sortButtonText, activeSortIndex === index && { color: '#FFFFFF', }]}>
-                  {activeSortIndex === index && individualSortingIndex === 0 ? sortType.main : sortType.reverse}
+                  {sortType.name}
                 </Text>
               </LinearGradient>
             </SharedButton>

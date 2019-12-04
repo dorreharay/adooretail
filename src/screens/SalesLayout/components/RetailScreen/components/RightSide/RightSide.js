@@ -21,35 +21,40 @@ const offlineIcon = require('@images/status_offline.png')
 const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
-  const { 
+  const {
     products, loadProducts,
-    receipts, setReceipts, 
-    selectedInstance, navigation, 
+    receipts, setReceipts,
+    selectedInstance, navigation,
     openMenu, account,
   } = props;
+
+  const dispatch = useDispatch()
 
   const toast = useRef(null)
   const inputRef = useRef(null)
 
   const netInfo = useNetInfo();
 
-  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const layout = useSelector(state => state.orders.layout)
-  const dispatch = useDispatch()
+  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
 
   const [searchTerm, setSearchTerm] = useState('')
 
-  const loadProductsThrottled = useRef(_.throttle(() => loadProducts(), 5000))
+  const loadProductsThrottled = useRef(_.throttle((token) => loadProducts(token), 5000))
 
   const loadAgain = () => {
-    return
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
       toast.current.show("Потрібне інтернет з'єднання", 1000);
 
       return
     }
-    loadProductsThrottled.current()
+    loadProducts(account.token)
+    // loadProductsThrottled.current(currentAccountToken)
   }
+
+  useEffect(() => {
+    loadProducts(currentAccountToken)
+  }, [currentAccountToken])
 
   const changeLayout = () => {
     var newLayout = 4
@@ -94,14 +99,17 @@ function RightSide(props) {
 
         </View>
 
-        <View style={styles.connection}>
-          <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
-          <Text style={styles.connectionText}>
-            {netInfo.isConnected && netInfo.isInternetReachable && 'online'}
-            {!netInfo.isConnected && 'offline'}
-            {netInfo.isConnected && !netInfo.isInternetReachable && 'waiting'}
-          </Text>
-        </View>
+        <SharedButton scale={0.85}>
+          <View style={styles.connection}>
+            <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
+            <Text style={styles.connectionText}>
+              {netInfo.isConnected && netInfo.isInternetReachable && 'online'}
+              {!netInfo.isConnected && 'offline'}
+              {netInfo.isConnected && !netInfo.isInternetReachable && 'waiting'}
+            </Text>
+          </View>
+        </SharedButton>
+
         <SharedButton
           onPress={changeLayout}
           buttonSizes={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
@@ -130,21 +138,6 @@ function RightSide(props) {
         setReceipts={setReceipts}
         selectedInstance={selectedInstance}
         searchTerm={searchTerm}
-      />
-      <Toast
-        ref={toast}
-        opacity={1}
-        style={{ paddingHorizontal: 20, backgroundColor: '#00000066' }}
-        position='bottom'
-        positionValue={50}
-        textStyle={{
-          marginBottom: 2,
-          color: '#FFFFFF',
-          fontSize: 17,
-          fontFamily: PROBA_REGULAR,
-        }}
-        fadeInDuration={600}
-        fadeOutDuration={800}
       />
     </View>
   )

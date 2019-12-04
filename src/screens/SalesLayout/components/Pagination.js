@@ -14,10 +14,10 @@ function Pagination(props) {
   return (
     <View style={[styles.paginationContainer, { left: (deviceWidth / 2) - 55, }]}>
       {accountWrapperVisibile && (
-        index !== (total - 1) ? (
+        index !== 0 ? (
           <TouchableOpacity
             style={styles.arrow}
-            onPress={() => swiperRef.current.scrollBy(1)}
+            onPress={() => swiperRef.current.scrollBy(-1)}
             activeOpacity={1}
           >
             <FastImage style={{ width: 20, height: 20, }} source={require('@images/erase.png')} />
@@ -33,10 +33,10 @@ function Pagination(props) {
           )
       )}
       {accountWrapperVisibile && (
-        index !== 0 ? (
+        index !== (total - 1) ? (
           <TouchableOpacity
             style={[styles.arrow, { transform: [{ rotate: '180deg' }] }]}
-            onPress={() => swiperRef.current.scrollBy(-1)}
+            onPress={() => swiperRef.current.scrollBy(1)}
             activeOpacity={1}
           >
             <FastImage style={{ width: 20, height: 20, }} source={require('@images/erase.png')} />

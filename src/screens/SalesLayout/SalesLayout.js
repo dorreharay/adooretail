@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, } from 'react';
+import React, { useRef, useState, useEffect, useMemo, Fragment, } from 'react';
 import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacity, ScrollView, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
@@ -18,16 +18,14 @@ import { currentAccountSelector, currentSessionSelector } from '@selectors'
 import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
 import Pagination from './components/Pagination'
 
-function SalesLayout({ navigation }) {
+function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
   const [animatedScale] = useState(new Animated.Value(1))
-  const [activeIndex, setActiveIndex] = useState(0)
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
   const [invalidSessions, setInvalidSessions] = useState([false, false])
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
   const products = currentAccount.products
-  const token = useSelector(state => state.user.currentAccountToken)
   const currentSession = useSelector(currentSessionSelector)
   const accounts = useSelector(state => state.user.accounts)
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
@@ -35,16 +33,6 @@ function SalesLayout({ navigation }) {
   const dispatch = useDispatch()
 
   const swiperRef = useRef(null)
-
-  const loadProducts = async () => {
-    try {
-      const { data } = await axios.get(`${API_URL}/user/products/${token}`)
-
-      updateLayout(data.products, layout)
-    } catch (error) {
-      toastRef.current.show("Помилка мережі", 1000);
-    }
-  }
 
   const updateLayout = (products, cardsPerRow) => {
     function chunkArray(myArray, chunk_size) {
@@ -65,10 +53,6 @@ function SalesLayout({ navigation }) {
   useMemo(() => {
     updateLayout(products.flat(), layout)
   }, [layout])
-
-  useEffect(() => {
-    loadProducts()
-  }, [token])
 
   const validateSession = () => {
     if (!accounts) return
@@ -106,9 +90,10 @@ function SalesLayout({ navigation }) {
     setAccountWrapperVisibility(true)
   }
 
-  const closeChangeAccountOverview = (sessionId, token) => {
+  const closeChangeAccountOverview = (index, token) => {
     animate()
-    dispatch(saveCurrentAccountIndex(sessionId))
+
+    dispatch(saveCurrentAccountIndex(index))
     dispatch(saveCurrentAccountToken(token))
 
     validateSession()
@@ -126,7 +111,6 @@ function SalesLayout({ navigation }) {
         scrollEnabled={accountWrapperVisibile}
         buttonWrapperStyle={{ paddingHorizontal: 0, paddingVertical: 0, }}
         showsButtons={false}
-        onIndexChanged={(index) => setActiveIndex(index)}
         renderPagination={(index, total) => {
           return (
             <Pagination
@@ -139,16 +123,16 @@ function SalesLayout({ navigation }) {
         }}
       >
         {accounts.map((account, index) => (
-          <>
-            <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]} key={index}>
+          <Fragment key={index}>
+            <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
               <View style={{ position: 'absolute', top: -60 }}>
                 <Text style={styles.accountHeading}>{account.businessName}</Text>
               </View>
               <RetailScreen
-                loadProducts={loadProducts}
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
-                account={account}
+                account={account} updateLayout={updateLayout}
+                toastRef={toastRef} layout={layout} 
               />
               <SessionModal
                 navigation={navigation}
@@ -166,22 +150,22 @@ function SalesLayout({ navigation }) {
                 />
               )}
             </Animated.View>
-          </>
+          </Fragment>
         ))}
       </Swiper>
       <Toast
         ref={toastRef}
         opacity={1}
-        style={{ paddingHorizontal: 20, backgroundColor: '#00000066' }}
+        style={{ paddingHorizontal: 40, backgroundColor: '#00000088' }}
         position='bottom'
-        positionValue={50}
+        positionValue={100}
         textStyle={{
           marginBottom: 2,
           color: '#FFFFFF',
           fontSize: 17,
           fontFamily: PROBA_REGULAR,
         }}
-        fadeInDuration={600}
+        fadeInDuration={200}
         fadeOutDuration={800}
       />
     </View>

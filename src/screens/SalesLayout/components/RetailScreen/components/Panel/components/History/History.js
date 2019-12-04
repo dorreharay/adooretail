@@ -29,8 +29,10 @@ function History({ selectedDate, handleNewDate, }) {
   const [daysLoading, setDaysLoadingStatus] = useState(false)
 
   const [availableSortTypes] = useState([
-    { main: 'Раніше', reverse: 'Пізніше', },
-    { main: 'Сума чеку', reverse: 'Сума чеку', }
+    { name: 'Раніше', },
+    { name: 'Пізніше', },
+    { name: 'Сума чеку: спадання', },
+    { name: 'Сума чеку: зріст', }
   ])
 
   useEffect(() => {
