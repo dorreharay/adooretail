@@ -17,6 +17,7 @@ import SessionModal from './components/SessionModal'
 import { currentAccountSelector, currentSessionSelector } from '@selectors'
 import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
 import Pagination from './components/Pagination'
+import FastImage from 'react-native-fast-image';
 
 function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
@@ -55,6 +56,7 @@ function SalesLayout({ navigation, }) {
   }, [layout])
 
   const validateSession = () => {
+    console.log('exactly ------------------------>')
     if (!accounts) return
 
     let newInvalidSessions = accounts.map((account, index) => {
@@ -128,6 +130,13 @@ function SalesLayout({ navigation, }) {
               <View style={{ position: 'absolute', top: -60 }}>
                 <Text style={styles.accountHeading}>{account.businessName}</Text>
               </View>
+              <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row', position: 'absolute', top: -60, right:0 }}>
+                <FastImage
+                  style={{ width: 25, height: 25, marginTop: 1, marginRight: 15, }}
+                  source={require('@images/delete_icon.png')}
+                />
+                <Text style={[styles.accountHeading, { color: '#FF7675' }]}>Видалити</Text>
+              </TouchableOpacity>
               <RetailScreen
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
