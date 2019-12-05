@@ -10,7 +10,7 @@ import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
 import { currentAccountSessionSelector } from '@selectors'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
-import SessionModal from './components/SessionModal'
+import SessionModal from './components/SessionModal/SessionModal'
 
 import { currentAccountSelector, currentSessionSelector } from '@selectors'
 import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
@@ -63,8 +63,8 @@ function SalesLayout({ navigation, }) {
 
       const currentAccountSession = sessions[sessions.length - 1]
       const sessionStartTime = moment(currentAccountSession.startTime).tz('Europe/Kiev')
-      const startOfDay = moment(Date.now()).tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
-      const endOfDay = moment(Date.now()).tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
+      const startOfDay = moment().tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
+      const endOfDay = moment().tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
 
       const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
 
