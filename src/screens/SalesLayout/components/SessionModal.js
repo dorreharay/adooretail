@@ -21,7 +21,7 @@ function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessio
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
-    setInvalidSessions(invalidSessions.map((item, key) => index === key ? false : item))
+    setInvalidSessions(invalidSessions.map((item, key) => false))
 
     navigation.navigate('InputCash')
   }
@@ -29,7 +29,7 @@ function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessio
   const startSession = () => {
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
-    setInvalidSessions(invalidSessions.map((item, key) => index === key ? false : item))
+    setInvalidSessions(invalidSessions.map((item, key) => false))
 
     navigation.navigate('InputCash')
   }

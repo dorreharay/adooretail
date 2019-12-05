@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Text, View, Image, StyleSheet, Animated, Easing, TouchableOpacity, } from 'react-native'
 import _ from 'lodash'
 import axios from 'axios'
+let moment = require('moment-timezone');
+moment.locale('uk');
 import styles from './styles'
 
 import { API_URL } from '@api'

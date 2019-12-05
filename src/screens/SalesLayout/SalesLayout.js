@@ -49,12 +49,11 @@ function SalesLayout({ navigation, }) {
     dispatch(setProducts(newProducts))
   }
 
-  useMemo(() => {
-    updateLayout(products.flat(), layout)
-  }, [layout])
+  useEffect(() => {
+    validateSession()
+  }, [])
 
   const validateSession = () => {
-    console.log('exactly ------------------------>')
     if (!accounts) return
 
     let newInvalidSessions = accounts.map((account, index) => {
@@ -74,6 +73,10 @@ function SalesLayout({ navigation, }) {
 
     setInvalidSessions(newInvalidSessions)
   }
+
+  useMemo(() => {
+    updateLayout(products.flat(), layout)
+  }, [layout])
 
   const animate = () => {
     Animated.parallel([
@@ -125,16 +128,21 @@ function SalesLayout({ navigation, }) {
         {accounts.map((account, index) => (
           <Fragment key={index}>
             <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
-              <View style={{ position: 'absolute', top: -60 }}>
-                <Text style={styles.accountHeading}>{account.businessName}</Text>
-              </View>
-              <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row', position: 'absolute', top: -60, right:0 }}>
-                <FastImage
-                  style={{ width: 25, height: 25, marginTop: 1, marginRight: 15, }}
-                  source={require('@images/delete_icon.png')}
-                />
-                <Text style={[styles.accountHeading, { color: '#FF7675' }]}>Видалити</Text>
-              </TouchableOpacity>
+              {accountWrapperVisibile && (
+                <Fragment>
+                  <View style={{ position: 'absolute', top: -60 }}>
+                    <Text style={styles.accountHeading}>{account.businessName}</Text>
+                  </View>
+                  <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row', position: 'absolute', top: -60, right: 0 }}>
+                    <FastImage
+                      style={{ width: 25, height: 25, marginRight: 15, }}
+                      source={require('@images/delete_icon.png')}
+                    />
+                    <Text style={[styles.accountHeading, { color: '#FF7675' }]}>Видалити</Text>
+                  </TouchableOpacity>
+                </Fragment>
+              )}
+
               <RetailScreen
                 toastRef={toastRef}
                 updateLayout={updateLayout}
@@ -142,7 +150,7 @@ function SalesLayout({ navigation, }) {
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
                 account={account} updateLayout={updateLayout}
-                toastRef={toastRef} layout={layout} 
+                toastRef={toastRef} layout={layout}
               />
               <SessionModal
                 navigation={navigation}
