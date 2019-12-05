@@ -4,7 +4,6 @@ import { Text, View, Image, StyleSheet, Animated, Easing, TouchableOpacity, } fr
 import _ from 'lodash'
 import axios from 'axios'
 import styles from './styles'
-import { API_URL } from '@api'
 
 import { API_URL } from '@api'
 
