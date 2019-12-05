@@ -14,19 +14,18 @@ import SessionModal from './components/SessionModal'
 
 import { currentAccountSelector, currentSessionSelector } from '@selectors'
 import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
-import { setLayout, } from '../../../reducers/OrdersReducer'
-import LinearGradient from 'react-native-linear-gradient';
+import Pagination from './components/Pagination'
 import FastImage from 'react-native-fast-image';
 
-function SalesLayout({ navigation }) {
+function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
   const [animatedScale] = useState(new Animated.Value(1))
-  const [activeIndex, setActiveIndex] = useState(0)
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
   const [invalidSessions, setInvalidSessions] = useState([false, false])
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
   const products = currentAccount.products
+  const currentSession = useSelector(currentSessionSelector)
   const accounts = useSelector(state => state.user.accounts)
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
@@ -55,6 +54,7 @@ function SalesLayout({ navigation }) {
   }, [layout])
 
   const validateSession = () => {
+    console.log('exactly ------------------------>')
     if (!accounts) return
 
     let newInvalidSessions = accounts.map((account, index) => {
@@ -90,9 +90,10 @@ function SalesLayout({ navigation }) {
     setAccountWrapperVisibility(true)
   }
 
-  const closeChangeAccountOverview = (sessionId, token) => {
+  const closeChangeAccountOverview = (index, token) => {
     animate()
-    dispatch(saveCurrentAccountIndex(sessionId))
+
+    dispatch(saveCurrentAccountIndex(index))
     dispatch(saveCurrentAccountToken(token))
 
     validateSession()
@@ -105,27 +106,43 @@ function SalesLayout({ navigation }) {
         ref={swiperRef}
         style={styles.wrapper}
         showsButtons={accountWrapperVisibile}
-        showsPagination={false}
         bounces={false} loop={false}
         removeClippedSubviews={false}
         scrollEnabled={accountWrapperVisibile}
         buttonWrapperStyle={{ paddingHorizontal: 0, paddingVertical: 0, }}
         showsButtons={false}
-        onIndexChanged={(index) => setActiveIndex(index)}
+        renderPagination={(index, total) => {
+          return (
+            <Pagination
+              swiperRef={swiperRef}
+              accountWrapperVisibile={accountWrapperVisibile}
+              total={total}
+              index={index}
+            />
+          )
+        }}
       >
         {accounts.map((account, index) => (
           <Fragment key={index}>
-            <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]} key={index}>
+            <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
               <View style={{ position: 'absolute', top: -60 }}>
-                <Text style={styles.accountHeading}>{account.token}</Text>
+                <Text style={styles.accountHeading}>{account.businessName}</Text>
               </View>
+              <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row', position: 'absolute', top: -60, right:0 }}>
+                <FastImage
+                  style={{ width: 25, height: 25, marginTop: 1, marginRight: 15, }}
+                  source={require('@images/delete_icon.png')}
+                />
+                <Text style={[styles.accountHeading, { color: '#FF7675' }]}>Видалити</Text>
+              </TouchableOpacity>
               <RetailScreen
                 toastRef={toastRef}
                 updateLayout={updateLayout}
                 layout={layout}
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
-                account={account}
+                account={account} updateLayout={updateLayout}
+                toastRef={toastRef} layout={layout} 
               />
               <SessionModal
                 navigation={navigation}
@@ -146,37 +163,19 @@ function SalesLayout({ navigation }) {
           </Fragment>
         ))}
       </Swiper>
-      {accountWrapperVisibile && activeIndex !== accounts.length - 1 && (
-        <TouchableOpacity
-          style={[styles.arrow, { transform: [{ rotate: '180deg' }] }]}
-          onPress={() => swiperRef.current.scrollBy(1)}
-          activeOpacity={1}
-        >
-          <FastImage style={{ width: 20, height: 20, }} source={require('@images/erase.png')} />
-        </TouchableOpacity>
-      )}
-      {accountWrapperVisibile && activeIndex !== 0 && (
-        <TouchableOpacity
-          style={[styles.arrow, { left: 40 }]}
-          onPress={() => swiperRef.current.scrollBy(-1)}
-          activeOpacity={1}
-        >
-          <FastImage style={{ width: 20, height: 20, }} source={require('@images/erase.png')} />
-        </TouchableOpacity>
-      )}
       <Toast
         ref={toastRef}
         opacity={1}
-        style={{ paddingHorizontal: 20, backgroundColor: '#00000066' }}
+        style={{ paddingHorizontal: 40, backgroundColor: '#00000088' }}
         position='bottom'
-        positionValue={50}
+        positionValue={100}
         textStyle={{
           marginBottom: 2,
           color: '#FFFFFF',
           fontSize: 17,
           fontFamily: PROBA_REGULAR,
         }}
-        fadeInDuration={600}
+        fadeInDuration={200}
         fadeOutDuration={800}
       />
     </View>
@@ -203,17 +202,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: PROBA_MEDIUM,
   },
-  arrow: {
-    position: 'absolute',
-    right: 40,
-    bottom: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    backgroundColor: '#FFFFFF26',
-  }
 })
 
 export default SalesLayout

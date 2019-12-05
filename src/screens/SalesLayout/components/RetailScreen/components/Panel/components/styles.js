@@ -48,6 +48,7 @@ const base = {
   daysListScrollContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    paddingTop: 20,
     paddingBottom: 100,
   },
   historyDay: {
@@ -60,7 +61,8 @@ const base = {
     marginRight: '1.5%',
     marginBottom: '2%',
     borderRadius: 5,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    elevation: 1,
   },
   historyDayHeadingText: {
     marginBottom: 10,
@@ -103,20 +105,19 @@ const base = {
     marginHorizontal: 3,
   },
   sortButton: {
-    width: 180,
     height: 40,
     marginLeft: 15,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
     borderRadius: 100,
+    backgroundColor: '#FFFFFF',
+    elevation: 1,
   },
   sortButtonGradient: {
-    width: 180,
+    // width: 180,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 40,
-    paddingHorizontal: 30,
+    paddingHorizontal: 50,
     paddingVertical: 10,
     borderRadius: 100,
   },
@@ -137,10 +138,9 @@ const base = {
     height: 70,
     paddingHorizontal: 40,
     marginBottom: 10,
-    borderWidth: 1, 
-    borderColor: '#F2F2F2',
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
+    elevation: 1,
   },
   receiptsListItemBlock: {
     alignItems: 'center',
@@ -165,10 +165,9 @@ const base = {
     width: 70,
     height: 70,
     marginLeft: 14,
-    borderWidth: 1,
-    borderColor: '#F2F2F2',
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
+    elevation: 2,
   },
   receiptDetails: {
     width: '100%',
