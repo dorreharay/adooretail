@@ -33,7 +33,6 @@ function RightSide(props) {
 
   const netInfo = useNetInfo();
 
-  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const layout = useSelector(state => state.orders.layout)
   const dispatch = useDispatch()
 

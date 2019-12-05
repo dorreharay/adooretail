@@ -1,13 +1,11 @@
 import React, { useRef, useState, useEffect, useMemo, Fragment, } from 'react';
 import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacity, ScrollView, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios'
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Swiper from 'react-native-swiper'
 let moment = require('moment-timezone');
 moment.locale('uk');
 
-import { API_URL } from '@api'
 import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
 import { currentAccountSessionSelector } from '@selectors'
 
@@ -29,25 +27,12 @@ function SalesLayout({ navigation }) {
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
   const products = currentAccount.products
-  const token = useSelector(state => state.user.currentAccountToken)
-  const currentSession = useSelector(currentSessionSelector)
   const accounts = useSelector(state => state.user.accounts)
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const dispatch = useDispatch()
 
   const swiperRef = useRef(null)
-
-  const loadProducts = async (newToken) => {
-    try {
-      toastRef.current.show("Синхронізація", 1000);
-      const { data } = await axios.get(`${API_URL}/user/products/${newToken ? newToken : token}`)
-
-      updateLayout(data.products, layout)
-    } catch (error) {
-      toastRef.current.show("Помилка мережі", 1000);
-    }
-  }
 
   const updateLayout = (products, cardsPerRow) => {
     function chunkArray(myArray, chunk_size) {
@@ -68,10 +53,6 @@ function SalesLayout({ navigation }) {
   useMemo(() => {
     updateLayout(products.flat(), layout)
   }, [layout])
-
-  useEffect(() => {
-    loadProducts(token)
-  }, [token])
 
   const validateSession = () => {
     if (!accounts) return
@@ -139,7 +120,9 @@ function SalesLayout({ navigation }) {
                 <Text style={styles.accountHeading}>{account.token}</Text>
               </View>
               <RetailScreen
-                loadProducts={loadProducts}
+                toastRef={toastRef}
+                updateLayout={updateLayout}
+                layout={layout}
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
                 account={account}
