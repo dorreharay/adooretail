@@ -71,17 +71,13 @@ function Login(props) {
 
     setLoadingStatus(true)
 
-    console.log(validPinCode)
-
     try {
       if(enteredPinCode !== validPinCode) {
         throw new Error('Не дійсний пін код')
       }
       
       const deviceId = await DeviceInfo.getUniqueId();
-
-      console.log(deviceId)
-
+      
       if (!registeredDeviceIds.includes(deviceId)) {
         throw new Error('Не правильний Device Id')
       }

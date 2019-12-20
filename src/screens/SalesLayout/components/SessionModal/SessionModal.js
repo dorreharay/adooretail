@@ -50,8 +50,6 @@ function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessio
 
   const currentText = relativeText[noSessionCreated ? 'start' : 'end']
 
-  console.log(noSessionCreated)
-
   return (
     <Modal
       visible={isVisible}

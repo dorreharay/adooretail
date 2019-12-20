@@ -23,6 +23,8 @@ function RetailScreen(props) {
 
   const dispatch = useDispatch()
 
+  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
+
   const [receipts, setReceipts] = useState([[], [], [], []])
   const [selectedInstance, selectReceiptInstance] = useState(0)
   const [selectedDate, selectDate] = useState(false)
@@ -45,6 +47,30 @@ function RetailScreen(props) {
     { name: 'Налаштування', onPress: () => openPanelInstance('transactions', 'Налаштування') },
     { name: 'Змінити аккаунт', onPress: openChangeAccountOverview },
   ])
+
+  const throttleRef = useRef(_.debounce((callback) => callback(), 1000, { 'trailing': false }))
+
+  useEffect(() => {
+    const isValid = validateSession(account.localSessions)
+
+    console.log('account.localSessions', account.localSessions)
+
+    console.log('isValid', isValid)
+  }, [account.localSessions, currentAccountToken])
+
+  const validateSession = (sessions) => {
+    if (sessions.length === 0) return false
+
+    const currentAccountSession = sessions[sessions.length - 1]
+
+    const sessionStartTime = moment(currentAccountSession.startTime).tz('Europe/Kiev')
+    const startOfDay = moment().tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
+    const endOfDay = moment().tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
+
+    const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
+
+    return isValid
+  }
 
   const loadProducts = async (token) => {
     try {

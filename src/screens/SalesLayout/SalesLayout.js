@@ -49,31 +49,6 @@ function SalesLayout({ navigation, }) {
     dispatch(setProducts(newProducts))
   }
 
-  useEffect(() => {
-    validateSession()
-  }, [])
-
-  const validateSession = () => {
-    if (!accounts) return
-
-    let newInvalidSessions = accounts.map((account, index) => {
-      const sessions = account.localSessions
-
-      if (!sessions[sessions.length - 1]) return true
-
-      const currentAccountSession = sessions[sessions.length - 1]
-      const sessionStartTime = moment(currentAccountSession.startTime).tz('Europe/Kiev')
-      const startOfDay = moment().tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
-      const endOfDay = moment().tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
-
-      const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
-
-      return !isValid
-    })
-
-    setInvalidSessions(newInvalidSessions)
-  }
-
   useMemo(() => {
     updateLayout(products.flat(), layout)
   }, [layout])
@@ -99,7 +74,6 @@ function SalesLayout({ navigation, }) {
     dispatch(saveCurrentAccountIndex(index))
     dispatch(saveCurrentAccountToken(token))
 
-    validateSession()
     setAccountWrapperVisibility(false)
   }
 
@@ -150,16 +124,16 @@ function SalesLayout({ navigation, }) {
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
                 account={account} updateLayout={updateLayout}
-                toastRef={toastRef} layout={layout}
+                toastRef={toastRef}
               />
-              <SessionModal
+              {/* <SessionModal
                 navigation={navigation}
                 isVisible={invalidSessions[index]}
                 invalidSessions={invalidSessions}
                 setInvalidSessions={setInvalidSessions}
                 index={index}
                 noSessionCreated={account.localSessions.length === 0}
-              />
+              /> */}
               {accountWrapperVisibile && (
                 <TouchableOpacity
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
