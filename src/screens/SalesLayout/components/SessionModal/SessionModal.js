@@ -13,7 +13,13 @@ import SharedButton from '@shared/SharedButton';
 import { setInitialSlide, setEmployees, setStartCash, } from '../../../../../reducers/UserReducer'
 import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer'
 
-function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessions, index, noSessionCreated, }) {
+function SessionModal(props) {
+  const {
+    navigation, isVisible,
+    index, noSessionCreated,
+    openChangeAccountOverview, setModalStatus,
+  } = props
+
   const dispatch = useDispatch()
 
   const [loading, setLoadingStatus] = useState(false)
@@ -22,7 +28,7 @@ function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessio
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
-    setInvalidSessions(invalidSessions.map((item, key) => false))
+    setModalStatus(false)
 
     navigation.navigate('InputCash')
   }
@@ -30,22 +36,29 @@ function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessio
   const startSession = () => {
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
-    setInvalidSessions(invalidSessions.map((item, key) => false))
+    setModalStatus(false)
 
     navigation.navigate('InputCash')
   }
 
+  const handleBackButton = () => {
+    setModalStatus(false)
+    openChangeAccountOverview()
+  }
+
   const relativeText = {
     start: {
-      first: 'Попередня зміна закінчена.',
-      second: 'Введіть остаточну касу за зміну та розпочніть нову.',
-      button: 'РОЗПОЧАТИ ЗМІНУ'
+      first: 'Створіть першу зміну в новому аккаунті.',
+      second: 'Усі попередні зміни не будуть втрачені.',
+      button: 'РОЗПОЧАТИ ЗМІНУ',
+      onPress: () => startSession(),
     },
     end: {
-      first: 'Створіть першу зміну в новому аккаунті.',
-      second: 'Попередні зміни не будуть втарачені.',
-      button: 'ЗАКІНЧИТИ ЗМІНУ'
-    }
+      first: 'Попередня зміна закінчена.',
+      second: 'Введіть остаточну касу за зміну та розпочніть нову.',
+      button: 'ЗАКІНЧИТИ ЗМІНУ',
+      onPress: () => endSession(),
+    },
   }
 
   const currentText = relativeText[noSessionCreated ? 'start' : 'end']
@@ -62,34 +75,33 @@ function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessio
     >
       <ModalContent>
         <View style={styles.modal}>
-          <FastImage style={styles.closeIcon} source={require('@images/back_modal.png')}></FastImage>
+          <TouchableOpacity
+            style={styles.closeIconButton}
+            onPress={handleBackButton}
+            activeOpacity={1}
+          >
+            <FastImage style={styles.closeIcon} source={require('@images/back_modal.png')} />
+          </TouchableOpacity>
+
           <Fragment>
             <View>
-            <Text style={styles.modalRegularText}>{currentText.first}</Text>
+              <Text style={styles.modalRegularText}>{currentText.first}</Text>
               <Text style={styles.modalRegularText}>{currentText.second}</Text>
             </View>
-            
-            <SharedButton
-              onPress={endSession}
-              forceStyles={styles.linearButton}
-              buttonSizes={{ width: '100%', }}
-              scale={0.92} onStart
+
+            <TouchableOpacity
+              onPress={currentText.onPress}
+              style={styles.linearButton}
+              activeOpacity={1}
             >
               <LinearGradient
                 style={styles.linearButtonGradient}
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                 colors={['#DB3E47', '#EF9058']}
               >
-                {loading ? (
-                  <Progress.Circle
-                    endAngle={0.9} size={25} color={'#FFFFFF'}
-                    borderWidth={2} indeterminate={true}
-                  />
-                ) : (
-                    <Text style={styles.linearButtonText}>{currentText.button}</Text>
-                  )}
+                <Text style={styles.linearButtonText}>{currentText.button}</Text>
               </LinearGradient>
-            </SharedButton>
+            </TouchableOpacity>
           </Fragment>
         </View>
       </ModalContent>
@@ -98,10 +110,16 @@ function SessionModal({ navigation, isVisible, invalidSessions, setInvalidSessio
 }
 
 const styles = StyleSheet.create({
-  closeIcon: {
+  closeIconButton: {
     position: 'absolute',
-    top: 15,
-    right: 15,
+    top: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+  },
+  closeIcon: {
     width: 22,
     height: 18,
   },

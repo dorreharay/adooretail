@@ -17,25 +17,13 @@ function SharedButton(props) {
       toValue: scale ? scale : 0.7,
       duration: duration ? duration : 100,
     }).start(() => setPressedState(true))
-
-    if(onStart) {
-      onPress()
-    }  
   }
 
   const animateOut = () => {
     Animated.timing(animatePress, {
       toValue: 1,
       duration: 200,
-    }).start(() => {
-      if(onPress && !onStart)
-        onPress()
-    })
-
-    if(rotateOnPress)
-      rotateIcon()
-        if(loadAgain)
-          loadAgain()
+    }).start()
   }
 
   const rotateIcon = () => {
@@ -58,6 +46,13 @@ function SharedButton(props) {
     ).start()
   }
 
+  const handlePress = () => {
+    onPress()
+
+    if (rotateOnPress)
+      rotateIcon()
+  }
+
   const spin = updateIconAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg']
@@ -66,6 +61,7 @@ function SharedButton(props) {
   return (
     <View style={forceStyles} key={key ? key : 0}>
       <TouchableWithoutFeedback
+        onPress={handlePress}
         onPressIn={animateIn}
         onPressOut={animateOut}
       >
@@ -81,16 +77,16 @@ function SharedButton(props) {
           {loading ? (
             null
           ) : (
-            children ? (
-              children
-            ) : (
-              text ? (
-                <Text style={textStyles}>{text}</Text>
+              children ? (
+                children
               ) : (
-                <Animated.Image style={{ width: iconSizes.width, height: iconSizes.height, transform: [{ rotate: spin }] }} source={source} />
-              )
-            )
-          )}
+                  text ? (
+                    <Text style={textStyles}>{text}</Text>
+                  ) : (
+                      <Animated.Image style={{ width: iconSizes.width, height: iconSizes.height, transform: [{ rotate: spin }] }} source={source} />
+                    )
+                )
+            )}
         </Animated.View>
       </TouchableWithoutFeedback>
     </View>

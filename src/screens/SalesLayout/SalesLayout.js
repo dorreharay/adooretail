@@ -20,9 +20,11 @@ import FastImage from 'react-native-fast-image';
 function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
   const [animatedScale] = useState(new Animated.Value(1))
+  const [isVisible, setModalStatus] = useState(false)
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
   const [invalidSessions, setInvalidSessions] = useState([false, false])
   const layout = useSelector(state => state.orders.layout)
+  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const currentAccount = useSelector(currentAccountSelector)
   const products = currentAccount.products
   const currentSession = useSelector(currentSessionSelector)
@@ -32,6 +34,26 @@ function SalesLayout({ navigation, }) {
   const dispatch = useDispatch()
 
   const swiperRef = useRef(null)
+
+  useEffect(() => {
+    const isValid = validateSession(currentAccount.localSessions)
+
+    setModalStatus(!isValid)
+  }, [currentAccountToken])
+
+  const validateSession = (sessions) => {
+    if (sessions.length === 0) return false
+
+    const currentAccountSession = sessions[sessions.length - 1]
+
+    const sessionStartTime = moment(currentAccountSession.startTime).tz('Europe/Kiev')
+    const startOfDay = moment().tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
+    const endOfDay = moment().tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
+
+    const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
+
+    return isValid
+  }
 
   const updateLayout = (products, cardsPerRow) => {
     function chunkArray(myArray, chunk_size) {
@@ -68,7 +90,7 @@ function SalesLayout({ navigation, }) {
     setAccountWrapperVisibility(true)
   }
 
-  const closeChangeAccountOverview = (index, token) => {
+  const closeChangeAccountOverview = (account, index, token) => {
     animate()
 
     dispatch(saveCurrentAccountIndex(index))
@@ -126,18 +148,18 @@ function SalesLayout({ navigation, }) {
                 account={account} updateLayout={updateLayout}
                 toastRef={toastRef}
               />
-              {/* <SessionModal
+              <SessionModal
                 navigation={navigation}
-                isVisible={invalidSessions[index]}
-                invalidSessions={invalidSessions}
-                setInvalidSessions={setInvalidSessions}
+                isVisible={isVisible}
                 index={index}
-                noSessionCreated={account.localSessions.length === 0}
-              /> */}
+                noSessionCreated={currentAccount.localSessions.length === 0}
+                openChangeAccountOverview={openChangeAccountOverview}
+                setModalStatus={setModalStatus}
+              />
               {accountWrapperVisibile && (
                 <TouchableOpacity
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                  onPress={() => closeChangeAccountOverview(index, account.token)}
+                  onPress={() => closeChangeAccountOverview(account, index, account.token)}
                   activeOpacity={1}
                 />
               )}
