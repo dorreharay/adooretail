@@ -27,7 +27,7 @@ function AppSessions(props) {
     setTimeout(() => {
       NavigationService.setTopLevelNavigator(navigatorRef.current)
       setTimeout(() => {
-        NavigationService.navigate('NoAccount')
+        NavigationService.navigate(screen)
         setTimeout(() => {
           changeInitialLoadingWrapperOpacity(false)
           SplashScreen.hide();
@@ -51,7 +51,10 @@ function AppSessions(props) {
         SplashScreen.hide();
       }
     }
-  }, [navigatorRef, currentSession, initialLoadingVisibility, currentAccount])
+  }, [
+    navigatorRef, currentSession, accounts,
+    initialLoadingVisibility, currentAccount
+  ])
 
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {
