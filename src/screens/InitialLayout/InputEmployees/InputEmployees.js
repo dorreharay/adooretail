@@ -81,7 +81,7 @@ function InputEmployees({ navigation }) {
       }, 400)
 
     } catch (e) {
-      toast.current.show(e.message, DURATION.LENGTH_LONG)
+      toast.current && toast.current.show(e.message, DURATION.LENGTH_LONG)
       console.log(e.message)
       setLoadingStatus(false)
     }

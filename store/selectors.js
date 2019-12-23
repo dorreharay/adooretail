@@ -8,7 +8,7 @@ const selectIndexAndAccounts = state => ({
 export const currentSessionSelector = createSelector(
   selectIndexAndAccounts,
   ({ accounts, currentAccountIndex }) => {
-    const localSessions = accounts[currentAccountIndex].localSessions
+    const localSessions = accounts[currentAccountIndex] ? accounts[currentAccountIndex].localSessions : []
 
     const lastIndex = localSessions ? localSessions.length - 1 : null
 
