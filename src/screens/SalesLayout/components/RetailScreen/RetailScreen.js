@@ -8,6 +8,7 @@ moment.locale('uk');
 import styles from './styles'
 
 import { API_URL } from '@api'
+import { NO_TIME } from '@statuses'
 
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
@@ -19,7 +20,10 @@ import History from './components/Panel/components/History/History';
 import PaymentModal from './components/LeftSide/components/PaymentModal';
 
 function RetailScreen(props) {
-  const { products, navigation, openChangeAccountOverview, account, updateLayout, toastRef, layout, } = props;
+  const {
+    products, navigation, openChangeAccountOverview,
+    account, updateLayout, toastRef, layout, setModalStatus,
+  } = props;
 
   const dispatch = useDispatch()
 
@@ -109,6 +113,12 @@ function RetailScreen(props) {
   }
 
   const endSession = () => {
+    if (true) {
+      setModalStatus(NO_TIME)
+
+      return
+    }
+
     closeMenu()
     dispatch(setEndOfSessionStatus(true))
 

@@ -15,9 +15,9 @@ import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer'
 
 function SessionModal(props) {
   const {
-    navigation, isVisible,
-    index, noSessionCreated,
-    openChangeAccountOverview, setModalStatus,
+    navigation,
+    modalStatus, setModalStatus,
+    openChangeAccountOverview,
   } = props
 
   const dispatch = useDispatch()
@@ -28,7 +28,7 @@ function SessionModal(props) {
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
-    setModalStatus(false)
+    setModalStatus('')
 
     navigation.navigate('InputCash')
   }
@@ -36,36 +36,19 @@ function SessionModal(props) {
   const startSession = () => {
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
-    setModalStatus(false)
+    setModalStatus('')
 
     navigation.navigate('InputCash')
   }
 
   const handleBackButton = () => {
-    setModalStatus(false)
+    setModalStatus('')
     openChangeAccountOverview()
   }
 
-  const relativeText = {
-    start: {
-      first: 'Створіть першу зміну в новому аккаунті.',
-      second: 'Усі попередні зміни не будуть втрачені.',
-      button: 'РОЗПОЧАТИ ЗМІНУ',
-      onPress: () => startSession(),
-    },
-    end: {
-      first: 'Попередня зміна закінчена.',
-      second: 'Введіть остаточну касу за зміну та розпочніть нову.',
-      button: 'ЗАКІНЧИТИ ЗМІНУ',
-      onPress: () => endSession(),
-    },
-  }
-
-  const currentText = relativeText[noSessionCreated ? 'start' : 'end']
-
   return (
     <Modal
-      visible={isVisible}
+      visible={modalStatus !== ''}
       modalAnimation={new SlideAnimation({
         slideFrom: 'bottom',
         animationDuration: 30,
@@ -75,22 +58,30 @@ function SessionModal(props) {
     >
       <ModalContent>
         <View style={styles.modal}>
-          <TouchableOpacity
-            style={styles.closeIconButton}
-            onPress={handleBackButton}
-            activeOpacity={1}
-          >
-            <FastImage style={styles.closeIcon} source={require('@images/back_modal.png')} />
-          </TouchableOpacity>
+          {modalStatus.type !== 'no_time' && (
+            <TouchableOpacity
+              style={styles.closeIconButton}
+              onPress={handleBackButton}
+              activeOpacity={1}
+            >
+              <FastImage style={styles.closeIcon} source={require('@images/back_modal.png')} />
+            </TouchableOpacity>
+          )}
 
           <Fragment>
             <View>
-              <Text style={styles.modalRegularText}>{currentText.first}</Text>
-              <Text style={styles.modalRegularText}>{currentText.second}</Text>
+              <Text style={styles.modalRegularText}>{modalStatus.first}</Text>
+              <Text style={styles.modalRegularText}>{modalStatus.second}</Text>
             </View>
 
             <TouchableOpacity
-              onPress={currentText.onPress}
+              onPress={() => {
+                if (modalStatus.type === 'start') startSession()
+
+                if (modalStatus.type === 'end') endSession()
+
+                if (modalStatus.type === 'no_time') setModalStatus('')
+              }}
               style={styles.linearButton}
               activeOpacity={1}
             >
@@ -99,7 +90,7 @@ function SessionModal(props) {
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                 colors={['#DB3E47', '#EF9058']}
               >
-                <Text style={styles.linearButtonText}>{currentText.button}</Text>
+                <Text style={styles.linearButtonText}>{modalStatus.button}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </Fragment>

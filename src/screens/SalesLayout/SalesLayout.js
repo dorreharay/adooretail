@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect, useMemo, Fragment, } from 'react';
 import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacity, ScrollView, } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Swiper from 'react-native-swiper'
 let moment = require('moment-timezone');
 moment.locale('uk');
 
 import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
-import { currentAccountSessionSelector } from '@selectors'
+import { START, END, NO_TIME } from '@statuses'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
 import SessionModal from './components/SessionModal/SessionModal'
@@ -20,12 +20,12 @@ import FastImage from 'react-native-fast-image';
 function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
   const [animatedScale] = useState(new Animated.Value(1))
-  const [isVisible, setModalStatus] = useState(false)
+  const [modalStatus, setModalStatus] = useState('')
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
   const [invalidSessions, setInvalidSessions] = useState([false, false])
   const layout = useSelector(state => state.orders.layout)
-  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const currentAccount = useSelector(currentAccountSelector)
+  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const products = currentAccount.products
   const currentSession = useSelector(currentSessionSelector)
   const accounts = useSelector(state => state.user.accounts)
@@ -38,7 +38,13 @@ function SalesLayout({ navigation, }) {
   useEffect(() => {
     const isValid = validateSession(currentAccount.localSessions)
 
-    setModalStatus(!isValid)
+    if (!isValid) {
+      if (currentAccount.localSessions.length === 0) {
+        setModalStatus(START)
+      } else {
+        setModalStatus(END)
+      }
+    }
   }, [currentAccountToken])
 
   const validateSession = (sessions) => {
@@ -146,14 +152,14 @@ function SalesLayout({ navigation, }) {
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
                 account={account} updateLayout={updateLayout}
-                toastRef={toastRef}
+                toastRef={toastRef} setModalStatus={setModalStatus}
               />
               <SessionModal
                 navigation={navigation}
-                isVisible={isVisible}
+                isVisible={modalStatus !== ''}
                 index={index}
-                noSessionCreated={currentAccount.localSessions.length === 0}
                 openChangeAccountOverview={openChangeAccountOverview}
+                modalStatus={modalStatus}
                 setModalStatus={setModalStatus}
               />
               {accountWrapperVisibile && (

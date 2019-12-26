@@ -1,16 +1,22 @@
 {
   "plugins": [
-    ["module-resolver", {
-      "root": ["./"],
-      "alias": {
-        "@images": "./assets/images",
-        "@api": "./config/api",
-        "@fonts": "./config/fonts",
-        "@dimensions": "./helpers/dimensions",
-        "@keyboards": "./helpers/keyboards",
-        "@shared": "./src/shared",
-        "@selectors": "./store/selectors",
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./"
+        ],
+        "alias": {
+          "@images": "./assets/images",
+          "@api": "./config/api",
+          "@fonts": "./config/fonts",
+          "@dimensions": "./helpers/dimensions",
+          "@keyboards": "./helpers/keyboards",
+          "@shared": "./src/shared",
+          "@selectors": "./store/selectors",
+          "@statuses": "./config/statuses"
+        }
       }
-    }]
+    ]
   ]
 }
