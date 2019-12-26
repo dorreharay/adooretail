@@ -25,19 +25,19 @@ function NoAccount(props) {
   const [successOpacity] = useState(new Animated.Value(0))
 
   const [selectedAccount, selectAccount] = useState({ id: false, })
-  const [showConfigureAccount, setConfigureAccountState] = useState(false)
+  const [showConfigureAccount, setConfigureAccountState] = useState(true)
   const [loading, setLoadingStatus] = useState(false)
   const [contentVisible, setContentVisibility] = useState(true)
   const [successVisible, setSuccessVisibility] = useState(false)
   
-  useEffect(() => {
-    if(accounts.every(item => _.isEmpty(item)))
-      setConfigureAccountState(true)
-  }, [accounts])
+  // useEffect(() => {
+  //   if(accounts.every(item => _.isEmpty(item)))
+  //     setConfigureAccountState(true)
+  // }, [accounts])
 
-  const addAccount = () => {
-    setConfigureAccountState(true)
-  }
+  // const addAccount = () => {
+  //   setConfigureAccountState(true)
+  // }
 
   const invokeSuccessAnimation = (callback) => {
     Animated.timing(

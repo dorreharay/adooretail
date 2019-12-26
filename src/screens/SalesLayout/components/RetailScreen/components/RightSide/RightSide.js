@@ -45,7 +45,7 @@ function RightSide(props) {
 
   const loadAgain = () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
-      toast.current.show("Потрібне інтернет з'єднання", 1000);
+      toast.current && toast.current.show("Потрібне інтернет з'єднання", 1000);
 
       return
     }

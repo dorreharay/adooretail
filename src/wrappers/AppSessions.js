@@ -19,28 +19,42 @@ function AppSessions(props) {
 
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(state => state.user.currentAccount)
+  const accounts = useSelector(state => state.user.accounts)
 
   const dispatch = useDispatch()
 
+  const gotoScreen = (screen) => {
+    setTimeout(() => {
+      NavigationService.setTopLevelNavigator(navigatorRef.current)
+      setTimeout(() => {
+        NavigationService.navigate(screen)
+        setTimeout(() => {
+          changeInitialLoadingWrapperOpacity(false)
+          SplashScreen.hide();
+        }, 250)
+      }, 110)
+    }, 100)
+  }
+
   useEffect(() => {
     if (initialLoadingVisibility) {
+      if (accounts.length === 0) {
+        gotoScreen('NoAccount')
+
+        return
+      }
+
       if (!currentSession.endTime && currentSession.length !== 0) {
-        setTimeout(() => {
-          NavigationService.setTopLevelNavigator(navigatorRef.current)
-          setTimeout(() => {
-            NavigationService.navigate('SalesLayout')
-            setTimeout(() => {
-              changeInitialLoadingWrapperOpacity(false)
-              SplashScreen.hide();
-            }, 250)
-          }, 110)
-        }, 100)
+        gotoScreen('SalesLayout')
       } else {
         changeInitialLoadingWrapperOpacity(false)
         SplashScreen.hide();
       }
     }
-  }, [navigatorRef, currentSession, initialLoadingVisibility, currentAccount])
+  }, [
+    navigatorRef, currentSession, accounts,
+    initialLoadingVisibility, currentAccount
+  ])
 
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {

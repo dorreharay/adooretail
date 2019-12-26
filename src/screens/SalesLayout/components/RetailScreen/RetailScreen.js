@@ -36,7 +36,7 @@ function RetailScreen(props) {
   const initialPanelScreens = { history: false, devices: false, transactions: false, }
 
   const [panelScreenState, setPanelScreenState] = useState(initialPanelScreens)
-  const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
+  const [paymentModalVisible, setPaymentModalVisibility] = useState(true)
 
   const [menuVisible, setMenuVisibility] = useState(false)
   const [modalOpacity] = useState(new Animated.Value(0))
@@ -181,19 +181,14 @@ function RetailScreen(props) {
         </PanelInstance>
       )}
 
-      {paymentModalVisible && (
-        <View style={styles.paymentWrapperContainer}>
-          <View style={styles.paymentModal}>
+      {/* {paymentModalVisible && (
+        
+      )} */}
 
-          </View>
-          <TouchableOpacity
-            onPress={() => setPaymentModalVisibility(false)}
-            style={styles.paymentWrapper}
-            activeOpacity={1}
-          >
-          </TouchableOpacity>
-        </View>
-      )}
+      <PaymentModal 
+        isVisible={paymentModalVisible}
+        setPaymentModalVisibility={setPaymentModalVisibility}
+      />
 
     </View>
   )
