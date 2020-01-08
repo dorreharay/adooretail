@@ -20,6 +20,8 @@ function InputEmployees({ navigation }) {
 
   const currentAccount = useSelector(currentAccountSelector)
   const employees = currentAccount.employees
+  const shift_start = currentAccount.shift_start
+  const shift_end = currentAccount.shift_end
   const { startCash, } = useSelector(state => ({ 
     startCash: state.user.startCash,
   }))
@@ -56,6 +58,8 @@ function InputEmployees({ navigation }) {
         startSum: startCash,
         employees: selectedEmployees,
         incasations: [],
+        shift_start,
+        shift_end,
       }
 
       // if(netInfo.isConnected && netInfo.isInternetReachable) {
