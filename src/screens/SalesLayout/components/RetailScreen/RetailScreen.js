@@ -179,10 +179,6 @@ function RetailScreen(props) {
         </PanelInstance>
       )}
 
-      {/* {paymentModalVisible && (
-        
-      )} */}
-
       <PaymentModal
         isVisible={paymentModalVisible}
         setPaymentModalVisibility={setPaymentModalVisibility}

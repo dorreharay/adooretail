@@ -3,6 +3,7 @@ import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacit
 import { connect, useSelector, useDispatch } from 'react-redux';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Swiper from 'react-native-swiper'
+let momentT = require('moment-timer');
 let moment = require('moment-timezone');
 moment.locale('uk');
 
@@ -35,7 +36,7 @@ function SalesLayout({ navigation, }) {
 
   const swiperRef = useRef(null)
 
-  useEffect(() => {
+  function validateSessionRoutine() {
     const isValid = validateSession(currentAccount.localSessions)
 
     if (!isValid) {
@@ -45,18 +46,40 @@ function SalesLayout({ navigation, }) {
         setModalStatus(END)
       }
     }
+  }
+
+  useEffect(() => {
+    validateSessionRoutine()
   }, [currentAccountToken])
+
+  useEffect(() => {
+    momentT.timer(() => console.log('aaaaaa'))
+    .every(durationInput)
+    .max(10)
+    .start()
+  }, [])
 
   const validateSession = (sessions) => {
     if (sessions.length === 0) return false
 
     const currentAccountSession = sessions[sessions.length - 1]
 
-    const sessionStartTime = moment(currentAccountSession.startTime).tz('Europe/Kiev')
-    const startOfDay = moment().tz('Europe/Kiev').startOf('day').format('YYYY-MM-DD HH:mm')
-    const endOfDay = moment().tz('Europe/Kiev').endOf('day').format('YYYY-MM-DD HH:mm')
+    console.log('---------->', moment(currentAccountSession.startTime))
+    console.log('----------<', currentAccountSession.shift_end.hours + ':' + currentAccountSession.shift_end.minutes)
 
-    const isValid = sessionStartTime.isBetween(startOfDay, endOfDay)
+    const sessionStartTime = moment(currentAccountSession.startTime)
+    const startOfShift = moment()
+      .hour(currentAccountSession.shift_start.hours)
+      .minutes(currentAccountSession.shift_end.minutes)
+      .seconds(0)
+      .format('YYYY-MM-DD HH:mm')
+    const endOfShift = moment()
+      .hour(currentAccountSession.shift_end.hours)
+      .minutes(currentAccountSession.shift_end.minutes)
+      .seconds(0)
+      .format('YYYY-MM-DD HH:mm')
+
+    const isValid = sessionStartTime.isBetween(startOfShift, endOfShift)
 
     return isValid
   }

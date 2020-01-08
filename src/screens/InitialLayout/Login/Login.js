@@ -78,9 +78,9 @@ function Login(props) {
 
       const deviceId = await DeviceInfo.getUniqueId();
 
-      if (!registeredDeviceIds.includes(deviceId)) {
-        throw new Error('Не правильний Device Id')
-      }
+      // if (!registeredDeviceIds.includes(deviceId)) {
+      //   throw new Error('Не правильний Device Id')
+      // }
 
       // if(netInfo.isConnected && netInfo.isInternetReachable) {
       //   const { data } = await axios.get(`${API_URL}/user/session/${token}`)
