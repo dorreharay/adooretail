@@ -3,7 +3,7 @@ import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacit
 import { connect, useSelector, useDispatch } from 'react-redux';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Swiper from 'react-native-swiper'
-let momentT = require('moment-timer');
+import { moment as momentTimer } from 'moment-timer';
 let moment = require('moment-timezone');
 moment.locale('uk');
 
@@ -36,6 +36,28 @@ function SalesLayout({ navigation, }) {
 
   const swiperRef = useRef(null)
 
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
+  useInterval(() => {
+    validateSessionRoutine()
+  }, 5 * 1000)
+
   function validateSessionRoutine() {
     const isValid = validateSession(currentAccount.localSessions)
 
@@ -48,29 +70,15 @@ function SalesLayout({ navigation, }) {
     }
   }
 
-  useEffect(() => {
-    validateSessionRoutine()
-  }, [currentAccountToken])
-
-  useEffect(() => {
-    momentT.timer(() => console.log('aaaaaa'))
-    .every(durationInput)
-    .max(10)
-    .start()
-  }, [])
-
   const validateSession = (sessions) => {
     if (sessions.length === 0) return false
 
     const currentAccountSession = sessions[sessions.length - 1]
 
-    console.log('---------->', moment(currentAccountSession.startTime))
-    console.log('----------<', currentAccountSession.shift_end.hours + ':' + currentAccountSession.shift_end.minutes)
-
     const sessionStartTime = moment(currentAccountSession.startTime)
     const startOfShift = moment()
       .hour(currentAccountSession.shift_start.hours)
-      .minutes(currentAccountSession.shift_end.minutes)
+      .minutes(currentAccountSession.shift_start.minutes)
       .seconds(0)
       .format('YYYY-MM-DD HH:mm')
     const endOfShift = moment()
@@ -79,7 +87,10 @@ function SalesLayout({ navigation, }) {
       .seconds(0)
       .format('YYYY-MM-DD HH:mm')
 
-    const isValid = sessionStartTime.isBetween(startOfShift, endOfShift)
+    console.log('----------< startOfShift', startOfShift)
+    console.log('----------< endOfShift', endOfShift)
+
+    const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
 
     return isValid
   }
