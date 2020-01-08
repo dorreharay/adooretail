@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNetInfo } from "@react-native-community/netinfo";
 import Ripple from 'react-native-material-ripple';
 import DeviceInfo from 'react-native-device-info';
-import Toast, {DURATION} from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import Svg, { Circle } from 'react-native-svg';
 import styles from './styles';
 
@@ -31,7 +31,7 @@ function Login(props) {
     { entered: false, },
     { entered: false, },
   ]
-  
+
   const dispatch = useDispatch();
   const netInfo = useNetInfo();
 
@@ -72,16 +72,16 @@ function Login(props) {
     setLoadingStatus(true)
 
     try {
-      if(enteredPinCode !== validPinCode) {
+      if (enteredPinCode !== validPinCode) {
         throw new Error('Не дійсний пін код')
       }
-      
+
       const deviceId = await DeviceInfo.getUniqueId();
-      
+
       if (!registeredDeviceIds.includes(deviceId)) {
         throw new Error('Не правильний Device Id')
       }
-      
+
       // if(netInfo.isConnected && netInfo.isInternetReachable) {
       //   const { data } = await axios.get(`${API_URL}/user/session/${token}`)
 
@@ -95,11 +95,11 @@ function Login(props) {
 
       //   return
       // } else {
-        if (!currentSession.endTime && currentSession.length !== 0) {
-          navigation.navigate('SalesLayout')
-        } else {
-          navigation.navigate('InputCash')
-        }
+      if (!currentSession.endTime && currentSession.length !== 0) {
+        navigation.navigate('ControlLayout')
+      } else {
+        navigation.navigate('InputCash')
+      }
       // }
 
       resetState()
@@ -118,7 +118,7 @@ function Login(props) {
 
     if (currentInput.length < passwordArray.length)
       newInput = currentInput + input;
-    else 
+    else
       return
 
     const enteredLength = passwordArray.filter(item => item.entered === true).length
@@ -155,7 +155,7 @@ function Login(props) {
   useEffect(() => {
     // validateDeviceID('1111222')
 
-    return () => {};
+    return () => { };
   }, [])
 
   return (
@@ -193,7 +193,7 @@ function Login(props) {
         </Ripple>
       </View>
       <LoginLoader active={loading} />
-      <Toast ref={toast}/>
+      <Toast ref={toast} />
     </View>
   )
 }

@@ -9,6 +9,8 @@ import { cashKeyboardLayout } from '../../../../../../../../helpers/keyboards'
 
 import PaymentSubmit from './PaymentSubmit';
 import PaymentHeading from './PaymentHeading';
+import PaymentTypes from './PaymentTypes';
+import PaymentTotal from './PaymentTotal';
 
 const PaymentModal = (props) => {
   const {
@@ -94,21 +96,24 @@ const PaymentModal = (props) => {
   return (
     <View style={styles.paymentWrapperContainer}>
       <View style={[styles.paymentModal, { width: deviceWidth * 0.46, height: deviceWidth * 0.5, }]}>
-        <PaymentHeading />
-        <PaymentSubmit />
+        <PaymentHeading setPaymentModalVisibility={setPaymentModalVisibility} />
+        <PaymentTypes />
+        <PaymentTotal />
+
+        <PaymentSubmit setPaymentModalVisibility={setPaymentModalVisibility} />
       </View>
-        <TouchableOpacity
-          onPress={() => setPaymentModalVisibility(false)}
-          style={styles.paymentWrapper}
-          activeOpacity={1}
-        />
-      </View >
-      )
-    }
-    
-    export default PaymentModal
-    
-    
+      <TouchableOpacity
+        onPress={() => setPaymentModalVisibility(false)}
+        style={styles.paymentWrapper}
+        activeOpacity={1}
+      />
+    </View >
+  )
+}
+
+export default PaymentModal
+
+
   // < View style={{ alignItems: 'center', position: 'absolute', top: 70, left: 0, width: '100%', zIndex: editSumMode ? 2 : -1, backgroundColor: 'white', }}>
   //   <View style={{ width: '100%', paddingHorizontal: 20, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
   //     <Text style={[styles.loginCaption, { width: 100, fontSize: 25, }]}>{initialReceiptSum - currentInput}₴</Text>

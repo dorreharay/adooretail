@@ -5,12 +5,14 @@ import styles from '../../../styles'
 
 import SharedButton from '@shared/SharedButton';
 
-function PaymentSubmit() {
+function PaymentSubmit(props) {
+  const { setPaymentModalVisibility } = props
+
   return (
     <SharedButton
       forceStyles={{ flex: 1 }}
       buttonSizes={styles.paymentSubmitButton}
-      onPress={() => { }}
+      onPress={() => setPaymentModalVisibility(false)}
       scale={0.95}
       backgroundColor={'red'}
     >

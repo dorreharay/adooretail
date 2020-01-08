@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
+import { COMFORTAA_LIGHT, PROBA_LIGHT, PROBA_MEDIUM } from '@fonts'
 
 const base = {
   container: {
@@ -39,9 +39,9 @@ const base = {
   paymentSubmitButton: {
     position: 'absolute',
     left: '7%',
-    bottom: 0,
+    bottom: 15,
     width: '86%',
-    height: 75,
+    height: 85,
   },
   paymentSubmitButtonGradient: {
     alignItems: 'center',
@@ -57,21 +57,67 @@ const base = {
   },
   paymentHeadingContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
     paddingHorizontal: '8%',
   },
   paymentHeadingText: {
     color: '#222222',
     fontSize: 50,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_LIGHT,
+  },
+  paymentCloseButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    height: 50,
+  },
+  paymentTypesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    paddingTop: '6%',
+    paddingHorizontal: '7%',
+  },
+  paymentType: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  paymentTypeName: {
+    marginHorizontal: 15,
+    color: '#343434',
+    fontSize: 32,
+    fontFamily: PROBA_LIGHT,
+  },
+  dot: {
+    width: '60',
+    height: '60',
+    cx: '38',
+    cy: '38',
+    r: '35',
+  },
+  paymentTotalContainer: {
+    width: '100%',
+    paddingHorizontal: '4%',
+    marginTop: 30
+  },
+  paymentTotalText: {
+    marginBottom: 15,
+    marginLeft: 20,
+    fontSize: 30,
+    fontFamily: PROBA_LIGHT,
   }
 };
- 
+
 const styles = createStyles(
   base,
- 
+
   maxWidth(500, {
-    
+
   })
 );
 

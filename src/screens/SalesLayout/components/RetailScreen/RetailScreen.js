@@ -36,19 +36,17 @@ function RetailScreen(props) {
   const initialPanelScreens = { history: false, devices: false, transactions: false, }
 
   const [panelScreenState, setPanelScreenState] = useState(initialPanelScreens)
-  const [paymentModalVisible, setPaymentModalVisibility] = useState(true)
+  const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
 
   const [menuVisible, setMenuVisibility] = useState(false)
   const [modalOpacity] = useState(new Animated.Value(0))
 
   const [menuButtons] = useState([
     {
-      name: 'Історія замовлень',
-      onPress: () => openPanelInstance('history', 'ІСТОРІЯ ЗАМОВЛЕНЬ'),
+      name: 'Панель керування',
+      // onPress: () => openPanelInstance('history', 'ІСТОРІЯ ЗАМОВЛЕНЬ'),
+      onPress: () => navigation.navigate('ControlLayout')
     },
-    { name: 'Пристрої', onPress: () => openPanelInstance('devices', 'Пристрої') },
-    { name: 'Транзакції', onPress: () => openPanelInstance('transactions', 'Транзакції') },
-    { name: 'Налаштування', onPress: () => openPanelInstance('transactions', 'Налаштування') },
     { name: 'Змінити аккаунт', onPress: openChangeAccountOverview },
   ])
 
@@ -65,7 +63,7 @@ function RetailScreen(props) {
 
       updateLayout(data.products, layout)
     } catch (error) {
-      console.error('Failed to fetch products', error)
+      console.warn('Failed to fetch products', error)
       toastRef.current.show("Помилка мережі", 1000);
     }
   }
@@ -185,7 +183,7 @@ function RetailScreen(props) {
         
       )} */}
 
-      <PaymentModal 
+      <PaymentModal
         isVisible={paymentModalVisible}
         setPaymentModalVisibility={setPaymentModalVisibility}
       />
