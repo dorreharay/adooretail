@@ -32,6 +32,7 @@
 		C27323DD87544542890D7A44 /* comfortaa_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D5240A2E9394E439DBCBF1B /* comfortaa_bold.ttf */; };
 		CB0F3E21237C43A60068C82D /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB0F3E20237C43A60068C82D /* Images-2.xcassets */; };
 		CB23EC98588D4A678E543EF1 /* probapro_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B48E21EEE6D46EA99345707 /* probapro_bold.ttf */; };
+		CB6F5A4223C5F8D100369C2A /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6F5A4123C5F8D100369C2A /* libRNSVG.a */; };
 		CBEC44AD237C1A1000435477 /* background-adv.png in Resources */ = {isa = PBXBuildFile; fileRef = CBEC44AC237C1A0F00435477 /* background-adv.png */; };
 		D0642424D96A40FEB4312299 /* futura_new_demi.otf in Resources */ = {isa = PBXBuildFile; fileRef = 644C413EDDC14CBEA53BB574 /* futura_new_demi.otf */; };
 /* End PBXBuildFile section */
@@ -97,6 +98,7 @@
 		B8229EB49CCE136137057360 /* Pods-adooretailTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretailTests.release.xcconfig"; path = "Target Support Files/Pods-adooretailTests/Pods-adooretailTests.release.xcconfig"; sourceTree = "<group>"; };
 		C64FE4528F365CCACC7EE9C4 /* Pods-adooretail-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-adooretail-tvOS/Pods-adooretail-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CB0F3E20237C43A60068C82D /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "adooretail/Images-2.xcassets"; sourceTree = "<group>"; };
+		CB6F5A4123C5F8D100369C2A /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNSVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEC44AC237C1A0F00435477 /* background-adv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-adv.png"; sourceTree = "<group>"; };
 		CD7F8A786E804F9CA1F61E6F /* ttcommons_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_light.ttf; path = ../assets/fonts/ttcommons_light.ttf; sourceTree = "<group>"; };
 		D07DB77C50C81CC32FC958F4 /* Pods-adooretail-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-adooretail-tvOSTests/Pods-adooretail-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6F5A4223C5F8D100369C2A /* libRNSVG.a in Frameworks */,
 				C1964B1111E54B10FE0B3B78 /* libPods-adooretail.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,6 +184,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB6F5A4123C5F8D100369C2A /* libRNSVG.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				8BC0E5CF3E11F18BC04C002F /* libPods-adooretail.a */,
