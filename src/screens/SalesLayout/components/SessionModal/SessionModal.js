@@ -6,16 +6,16 @@ import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
 import * as Progress from 'react-native-progress';
 import FastImage from 'react-native-fast-image'
 
-import { PROBA_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
+import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
 import SharedButton from '@shared/SharedButton';
 
-import { setInitialSlide, setEmployees, setStartCash, } from '../../../../../reducers/UserReducer'
+import { setInitialSlide, setEmployees, setStartCash, addFiveMinutesToShift, } from '../../../../../reducers/UserReducer'
 import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer'
 
 function SessionModal(props) {
   const {
-    navigation,
+    navigation, intervalRef,
     modalStatus, setModalStatus,
     openChangeAccountOverview,
   } = props
@@ -30,6 +30,8 @@ function SessionModal(props) {
     dispatch(setEndOfSessionStatus(true))
     setModalStatus('')
 
+    clearInterval(intervalRef.current)
+
     navigation.navigate('InputCash')
   }
 
@@ -38,12 +40,21 @@ function SessionModal(props) {
     dispatch(setStartCash(0))
     setModalStatus('')
 
+    clearInterval(intervalRef.current)
+
     navigation.navigate('InputCash')
   }
 
   const handleBackButton = () => {
     setModalStatus('')
     openChangeAccountOverview()
+  }
+
+  const addFiveMinutes = () => {
+    setModalStatus('')
+
+    clearInterval(intervalRef.current)
+    dispatch(addFiveMinutesToShift())
   }
 
   return (
@@ -73,6 +84,15 @@ function SessionModal(props) {
               <Text style={styles.modalRegularText}>{modalStatus.first}</Text>
               <Text style={styles.modalRegularText}>{modalStatus.second}</Text>
             </View>
+
+            {modalStatus.type === 'end' && (
+              <TouchableOpacity
+                style={styles.additonalButton}
+                onPress={addFiveMinutes}
+              >
+                <Text style={styles.additonalButtonText}>Ще 5 хвилин</Text>
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity
               onPress={() => {
@@ -166,6 +186,21 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontFamily: PROBA_REGULAR,
   },
+  additonalButton: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 80,
+    width: '100%',
+    padding: 20,
+    // marginLeft: 10,
+  },
+  additonalButtonText: {
+    color: '#343434',
+    fontSize: 16,
+    fontFamily: FUTURA_REGULAR,
+  }
 })
 
 export default SessionModal

@@ -8,6 +8,8 @@ const SET_EMPLOYEES = 'SET_EMPLOYEES';
 const SAVE_CURRENT_ACCOUNT_INDEX = 'SAVE_CURRENT_ACCOUNT_INDEX';
 const SAVE_CURRENT_ACCOUNT_TOKEN = 'SAVE_CURRENT_ACCOUNT_TOKEN';
 const SET_PRODUCTS = 'SET_PRODUCTS';
+const ADD_FIVE_MINUTES_TO_SHIFT = 'ADD_FIVE_MINUTES_TO_SHIFT';
+const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT'
 
 const initialState = {
   token: '',
@@ -26,13 +28,17 @@ const initialState = {
         '67CA2667-D89D-4951-8112-7EA50AF8DA94',
       ],
       img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
-      shift_start: {
-        hours: 7,
+      default_shift_end: {
+        hours: 19,
         minutes: 0,
       },
+      shift_start: {
+        hours: 0,
+        minutes: 10,
+      },
       shift_end: {
-        hours: 13,
-        minutes: 9,
+        hours: 19,
+        minutes: 0,
       },
       employees: [
         {
@@ -69,8 +75,8 @@ const initialState = {
         minutes: 0,
       },
       shift_end: {
-        hours: 19,
-        minutes: 0,
+        hours: 0,
+        minutes: 42,
       },
       registeredDeviceIds: [
         '888f33dcebf0800b',
@@ -162,6 +168,19 @@ export function setEmployees(payload) {
   }
 }
 
+export function addFiveMinutesToShift(payload) {
+  return {
+    type: ADD_FIVE_MINUTES_TO_SHIFT,
+    payload
+  }
+}
+
+export function restoreDefaultShift(payload) {
+  return {
+    type: RESTORE_DEFAULT_SHIFT,
+    payload
+  }
+}
 
 const ACTION_HANDLERS = {
   [SET_PRODUCTS]: (state, action) => {
@@ -169,6 +188,20 @@ const ACTION_HANDLERS = {
     const newProducts = action.payload
 
     const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, products: newProducts }) : item)
+
+    return { ...state, accounts: newAccounts, }
+  },
+  [ADD_FIVE_MINUTES_TO_SHIFT]: (state, action) => {
+    const { accounts, currentAccountIndex, } = state
+
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, shift_end: { ...item.shift_end, minutes: item.shift_end.minutes + 5 } }) : item)
+
+    return { ...state, accounts: newAccounts, }
+  },
+  [RESTORE_DEFAULT_SHIFT]: (state, action) => {
+    const { accounts, currentAccountIndex, } = state
+
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, shift_end: item.default_shift_end }) : item)
 
     return { ...state, accounts: newAccounts, }
   },

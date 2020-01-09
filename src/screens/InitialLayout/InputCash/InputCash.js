@@ -9,7 +9,7 @@ import { API_URL } from '../../../../config/api';
 import { cashKeyboardLayout } from '../../../../helpers/keyboards'
 
 import { currentAccountSelector } from '@selectors'
-import { setEmployees, setStartCash, updateCurrentSession } from '../../../../reducers/UserReducer'
+import { setEmployees, setStartCash, updateCurrentSession, restoreDefaultShift, } from '../../../../reducers/UserReducer'
 import { setEndOfSessionStatus } from '../../../../reducers/TempReducer'
 
 import LoginLoader from '@shared/LoginLoader';
@@ -70,6 +70,7 @@ function InputCash(props) {
 
         dispatch(setEndOfSessionStatus(false))
         dispatch(updateCurrentSession({ status: 'end' }))
+        dispatch(restoreDefaultShift())
 
         navigation.navigate('Login')
       } catch (e) {

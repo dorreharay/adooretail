@@ -12,6 +12,11 @@ const PROBA_REGULAR = Platform.OS === 'android' ? 'probapro_regular' : 'ProbaPro
 const PROBA_MEDIUM = Platform.OS === 'android' ? 'probapro_medium' : 'ProbaPro-Medium'
 const PROBA_BOLD = Platform.OS === 'android' ? 'probapro_bold' : 'ProbaPro-Bold'
 
+const GILROY_LIGHT = Platform.OS === 'android' ? 'gilroy_light' : 'Gilroy-Light'
+const GILROY_REGULAR = Platform.OS === 'android' ? 'gilroy_regular' : 'Gilroy-Regular'
+const GILROY_MEDIUM = Platform.OS === 'android' ? 'gilroy_medium' : 'Gilroy-Medium'
+const GILROY_BOLD = Platform.OS === 'android' ? 'gilroy_bold' : 'Gilroy-Bold'
+
 export {
   COMFORTAA_LIGHT,
   COMFORTAA_REGULAR,
@@ -24,4 +29,9 @@ export {
   PROBA_REGULAR,
   PROBA_MEDIUM,
   PROBA_BOLD,
+
+  GILROY_LIGHT,
+  GILROY_REGULAR,
+  GILROY_MEDIUM,
+  GILROY_BOLD,
 }

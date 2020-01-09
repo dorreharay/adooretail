@@ -132,10 +132,10 @@ const base = {
     height: 300,
   }
 };
- 
+
 const styles = createStyles(
   base,
- 
+
   maxWidth(500, {
     loginHeading: {
       fontSize: 15,

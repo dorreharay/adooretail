@@ -45,7 +45,7 @@ function AppSessions(props) {
       }
 
       if (!currentSession.endTime && currentSession.length !== 0) {
-        gotoScreen('SalesLayout')
+        gotoScreen('ControlLayout')
       } else {
         changeInitialLoadingWrapperOpacity(false)
         SplashScreen.hide();

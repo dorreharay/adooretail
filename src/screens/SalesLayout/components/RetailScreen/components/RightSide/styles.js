@@ -10,7 +10,7 @@ const base = {
     padding: '2%',
     paddingTop: 15,
     paddingBottom: 0,
-    backgroundColor: '#F4F4F4'
+    backgroundColor: '#F3F4F6'
   },
   toolsBar: {
     flexDirection: 'row',
@@ -96,7 +96,7 @@ const base = {
     top: 15,
     right: 25,
   },
-  modal: { 
+  modal: {
     width: 350,
     height: 405,
     borderRadius: 10,
@@ -145,12 +145,12 @@ const base = {
     backgroundColor: '#FFFFFF',
   },
 };
- 
+
 const styles = createStyles(
   base,
- 
+
   maxWidth(500, {
-    
+
   })
 );
 

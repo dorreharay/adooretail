@@ -3,7 +3,8 @@ import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacit
 import { connect, useSelector, useDispatch } from 'react-redux';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Swiper from 'react-native-swiper'
-let momentT = require('moment-timer');
+import _ from 'lodash'
+import { moment as momentTimer } from 'moment-timer';
 let moment = require('moment-timezone');
 moment.locale('uk');
 
@@ -20,6 +21,9 @@ import FastImage from 'react-native-fast-image';
 
 function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
+  const intervalRef = useRef(false)
+  const throttleRef = useRef(_.debounce((callback) => callback(), 1000, { 'trailing': false }))
+
   const [animatedScale] = useState(new Animated.Value(1))
   const [modalStatus, setModalStatus] = useState('')
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
@@ -36,11 +40,25 @@ function SalesLayout({ navigation, }) {
 
   const swiperRef = useRef(null)
 
-  function validateSessionRoutine() {
-    const isValid = validateSession(currentAccount.localSessions)
+  useEffect(() => {
+    validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+
+    // navigation.addListener('didFocus', payload => {
+    //   validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+    // });
+  }, [])
+
+  useEffect(() => {
+    clearInterval(intervalRef.current)
+
+    intervalRef.current = setInterval(() => validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end), 5 * 1000)
+  }, [currentAccount.shift_end])
+
+  function validateSessionRoutine(localSessions, shiftEnd) {
+    const isValid = validateSession(localSessions, shiftEnd)
 
     if (!isValid) {
-      if (currentAccount.localSessions.length === 0) {
+      if (localSessions.length === 0) {
         setModalStatus(START)
       } else {
         setModalStatus(END)
@@ -48,38 +66,26 @@ function SalesLayout({ navigation, }) {
     }
   }
 
-  useEffect(() => {
-    validateSessionRoutine()
-  }, [currentAccountToken])
-
-  useEffect(() => {
-    momentT.timer(() => console.log('aaaaaa'))
-    .every(durationInput)
-    .max(10)
-    .start()
-  }, [])
-
-  const validateSession = (sessions) => {
+  const validateSession = (sessions, shiftEnd) => {
     if (sessions.length === 0) return false
 
     const currentAccountSession = sessions[sessions.length - 1]
 
-    console.log('---------->', moment(currentAccountSession.startTime))
-    console.log('----------<', currentAccountSession.shift_end.hours + ':' + currentAccountSession.shift_end.minutes)
-
     const sessionStartTime = moment(currentAccountSession.startTime)
     const startOfShift = moment()
       .hour(currentAccountSession.shift_start.hours)
-      .minutes(currentAccountSession.shift_end.minutes)
+      .minutes(currentAccountSession.shift_start.minutes)
       .seconds(0)
       .format('YYYY-MM-DD HH:mm')
     const endOfShift = moment()
-      .hour(currentAccountSession.shift_end.hours)
-      .minutes(currentAccountSession.shift_end.minutes)
+      .hour(shiftEnd.hours)
+      .minutes(shiftEnd.minutes)
       .seconds(0)
       .format('YYYY-MM-DD HH:mm')
 
-    const isValid = sessionStartTime.isBetween(startOfShift, endOfShift)
+    console.log('endOfShift', endOfShift)
+
+    const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
 
     return isValid
   }
@@ -180,7 +186,7 @@ function SalesLayout({ navigation, }) {
               <SessionModal
                 navigation={navigation}
                 isVisible={modalStatus !== ''}
-                index={index}
+                index={index} intervalRef={intervalRef}
                 openChangeAccountOverview={openChangeAccountOverview}
                 modalStatus={modalStatus}
                 setModalStatus={setModalStatus}

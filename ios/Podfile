@@ -44,6 +44,8 @@ target 'adooretail' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
+
   target 'adooretailTests' do
     inherit! :search_paths
     # Pods for testing

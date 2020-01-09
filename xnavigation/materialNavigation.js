@@ -7,14 +7,16 @@ import Login from '../src/screens/InitialLayout/Login/Login'
 import InputCash from '../src/screens/InitialLayout/InputCash/InputCash';
 import InputEmployees from '../src/screens/InitialLayout/InputEmployees/InputEmployees';
 import SalesLayout from '../src/screens/SalesLayout/SalesLayout'
+import ControlLayout from '../src/screens/ControlLayout/ControlLayout'
 
-const materialNavigation = createMaterialTopTabNavigator (
+const materialNavigation = createMaterialTopTabNavigator(
   {
     NoAccount: { screen: NoAccount, },
     Login: { screen: Login, },
     InputCash: { screen: InputCash, },
     InputEmployee: { screen: InputEmployees },
     SalesLayout: { screen: SalesLayout, },
+    ControlLayout: { screen: ControlLayout, },
   },
   {
     defaultNavigationOptions: {

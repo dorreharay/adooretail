@@ -124,6 +124,7 @@ const base = {
     position: 'absolute',
     top: 200,
     alignItems: 'center',
+    flexDirection: 'row',
     width: 470,
     height: 580,
     paddingTop: 20,
