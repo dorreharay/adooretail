@@ -7,38 +7,23 @@ import SharedButton from '@shared/SharedButton';
 import PaymentSubmit from '../PaymentSubmit';
 
 function PaymentLeftSide(props) {
-  const {  } = props
-
-  const [selectedType, selectTypeIndex] = useState(0)
-  const [pTypes, setPTypes] = useState([
-    {
-      name: 'Готівка',
-      imageSource: require('@images/dollar.png'),
-    },
-    {
-      name: 'Картка',
-      imageSource: require('@images/debit.png'),
-    },
-    {
-      name: 'Сертифікат',
-      imageSource: require('@images/gift.png'),
-    },
-  ])
+  const { selectedType, pTypes, selectPType, } = props
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Спосіб оплати</Text>
       {pTypes.map((item, index) => (
         <TouchableOpacity
-          style={[styles.paymentType, selectedType === index && { backgroundColor: '#2E2C2E', }]}
-          onPress={() => selectTypeIndex(index)}
+          style={[styles.paymentType, selectedType.index === index && { backgroundColor: '#2E2C2E', }]}
+          onPress={() => selectPType(item)}
           activeOpacity={1}
+          key={index}
         >
           <FastImage
             style={{ width: 30, height: 30, marginRight: 15, }}
             source={item.imageSource}
           />
-          <Text style={[styles.paymentTypeName, selectedType === index && { color: '#FFFFFF', }]}>{item.name}</Text>
+          <Text style={[styles.paymentTypeName, selectedType.index === index && { color: '#FFFFFF', }]}>{item.name}</Text>
         </TouchableOpacity>
       ))}
       <Text style={styles.heading}>Працівник</Text>

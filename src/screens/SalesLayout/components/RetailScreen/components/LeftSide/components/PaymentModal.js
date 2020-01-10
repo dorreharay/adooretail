@@ -20,75 +20,76 @@ const PaymentModal = (props) => {
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const blurRef = useRef(null)
-  const [currentInput, setCurrentInput] = useState('0')
-  const [selectedPaymentType, selectPaymentType] = useState('готівка')
-  const [editSumMode, setEditSumMode] = useState(false)
-  const [sumError, setSumError] = useState(false)
 
-  const sendReceipt = () => {
-    if (Number(initialReceiptSum) > Number(currentInput)) {
-      setSumError(true)
-
-      return
+  const initialStatuses = {
+    initial: {
+      index: 0,
+      statusColor: '#EDEDED',
+      statusText: 'Очікування',
+      blinking: false,
+    },
+    waiting: {
+      index: 1,
+      statusColor: 'yellow',
+      statusText: 'Оплата через термінал',
+      blinking: true,
+    },
+    success: {
+      index: 2,
+      statusColor: '#6FE37A',
+      statusText: 'Оплата проведена',
+      blinking: false,
     }
+  }
+  const [status, setStatus] = useState(initialStatuses.initial)
 
-    changePaymentModalState(false)
+  const [buttonAccessible, setButtonAccessibility] = useState(true)
+  const [currentInput, setCurrentInput] = useState('0')
+  const [pTypes, setPTypes] = useState([
+    {
+      index: 0,
+      name: 'Готівка',
+      imageSource: require('@images/dollar.png'),
+      onPress: () => setPaymentModalVisibility(false),
+    },
+    {
+      index: 1,
+      name: 'Картка',
+      imageSource: require('@images/debit.png'),
+      onPress: () => handleCardPick(),
+      buttonText: 'Розпочати оплату',
+    },
+    {
+      index: 2,
+      name: 'Сертифікат',
+      imageSource: require('@images/gift.png'),
+      onPress: () => setPaymentModalVisibility(false),
+    },
+  ])
+  const [selectedType, selectPType] = useState(pTypes[0])
+
+  const handleCardPick = () => {
+    setStatus(initialStatuses.waiting)
+    setButtonAccessibility(false)
+
     setTimeout(() => {
-      setReceiptInstance([])
-    }, 200)
+      setStatus(initialStatuses.success)
+
+      setTimeout(() => {
+        setPaymentModalVisibility(false)
+        setButtonAccessibility(true)
+      }, 500)
+    }, 7000)
+  }
+
+  const resetStatus = () => {
+    setStatus(initialStatuses.initial)
+    setButtonAccessibility(true)
   }
 
   useEffect(() => {
-    setCurrentInput(initialReceiptSum.toString())
-
-    return () => setCurrentInput('0')
-  }, [initialReceiptSum])
-
-  const handleKeyPress = (input) => {
-    input = input.toString()
-    let newInput = currentInput;
-
-    setSumError(false)
-
-    if (currentInput === initialReceiptSum.toString()) {
-      newInput = input
-
-      setCurrentInput(newInput)
-      return
-    }
-
-    if (newInput == '0') {
-      newInput = ''
-    }
-
-    if (input === '.' && currentInput.includes('.')) return
-
-    if (newInput.length < 8) {
-      newInput = newInput + input;
-    } else {
-      return
-    }
-
-    setCurrentInput(newInput)
-  }
-
-  const handleDeleteSign = () => {
-    let newInput = currentInput;
-
-    setSumError(false)
-
-    if (currentInput.length > 0) {
-      newInput = currentInput.slice(0, -1);
-    } else {
-      return
-    }
-
-    if (currentInput.length === 1) {
-      newInput = '0'
-    }
-
-    setCurrentInput(newInput)
-  }
+    resetStatus()
+  }, [isVisible])
 
   if (!isVisible) return null
 
@@ -100,13 +101,23 @@ const PaymentModal = (props) => {
       blurAmount={10}
     >
       <TouchableOpacity
-        // onPress={() => setPaymentModalVisibility(false)}
         style={styles.paymentWrapper}
         activeOpacity={1}
       />
       <View style={[styles.paymentModal, { width: deviceWidth * 0.72, height: deviceWidth * 0.55, }]}>
-        <PaymentLeftSide />
-        <PaymentRightSide setPaymentModalVisibility={setPaymentModalVisibility} />
+        <PaymentLeftSide
+          pTypes={pTypes}
+          selectedType={selectedType}
+          selectPType={selectPType}
+        />
+        <PaymentRightSide
+          selectedType={selectedType}
+          setPaymentModalVisibility={setPaymentModalVisibility}
+          initialStatuses={initialStatuses}
+          status={status}
+          setStatus={setStatus} resetStatus={resetStatus}
+          buttonAccessible={buttonAccessible}
+        />
       </View>
     </BlurView>
   )

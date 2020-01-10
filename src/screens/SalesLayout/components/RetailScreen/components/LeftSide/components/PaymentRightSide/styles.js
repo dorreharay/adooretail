@@ -39,11 +39,18 @@ const base = {
     fontSize: 25,
     fontFamily: GILROY_REGULAR,
   },
-  paid: {
+  secondContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 25,
+    height: 50,
     paddingLeft: leftPadding,
+  },
+  statusDot: {
+    width: 30,
+    height: 30,
+    marginRight: 15,
+    borderRadius: 100,
   },
   paidInput: {
     paddingHorizontal: 20,
@@ -61,7 +68,7 @@ const base = {
     color: '#343434',
     fontSize: 25,
     fontFamily: GILROY_REGULAR,
-    lineHeight: 27,
+    lineHeight: 30,
   },
   changeText: {
     color: '#9A9A9A',
@@ -92,6 +99,14 @@ const base = {
     height: 60,
     marginBottom: 5,
     backgroundColor: '#f3f3f3'
+  },
+  cancelPaymentProcessButton: {
+    padding: 10,
+  },
+  cancelPaymentProcessText: {
+    color: '#343434',
+    fontSize: 15,
+    fontFamily: GILROY_REGULAR,
   }
 };
  

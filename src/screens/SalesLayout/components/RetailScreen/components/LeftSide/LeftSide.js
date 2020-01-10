@@ -173,7 +173,7 @@ function LeftSide(props) {
         <LinearGradient
           start={{ x: 0, y: 1 }}
           end={{ x: 1, y: 0 }}
-          colors={['#FF7675', '#FD9C6C']}
+          colors={['#DB3E69', '#FD9C6C']}
           style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.7 }]}
         >
           <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>

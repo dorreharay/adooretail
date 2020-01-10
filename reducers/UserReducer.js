@@ -33,8 +33,8 @@ const initialState = {
         minutes: 0,
       },
       shift_start: {
-        hours: 0,
-        minutes: 10,
+        hours: 9,
+        minutes: 0,
       },
       shift_end: {
         hours: 19,
