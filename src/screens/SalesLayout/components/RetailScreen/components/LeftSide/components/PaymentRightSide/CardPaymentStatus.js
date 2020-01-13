@@ -12,7 +12,7 @@ function CardPaymentStatus(props) {
   useEffect(() => {
     return () => {
       stopBlinking()
-      setStatus(initialStatuses.initial)
+      setStatus(initialStatuses.waiting)
     }
   }, [])
 
@@ -50,19 +50,19 @@ function CardPaymentStatus(props) {
   return (
     <View style={[styles.secondContainer, { justifyContent: 'space-between', paddingRight: '7%', }]}>
       <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', }}>
-        <View style={{ flexDirection: 'row', width: '80%', }}>
+        <View style={{ flexDirection: 'row', width: '90%', }}>
           <Animated.View style={[styles.statusDot, { backgroundColor: statusColor }, { opacity: statusDotOpacity }]} />
           <Text style={styles.paidText}>{statusText}</Text>
         </View>
         
-        {status.index === 1 && (
+        {/* {status.index === 1 && (
           <SharedButton
             forceStyles={styles.cancelPaymentProcessButton}
             onPress={resetStatus}
           >
             <Text style={styles.cancelPaymentProcessText}>Відмінити</Text>
           </SharedButton>
-        )}
+        )} */}
       </View>
     </View>
   )

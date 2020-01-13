@@ -37,6 +37,7 @@ function RetailScreen(props) {
 
   const [panelScreenState, setPanelScreenState] = useState(initialPanelScreens)
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
+  const [currentReceipt, setCurrentReceipt] = useState(0)
 
   const [menuVisible, setMenuVisibility] = useState(false)
   const [modalOpacity] = useState(new Animated.Value(0))
@@ -51,6 +52,11 @@ function RetailScreen(props) {
   ])
 
   const throttleRef = useRef(_.debounce((callback) => callback(), 1000, { 'trailing': false }))
+
+  const setPaymentModalState = (state, receipt) => {
+    setCurrentReceipt(receipt)
+    setPaymentModalVisibility(state)
+  }
 
   const loadProducts = async (token) => {
     try {
@@ -130,7 +136,7 @@ function RetailScreen(props) {
         setReceipts={setReceipts}
         selectedInstance={selectedInstance}
         selectReceiptInstance={selectReceiptInstance}
-        setPaymentModalVisibility={setPaymentModalVisibility}
+        setPaymentModalState={setPaymentModalState}
       />
       <RightSide
         products={products}
@@ -182,6 +188,7 @@ function RetailScreen(props) {
       <PaymentModal
         isVisible={paymentModalVisible}
         setPaymentModalVisibility={setPaymentModalVisibility}
+        currentReceipt={currentReceipt}
       />
 
     </View>

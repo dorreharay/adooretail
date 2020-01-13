@@ -6,23 +6,31 @@ import styles from '../../../styles'
 import SharedButton from '@shared/SharedButton';
 
 function PaymentSubmit(props) {
-  const { selectedType, buttonAccessible, } = props
-  const { buttonText } = selectedType
+  const { status, selectedType, buttonAccessible, } = props
+  const { index, buttonText, finalButtonText } = selectedType
+
+  const handlePress = () => {
+    if (index === 1) {
+      selectedType.onPress()
+    } else {
+      selectedType.onPress()
+    }
+  }
 
   return (
     <SharedButton
       forceStyles={{ flex: 1 }}
       buttonSizes={styles.paymentSubmitButton}
-      onPress={() => buttonAccessible ? selectedType.onPress() : null}
+      onPress={handlePress}
       scale={0.95}
     >
       <LinearGradient
         start={{ x: 0, y: 1 }}
         end={{ x: 1, y: 0 }}
-        colors={buttonAccessible ? ['#DB3E69', '#EF9058'] : ['#DEDEDE', '#DEDEDE']}
+        colors={['#DB3E69', '#EF9058']}
         style={styles.paymentSubmitButtonGradient}
       >
-        <Text style={styles.paymentSubmitButtonText}>{buttonText ? buttonText : 'Підтвердити'}</Text>
+        <Text style={styles.paymentSubmitButtonText}>{buttonText}</Text>
       </LinearGradient>
     </SharedButton>
   )

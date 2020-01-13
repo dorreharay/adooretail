@@ -12,10 +12,7 @@ import PaymentLeftSide from './PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
 
 const PaymentModal = (props) => {
-  const {
-    changePaymentModalState, setPaymentModalVisibility,
-    initialReceiptSum = 0, setReceiptInstance, isVisible,
-  } = props;
+  const { setPaymentModalVisibility, isVisible, currentReceipt } = props;
 
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
@@ -31,7 +28,7 @@ const PaymentModal = (props) => {
     waiting: {
       index: 1,
       statusColor: 'yellow',
-      statusText: 'Оплата через термінал',
+      statusText: 'Очікування оплати в терміналі',
       blinking: true,
     },
     success: {
@@ -41,49 +38,45 @@ const PaymentModal = (props) => {
       blinking: false,
     }
   }
-  const [status, setStatus] = useState(initialStatuses.initial)
+  const [status, setStatus] = useState(initialStatuses.waiting)
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)
-  const [currentInput, setCurrentInput] = useState('0')
   const [pTypes, setPTypes] = useState([
     {
       index: 0,
       name: 'Готівка',
       imageSource: require('@images/dollar.png'),
       onPress: () => setPaymentModalVisibility(false),
+      buttonText: 'Підтвердити',
     },
     {
       index: 1,
       name: 'Картка',
       imageSource: require('@images/debit.png'),
-      onPress: () => handleCardPick(),
-      buttonText: 'Розпочати оплату',
+      onPress: () => handleCardPayment(),
+      buttonText: 'Підтвердити',
     },
     {
       index: 2,
-      name: 'Сертифікат',
+      name: 'Знижка',
       imageSource: require('@images/gift.png'),
       onPress: () => setPaymentModalVisibility(false),
+      buttonText: 'Підтвердити',
     },
   ])
   const [selectedType, selectPType] = useState(pTypes[0])
 
-  const handleCardPick = () => {
-    setStatus(initialStatuses.waiting)
-    setButtonAccessibility(false)
+  const handleCardPayment = () => {
+    setStatus(initialStatuses.success)
 
     setTimeout(() => {
-      setStatus(initialStatuses.success)
-
-      setTimeout(() => {
-        setPaymentModalVisibility(false)
-        setButtonAccessibility(true)
-      }, 500)
-    }, 7000)
+      setPaymentModalVisibility(false)
+      setButtonAccessibility(true)
+    }, 500)
   }
 
   const resetStatus = () => {
-    setStatus(initialStatuses.initial)
+    setStatus(initialStatuses.waiting)
     setButtonAccessibility(true)
   }
 
@@ -115,6 +108,8 @@ const PaymentModal = (props) => {
           setPaymentModalVisibility={setPaymentModalVisibility}
           initialStatuses={initialStatuses}
           status={status}
+          total={currentReceipt.receiptSum}
+          receipt={currentReceipt.payload}
           setStatus={setStatus} resetStatus={resetStatus}
           buttonAccessible={buttonAccessible}
         />

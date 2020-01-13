@@ -19,15 +19,18 @@ function PaymentLeftSide(props) {
           activeOpacity={1}
           key={index}
         >
-          <FastImage
-            style={{ width: 30, height: 30, marginRight: 15, }}
-            source={item.imageSource}
-          />
+          {item.imageSource && (
+            <FastImage
+              style={{ width: 30, height: 30, marginRight: 15, }}
+              source={item.imageSource}
+            />
+          )}
+
           <Text style={[styles.paymentTypeName, selectedType.index === index && { color: '#FFFFFF', }]}>{item.name}</Text>
         </TouchableOpacity>
       ))}
       <Text style={styles.heading}>Працівник</Text>
-      
+
       {/* <SharedButton
         forceStyles={styles.cancelOrderButton}
         iconSizes={{ width: 0, height: 0 }}

@@ -87,7 +87,7 @@ const base = {
     fontFamily: GILROY_REGULAR,
   },
   orderContainer: {
-    width: '80%',
+    width: '85%',
     height: '7%',
     marginLeft: leftPadding,
     borderWidth: 1.5,
@@ -95,10 +95,19 @@ const base = {
     borderRadius: 5,
   },
   orderItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
     height: 60,
-    marginBottom: 5,
-    backgroundColor: '#f3f3f3'
+    paddingHorizontal: '5%',
+    borderWidth: 1,
+    borderColor: '#F3F3F3'
+  },
+  orderItemText: {
+    color: '#343434',
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
   },
   cancelPaymentProcessButton: {
     padding: 10,
@@ -107,7 +116,18 @@ const base = {
     color: '#343434',
     fontSize: 15,
     fontFamily: GILROY_REGULAR,
-  }
+  },
+  discountContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '80%',
+  },
+  cameraContainer: {
+    width: '80%',
+    height: '80%',
+    backgroundColor: '#181619'
+  },
 };
  
 const styles = createStyles(

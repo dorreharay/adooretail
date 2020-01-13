@@ -4,12 +4,13 @@ import FastImage from 'react-native-fast-image';
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton';
-import PaymentSubmit from '../PaymentSubmit'
-import CardPaymentStatus from './CardPaymentStatus'
+
+import PaymentType from './PaymentType'
+import CodePayment from './CodePayment'
 
 function PaymentRightSide(props) {
   const {
-    total = 250, setPaymentModalVisibility,
+    total = '', receipt, setPaymentModalVisibility,
     selectedType, status, setStatus, initialStatuses,
     buttonAccessible, resetStatus,
   } = props
@@ -32,7 +33,7 @@ function PaymentRightSide(props) {
   const handleChangeSum = (value) => {
     value = value.replace(/[^\d]/g, '')
 
-    // if(enteredSum.length === 1) return
+    if(value.length >= 4 && enteredSum.length > 3) return enteredSum
 
     setEnteredSum(value)
   }
@@ -40,7 +41,7 @@ function PaymentRightSide(props) {
   return (
     <View style={styles.container}>
       <View style={styles.heading}>
-        <Text style={styles.headingText}>Деталі оплати</Text>
+        <Text style={styles.headingText}>{selectedType.index !== 2 ? 'Деталі оплати' : 'Відскануйте QR-код'}</Text>
 
         <SharedButton
           forceStyles={styles.cancelButton}
@@ -50,55 +51,24 @@ function PaymentRightSide(props) {
           }}
           scale={0.9}
         >
-          <Text style={styles.cancelButtonText}>Скасувати оплату</Text>
+          <Text style={styles.cancelButtonText}>Скасувати</Text>
         </SharedButton>
       </View>
 
-
-      <View style={styles.totalDetails}>
-        <View style={styles.toByPaid}>
-          <Text style={styles.toByPaidText}>250 грн до сплати</Text>
-        </View>
-
-        {selectedType.index === 0 && (
-          <View style={[styles.secondContainer, { justifyContent: 'space-between', paddingRight: '7%', }]}>
-            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-              <TextInput
-                style={[styles.paidInput, invalidColor ? { color: '#E35E62', borderColor: '#E35E62', } : { color: '#39B14C', borderColor: '#39B14C', }]}
-                value={enteredSum}
-                onChangeText={handleChangeSum}
-                keyboardType='number-pad'
-              />
-              <Text style={styles.paidText}>грн внесено</Text>
-            </View>
-            <Text style={styles.changeText}>Решта: {(+enteredSum) - total}</Text>
-          </View>
-        )}
-
-        {selectedType.index === 1 && (
-          <CardPaymentStatus
-            status={status}
-            setStatus={setStatus}
-            initialStatuses={initialStatuses}
-            resetStatus={resetStatus}
-          />
-        )}
-      </View>
-
-      <Text style={styles.headingText}>Замовлення</Text>
-
-      <ScrollView style={styles.orderContainer}>
-        <View style={styles.orderItem}></View>
-        <View style={styles.orderItem}></View>
-        <View style={styles.orderItem}></View>
-        <View style={styles.orderItem}></View>
-      </ScrollView>
-
-      <PaymentSubmit
-        buttonAccessible={buttonAccessible}
-        selectedType={selectedType}
-        setPaymentModalVisibility={setPaymentModalVisibility}
-      />
+      {selectedType.index !== 2 ? (
+        <PaymentType 
+          selectedType={selectedType}
+          enteredSum={enteredSum} receipt={receipt}
+          total={total} buttonAccessible={buttonAccessible}
+          invalidColor={invalidColor}
+          status={status} setStatus={setStatus}
+          initialStatuses={initialStatuses} resetStatus={resetStatus}
+          setPaymentModalVisibility={setPaymentModalVisibility}
+          handleChangeSum={handleChangeSum}
+        />
+      ) : (
+        <CodePayment />
+      )}
     </View>
   )
 }
