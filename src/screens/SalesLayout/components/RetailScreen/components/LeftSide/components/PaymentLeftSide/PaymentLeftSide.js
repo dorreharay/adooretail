@@ -29,16 +29,16 @@ function PaymentLeftSide(props) {
           <Text style={[styles.paymentTypeName, selectedType.index === index && { color: '#FFFFFF', }]}>{item.name}</Text>
         </TouchableOpacity>
       ))}
-      <Text style={styles.heading}>Працівник</Text>
+      {/* <Text style={styles.heading}>Працівник</Text>
 
-      {/* <SharedButton
-        forceStyles={styles.cancelOrderButton}
-        iconSizes={{ width: 0, height: 0 }}
-        onPress={() => setPaymentModalVisibility(false)}
-        scale={0.9}
-      >
-        <Text style={styles.cancelOrderButtonText}>Скасувати оплату</Text>
-      </SharedButton> */}
+      <View style={styles.currentEmployee}>
+        <FastImage
+          style={styles.currentEmployeeImage}
+          // source={require('@images/status_waiting.png')}
+          source={null}
+        />
+        <Text ellipsizeMode='tail' numberOfLines={1} style={styles.currentEmployeeName}>Андрій Бариста</Text>
+      </View> */}
     </View>
   )
 }

@@ -44,6 +44,26 @@ const base = {
     fontSize: 16,
     fontFamily: GILROY_MEDIUM,
   },
+  currentEmployee: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '75%',
+    height: 50,
+    paddingLeft: leftPadding,
+  },
+  currentEmployeeImage: {
+    width: 40,
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
+    borderRadius: 100,
+  },
+  currentEmployeeName: {
+    marginLeft: 15,
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
+  },
 };
  
 const styles = createStyles(

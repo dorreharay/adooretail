@@ -100,6 +100,7 @@ const base = {
     justifyContent: 'space-between',
     width: '100%',
     height: 60,
+    maxHeight: 100,
     paddingHorizontal: '5%',
     borderWidth: 1,
     borderColor: '#F3F3F3'

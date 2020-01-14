@@ -39,7 +39,6 @@ function RightSide(props) {
   const currentAccountToken = useSelector(state => state.user.currentAccountToken)
 
   const [searchTerm, setSearchTerm] = useState('')
-  const [netStatus, setNetStatus] = useState('offline')
 
   const loadProductsThrottled = useRef(_.throttle((token) => loadProducts(token), 5000))
 
@@ -53,20 +52,7 @@ function RightSide(props) {
     // loadProductsThrottled.current(currentAccountToken)
   }
 
-  const getNetInfo = () => {
-    if(netInfo.isConnected && netInfo.isInternetReachable) {
-      setNetStatus('online')
-    }
-    if(!netInfo.isConnected) {
-      setNetStatus('offline')
-    }
-    if(netInfo.isConnected && !netInfo.isInternetReachable) {
-      setNetStatus('waiting')
-    }
-  }
-
   useEffect(() => {
-    getNetInfo()
     loadProducts(currentAccountToken)
   }, [currentAccountToken])
 
@@ -113,10 +99,10 @@ function RightSide(props) {
 
         </View>
 
-        <SharedButton onPress={getNetInfo} scale={0.85}>
+        <SharedButton onPress={() => {}} scale={0.85}>
           <View style={styles.connection}>
             <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
-            <Text style={styles.connectionText}>{netStatus}</Text>
+            <Text style={styles.connectionText}>{netInfo.isConnected ? netInfo.isInternetReachable ? 'online' : 'waiting' : 'offline'}</Text>
           </View>
         </SharedButton>
 

@@ -50,7 +50,7 @@ function PaymentType(props) {
       <ScrollView style={styles.orderContainer} contentContainerStyle={{ paddingBottom: 2, }}>
         {receipt.map((item, index) => (
           <View style={styles.orderItem} key={index}>
-            <Text style={[styles.orderItemText, { width: '55%', }]}>{item.title}</Text>
+            <Text style={[styles.orderItemText, { width: '65%', }]}>{item.title}</Text>
             <Text style={styles.orderItemText}>{item.price} грн</Text>
             <Text style={styles.orderItemText}>{item.quantity} шт</Text>
           </View>
