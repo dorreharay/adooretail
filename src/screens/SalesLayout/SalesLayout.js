@@ -43,16 +43,14 @@ function SalesLayout({ navigation, }) {
   useEffect(() => {
     validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
 
-    // navigation.addListener('didFocus', payload => {
-    //   validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-    // });
-  }, [])
-
-  useEffect(() => {
     clearInterval(intervalRef.current)
 
     intervalRef.current = setInterval(() => validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end), 5 * 1000)
   }, [currentAccount.shift_end])
+
+  useEffect(() => {
+    validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+  }, [currentAccountToken])
 
   function validateSessionRoutine(localSessions, shiftEnd) {
     const isValid = validateSession(localSessions, shiftEnd)

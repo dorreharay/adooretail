@@ -8,7 +8,7 @@ import AppLoading from './src/wrappers/AppLoading'
 
 import NavigationService from './xnavigation/NavigationService';
 
-function MainApp(props){
+function MainApp(props) {
   const { navigation, screenProps, } = props
 
   const navigatorRef = useRef(null)
@@ -23,7 +23,7 @@ function MainApp(props){
           ref={navigatorRef}
           navigation={navigation}
           screenProps={screenProps}
-        />     
+        />
       </AppSessions>
     </AppLoading>
   )

@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { View, Dimensions } from 'react-native'
+import { View, Text, Dimensions, StyleSheet, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
 import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
+import DeviceInfo from 'react-native-device-info';
 
 import { currentSessionSelector } from '@selectors'
+import { PROBA_LIGHT } from '@fonts'
 import { setForceSlide, setEndOfSessionStatus, setOrientationDimensions, } from '../../reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
@@ -22,6 +24,8 @@ function AppSessions(props) {
   const accounts = useSelector(state => state.user.accounts)
 
   const dispatch = useDispatch()
+
+  const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
 
   const gotoScreen = (screen) => {
     setTimeout(() => {
@@ -52,9 +56,9 @@ function AppSessions(props) {
       }
     }
   }, [
-    navigatorRef, currentSession, accounts,
-    initialLoadingVisibility, currentAccount
-  ])
+      navigatorRef, currentSession, accounts,
+      initialLoadingVisibility, currentAccount
+    ])
 
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {
@@ -81,6 +85,19 @@ function AppSessions(props) {
     return () => Orientation.removeOrientationListener(onOrientationChange);
   }, [])
 
+  const getBuildInfo = async () => {
+    const version = await DeviceInfo.getVersion()
+    const buildNumber = await DeviceInfo.getBuildNumber()
+
+    setBuildInfo({ version, buildNumber, })
+
+    return () => { }
+  }
+
+  useEffect(() => {
+    getBuildInfo()
+  }, [])
+
   const screenProps = {
     initialLoadingVisibility,
     initialLoadingOpacity,
@@ -92,24 +109,43 @@ function AppSessions(props) {
   );
 
   return (
-    <SharedBackground
-      loading={initialLoadingVisibility}
-      opacity={initialLoadingOpacity}
-      source={require('@images/background-adv7.png')}
-      mainWrapper
-    >
+    <>
       <SharedBackground
         loading={initialLoadingVisibility}
         opacity={initialLoadingOpacity}
         source={require('@images/background-adv7.png')}
-        navigation={NavigationService}
+        mainWrapper
       >
-        <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
-          {withProps}
-        </View>
+        <SharedBackground
+          loading={initialLoadingVisibility}
+          opacity={initialLoadingOpacity}
+          source={require('@images/background-adv7.png')}
+          navigation={NavigationService}
+        >
+          <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
+            <View style={styles.versionContainer}>
+              <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
+            </View>
+            {withProps}
+          </View>
+        </SharedBackground>
       </SharedBackground>
-    </SharedBackground>
+    </>
   )
 }
+
+const styles = StyleSheet.create({
+  versionContainer: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    zIndex: 1000,
+  },
+  versionText: {
+    color: '#222222',
+    fontSize: 15,
+    fontFamily: PROBA_LIGHT,
+  },
+})
 
 export default AppSessions

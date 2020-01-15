@@ -190,7 +190,6 @@ function RetailScreen(props) {
         setPaymentModalVisibility={setPaymentModalVisibility}
         currentReceipt={currentReceipt}
       />
-
     </View>
   )
 }

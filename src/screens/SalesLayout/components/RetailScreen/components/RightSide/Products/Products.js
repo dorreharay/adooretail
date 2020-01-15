@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
+let moment = require('moment-timezone');
+moment.locale('uk');
 import styles from './styles'
 
 import { currentProductsSelector } from '@selectors'
@@ -75,10 +77,21 @@ function Products(props) {
         return item
       })
     } else {
-      newReceiptsInstance = [...receipts[selectedInstance], { ...product, quantity: 1, }]
+      let initialReceiptItem = { ...product, quantity: 1, }
+
+      if(receipts[selectedInstance].length === 0) {
+        initialReceiptItem = {
+          ...initialReceiptItem,
+          timeStart: moment(Date.now()).format('YYYY-MM-DD HH:mm')
+        }
+      }
+
+      newReceiptsInstance = [...receipts[selectedInstance], initialReceiptItem]
     }
 
     const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
+
+    console.log(newReceipts)
 
     setReceipts(newReceipts)
   }

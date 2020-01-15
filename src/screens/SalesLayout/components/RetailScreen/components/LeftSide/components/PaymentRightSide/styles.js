@@ -77,7 +77,10 @@ const base = {
     lineHeight: 27,
   },
   cancelButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 50,
+    marginTop: 10,
     paddingTop: 3,
     paddingHorizontal: 20,
   },
@@ -125,9 +128,10 @@ const base = {
     height: '80%',
   },
   cameraContainer: {
-    width: '80%',
-    height: '80%',
-    backgroundColor: '#181619'
+    width: 420,
+    height: 420,
+    backgroundColor: '#181619',
+    borderRadius: 1000,
   },
 };
  

@@ -1,4 +1,4 @@
-import React, { useState, Fragment, } from 'react'
+import React, { useState, useRef, Fragment, } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, Animated, Easing, } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
@@ -103,13 +103,13 @@ function History(props) {
       ]
     },
   ])
-  const [expandedIndexes, setExpandedIndexes] = useState([])
+  const [expandedIndex, setExpandedIndex] = useState(null)
   const [spinValue] = useState(new Animated.Value(1))
 
-  const handleExpand = (index) => {
-    if (expandedIndexes.includes(index)) {
-      const newExpandedIndexes = expandedIndexes.filter(item => item !== index)
+  const scrollRef = useRef(null)
 
+  const handleExpand = (index) => {
+    if (expandedIndex === index) {
       Animated.timing(
         spinValue,
         {
@@ -119,7 +119,7 @@ function History(props) {
         }
       ).start()
 
-      setExpandedIndexes(newExpandedIndexes)
+      setExpandedIndex(null)
     } else {
       Animated.timing(
         spinValue,
@@ -130,7 +130,9 @@ function History(props) {
         }
       ).start()
 
-      setExpandedIndexes([...expandedIndexes, index])
+      scrollRef.current.scrollTo(index * 70)
+
+      setExpandedIndex(index)
     }
   }
 
@@ -142,7 +144,12 @@ function History(props) {
   const AnimatedImage = Animated.createAnimatedComponent(FastImage)
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 70, }}>
+    <ScrollView 
+      ref={scrollRef}
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 10000, }}
+      scrollEnabled={expandedIndex === null}
+    >
       {days.map((day, index) => (
         <Fragment key={index}>
           <TouchableOpacity
@@ -159,13 +166,13 @@ function History(props) {
             <Text style={styles.dayHeaderEmployees}>Працівників на зміні: {day.employees.length}</Text>
             <View style={styles.dayHeaderIcon}>
               <AnimatedImage
-                style={[{ width: 15, height: 15 }, expandedIndexes.includes(index) && { transform: [{ rotate: spin }] }]}
+                style={[{ width: 15, height: 15 }, expandedIndex === index && { transform: [{ rotate: spin }] }]}
                 source={require('@images/down-arrow.png')}
               />
             </View>
           </TouchableOpacity>
-          <Collapsible collapsed={!expandedIndexes.includes(index)}>
-            <View style={{ width: '100%', maxHeight: 600, paddingLeft: 40, paddingBottom: 50, backgroundColor: '#FFFFFF' }}>
+          <Collapsible collapsed={expandedIndex !== index}>
+            <View style={{ width: '100%', maxHeight: 600, paddingLeft: 40, backgroundColor: '#FFFFFF' }}>
               {/* <View style={styles.employeesContainer}>
                 <View style={styles.employeeBlock}>
                   <View style={styles.employee}>
@@ -193,9 +200,10 @@ function History(props) {
 
               <ScrollView
                 style={styles.historyInstanceContainer}
-                contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap' }}
+                contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 30, }}
+                scrollEnabled={expandedIndex === index}
               >
-                {[{}, {}, {}, {}, {}, {}, {}, {}, {}, {},].map((item, index) => (
+                {[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},].map((item, index) => (
                   <View style={styles.historyInstance}>
                     <Text style={styles.receiptTime}>12:31</Text>
                     <Text style={styles.receiptItem}>Лате 250 мл - 25 грн</Text>

@@ -24,7 +24,7 @@ const base = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: '#00000066',
+    backgroundColor: '#0000008C',
     zIndex: 10,
   },
   paymentModal: {
@@ -109,7 +109,7 @@ const base = {
     marginLeft: 20,
     fontSize: 30,
     fontFamily: PROBA_LIGHT,
-  }
+  },
 };
 
 const styles = createStyles(

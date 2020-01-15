@@ -47,6 +47,7 @@ function ContentPanel(props) {
         itemWidth={deviceWidth * 0.8}
         itemHeight={deviceHeight * 0.93}
         vertical
+        scrollEnabled={false}
         onSnapToItem={handleSlideIndex}
         inactiveSlideScale={0.95}
       />

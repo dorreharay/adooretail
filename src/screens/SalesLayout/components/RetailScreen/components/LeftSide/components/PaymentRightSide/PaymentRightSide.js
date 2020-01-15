@@ -12,13 +12,12 @@ function PaymentRightSide(props) {
   const {
     total = '', receipt, setPaymentModalVisibility,
     selectedType, status, setStatus, initialStatuses,
-    buttonAccessible, resetStatus,
+    buttonAccessible, resetStatus, enteredSum, setEnteredSum,
   } = props
 
   const { statusColor, statusText, blinking, } = status
 
   const [invalidColor, setInvalidColor] = useState(false)
-  const [enteredSum, setEnteredSum] = useState(`${total}`)
 
   useEffect(() => {
     if (+enteredSum >= total) {
@@ -31,9 +30,21 @@ function PaymentRightSide(props) {
   }, [enteredSum])
 
   const handleChangeSum = (value) => {
-    value = value.replace(/[^\d]/g, '')
+    value = value.replace(/[^0-9.]/g, '')
 
-    if(value.length >= 4 && enteredSum.length > 3) return enteredSum
+    const splittedValue = value.split('')
+    const dotsNumber = splittedValue.filter(item => item === '.').length
+
+    if(dotsNumber > 1) {
+      return
+    }
+
+    const dotIndex = value.indexOf('.')
+    const valueBeforeDot = value.slice(0, dotIndex)
+
+    console.log(valueBeforeDot)
+    
+    if(valueBeforeDot.length >= 5) return enteredSum
 
     setEnteredSum(value)
   }

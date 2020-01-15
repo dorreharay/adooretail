@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, } from 'react-native'
 import { useSelector } from 'react-redux'
 import Modal, { SlideAnimation, ModalContent, ModalButton, } from 'react-native-modals';
 import FastImage from 'react-native-fast-image';
-import { BlurView, } from "@react-native-community/blur";
 import styles from '../../../styles'
 
 import { cashKeyboardLayout } from '../../../../../../../../helpers/keyboards'
@@ -38,36 +37,74 @@ const PaymentModal = (props) => {
       blinking: false,
     }
   }
+
   const [status, setStatus] = useState(initialStatuses.waiting)
+  const [enteredSum, setEnteredSum] = useState(`${currentReceipt.receiptSum}`)
+
+  useEffect(() => {
+    setEnteredSum(`${currentReceipt.receiptSum}`)
+  }, [currentReceipt])
+
+  const saveReceipt = (paymentType, currentReceipt) => {
+    function guidGenerator() {
+      let S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      };
+      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    }
+
+    const timeStart = currentReceipt
+    // const timeStart = firstReceipt.timeStart
+
+    const payload = {
+      payment_type: paymentType,
+      receipt: currentReceipt.payload,
+      total: currentReceipt.receiptSum,
+      input: parseFloat(enteredSum),
+      localId: guidGenerator(),
+      timeStart,
+    }
+
+    console.log('payload', payload)
+  }
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)
   const [pTypes, setPTypes] = useState([
     {
       index: 0,
       name: 'Готівка',
+      apiName: 'cash',
       imageSource: require('@images/dollar.png'),
-      onPress: () => setPaymentModalVisibility(false),
+      onPress: () => {
+        saveReceipt('cash', currentReceipt)
+        setPaymentModalVisibility(false)
+      },
       buttonText: 'Підтвердити',
     },
     {
       index: 1,
       name: 'Картка',
+      apiName: 'card',
       imageSource: require('@images/debit.png'),
-      onPress: () => handleCardPayment(),
-      buttonText: 'Підтвердити',
+      onPress: () => {
+        handleCardPayment('card', currentReceipt)
+      },
+      buttonText: 'Підтвердити розрахунок',
     },
     {
       index: 2,
       name: 'Знижка',
       imageSource: require('@images/gift.png'),
-      onPress: () => setPaymentModalVisibility(false),
-      buttonText: 'Підтвердити',
+      onPress: () => { },
+      buttonText: '',
     },
   ])
   const [selectedType, selectPType] = useState(pTypes[0])
 
-  const handleCardPayment = () => {
+  const handleCardPayment = (paymentType, currentReceipt) => {
     setStatus(initialStatuses.success)
+
+    saveReceipt(paymentType, currentReceipt)
 
     setTimeout(() => {
       setPaymentModalVisibility(false)
@@ -87,12 +124,7 @@ const PaymentModal = (props) => {
   if (!isVisible) return null
 
   return (
-    <BlurView
-      viewRef={blurRef}
-      style={styles.paymentWrapperContainer}
-      blurType="light"
-      blurAmount={10}
-    >
+    <View style={styles.paymentWrapperContainer}>
       <TouchableOpacity
         style={styles.paymentWrapper}
         activeOpacity={1}
@@ -107,14 +139,15 @@ const PaymentModal = (props) => {
           selectedType={selectedType}
           setPaymentModalVisibility={setPaymentModalVisibility}
           initialStatuses={initialStatuses}
-          status={status}
-          total={currentReceipt.receiptSum}
+          status={status} total={enteredSum}
           receipt={currentReceipt.payload}
           setStatus={setStatus} resetStatus={resetStatus}
           buttonAccessible={buttonAccessible}
+          enteredSum={enteredSum}
+          setEnteredSum={setEnteredSum}
         />
       </View>
-    </BlurView>
+    </View>
   )
 }
 
