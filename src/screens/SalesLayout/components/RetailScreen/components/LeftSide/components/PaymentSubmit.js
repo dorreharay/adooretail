@@ -21,14 +21,14 @@ function PaymentSubmit(props) {
     <SharedButton
       forceStyles={{ flex: 1 }}
       buttonSizes={styles.paymentSubmitButton}
-      onPress={handlePress}
+      onPress={() => buttonAccessible ? handlePress() : null}
       scale={0.95}
     >
       <LinearGradient
         start={{ x: 0, y: 1 }}
         end={{ x: 1, y: 0 }}
         colors={['#DB3E69', '#EF9058']}
-        style={styles.paymentSubmitButtonGradient}
+        style={[styles.paymentSubmitButtonGradient, !buttonAccessible && { opacity: 0.6 }]}
       >
         <Text style={styles.paymentSubmitButtonText}>{buttonText}</Text>
       </LinearGradient>

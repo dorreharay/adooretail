@@ -53,8 +53,10 @@ const PaymentModal = (props) => {
       return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     }
 
-    const timeStart = currentReceipt
+    // const firstReceipt = currentReceipt.payload[0]
     // const timeStart = firstReceipt.timeStart
+
+    console.log('aaaa', currentReceipt)
 
     const payload = {
       payment_type: paymentType,
@@ -62,7 +64,7 @@ const PaymentModal = (props) => {
       total: currentReceipt.receiptSum,
       input: parseFloat(enteredSum),
       localId: guidGenerator(),
-      timeStart,
+      timeStart: 0,
     }
 
     console.log('payload', payload)
@@ -139,12 +141,13 @@ const PaymentModal = (props) => {
           selectedType={selectedType}
           setPaymentModalVisibility={setPaymentModalVisibility}
           initialStatuses={initialStatuses}
-          status={status} total={enteredSum}
+          status={status} total={currentReceipt.receiptSum}
           receipt={currentReceipt.payload}
           setStatus={setStatus} resetStatus={resetStatus}
           buttonAccessible={buttonAccessible}
           enteredSum={enteredSum}
           setEnteredSum={setEnteredSum}
+          setButtonAccessibility={setButtonAccessibility}
         />
       </View>
     </View>

@@ -31,7 +31,7 @@ function PaymentType(props) {
               />
               <Text style={styles.paidText}>грн внесено</Text>
             </View>
-            <Text style={styles.changeText}>Решта: {(+enteredSum) - total}</Text>
+            <Text style={styles.changeText}>Решта: {((+enteredSum) - total).toFixed(2)}</Text>
           </View>
         )}
 
