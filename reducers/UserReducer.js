@@ -1,4 +1,5 @@
 import moment from 'moment-timezone'
+import Receipt from '../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/Receipt';
 
 const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
@@ -9,7 +10,8 @@ const SAVE_CURRENT_ACCOUNT_INDEX = 'SAVE_CURRENT_ACCOUNT_INDEX';
 const SAVE_CURRENT_ACCOUNT_TOKEN = 'SAVE_CURRENT_ACCOUNT_TOKEN';
 const SET_PRODUCTS = 'SET_PRODUCTS';
 const ADD_FIVE_MINUTES_TO_SHIFT = 'ADD_FIVE_MINUTES_TO_SHIFT';
-const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT'
+const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT';
+const SAVE_LOCAL_RECEIPT = 'SAVE_LOCAL_RECEIPT';
 
 const initialState = {
   token: '',
@@ -64,6 +66,7 @@ const initialState = {
       ],
       products: [],
       localSessions: [],
+      receipts: [],
     },
     {
       id: '4sd3fsgu76fg55akgjsd54jadfnu343',
@@ -106,9 +109,17 @@ const initialState = {
       ],
       products: [],
       localSessions: [],
+      receipts: [],
     },
   ],
 };
+
+export function saveLocalReceipt(payload) {
+  return {
+    type: SAVE_LOCAL_RECEIPT,
+    payload
+  }
+}
 
 export function setProducts(payload) {
   return {
@@ -116,7 +127,6 @@ export function setProducts(payload) {
     payload
   }
 }
-
 
 export function saveCurrentAccountIndex(payload) {
   return {
@@ -183,6 +193,25 @@ export function restoreDefaultShift(payload) {
 }
 
 const ACTION_HANDLERS = {
+  [SAVE_LOCAL_RECEIPT]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+    const newReceipt = action.payload
+
+    const newAccounts = accounts.map((item, id) => {
+      if(id === currentAccountIndex && !!item.receipts) {
+        const lastSessionIndex = item.localSessions.length - 1
+
+        return ({ 
+          ...item, 
+          localSessions: item.localSessions.map((elem, key) => lastSessionIndex === key ? ({ ...elem, receipts: [...elem.receipts, newReceipt] }) : elem)
+        })
+      } else {
+        return item
+      }
+    })
+
+    return { ...state, accounts: newAccounts, }
+  },
   [SET_PRODUCTS]: (state, action) => {
     const { accounts, currentAccountIndex } = state
     const newProducts = action.payload
@@ -228,6 +257,7 @@ const ACTION_HANDLERS = {
     if (status === 'new') {
       newSession = {
         ...newSessionProp,
+        receipts: [],
         startTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
       }
 

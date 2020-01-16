@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, } from 'react'
 import { View, TouchableOpacity, } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch, } from 'react-redux'
 let moment = require('moment-timezone');
 moment.locale('uk');
 import styles from '../../../styles'
 
-import { cashKeyboardLayout } from '../../../../../../../../helpers/keyboards'
+import { saveLocalReceipt } from '@reducers/UserReducer'
 
 import PaymentLeftSide from './PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
@@ -13,6 +13,7 @@ import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
 const PaymentModal = (props) => {
   const { setPaymentModalVisibility, isVisible, currentReceipt, } = props;
 
+  const dispatch = useDispatch()
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const blurRef = useRef(null)
@@ -63,13 +64,16 @@ const PaymentModal = (props) => {
       receipt: currentReceipt.payload,
       total: currentReceipt.receiptSum,
       input: parseFloat(enteredSum),
+      change: +((+enteredSum) - currentReceipt.receiptSum).toFixed(2).replace(".00", ""),
       localId: guidGenerator(),
       first_product_time: timeStart,
       last_product_time: timeEnd,
       transaction_time_end: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
     }
 
-    console.log('payload', payload)
+    if(!payload) return
+
+    dispatch(saveLocalReceipt(payload))
   }
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)
@@ -148,6 +152,7 @@ const PaymentModal = (props) => {
           buttonAccessible={buttonAccessible}
           enteredSum={enteredSum} saveReceipt={saveReceipt}
           setEnteredSum={setEnteredSum}
+          setButtonAccessibility={setButtonAccessibility}
         />
       </View>
     </View>

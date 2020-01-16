@@ -6,7 +6,7 @@ import FastImage from "react-native-fast-image";
 import LinearGradient from 'react-native-linear-gradient'
 import styles from '../styles';
 
-import { changeAccount } from '../../../../../reducers/UserReducer'
+import { changeAccount } from '@reducers/UserReducer'
 
 function ChooseAccount(props) {
   const {

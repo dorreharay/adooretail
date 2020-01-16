@@ -13,8 +13,8 @@ import SharedButton from '@shared/SharedButton';
 
 import Products from './Products/Products'
 
-import { setLayout } from '../../../../../../../reducers/OrdersReducer'
-import { setEndOfSessionStatus } from '../../../../../../../reducers/TempReducer';
+import { setLayout } from '@reducers/OrdersReducer'
+import { setEndOfSessionStatus } from '@reducers/TempReducer';
 
 const onlineIcon = require('@images/status_online.png')
 const offlineIcon = require('@images/status_offline.png')

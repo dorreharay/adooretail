@@ -9,8 +9,8 @@ import { API_URL } from '../../../../config/api';
 import { cashKeyboardLayout } from '../../../../helpers/keyboards'
 
 import { currentAccountSelector } from '@selectors'
-import { setEmployees, setStartCash, updateCurrentSession, restoreDefaultShift, } from '../../../../reducers/UserReducer'
-import { setEndOfSessionStatus } from '../../../../reducers/TempReducer'
+import { setEmployees, setStartCash, updateCurrentSession, restoreDefaultShift, } from '@reducers/UserReducer'
+import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 import LoginLoader from '@shared/LoginLoader';
 

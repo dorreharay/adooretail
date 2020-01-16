@@ -10,8 +10,8 @@ import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, } from '@font
 
 import SharedButton from '@shared/SharedButton';
 
-import { setInitialSlide, setEmployees, setStartCash, addFiveMinutesToShift, } from '../../../../../reducers/UserReducer'
-import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer'
+import { setInitialSlide, setEmployees, setStartCash, addFiveMinutesToShift, } from '@reducers/UserReducer'
+import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 function SessionModal(props) {
   const {

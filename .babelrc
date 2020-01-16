@@ -14,7 +14,8 @@
           "@keyboards": "./helpers/keyboards",
           "@shared": "./src/shared",
           "@selectors": "./store/selectors",
-          "@statuses": "./config/statuses"
+          "@statuses": "./config/statuses",
+          "@reducers": "./reducers"
         }
       }
     ]

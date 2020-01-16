@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
 import { persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage';
-import OrdersReducer from '../reducers/OrdersReducer';
-import UserReducer from '../reducers/UserReducer';
-import TempReducer from '../reducers/TempReducer';
+import OrdersReducer from '@reducers/OrdersReducer';
+import UserReducer from '@reducers/UserReducer';
+import TempReducer from '@reducers/TempReducer';
 
 const RESET_STORE = 'RESET_STORE';
 

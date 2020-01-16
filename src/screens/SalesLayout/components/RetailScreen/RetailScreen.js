@@ -15,7 +15,7 @@ import RightSide from './components/RightSide/RightSide';
 import Panel from './components/Panel/Panel';
 import PanelInstance from './components/Panel/components/PanelInstance'
 
-import { setEndOfSessionStatus } from '../../../../../reducers/TempReducer';
+import { setEndOfSessionStatus } from '@reducers/TempReducer';
 import History from './components/Panel/components/History/History';
 import PaymentModal from './components/LeftSide/components/PaymentModal';
 

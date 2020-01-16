@@ -13,7 +13,7 @@ function PaymentRightSide(props) {
     total = '', receipt, setPaymentModalVisibility,
     selectedType, status, setStatus, initialStatuses,
     buttonAccessible, resetStatus, enteredSum, setEnteredSum,
-    saveReceipt,
+    saveReceipt, setButtonAccessibility,
   } = props
 
   const { statusColor, statusText, blinking, } = status
@@ -21,29 +21,37 @@ function PaymentRightSide(props) {
   const [invalidColor, setInvalidColor] = useState(false)
 
   useEffect(() => {
+    if (selectedType.index === 1) return setButtonAccessibility(true)
+
     if (+enteredSum >= total) {
+      setButtonAccessibility(true)
       setInvalidColor(false)
     }
 
     if (+enteredSum < total) {
+      setButtonAccessibility(false)
       setInvalidColor(true)
     }
-  }, [enteredSum])
+  }, [enteredSum, selectedType])
 
   const handleChangeSum = (value) => {
     value = value.replace(/[^0-9.]/g, '')
 
     const splittedValue = value.split('')
-    const dotsNumber = splittedValue.filter(item => item === '.').length
+    const dotsAmount = splittedValue.filter(item => item === '.').length
 
-    if(dotsNumber > 1) {
+    if (dotsAmount > 1) {
       return
     }
 
     const dotIndex = value.indexOf('.')
     const valueBeforeDot = value.slice(0, dotIndex)
-    
-    if(valueBeforeDot.length >= 5) return enteredSum
+    const valueAfterDot = value.slice(dotIndex)
+
+    if (valueBeforeDot.length >= 5) return
+    if (valueAfterDot.length > 3) return
+
+    setButtonAccessibility(false)
 
     setEnteredSum(value)
   }
@@ -66,7 +74,7 @@ function PaymentRightSide(props) {
       </View>
 
       {selectedType.index !== 2 ? (
-        <PaymentType 
+        <PaymentType
           selectedType={selectedType}
           enteredSum={enteredSum} receipt={receipt}
           total={total} buttonAccessible={buttonAccessible}
@@ -77,8 +85,8 @@ function PaymentRightSide(props) {
           handleChangeSum={handleChangeSum} saveReceipt={saveReceipt}
         />
       ) : (
-        <CodePayment />
-      )}
+          <CodePayment />
+        )}
     </View>
   )
 }

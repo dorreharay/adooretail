@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, } from 'react'
 import { View, Animated, } from 'react-native'
 import _ from 'lodash'
-import { setEndOfSessionStatus } from '../../reducers/TempReducer'
+import { setEndOfSessionStatus } from '@reducers/TempReducer'
 import Orientation from 'react-native-orientation';
 
 function AppLoading({ children, }){

@@ -8,7 +8,7 @@ import DeviceInfo from 'react-native-device-info';
 
 import { currentSessionSelector } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
-import { setForceSlide, setEndOfSessionStatus, setOrientationDimensions, } from '../../reducers/TempReducer'
+import { setForceSlide, setEndOfSessionStatus, setOrientationDimensions, } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
 

@@ -15,7 +15,7 @@ import RetailScreen from './components/RetailScreen/RetailScreen';
 import SessionModal from './components/SessionModal/SessionModal'
 
 import { currentAccountSelector, currentSessionSelector } from '@selectors'
-import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '../../../reducers/UserReducer'
+import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '@reducers/UserReducer'
 import Pagination from './components/Pagination'
 import FastImage from 'react-native-fast-image';
 

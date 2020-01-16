@@ -14,7 +14,7 @@ import LoginLoader from '@shared/LoginLoader';
 import EmployeesList from "./components/EmployeesList";
 
 import { currentAccountSelector } from '@selectors'
-import { updateCurrentSession, setEmployees, setStartCash, } from '../../../../reducers/UserReducer';
+import { updateCurrentSession, setEmployees, setStartCash, } from '@reducers/UserReducer';
 
 function InputEmployees({ navigation }) {
 
@@ -58,9 +58,12 @@ function InputEmployees({ navigation }) {
         startSum: startCash,
         employees: selectedEmployees,
         incasations: [],
+        receipts: [],
         shift_start,
         shift_end,
       }
+
+      console.log(newSession)
 
       // if(netInfo.isConnected && netInfo.isInternetReachable) {
       //   await axios.post(`${API_URL}/user/session/init/${token}`, newSessionObj)

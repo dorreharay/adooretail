@@ -16,8 +16,8 @@ import { loginKeyboardLayout } from '../../../../helpers/keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
 
-import { setCurrentSession, } from '../../../../reducers/UserReducer'
-import { setEndOfSessionStatus } from '../../../../reducers/TempReducer'
+import { setCurrentSession, } from '@reducers/UserReducer'
+import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 function Login(props) {
   const { navigation, screenProps, } = props;
