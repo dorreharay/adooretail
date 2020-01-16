@@ -27,8 +27,6 @@ function RetailScreen(props) {
 
   const dispatch = useDispatch()
 
-  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
-
   const [receipts, setReceipts] = useState([[], [], [], []])
   const [selectedInstance, selectReceiptInstance] = useState(0)
   const [selectedDate, selectDate] = useState(false)
@@ -76,6 +74,12 @@ function RetailScreen(props) {
 
   const handleNewDate = (newDate) => {
     selectDate(newDate)
+  }
+
+  const clearCurrentReceipt = () => {
+    const newReceipt = receipts.map((item, index) => index === selectedInstance ? ([]) : item)
+
+    setReceipts(newReceipt)
   }
 
   const openPanelInstance = (instanceName, title) => {
@@ -189,6 +193,7 @@ function RetailScreen(props) {
         isVisible={paymentModalVisible}
         setPaymentModalVisibility={setPaymentModalVisibility}
         currentReceipt={currentReceipt}
+        clearCurrentReceipt={clearCurrentReceipt}
       />
     </View>
   )

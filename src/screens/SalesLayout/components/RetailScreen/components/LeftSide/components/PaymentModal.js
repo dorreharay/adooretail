@@ -11,7 +11,10 @@ import PaymentLeftSide from './PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
 
 const PaymentModal = (props) => {
-  const { setPaymentModalVisibility, isVisible, currentReceipt, } = props;
+  const { 
+    setPaymentModalVisibility, isVisible,
+    currentReceipt, clearCurrentReceipt,
+  } = props;
 
   const dispatch = useDispatch()
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
@@ -85,6 +88,7 @@ const PaymentModal = (props) => {
       imageSource: require('@images/dollar.png'),
       onPress: (callBack) => {
         callBack()
+        clearCurrentReceipt()
         setPaymentModalVisibility(false)
       },
       buttonText: 'Підтвердити',
@@ -116,6 +120,7 @@ const PaymentModal = (props) => {
     setTimeout(() => {
       setPaymentModalVisibility(false)
       setButtonAccessibility(true)
+      clearCurrentReceipt()
     }, 500)
   }
 
