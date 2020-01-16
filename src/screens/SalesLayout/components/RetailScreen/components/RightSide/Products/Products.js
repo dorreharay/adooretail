@@ -77,21 +77,17 @@ function Products(props) {
         return item
       })
     } else {
-      let initialReceiptItem = { ...product, quantity: 1, }
-
-      if(receipts[selectedInstance].length === 0) {
-        initialReceiptItem = {
-          ...initialReceiptItem,
-          timeStart: moment(Date.now()).format('YYYY-MM-DD HH:mm')
-        }
+      let initialReceiptItem = {
+        title: product.title,
+        price: product.price,
+        quantity: 1,
+        time: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
       }
 
       newReceiptsInstance = [...receipts[selectedInstance], initialReceiptItem]
     }
 
     const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
-
-    console.log(newReceipts)
 
     setReceipts(newReceipts)
   }

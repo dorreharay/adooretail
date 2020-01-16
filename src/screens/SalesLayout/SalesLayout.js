@@ -81,7 +81,7 @@ function SalesLayout({ navigation, }) {
       .seconds(0)
       .format('YYYY-MM-DD HH:mm')
 
-    console.log('endOfShift', endOfShift)
+    console.log('End of shift --->', endOfShift)
 
     const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
 

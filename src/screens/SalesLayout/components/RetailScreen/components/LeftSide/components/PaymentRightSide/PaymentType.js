@@ -10,7 +10,7 @@ function PaymentType(props) {
   const {
     selectedType, enteredSum, total, invalidColor, status, setStatus,
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
-    handleChangeSum, receipt,
+    handleChangeSum, receipt, saveReceipt,
   } = props
 
   return (
@@ -62,6 +62,7 @@ function PaymentType(props) {
         buttonAccessible={buttonAccessible}
         selectedType={selectedType}
         setPaymentModalVisibility={setPaymentModalVisibility}
+        saveReceipt={saveReceipt} receipt={receipt}
       />
     </>
   )

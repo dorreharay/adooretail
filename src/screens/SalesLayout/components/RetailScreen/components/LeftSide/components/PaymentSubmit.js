@@ -6,16 +6,10 @@ import styles from '../../../styles'
 import SharedButton from '@shared/SharedButton';
 
 function PaymentSubmit(props) {
-  const { status, selectedType, buttonAccessible, } = props
+  const { status, selectedType, buttonAccessible, saveReceipt, receipt, } = props
   const { index, buttonText, finalButtonText } = selectedType
 
-  const handlePress = () => {
-    if (index === 1) {
-      selectedType.onPress()
-    } else {
-      selectedType.onPress()
-    }
-  }
+  const handlePress = () => selectedType.onPress(() => saveReceipt(selectedType.apiName, receipt))
 
   return (
     <SharedButton

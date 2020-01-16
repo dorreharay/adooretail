@@ -13,6 +13,7 @@ function PaymentRightSide(props) {
     total = '', receipt, setPaymentModalVisibility,
     selectedType, status, setStatus, initialStatuses,
     buttonAccessible, resetStatus, enteredSum, setEnteredSum,
+    saveReceipt,
   } = props
 
   const { statusColor, statusText, blinking, } = status
@@ -41,8 +42,6 @@ function PaymentRightSide(props) {
 
     const dotIndex = value.indexOf('.')
     const valueBeforeDot = value.slice(0, dotIndex)
-
-    console.log(valueBeforeDot)
     
     if(valueBeforeDot.length >= 5) return enteredSum
 
@@ -75,7 +74,7 @@ function PaymentRightSide(props) {
           status={status} setStatus={setStatus}
           initialStatuses={initialStatuses} resetStatus={resetStatus}
           setPaymentModalVisibility={setPaymentModalVisibility}
-          handleChangeSum={handleChangeSum}
+          handleChangeSum={handleChangeSum} saveReceipt={saveReceipt}
         />
       ) : (
         <CodePayment />

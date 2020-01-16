@@ -1,8 +1,8 @@
-import React, { Fragment, useState, useEffect, useRef, } from 'react'
-import { View, Text, TextInput, TouchableOpacity, } from 'react-native'
+import React, { useState, useEffect, useRef, } from 'react'
+import { View, TouchableOpacity, } from 'react-native'
 import { useSelector } from 'react-redux'
-import Modal, { SlideAnimation, ModalContent, ModalButton, } from 'react-native-modals';
-import FastImage from 'react-native-fast-image';
+let moment = require('moment-timezone');
+moment.locale('uk');
 import styles from '../../../styles'
 
 import { cashKeyboardLayout } from '../../../../../../../../helpers/keyboards'
@@ -11,7 +11,7 @@ import PaymentLeftSide from './PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
 
 const PaymentModal = (props) => {
-  const { setPaymentModalVisibility, isVisible, currentReceipt } = props;
+  const { setPaymentModalVisibility, isVisible, currentReceipt, } = props;
 
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
@@ -45,7 +45,7 @@ const PaymentModal = (props) => {
     setEnteredSum(`${currentReceipt.receiptSum}`)
   }, [currentReceipt])
 
-  const saveReceipt = (paymentType, currentReceipt) => {
+  const saveReceipt = (paymentType) => {
     function guidGenerator() {
       let S4 = function () {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -53,8 +53,10 @@ const PaymentModal = (props) => {
       return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     }
 
-    const timeStart = currentReceipt
-    // const timeStart = firstReceipt.timeStart
+    const firstReceipt = currentReceipt.payload[0]
+    const lastReceipt = currentReceipt.payload[currentReceipt.payload.length - 1]
+    const timeStart = firstReceipt.time
+    const timeEnd = lastReceipt.time
 
     const payload = {
       payment_type: paymentType,
@@ -62,7 +64,9 @@ const PaymentModal = (props) => {
       total: currentReceipt.receiptSum,
       input: parseFloat(enteredSum),
       localId: guidGenerator(),
-      timeStart,
+      first_product_time: timeStart,
+      last_product_time: timeEnd,
+      transaction_time_end: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
     }
 
     console.log('payload', payload)
@@ -75,8 +79,8 @@ const PaymentModal = (props) => {
       name: 'Готівка',
       apiName: 'cash',
       imageSource: require('@images/dollar.png'),
-      onPress: () => {
-        saveReceipt('cash', currentReceipt)
+      onPress: (callBack) => {
+        callBack()
         setPaymentModalVisibility(false)
       },
       buttonText: 'Підтвердити',
@@ -86,8 +90,9 @@ const PaymentModal = (props) => {
       name: 'Картка',
       apiName: 'card',
       imageSource: require('@images/debit.png'),
-      onPress: () => {
-        handleCardPayment('card', currentReceipt)
+      onPress: (callBack) => {
+        callBack()
+        handleCardPayment()
       },
       buttonText: 'Підтвердити розрахунок',
     },
@@ -101,10 +106,8 @@ const PaymentModal = (props) => {
   ])
   const [selectedType, selectPType] = useState(pTypes[0])
 
-  const handleCardPayment = (paymentType, currentReceipt) => {
+  const handleCardPayment = () => {
     setStatus(initialStatuses.success)
-
-    saveReceipt(paymentType, currentReceipt)
 
     setTimeout(() => {
       setPaymentModalVisibility(false)
@@ -139,11 +142,11 @@ const PaymentModal = (props) => {
           selectedType={selectedType}
           setPaymentModalVisibility={setPaymentModalVisibility}
           initialStatuses={initialStatuses}
-          status={status} total={enteredSum}
+          status={status} total={currentReceipt.receiptSum}
           receipt={currentReceipt.payload}
           setStatus={setStatus} resetStatus={resetStatus}
           buttonAccessible={buttonAccessible}
-          enteredSum={enteredSum}
+          enteredSum={enteredSum} saveReceipt={saveReceipt}
           setEnteredSum={setEnteredSum}
         />
       </View>
