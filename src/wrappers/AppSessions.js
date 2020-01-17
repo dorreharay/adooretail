@@ -5,6 +5,7 @@ import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
+import io from 'socket.io-client';
 
 import { currentSessionSelector } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
@@ -26,6 +27,14 @@ function AppSessions(props) {
   const dispatch = useDispatch()
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
+
+  // useEffect(() => {
+  //   const socket = io('http://localhost:3000');
+
+  //   io.on('connection', (socket) => {
+  //     console.log(socket)
+  //   });
+  // }, [])
 
   const gotoScreen = (screen) => {
     setTimeout(() => {
