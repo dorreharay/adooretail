@@ -6,15 +6,23 @@ import styles from '../../../styles'
 import SharedButton from '@shared/SharedButton';
 
 function PaymentSubmit(props) {
-  const { status, selectedType, buttonAccessible, saveReceipt, receipt, } = props
+  const { status, selectedType, buttonAccessible, saveReceipt, receipt, clearCurrentReceipt, } = props
   const { index, buttonText, finalButtonText } = selectedType
 
-  const handlePress = () => selectedType.onPress(() => saveReceipt(selectedType.apiName, receipt))
+  const handlePress = () => selectedType.onPress(() => {
+    saveReceipt(selectedType.apiName, receipt)
+    if(selectedType.index === 1) {
+      setTimeout(() => {
+        clearCurrentReceipt()
+      }, 500)
+    } else {
+      clearCurrentReceipt()
+    }
+  })
 
   return (
     <SharedButton
-      forceStyles={{ flex: 1 }}
-      buttonSizes={styles.paymentSubmitButton}
+      style={styles.paymentSubmitButton}
       onPress={() => buttonAccessible ? handlePress() : null}
       scale={0.95}
     >

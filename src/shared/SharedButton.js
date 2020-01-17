@@ -1,22 +1,21 @@
-import React, { Component, useState, useEffect, useRef, } from 'react';
+import React, { useState, } from 'react';
 import { Animated, View, TouchableWithoutFeedback, StyleSheet, Image, Alert, Text, } from 'react-native';
 
 function SharedButton(props) {
   const {
-    children, onPress, scale, duration, onStart, buttonSizes, iconSizes,
-    source, loading, backgroundColor, borderRadius, forceStyles = {},
-    text, rotateOnPress, loadAgain, textStyles, key,
-  } = props;
+    style = {}, iconStyle, source, svgSource,
+    borderRadius, scale, duration, loading,
+    onPress, rotateOnPress, children,
+  } = props
 
   const [animatePress] = useState(new Animated.Value(1))
-  const [updateIconAnimation] = useState(new Animated.Value(0))
-  const [pressed, setPressedState] = useState(false)
+  const [animateRotation] = useState(new Animated.Value(0))
 
   const animateIn = () => {
     Animated.timing(animatePress, {
       toValue: scale ? scale : 0.7,
       duration: duration ? duration : 100,
-    }).start(() => setPressedState(true))
+    }).start()
   }
 
   const animateOut = () => {
@@ -24,17 +23,21 @@ function SharedButton(props) {
       toValue: 1,
       duration: 200,
     }).start()
+
+    if (rotateOnPress) {
+      rotateIcon()
+    }
   }
 
   const rotateIcon = () => {
     Animated.loop(
       Animated.sequence([
-        Animated.timing(updateIconAnimation, {
+        Animated.timing(animateRotation, {
           toValue: 1,
           duration: 500,
           useNativeDriver: true
         }),
-        Animated.timing(updateIconAnimation, {
+        Animated.timing(animateRotation, {
           toValue: 0,
           duration: 0,
           useNativeDriver: true
@@ -46,47 +49,59 @@ function SharedButton(props) {
     ).start()
   }
 
-  const handlePress = () => {
-    onPress()
+  const renderContent = () => {
+    if(children) return (
+      <View style={{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', }}>{children}</View>
+    )
 
-    if (rotateOnPress)
-      rotateIcon()
+    if(loading) {
+      return <Text>Loading...</Text>
+    }
+
+    return (
+      <Animated.View style={{ ...iconStyle, transform: [{ rotate: spin }] }}>
+        {svgSource ? (
+          svgSource
+        ) : (
+          <Image
+            style={{ 
+              width: '100%',
+              height: '100%',
+              borderRadius: borderRadius ? borderRadius : 0,
+            }}
+            source={source ? source.uri ? { uri: source.uri } : source : null}
+          />
+        )}
+      </Animated.View>
+    )
   }
 
-  const spin = updateIconAnimation.interpolate({
+  const relativeStyles = [
+    {...style},
+    style.flexDirection && { flexDirection: style.flexDirection },
+    {
+      ...styles.button,
+      borderRadius: borderRadius ? borderRadius : 5,
+      transform: [{
+        scale: animatePress
+      }]
+    },
+  ]
+
+  const spin = animateRotation.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg']
   })
 
   return (
-    <View style={forceStyles} key={key ? key : 0}>
+    <View style={children ? style : {}}>
       <TouchableWithoutFeedback
-        onPress={handlePress}
+        onPress={onPress}
         onPressIn={animateIn}
         onPressOut={animateOut}
       >
-        <Animated.View style={{
-          ...styles.button,
-          ...buttonSizes,
-          borderRadius: borderRadius ? borderRadius : 5,
-          backgroundColor: backgroundColor ? backgroundColor : '',
-          transform: [{
-            scale: animatePress
-          }]
-        }}>
-          {loading ? (
-            null
-          ) : (
-              children ? (
-                children
-              ) : (
-                  text ? (
-                    <Text style={textStyles}>{text}</Text>
-                  ) : (
-                      <Animated.Image style={{ width: iconSizes.width, height: iconSizes.height, transform: [{ rotate: spin }] }} source={source} />
-                    )
-                )
-            )}
+        <Animated.View style={relativeStyles}>
+          {renderContent()}
         </Animated.View>
       </TouchableWithoutFeedback>
     </View>
@@ -97,8 +112,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    height: '100%',
   }
 })
 

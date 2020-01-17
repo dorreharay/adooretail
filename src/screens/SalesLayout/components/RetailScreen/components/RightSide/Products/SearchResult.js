@@ -14,8 +14,7 @@ function SearchResult(props) {
       {searchResult.map((rowItem, key) => (
         <SharedButton
           onPress={(force) => addProductQuantity(rowItem)(force)}
-          forceStyles={[styles[`colsProduct${layout}`], key % 4 === 0 && { marginLeft: 0, }]}
-          buttonSizes={{ flex: 1, width: '100%', }}
+          style={[styles[`colsProduct${layout}`], key % 4 === 0 && { marginLeft: 0, }]}
           scale={0.95} onStart
         >
           <LinearGradient colors={[rowItem.color, rowItem.shadow]} style={styles.variant}>

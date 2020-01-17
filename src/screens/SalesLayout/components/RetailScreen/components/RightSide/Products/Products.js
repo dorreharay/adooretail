@@ -149,6 +149,13 @@ function Products(props) {
     }
   }
 
+  function guidGenerator() {
+    let S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4());
+  }
+
   return (
     <ScrollView
       ref={scrollView}
@@ -167,19 +174,20 @@ function Products(props) {
         {products.map((row, index) => (
           <View style={styles.row} key={index}>
             {row.map((rowItem, key) => (
-              <TouchableOpacity
+              <SharedButton
                 style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                 onPress={() => changeActiveCategory(index, key)}
                 activeOpacity={1} key={key}
+                scale={0.95}
               >
                 <FastImage
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
                   source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
                 />
-                <TouchableOpacity style={[styles[`categoryTitle${layout}`], { bottom: -1, }]} onPress={() => changeActiveCategory(index, key)} activeOpacity={1} key={index}>
+                <View style={[styles[`categoryTitle${layout}`], { bottom: -1, }]} onPress={() => changeActiveCategory(index, key)} activeOpacity={1} key={index}>
                   <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
-                </TouchableOpacity>
-              </TouchableOpacity>
+                </View>
+              </SharedButton>
             ))}
           </View>
         ))}
@@ -203,11 +211,10 @@ function Products(props) {
                   ) : (
                     <SharedButton
                       onPress={(force) => addProductQuantity(rowItem)(force)}
-                      forceStyles={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
-                      buttonSizes={{ flex: 1, width: '100%', }}
-                      scale={0.95} onStart key={key}
+                      style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
+                      scale={0.95}
                     >
-                      <LinearGradient colors={[rowItem.color, rowItem.shadow]} style={styles.variant}>
+                      <LinearGradient style={styles.variant} colors={[rowItem.color, rowItem.shadow]}>
                         <View style={styles.variantPrice}>
                           <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
                         </View>

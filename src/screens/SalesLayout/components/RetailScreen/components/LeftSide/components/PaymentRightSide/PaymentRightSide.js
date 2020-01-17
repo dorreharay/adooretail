@@ -13,7 +13,7 @@ function PaymentRightSide(props) {
     total = '', receipt, setPaymentModalVisibility,
     selectedType, status, setStatus, initialStatuses,
     buttonAccessible, resetStatus, enteredSum, setEnteredSum,
-    saveReceipt, setButtonAccessibility,
+    saveReceipt, setButtonAccessibility, clearCurrentReceipt,
   } = props
 
   const { statusColor, statusText, blinking, } = status
@@ -62,7 +62,7 @@ function PaymentRightSide(props) {
         <Text style={styles.headingText}>{selectedType.index !== 2 ? 'Деталі оплати' : 'Відскануйте QR-код'}</Text>
 
         <SharedButton
-          forceStyles={styles.cancelButton}
+          style={styles.cancelButton}
           onPress={() => {
             setPaymentModalVisibility(false)
             resetStatus()
@@ -83,6 +83,7 @@ function PaymentRightSide(props) {
           initialStatuses={initialStatuses} resetStatus={resetStatus}
           setPaymentModalVisibility={setPaymentModalVisibility}
           handleChangeSum={handleChangeSum} saveReceipt={saveReceipt}
+          clearCurrentReceipt={clearCurrentReceipt}
         />
       ) : (
           <CodePayment />

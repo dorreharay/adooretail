@@ -54,15 +54,6 @@ function CardPaymentStatus(props) {
           <Animated.View style={[styles.statusDot, { backgroundColor: statusColor }, { opacity: statusDotOpacity }]} />
           <Text style={styles.paidText}>{statusText}</Text>
         </View>
-        
-        {/* {status.index === 1 && (
-          <SharedButton
-            forceStyles={styles.cancelPaymentProcessButton}
-            onPress={resetStatus}
-          >
-            <Text style={styles.cancelPaymentProcessText}>Відмінити</Text>
-          </SharedButton>
-        )} */}
       </View>
     </View>
   )

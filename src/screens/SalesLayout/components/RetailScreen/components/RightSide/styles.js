@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
 
 const toolsBarHeight = 45
 
@@ -143,6 +143,11 @@ const base = {
     height: 45,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
+  },
+  layoutNumberText: {
+    color: '#414141',
+    fontSize: 18,
+    fontFamily: PROBA_MEDIUM,
   },
 };
 

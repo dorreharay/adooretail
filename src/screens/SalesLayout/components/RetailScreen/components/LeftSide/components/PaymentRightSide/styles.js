@@ -91,7 +91,6 @@ const base = {
   },
   orderContainer: {
     width: '85%',
-    height: '7%',
     marginLeft: leftPadding,
     borderWidth: 1.5,
     borderColor: '#E3E3E3',

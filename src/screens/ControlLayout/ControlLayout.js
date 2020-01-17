@@ -1,8 +1,6 @@
 import React, { useState, } from 'react'
-import { View, Text, StyleSheet, Animated, } from 'react-native'
+import { View, StyleSheet, Animated, } from 'react-native'
 import { useSelector } from 'react-redux'
-
-import { PROBA_MEDIUM } from '@fonts'
 
 import ControlPanel from './components/ControlPanel/ControlPanel'
 import ContentPanel from './components/ContentPanel/ContentPanel'
@@ -16,29 +14,6 @@ function ControlLayout(props) {
   const { deviceWidth } = useSelector(state => state.temp.dimensions)
 
   const [animatedX] = useState(new Animated.Value(0))
-  // -deviceWidth * 0.2
-  const openPanel = () => {
-    Animated.timing(
-      animatedX,
-      {
-        toValue: 0,
-        duration: 300,
-      },
-    ).start()
-  }
-
-  const closePanel = () => {
-
-    return
-
-    Animated.timing(
-      animatedX,
-      {
-        toValue: -deviceWidth * 0.2,
-        duration: 300,
-      },
-    ).start()
-  }
 
   const [tabs] = useState({
     'Основні': [
@@ -118,6 +93,30 @@ function ControlLayout(props) {
   })
 
   const [activeCategory, setActiveCategory] = useState(0)
+
+  // -deviceWidth * 0.2
+  const openPanel = () => {
+    Animated.timing(
+      animatedX,
+      {
+        toValue: 0,
+        duration: 300,
+      },
+    ).start()
+  }
+
+  const closePanel = () => {
+
+    return
+
+    Animated.timing(
+      animatedX,
+      {
+        toValue: -deviceWidth * 0.2,
+        duration: 300,
+      },
+    ).start()
+  }
 
   const handleCategoryPress = (index) => {
     setActiveCategory(index)

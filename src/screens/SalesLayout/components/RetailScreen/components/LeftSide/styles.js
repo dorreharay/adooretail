@@ -25,7 +25,7 @@ const base = {
   receiptButtonText: {
     color: '#343434',
     fontSize: 22,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: PROBA_REGULAR,
   },
   receipts: {
     flex: 1,
@@ -35,7 +35,7 @@ const base = {
     justifyContent: 'center',
     width: '100%',
     height: '15%',
-    paddingHorizontal: 30,
+    paddingHorizontal: 15,
     marginBottom: '2%',
   },
   lsproceedButton: {
@@ -52,6 +52,12 @@ const base = {
     fontSize: 24,
     fontFamily: PROBA_MEDIUM,
     letterSpacing: 0.7,
+  },
+  lsInstanceContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderColor: '#FE8B70',
   },
   receiptItem: {
     display: 'flex',

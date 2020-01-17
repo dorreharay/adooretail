@@ -39,9 +39,10 @@ const base = {
     justifyContent: 'flex-end',
     width: '30%',
     height: '100%',
+    marginRight: 20,
   },
   backButton: {
-    paddingRight: 45,
+    paddingHorizontal: 15,
     height: '100%',
   },
   primaryColor: {
@@ -49,7 +50,6 @@ const base = {
     fontFamily: PROBA_MEDIUM,
   },
   headingText: {
-    marginLeft: 20,
     color: '#343434',
     fontSize: 35,
     fontFamily: PROBA_MEDIUM,

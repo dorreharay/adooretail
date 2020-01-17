@@ -10,7 +10,7 @@ function PaymentType(props) {
   const {
     selectedType, enteredSum, total, invalidColor, status, setStatus,
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
-    handleChangeSum, receipt, saveReceipt,
+    handleChangeSum, receipt, saveReceipt, clearCurrentReceipt,
   } = props
 
   return (
@@ -45,17 +45,18 @@ function PaymentType(props) {
         )}
       </View>
 
-      <Text style={styles.headingText}>Замовлення</Text>
+      <View style={{ height: '42%', }}>
+        <Text style={styles.headingText}>Замовлення</Text>
 
-      <ScrollView style={styles.orderContainer} contentContainerStyle={{ paddingBottom: 2, }}>
-        {receipt.map((item, index) => (
-          <View style={styles.orderItem} key={index}>
-            <Text style={[styles.orderItemText, { width: '65%', }]}>{item.title}</Text>
-            <Text style={styles.orderItemText}>{item.price} грн</Text>
-            <Text style={styles.orderItemText}>{item.quantity} шт</Text>
-          </View>
-        ))}
-      </ScrollView>
+        <ScrollView style={styles.orderContainer} contentContainerStyle={{ paddingBottom: 2, }}>
+          {receipt.map((item, index) => (
+            <View style={styles.orderItem} key={index}>
+              <Text style={[styles.orderItemText, { width: '65%', }]}>{item.title} x {item.quantity}</Text>
+              <Text style={styles.orderItemText}>{item.price} грн</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
 
       <PaymentSubmit
         status={status}
@@ -63,6 +64,7 @@ function PaymentType(props) {
         selectedType={selectedType}
         setPaymentModalVisibility={setPaymentModalVisibility}
         saveReceipt={saveReceipt} receipt={receipt}
+        clearCurrentReceipt={clearCurrentReceipt}
       />
     </>
   )

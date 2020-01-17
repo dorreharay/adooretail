@@ -88,7 +88,6 @@ const PaymentModal = (props) => {
       imageSource: require('@images/dollar.png'),
       onPress: (callBack) => {
         callBack()
-        clearCurrentReceipt()
         setPaymentModalVisibility(false)
       },
       buttonText: 'Підтвердити',
@@ -120,7 +119,6 @@ const PaymentModal = (props) => {
     setTimeout(() => {
       setPaymentModalVisibility(false)
       setButtonAccessibility(true)
-      clearCurrentReceipt()
     }, 500)
   }
 
@@ -158,6 +156,7 @@ const PaymentModal = (props) => {
           enteredSum={enteredSum} saveReceipt={saveReceipt}
           setEnteredSum={setEnteredSum}
           setButtonAccessibility={setButtonAccessibility}
+          clearCurrentReceipt={clearCurrentReceipt}
         />
       </View>
     </View>

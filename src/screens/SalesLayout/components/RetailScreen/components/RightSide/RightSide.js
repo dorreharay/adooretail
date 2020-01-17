@@ -91,8 +91,8 @@ function RightSide(props) {
           {searchTerm !== '' && (
             <SharedButton
               onPress={() => setSearchTerm('')}
-              buttonSizes={{ width: styles.search.height, height: styles.search.height, marginRight: 5, }}
-              iconSizes={{ width: styles.search.height - 30, height: styles.search.height - 30 }}
+              style={{ width: styles.search.height, height: styles.search.height, marginRight: 5, }}
+              iconStyle={{ width: styles.search.height - 30, height: styles.search.height - 30 }}
               source={require('@images/x_icon.png')}
             />
           )}
@@ -108,24 +108,24 @@ function RightSide(props) {
 
         <SharedButton
           onPress={changeLayout}
-          buttonSizes={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
-          iconSizes={{ width: styles.update.width, height: styles.update.height - 20, }}
-          text={layout} scale={0.8}
-          backgroundColor={'#FFFFFF'}
-        />
+          style={{ width: styles.update.width, height: styles.update.height, marginRight: 10, backgroundColor: '#FFFFFF', }}
+          iconStyle={{ width: styles.update.width, height: styles.update.height - 20, }}
+          scale={0.8}
+        >
+          <Text style={styles.layoutNumberText}>{layout}</Text>
+        </SharedButton>
         <SharedButton
           onPress={loadAgain}
-          buttonSizes={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
-          iconSizes={{ width: styles.update.width - 27, height: styles.update.height - 26, }}
+          style={{ width: styles.update.width, height: styles.update.height, marginRight: 10, backgroundColor: '#FFFFFF' }}
+          iconStyle={{ width: styles.update.width - 27, height: styles.update.height - 26, }}
           source={require('@images/reload.png')} scale={0.8}
-          rotateOnPress loadAgain={loadAgain} backgroundColor={'#FFFFFF'}
+          rotateOnPress loadAgain={loadAgain}
         />
         <SharedButton
           onPress={openMenu}
-          buttonSizes={{ width: styles.menu.width, height: styles.menu.height, }}
-          iconSizes={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
+          style={{ width: styles.menu.width, height: styles.menu.height, backgroundColor: '#FFFFFF' }}
+          iconStyle={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
           source={require('@images/menu.png')} scale={0.9}
-          backgroundColor={'#FFFFFF'} onStart
         />
       </View>
       <Products
