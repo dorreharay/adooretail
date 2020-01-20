@@ -65,6 +65,8 @@ function SalesLayout({ navigation, }) {
   }
 
   const validateSession = (sessions, shiftEnd) => {
+    console.log('-------__>', shiftEnd)
+
     if (sessions.length === 0) return false
 
     const currentAccountSession = sessions[sessions.length - 1]

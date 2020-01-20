@@ -12,6 +12,7 @@ const SET_PRODUCTS = 'SET_PRODUCTS';
 const ADD_FIVE_MINUTES_TO_SHIFT = 'ADD_FIVE_MINUTES_TO_SHIFT';
 const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT';
 const SAVE_LOCAL_RECEIPT = 'SAVE_LOCAL_RECEIPT';
+const SYNC_DATA = 'SYNC_DATA';
 
 const initialState = {
   token: '',
@@ -113,6 +114,13 @@ const initialState = {
   ],
 };
 
+export function syncDataWithStore(payload) {
+  return {
+    type: SYNC_DATA,
+    payload
+  }
+}
+
 export function saveLocalReceipt(payload) {
   return {
     type: SAVE_LOCAL_RECEIPT,
@@ -192,12 +200,29 @@ export function restoreDefaultShift(payload) {
 }
 
 const ACTION_HANDLERS = {
+  [SYNC_DATA]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+    const data = action.payload
+
+    const newAccounts = accounts.map((item, id) => {
+      if (id === currentAccountIndex) {
+        return ({
+          ...item,
+          ...data,
+        })
+      } else {
+        return item
+      }
+    })
+
+    return { ...state, accounts: newAccounts, }
+  },
   [SAVE_LOCAL_RECEIPT]: (state, action) => {
     const { accounts, currentAccountIndex } = state
     const newReceipt = action.payload
 
     const newAccounts = accounts.map((item, id) => {
-      if (id === currentAccountIndex && !!item.receipts) {
+      if (id === currentAccountIndex) {
         const lastSessionIndex = item.localSessions.length - 1
 
         return ({

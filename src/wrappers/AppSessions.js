@@ -10,7 +10,8 @@ import API from '../../rest/api'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
-import { setForceSlide, setEndOfSessionStatus, setOrientationDimensions, } from '@reducers/TempReducer'
+import { syncDataWithStore } from '@reducers/UserReducer'
+import { setOrientationDimensions, } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
 
@@ -42,22 +43,34 @@ function AppSessions(props) {
 
   const synchronizeSessions = async () => {
     try {
-      const res = await API.synchronizeSessions({
+      const data = await API.synchronizeSessions({
         localSessions: getPreparedSessions(),
       })
+
+      const payload = {
+        shift_start: data.shift_start.shift_start,
+        shift_end: data.shift_end.shift_end,
+        default_shift_end: data.shift_end.shift_end,
+        businessName: data.business_name.business_name,
+        registeredDeviceIds: data.registered_device_ids.registered_device_ids,
+        employees: data.employees.employees,
+        // products: data.products.products,
+      }
+
+      dispatch(syncDataWithStore(payload))
     } catch (error) {
       console.log('error', error)
     }
   }
 
-  // useEffect(() => {
-  //   syncRef.current = setInterval(() => {
-  //     synchronizeSessions()
-  //   }, 10 * 1000)
-  //   return () => {
-  //     clearInterval(syncRef.current)
-  //   };
-  // }, [currentAccount])
+  useEffect(() => {
+    syncRef.current = setInterval(() => {
+      synchronizeSessions()
+    }, 30 * 1000)
+    return () => {
+      clearInterval(syncRef.current)
+    };
+  }, [currentAccount])
 
   const gotoScreen = (screen) => {
     setTimeout(() => {
@@ -88,9 +101,9 @@ function AppSessions(props) {
       }
     }
   }, [
-    navigatorRef, currentSession, accounts,
-    initialLoadingVisibility, currentAccount
-  ])
+      navigatorRef, currentSession, accounts,
+      initialLoadingVisibility, currentAccount
+    ])
 
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {
