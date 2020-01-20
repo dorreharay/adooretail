@@ -27,11 +27,11 @@ function Products(props) {
   const [searchResult, setSearchResult] = useState([])
 
   useEffect(() => {
-    if(products.length !== 0) {
+    if (products.length !== 0) {
       const flattened = products.flat()
 
       const newAvailableVariants = flattened.map(item => item.variants)
-    
+
       setAvailableVariants(newAvailableVariants)
     }
   }, [products])
@@ -45,17 +45,17 @@ function Products(props) {
     const searchTermNotEmpty = searchTerm.length !== 0
     const productsNotEmpty = products.length !== 0
 
-    if(variantsNotEmpty && searchTermNotEmpty) {
-      if(!productsNotEmpty) {
+    if (variantsNotEmpty && searchTermNotEmpty) {
+      if (!productsNotEmpty) {
         setSearchResult([])
-  
+
         return
       }
 
       const flattened = products.flat()
 
       let withVariants = flattened.map(item => item.variants)
-          withVariants = withVariants.flat()
+      withVariants = withVariants.flat()
 
       const newSearchResult = withVariants.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase()))
 
@@ -68,9 +68,9 @@ function Products(props) {
 
     let newReceiptsInstance = []
 
-    if(productExists) {
+    if (productExists) {
       newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
-        if(item.title === product.title) {
+        if (item.title === product.title) {
           return ({ ...item, quantity: item.quantity + 1 })
         }
 
@@ -93,13 +93,13 @@ function Products(props) {
   }
 
   const updateLayout = (productsArg, cardsPerRow) => {
-    function chunkArray(myArray, chunk_size){
+    function chunkArray(myArray, chunk_size) {
       var results = [];
-      
+
       while (myArray.length) {
         results.push(myArray.splice(0, chunk_size));
       }
-      
+
       return results;
     }
 
@@ -124,9 +124,9 @@ function Products(props) {
   }
 
   useEffect(() => {
-    if(activeCategory) {
+    if (activeCategory) {
       const flattened = activeCategory.flat()
-      
+
       updateLayout(flattened, layout)
     }
   }, [layout])
@@ -138,13 +138,13 @@ function Products(props) {
   }
 
   const calculateColHeight = (appliedLayout) => {
-    if(appliedLayout === 3) {
+    if (appliedLayout === 3) {
       return deviceWidth * 0.2
     }
-    if(appliedLayout === 4) {
+    if (appliedLayout === 4) {
       return deviceWidth * 0.15
     }
-    if(appliedLayout === 5) {
+    if (appliedLayout === 5) {
       return deviceWidth * 0.12
     }
   }
@@ -203,25 +203,26 @@ function Products(props) {
                       activeOpacity={1}
                       key={key}
                     >
-                        <FastImage
-                          style={{ width: 15, height: 30, }}
-                          source={require('@images/back_thin.png')}
-                        />
+                      <FastImage
+                        style={{ width: 15, height: 30, }}
+                        source={require('@images/back_thin.png')}
+                      />
                     </TouchableOpacity>
                   ) : (
-                    <SharedButton
-                      onPress={(force) => addProductQuantity(rowItem)(force)}
-                      style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
-                      scale={0.95}
-                    >
-                      <LinearGradient style={styles.variant} colors={[rowItem.color, rowItem.shadow]}>
-                        <View style={styles.variantPrice}>
-                          <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
-                        </View>
-                        <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
-                      </LinearGradient>
-                    </SharedButton>
-                  )
+                      <SharedButton
+                        onPress={(force) => addProductQuantity(rowItem)(force)}
+                        style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
+                        scale={0.95}
+                        id={key}
+                      >
+                        <LinearGradient style={styles.variant} colors={[rowItem.color, rowItem.shadow]}>
+                          <View style={styles.variantPrice}>
+                            <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
+                          </View>
+                          <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
+                        </LinearGradient>
+                      </SharedButton>
+                    )
                 ))}
               </View>
             ))}

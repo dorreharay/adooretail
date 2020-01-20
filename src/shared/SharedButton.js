@@ -5,7 +5,7 @@ function SharedButton(props) {
   const {
     style = {}, iconStyle, source, svgSource,
     borderRadius, scale, duration, loading,
-    onPress, rotateOnPress, children,
+    onPress, rotateOnPress, children, id = 0,
   } = props
 
   const [animatePress] = useState(new Animated.Value(1))
@@ -50,34 +50,34 @@ function SharedButton(props) {
   }
 
   const renderContent = () => {
-    if(children) return (
+    if (children) return (
       <View style={{ alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', }}>{children}</View>
     )
 
-    if(loading) {
+    if (loading) {
       return <Text>Loading...</Text>
     }
 
     return (
-      <Animated.View style={{ ...iconStyle, transform: [{ rotate: spin }] }}>
+      <Animated.View style={{ ...iconStyle, transform: [{ rotate: spin }] }} key={id}>
         {svgSource ? (
           svgSource
         ) : (
-          <Image
-            style={{ 
-              width: '100%',
-              height: '100%',
-              borderRadius: borderRadius ? borderRadius : 0,
-            }}
-            source={source ? source.uri ? { uri: source.uri } : source : null}
-          />
-        )}
+            <Image
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: borderRadius ? borderRadius : 0,
+              }}
+              source={source ? source.uri ? { uri: source.uri } : source : null}
+            />
+          )}
       </Animated.View>
     )
   }
 
   const relativeStyles = [
-    {...style},
+    { ...style },
     style.flexDirection && { flexDirection: style.flexDirection },
     {
       ...styles.button,

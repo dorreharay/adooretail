@@ -4,7 +4,7 @@ import { useSelector, useDispatch, } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment-timezone'
 import { useNetInfo } from "@react-native-community/netinfo";
-import Toast, {DURATION} from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles'
 
 import { API_URL } from '../../../../config/api';
@@ -22,7 +22,7 @@ function InputEmployees({ navigation }) {
   const employees = currentAccount.employees
   const shift_start = currentAccount.shift_start
   const shift_end = currentAccount.shift_end
-  const { startCash, } = useSelector(state => ({ 
+  const { startCash, } = useSelector(state => ({
     startCash: state.user.startCash,
   }))
 
@@ -37,7 +37,7 @@ function InputEmployees({ navigation }) {
   const handleCheck = (name, index) => {
     const newCheckedEmployees = checked.includes(index) ? checked.filter((item, key) => index !== item) : [...checked, index]
 
-    if(name !== 'Пусто') {
+    if (name !== 'Пусто') {
       setCheckedEmployees(newCheckedEmployees)
     }
   }
@@ -45,13 +45,20 @@ function InputEmployees({ navigation }) {
   const handleProceed = async () => {
     const { token, } = currentAccount
 
-    if(checked.length === 0) {
+    if (checked.length === 0) {
       return
     }
 
     setLoadingStatus(true)
 
     try {
+      function guidGenerator() {
+        let S4 = function () {
+          return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        };
+        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+      }
+
       const selectedEmployees = employees.filter((item, index) => checked.includes(index)).map(item => item.name)
 
       let newSession = {
@@ -61,6 +68,7 @@ function InputEmployees({ navigation }) {
         receipts: [],
         shift_start,
         shift_end,
+        localId: guidGenerator(),
       }
 
       console.log(newSession)
@@ -105,15 +113,15 @@ function InputEmployees({ navigation }) {
           <Image style={{ width: 20, height: 15, }} source={require('@images/tick_light.png')} fadeDuration={0}></Image>
         </TouchableOpacity>
       ) : (
-        <View style={{ width: 50, height: 50, borderRadius: 100, borderWidth: 2, borderColor: '#D2D2D226', marginTop: 45, }}></View>
-      )}
+          <View style={{ width: 50, height: 50, borderRadius: 100, borderWidth: 2, borderColor: '#D2D2D226', marginTop: 45, }}></View>
+        )}
 
       {/* <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputCash')} activeOpacity={1}>
         <Image style={{ width: 18, height: 18, transform: [{ rotate: '180deg' }] }} source={require('@images/erase.png')} fadeDuration={0}></Image>
       </TouchableOpacity> */}
 
       <LoginLoader active={loading} />
-      <Toast ref={toast}/>
+      <Toast ref={toast} />
     </View>
   )
 }

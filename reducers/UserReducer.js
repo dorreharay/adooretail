@@ -35,7 +35,7 @@ const initialState = {
         minutes: 0,
       },
       shift_start: {
-        hours: 9,
+        hours: 1,
         minutes: 0,
       },
       shift_end: {
@@ -66,7 +66,6 @@ const initialState = {
       ],
       products: [],
       localSessions: [],
-      receipts: [],
     },
     {
       id: '4sd3fsgu76fg55akgjsd54jadfnu343',
@@ -198,11 +197,11 @@ const ACTION_HANDLERS = {
     const newReceipt = action.payload
 
     const newAccounts = accounts.map((item, id) => {
-      if(id === currentAccountIndex && !!item.receipts) {
+      if (id === currentAccountIndex && !!item.receipts) {
         const lastSessionIndex = item.localSessions.length - 1
 
-        return ({ 
-          ...item, 
+        return ({
+          ...item,
           localSessions: item.localSessions.map((elem, key) => lastSessionIndex === key ? ({ ...elem, receipts: [...elem.receipts, newReceipt] }) : elem)
         })
       } else {

@@ -5,9 +5,10 @@ import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
-import io from 'socket.io-client';
 
-import { currentSessionSelector } from '@selectors'
+import API from '../../rest/api'
+
+import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
 import { setForceSlide, setEndOfSessionStatus, setOrientationDimensions, } from '@reducers/TempReducer'
 
@@ -20,21 +21,43 @@ function AppSessions(props) {
     initialLoadingOpacity, initialLoadingVisibility,
   } = props
 
+  const syncRef = useRef(null)
   const currentSession = useSelector(currentSessionSelector)
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const currentAccount = useSelector(currentAccountSelector)
   const accounts = useSelector(state => state.user.accounts)
 
   const dispatch = useDispatch()
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
 
-  // useEffect(() => {
-  //   const socket = io('http://localhost:3000');
+  const getPreparedSessions = () => {
+    let offset = 0
 
-  //   io.on('connection', (socket) => {
-  //     console.log(socket)
-  //   });
-  // }, [])
+    if (currentAccount.localSessions.length >= 5) {
+      offset = currentAccount.localSessions.length - 5
+    }
+
+    return currentAccount.localSessions.slice(offset, currentAccount.localSessions.length)
+  }
+
+  const synchronizeSessions = async () => {
+    try {
+      const res = await API.synchronizeSessions({
+        localSessions: getPreparedSessions(),
+      })
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  // useEffect(() => {
+  //   syncRef.current = setInterval(() => {
+  //     synchronizeSessions()
+  //   }, 10 * 1000)
+  //   return () => {
+  //     clearInterval(syncRef.current)
+  //   };
+  // }, [currentAccount])
 
   const gotoScreen = (screen) => {
     setTimeout(() => {
@@ -65,9 +88,9 @@ function AppSessions(props) {
       }
     }
   }, [
-      navigatorRef, currentSession, accounts,
-      initialLoadingVisibility, currentAccount
-    ])
+    navigatorRef, currentSession, accounts,
+    initialLoadingVisibility, currentAccount
+  ])
 
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {

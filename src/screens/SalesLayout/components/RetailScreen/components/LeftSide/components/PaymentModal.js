@@ -11,7 +11,7 @@ import PaymentLeftSide from './PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
 
 const PaymentModal = (props) => {
-  const { 
+  const {
     setPaymentModalVisibility, isVisible,
     currentReceipt, clearCurrentReceipt,
   } = props;
@@ -74,7 +74,7 @@ const PaymentModal = (props) => {
       transaction_time_end: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
     }
 
-    if(!payload) return
+    if (!payload) return
 
     dispatch(saveLocalReceipt(payload))
   }

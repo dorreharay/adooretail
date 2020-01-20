@@ -55,7 +55,7 @@ function RetailScreen(props) {
 
   const loadProducts = async (token) => {
     try {
-      console.log('Fetch products', token)
+      console.log('Fetching products ---->')
       toastRef.current.show("Синхронізація", 1000);
 
       const { data } = await axios.get(`${API_URL}/user/products/${token}`)
