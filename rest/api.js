@@ -25,7 +25,7 @@ async function asyncAxiosCall(event, payload) {
 
     console.log('Rest call ==>', event, data);
     const result = await httpClient.post(event, { ...data });
-    console.log('Rest call result ==>', event, result.data);
+    console.log('Response ==>', event, result.data);
 
     return result.data
   } catch (e) {

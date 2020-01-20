@@ -5,7 +5,7 @@ function SharedButton(props) {
   const {
     style = {}, iconStyle, source, svgSource,
     borderRadius, scale, duration, loading,
-    onPress, rotateOnPress, children, id = 0,
+    onPress, rotateOnPress, children,
   } = props
 
   const [animatePress] = useState(new Animated.Value(1))
@@ -59,7 +59,7 @@ function SharedButton(props) {
     }
 
     return (
-      <Animated.View style={{ ...iconStyle, transform: [{ rotate: spin }] }} key={id}>
+      <Animated.View style={{ ...iconStyle, transform: [{ rotate: spin }] }}>
         {svgSource ? (
           svgSource
         ) : (

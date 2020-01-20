@@ -65,8 +65,6 @@ function SalesLayout({ navigation, }) {
   }
 
   const validateSession = (sessions, shiftEnd) => {
-    console.log('-------__>', shiftEnd)
-
     if (sessions.length === 0) return false
 
     const currentAccountSession = sessions[sessions.length - 1]
@@ -82,8 +80,6 @@ function SalesLayout({ navigation, }) {
       .minutes(shiftEnd.minutes)
       .seconds(0)
       .format('YYYY-MM-DD HH:mm')
-
-    console.log('End of shift --->', endOfShift)
 
     const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
 

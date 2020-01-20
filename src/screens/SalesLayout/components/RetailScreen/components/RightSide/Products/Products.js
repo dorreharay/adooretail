@@ -177,8 +177,8 @@ function Products(props) {
               <SharedButton
                 style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                 onPress={() => changeActiveCategory(index, key)}
-                activeOpacity={1} key={key}
-                scale={0.95}
+                activeOpacity={1}
+                scale={0.95} key={key}
               >
                 <FastImage
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
@@ -213,7 +213,7 @@ function Products(props) {
                         onPress={(force) => addProductQuantity(rowItem)(force)}
                         style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                         scale={0.95}
-                        id={key}
+                        key={key}
                       >
                         <LinearGradient style={styles.variant} colors={[rowItem.color, rowItem.shadow]}>
                           <View style={styles.variantPrice}>
