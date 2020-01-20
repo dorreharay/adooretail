@@ -71,8 +71,6 @@ function InputEmployees({ navigation }) {
         localId: guidGenerator(),
       }
 
-      console.log(newSession)
-
       // if(netInfo.isConnected && netInfo.isInternetReachable) {
       //   await axios.post(`${API_URL}/user/session/init/${token}`, newSessionObj)
 

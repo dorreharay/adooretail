@@ -1,4 +1,4 @@
-import React, { useState, } from 'react';
+import React, { useRef, useState, useEffect, } from 'react';
 import { Animated, View, TouchableWithoutFeedback, StyleSheet, Image, Alert, Text, } from 'react-native';
 
 function SharedButton(props) {
@@ -8,10 +8,14 @@ function SharedButton(props) {
     onPress, rotateOnPress, children,
   } = props
 
+  const timerRef = useRef(null)
+
   const [animatePress] = useState(new Animated.Value(1))
   const [animateRotation] = useState(new Animated.Value(0))
 
   const animateIn = () => {
+    // timerRef.current = setTimeout(animateIn, 400)
+
     Animated.timing(animatePress, {
       toValue: scale ? scale : 0.7,
       duration: duration ? duration : 100,
@@ -19,6 +23,8 @@ function SharedButton(props) {
   }
 
   const animateOut = () => {
+    clearTimeout(timerRef.current)
+
     Animated.timing(animatePress, {
       toValue: 1,
       duration: 200,

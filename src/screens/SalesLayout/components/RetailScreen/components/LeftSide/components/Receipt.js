@@ -1,15 +1,44 @@
-import React from 'react';
+import React, { useRef, useState, useEffect, } from 'react';
 import { View, Text, TouchableOpacity, Image, } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import styles from '../styles'
 
 import { FUTURA_LIGHT } from '@fonts'
 
-function Receipt({ receipt, setReceiptInstance, }) {
+import SharedButton from '@shared/SharedButton';
+
+function Receipt({ receipt, setReceiptInstance, addProductQuantity, substractProductQuantity, }) {
+
+  const activatedRef = useRef(null)
 
   const deleteItem = (receiptIndex) => {
     const newReceipt = receipt.filter((item, index) => index !== receiptIndex)
 
     setReceiptInstance(newReceipt)
+  }
+
+  const [activatedIndex, setActivatedIndex] = useState(false)
+
+  const handleActivate = (index) => {
+    setActivatedIndex(index)
+
+    if (activatedIndex === false) {
+      activatedRef.current = setTimeout(() => {
+        setActivatedIndex(false)
+      }, 1500)
+    }
+  }
+
+  const handlePress = (type, rowItem) => {
+    if (type === 'plus') {
+      addProductQuantity(rowItem)(false)
+    } else {
+      substractProductQuantity(rowItem)(false)
+    }
+
+    clearTimeout(activatedRef.current)
+
+    activatedRef.current = setTimeout(() => setActivatedIndex(false), 1000)
   }
 
   return (
@@ -24,9 +53,41 @@ function Receipt({ receipt, setReceiptInstance, }) {
               <Text style={styles.receiptOnePrice}>@{item.price}, -</Text>
             </View>
             <View style={styles.receiptQtyContainer}>
-              <TouchableOpacity style={styles.receiptQty} onPress={() => {}} activeOpacity={1}>
-                <Text style={styles.receiptQtyText}>{item.quantity}</Text>
-              </TouchableOpacity>
+              {activatedIndex === index && (
+                <SharedButton
+                  style={{ width: 28, height: 28, }}
+                  onPress={() => handlePress('plus', item)}
+                  scale={0.85}
+                >
+                  <FastImage
+                    style={{ width: 15, height: 15, }}
+                    source={require('@images/plus.png')}
+                  />
+                </SharedButton>
+              )}
+
+              <SharedButton
+                style={styles.receiptQty}
+                onPress={() => handleActivate(index)}
+                scale={0.85}
+              >
+                <View style={styles.receiptQtyInner}>
+                  <Text style={[styles.receiptQtyText, activatedIndex === index && styles.selectedText]}>{item.quantity}</Text>
+                </View>
+              </SharedButton>
+
+              {activatedIndex === index && (
+                <SharedButton
+                  style={{ width: 28, height: 28, }}
+                  onPress={() => handlePress('minus', item)}
+                  scale={0.85}
+                >
+                  <FastImage
+                    style={{ width: 15, height: 15, }}
+                    source={require('@images/minus.png')}
+                  />
+                </SharedButton>
+              )}
             </View>
             <View style={styles.receiptPrice}>
               <Text style={{ height: '100%', textAlign: 'center', color: '#343434', fontSize: 18, fontFamily: FUTURA_LIGHT }}>{item.quantity * item.price} грн</Text>

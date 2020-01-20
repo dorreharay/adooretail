@@ -3,14 +3,11 @@ import { useSelector, useDispatch, } from 'react-redux';
 import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
-import * as Progress from 'react-native-progress';
 import FastImage from 'react-native-fast-image'
 
 import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
-import SharedButton from '@shared/SharedButton';
-
-import { setInitialSlide, setEmployees, setStartCash, addFiveMinutesToShift, } from '@reducers/UserReducer'
+import { setEmployees, setStartCash, addFiveMinutesToShift, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 function SessionModal(props) {
@@ -21,8 +18,6 @@ function SessionModal(props) {
   } = props
 
   const dispatch = useDispatch()
-
-  const [loading, setLoadingStatus] = useState(false)
 
   const endSession = () => {
     dispatch(setEmployees([]))

@@ -105,9 +105,17 @@ function AppSessions(props) {
       initialLoadingVisibility, currentAccount
     ])
 
+  const saveDimensions = () => {
+    let deviceWidth = Dimensions.get('screen').width
+    let deviceHeight = Dimensions.get('screen').height
+
+    dispatch(setOrientationDimensions({ deviceWidth, deviceHeight }))
+  }
+
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {
       Orientation.lockToLandscape()
+      saveDimensions()
     }
   }
 
@@ -116,11 +124,10 @@ function AppSessions(props) {
 
       if (orientation === 'PORTRAIT') {
         Orientation.lockToLandscape()
-      } else {
-        let deviceWidth = Dimensions.get('screen').width
-        let deviceHeight = Dimensions.get('screen').height
 
-        dispatch(setOrientationDimensions({ deviceWidth, deviceHeight }))
+        saveDimensions()
+      } else {
+        saveDimensions()
       }
     });
 

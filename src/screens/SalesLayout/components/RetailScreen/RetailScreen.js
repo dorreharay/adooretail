@@ -69,105 +69,158 @@ function RetailScreen(props) {
     }
   }
 
-  const handleNewDate = (newDate) => {
-    selectDate(newDate)
-  }
+  const addProductQuantity = (product) => (force) => {
+    const productExists = !!receipts[selectedInstance].find(item => item.title === product.title)
 
-  const clearCurrentReceipt = () => {
-    const newReceipts = receipts.map((item, index) => index === selectedInstance ? ([]) : item)
+    let newReceiptsInstance = []
+
+    if (productExists) {
+      newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
+        if (item.title === product.title) {
+          return ({ ...item, quantity: item.quantity + 1 })
+        }
+
+        return item
+      })
+    } else {
+      let initialReceiptItem = {
+        title: product.title,
+        price: product.price,
+        quantity: 1,
+        time: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+      }
+
+      newReceiptsInstance = [...receipts[selectedInstance], initialReceiptItem]
+    }
+
+    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
 
     setReceipts(newReceipts)
   }
 
-  const openPanelInstance = (instanceName, title) => {
-    setMenuVisibility(false)
-    setPanelScreenState({ ...initialPanelScreens, [instanceName]: title })
-  }
+  const substractProductQuantity = (product) => (force) => {
+    let newReceiptsInstance = []
 
-  const closePanelInstance = () => setPanelScreenState(initialPanelScreens)
+    if (product.quantity === 1) {
+      newReceiptsInstance = receipts[selectedInstance].filter((item, index) => item.title !== product.title)
+    } else {
+      newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
+        if (item.title === product.title) {
+          return ({ ...item, quantity: item.quantity - 1 })
+        }
 
-  const openMenu = () => {
-    setTimeout(() => {
-      setMenuVisibility(true)
-
-      setTimeout(() => {
-        handleModalAnimation()
-      }, 10)
-    }, 50)
-  }
-
-  const closeMenu = () => {
-    setTimeout(() => {
-      setMenuVisibility(false)
-
-      setTimeout(() => {
-        handleModalAnimation()
-      }, 10)
-    }, 170)
-  }
-
-  const handleModalAnimation = () => {
-    Animated.timing(
-      modalOpacity,
-      {
-        toValue: modalOpacity._value === 1 ? 0 : 1,
-        duration: 50,
-        easing: Easing.ease
-      }
-    ).start();
-  }
-
-  const endSession = () => {
-    if (true) {
-      setModalStatus(NO_TIME)
-
-      return
+        return item
+      })
     }
 
-    closeMenu()
-    dispatch(setEndOfSessionStatus(true))
+  const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
 
-    navigation.navigate('InputCash')
+  setReceipts(newReceipts)
+}
+
+
+const handleNewDate = (newDate) => {
+  selectDate(newDate)
+}
+
+const clearCurrentReceipt = () => {
+  const newReceipts = receipts.map((item, index) => index === selectedInstance ? ([]) : item)
+
+  setReceipts(newReceipts)
+}
+
+const openPanelInstance = (instanceName, title) => {
+  setMenuVisibility(false)
+  setPanelScreenState({ ...initialPanelScreens, [instanceName]: title })
+}
+
+const closePanelInstance = () => setPanelScreenState(initialPanelScreens)
+
+const openMenu = () => {
+  setTimeout(() => {
+    setMenuVisibility(true)
+
+    setTimeout(() => {
+      handleModalAnimation()
+    }, 10)
+  }, 50)
+}
+
+const closeMenu = () => {
+  setTimeout(() => {
+    setMenuVisibility(false)
+
+    setTimeout(() => {
+      handleModalAnimation()
+    }, 10)
+  }, 170)
+}
+
+const handleModalAnimation = () => {
+  Animated.timing(
+    modalOpacity,
+    {
+      toValue: modalOpacity._value === 1 ? 0 : 1,
+      duration: 50,
+      easing: Easing.ease
+    }
+  ).start();
+}
+
+const endSession = () => {
+  if (true) {
+    setModalStatus(NO_TIME)
+
+    return
   }
 
-  return (
-    <View style={styles.container}>
-      <LeftSide
-        receipts={receipts}
-        setReceipts={setReceipts}
-        selectedInstance={selectedInstance}
-        selectReceiptInstance={selectReceiptInstance}
-        setPaymentModalState={setPaymentModalState}
-      />
-      <RightSide
-        products={products}
-        loadProducts={loadProducts}
-        receipts={receipts}
-        setReceipts={setReceipts}
-        navigation={navigation}
-        selectedInstance={selectedInstance}
-        openMenu={openMenu}
-        account={account}
-      />
-      {menuVisible && (
-        <Panel
-          openMenu={openMenu}
-          closeMenu={closeMenu}
-          endSession={endSession}
-          modalOpacity={modalOpacity}
-          openPanelInstance={openPanelInstance}
-          menuButtons={menuButtons}
-        />
-      )}
+  closeMenu()
+  dispatch(setEndOfSessionStatus(true))
 
-      <PaymentModal
-        isVisible={paymentModalVisible}
-        setPaymentModalVisibility={setPaymentModalVisibility}
-        currentReceipt={currentReceipt}
-        clearCurrentReceipt={clearCurrentReceipt}
+  navigation.navigate('InputCash')
+}
+
+return (
+  <View style={styles.container}>
+    <LeftSide
+      receipts={receipts}
+      setReceipts={setReceipts}
+      selectedInstance={selectedInstance}
+      selectReceiptInstance={selectReceiptInstance}
+      setPaymentModalState={setPaymentModalState}
+      addProductQuantity={addProductQuantity}
+      substractProductQuantity={substractProductQuantity}
+    />
+    <RightSide
+      products={products}
+      loadProducts={loadProducts}
+      receipts={receipts}
+      setReceipts={setReceipts}
+      navigation={navigation}
+      selectedInstance={selectedInstance}
+      openMenu={openMenu}
+      account={account}
+      addProductQuantity={addProductQuantity}
+    />
+    {menuVisible && (
+      <Panel
+        openMenu={openMenu}
+        closeMenu={closeMenu}
+        endSession={endSession}
+        modalOpacity={modalOpacity}
+        openPanelInstance={openPanelInstance}
+        menuButtons={menuButtons}
       />
-    </View>
-  )
+    )}
+
+    <PaymentModal
+      isVisible={paymentModalVisible}
+      setPaymentModalVisibility={setPaymentModalVisibility}
+      currentReceipt={currentReceipt}
+      clearCurrentReceipt={clearCurrentReceipt}
+    />
+  </View>
+)
 }
 
 export default RetailScreen

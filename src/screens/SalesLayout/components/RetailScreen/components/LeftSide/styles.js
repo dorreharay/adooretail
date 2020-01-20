@@ -85,7 +85,7 @@ const base = {
     borderRadius : 1,
   },
   receiptOnePriceContainer: {
-    width: '29%',
+    width: '20%',
   },
   receiptOnePrice: {
     color: '#343434',
@@ -94,16 +94,23 @@ const base = {
   },
   receiptQtyContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
     width: '25%',
+    // backgroundColor: 'gray'
   },
   receiptQty: {
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    width: 30,
+    width: '65%',
     height: 30,
+  },
+  receiptQtyInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
     borderColor: '#CECECE',
     borderWidth: 0.5,
   },
@@ -113,11 +120,10 @@ const base = {
     fontFamily: PROBA_LIGHT,
   },
   receiptPrice: {
-    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     flexDirection: 'row',
-    width: '30%',
+    width: '20%',
   },
   receiptDeleteIcon: {
     alignItems: 'center',
@@ -125,6 +131,9 @@ const base = {
     flexDirection: 'row',
     width: '16%',
     height: 50,
+  },
+  selectedText: {
+    fontFamily: PROBA_MEDIUM,
   },
   paymentModal: {
     position: 'absolute',

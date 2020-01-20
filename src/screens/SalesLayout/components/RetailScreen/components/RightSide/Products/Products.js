@@ -8,13 +8,11 @@ let moment = require('moment-timezone');
 moment.locale('uk');
 import styles from './styles'
 
-import { currentProductsSelector } from '@selectors'
-
 import SharedButton from '@shared/SharedButton';
 import SearchResult from './SearchResult'
 
 function Products(props) {
-  const { receipts, products, setReceipts, selectedInstance, searchTerm, } = props;
+  const { receipts, products, setReceipts, selectedInstance, searchTerm, addProductQuantity, } = props;
 
   const layout = useSelector(state => state.orders.layout)
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
@@ -61,35 +59,6 @@ function Products(props) {
 
       setSearchResult(newSearchResult)
     }
-  }
-
-  const addProductQuantity = (product) => (force) => {
-    const productExists = !!receipts[selectedInstance].find(item => item.title === product.title)
-
-    let newReceiptsInstance = []
-
-    if (productExists) {
-      newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
-        if (item.title === product.title) {
-          return ({ ...item, quantity: item.quantity + 1 })
-        }
-
-        return item
-      })
-    } else {
-      let initialReceiptItem = {
-        title: product.title,
-        price: product.price,
-        quantity: 1,
-        time: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
-      }
-
-      newReceiptsInstance = [...receipts[selectedInstance], initialReceiptItem]
-    }
-
-    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
-
-    setReceipts(newReceipts)
   }
 
   const updateLayout = (productsArg, cardsPerRow) => {

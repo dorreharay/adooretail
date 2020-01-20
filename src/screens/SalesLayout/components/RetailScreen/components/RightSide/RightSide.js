@@ -2,19 +2,14 @@ import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, TextInput, Alert, Animated, TouchableOpacity, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
-import Toast, { DURATION } from 'react-native-easy-toast'
 import _ from 'lodash'
-import Modal, { FadeAnimation, ModalContent, } from 'react-native-modals';
 import styles from './styles'
-
-import { PROBA_REGULAR } from '@fonts'
 
 import SharedButton from '@shared/SharedButton';
 
 import Products from './Products/Products'
 
 import { setLayout } from '@reducers/OrdersReducer'
-import { setEndOfSessionStatus } from '@reducers/TempReducer';
 
 const onlineIcon = require('@images/status_online.png')
 const offlineIcon = require('@images/status_offline.png')
@@ -25,7 +20,7 @@ function RightSide(props) {
     products, loadProducts,
     receipts, setReceipts,
     selectedInstance, navigation,
-    openMenu, account,
+    openMenu, account, addProductQuantity,
   } = props;
 
   const dispatch = useDispatch()
@@ -134,6 +129,7 @@ function RightSide(props) {
         setReceipts={setReceipts}
         selectedInstance={selectedInstance}
         searchTerm={searchTerm}
+        addProductQuantity={addProductQuantity}
       />
     </View>
   )

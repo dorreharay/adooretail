@@ -18,7 +18,7 @@ const headerButtonSizes = { justifyContent: 'center', width: headerHeight, heigh
 const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
 
 function LeftSide(props) {
-  const { receipts, setReceipts, selectedInstance, selectReceiptInstance, setPaymentModalState, } = props;
+  const { receipts, setReceipts, selectedInstance, selectReceiptInstance, setPaymentModalState, addProductQuantity, substractProductQuantity, } = props;
 
   const receiptsRef = useRef(null)
 
@@ -161,6 +161,8 @@ function LeftSide(props) {
         <Receipt
           receipt={receipts[selectedInstance]}
           setReceiptInstance={setReceiptInstance}
+          addProductQuantity={addProductQuantity}
+          substractProductQuantity={substractProductQuantity}
         />
       </ScrollView>
       <SharedButton
