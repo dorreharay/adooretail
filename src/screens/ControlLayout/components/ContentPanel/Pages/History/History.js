@@ -116,13 +116,20 @@ function History(props) {
                   contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap', paddingBottom: 30, }}
                   scrollEnabled={expandedIndex === index}
                 >
-                  {day.receipts.map((item, index) => (
+                  {day.receipts.slice(day.receipts.length - 20, day.receipts.length).reverse().map((item, index) => (
                     <View style={styles.historyInstance} key={index}>
-                      <Text style={styles.receiptTime}>{moment(item.transaction_time_end).format('hh:mm')}</Text>
-                      {item.receipt.map((elem, id) => (
-                        <Text style={styles.receiptItem} key={id}>{elem.title} - {elem.price * elem.quantity} грн</Text>
-                      ))}
-                      <Text style={styles.receiptTotal}>Всього: {item.receipt.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)} грн</Text>
+                      <View style={{ width: '60%', }}>
+                        <Text style={styles.receiptTime}>Час: {moment(item.transaction_time_end).format('HH:mm')}</Text>
+                        <Text style={styles.receiptType}>Тип оплати: {true ? 'Готівка' : 'Картка'}</Text>
+                        <Text style={styles.receiptTotal}>Всього: {item.receipt.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)} грн</Text>
+                      </View>
+
+
+                      <Collapsible style={styles.collapsedReceiptContent} collapsed={false}>
+                        {item.receipt.map((elem, id) => (
+                          <Text style={styles.receiptItem} key={id}>{elem.title} - {elem.price * elem.quantity} грн</Text>
+                        ))}
+                      </Collapsible>
                     </View>
                   ))}
                 </ScrollView>

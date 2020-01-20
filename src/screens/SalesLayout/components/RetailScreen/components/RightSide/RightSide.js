@@ -94,7 +94,7 @@ function RightSide(props) {
 
         </View>
 
-        <SharedButton onPress={() => {}} scale={0.85}>
+        <SharedButton onPress={() => { }} scale={0.85}>
           <View style={styles.connection}>
             <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
             <Text style={styles.connectionText}>{netInfo.isConnected ? netInfo.isInternetReachable ? 'online' : 'waiting' : 'offline'}</Text>
@@ -103,11 +103,13 @@ function RightSide(props) {
 
         <SharedButton
           onPress={changeLayout}
-          style={{ width: styles.update.width, height: styles.update.height, marginRight: 10, backgroundColor: '#FFFFFF', }}
-          iconStyle={{ width: styles.update.width, height: styles.update.height - 20, }}
+          style={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
+          // iconStyle={{ width: styles.update.width, height: styles.update.height - 20, }}
           scale={0.8}
         >
-          <Text style={styles.layoutNumberText}>{layout}</Text>
+          <View style={{ width: '100%', flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', }}>
+            <Text style={styles.layoutNumberText}>{layout}</Text>
+          </View>
         </SharedButton>
         <SharedButton
           onPress={loadAgain}

@@ -94,30 +94,43 @@ const base = {
   historyInstanceContainer: {
     width: '100%',
     height: '100%',
-    marginTop: 20,
+    borderTopWidth: 1,
+    borderColor: '#F3F3F3'
   },
   historyInstance: {
-    width: '25%',
+    flexDirection: 'row',
+    width: '100%',
     padding: 25,
-    // borderWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#F3F3F3'
   },
   receiptTime: {
     color: '#000000',
-    fontSize: 30,
+    fontSize: 21,
     fontFamily: PROBA_REGULAR,
   },
-  receiptItem: {
-    marginTop: 10,
-    color: '#000000',
-    fontSize: 15,
-    fontFamily: PROBA_LIGHT,
-    lineHeight: 30,
-  },
-  receiptTotal: {
-    marginTop: 15,
+  receiptType: {
+    marginTop: 17,
     color: '#000000',
     fontSize: 20,
     fontFamily: PROBA_REGULAR,
+  },
+  receiptItem: {
+    color: '#535353',
+    fontSize: 18,
+    fontFamily: PROBA_REGULAR,
+    lineHeight: 35,
+  },
+  receiptTotal: {
+    marginTop: 20,
+    color: '#000000',
+    fontSize: 17,
+    fontFamily: PROBA_REGULAR,
+  },
+  collapsedReceiptContent: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    width: '100%',
   }
 };
 
