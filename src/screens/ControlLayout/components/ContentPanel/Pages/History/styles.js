@@ -122,14 +122,14 @@ const base = {
     lineHeight: 35,
   },
   receiptTotal: {
-    marginTop: 20,
+    marginTop: 18,
     color: '#000000',
-    fontSize: 17,
+    fontSize: 19,
     fontFamily: PROBA_REGULAR,
   },
   collapsedReceiptContent: {
     flexDirection: 'column',
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
     width: '100%',
   }
 };

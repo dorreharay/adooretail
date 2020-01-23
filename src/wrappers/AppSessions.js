@@ -67,6 +67,7 @@ function AppSessions(props) {
         businessName: data.business_name,
         registeredDeviceIds: data.registered_device_ids,
         employees: data.employees,
+        warehouse: data.warehouse,
         // products: data.products.products,
       }
 

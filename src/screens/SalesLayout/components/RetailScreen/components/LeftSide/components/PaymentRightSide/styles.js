@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
 
 const leftPadding = '7.5%'
 
@@ -110,7 +110,7 @@ const base = {
   orderItemText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: PROBA_REGULAR,
   },
   cancelPaymentProcessButton: {
     padding: 10,
@@ -118,7 +118,7 @@ const base = {
   cancelPaymentProcessText: {
     color: '#343434',
     fontSize: 15,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: PROBA_REGULAR,
   },
   discountContainer: {
     alignItems: 'center',
