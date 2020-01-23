@@ -5,6 +5,7 @@ import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
+import { useNetInfo } from '@react-native-community/netinfo';
 let moment = require('moment-timezone');
 moment.locale('uk');
 
@@ -36,10 +37,12 @@ function AppSessions(props) {
   const accounts = useSelector(state => state.user.accounts)
 
   const dispatch = useDispatch()
+  const netInfo = useNetInfo()
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
   const [modalStatus, setModalStatus] = useState('')
   const [currentRoute, setCurrentRoute] = useState(false)
+  const [prevNetState, setPrevNetState] = useState(false)
 
   const getPreparedSessions = () => {
     let offset = 0
@@ -58,12 +61,12 @@ function AppSessions(props) {
       })
 
       const payload = {
-        shift_start: data.shift_start.shift_start,
-        shift_end: data.shift_end.shift_end,
-        default_shift_end: data.shift_end.shift_end,
-        businessName: data.business_name.business_name,
-        registeredDeviceIds: data.registered_device_ids.registered_device_ids,
-        employees: data.employees.employees,
+        shift_start: data.shift_start,
+        shift_end: data.shift_end,
+        default_shift_end: data.shift_end,
+        businessName: data.business_name,
+        registeredDeviceIds: data.registered_device_ids,
+        employees: data.employees,
         // products: data.products.products,
       }
 
@@ -80,7 +83,27 @@ function AppSessions(props) {
     return () => {
       clearInterval(syncRef.current)
     };
-  }, [])
+  }, [currentSession,])
+
+  const netCheck = () => {
+    if(!prevNetState) return
+
+    if(!prevNetState.isConnected && netInfo.isConnected) {
+      clearInterval(syncRef.current)
+
+      syncRef.current = setInterval(() => {
+        synchronizeSessions()
+      }, 30 * 1000)
+    }
+
+    if(prevNetState.isConnected && !netInfo.isConnected) {
+      clearInterval(syncRef.current)
+    }
+
+    setPrevNetState(netInfo)
+  }
+
+  useEffect(() => netCheck(), [netInfo])
 
   const asyncSync = async () => {
     await synchronizeSessions()
@@ -118,7 +141,7 @@ function AppSessions(props) {
     }
   }
 
-  useEffect(peek, [])
+  useEffect(peek, [currentSession])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width
