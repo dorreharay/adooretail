@@ -4,15 +4,12 @@ import { connect, useSelector, useDispatch } from 'react-redux';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import Swiper from 'react-native-swiper'
 import _ from 'lodash'
-import { moment as momentTimer } from 'moment-timer';
 let moment = require('moment-timezone');
 moment.locale('uk');
 
 import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
-import { START, END, NO_TIME } from '@statuses'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
-import SessionModal from './components/SessionModal/SessionModal'
 
 import { currentAccountSelector, currentSessionSelector } from '@selectors'
 import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '@reducers/UserReducer'
@@ -21,70 +18,19 @@ import FastImage from 'react-native-fast-image';
 
 function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
-  const intervalRef = useRef(false)
   const throttleRef = useRef(_.debounce((callback) => callback(), 1000, { 'trailing': false }))
 
   const [animatedScale] = useState(new Animated.Value(1))
-  const [modalStatus, setModalStatus] = useState('')
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
-  const [invalidSessions, setInvalidSessions] = useState([false, false])
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
-  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const products = currentAccount.products
-  const currentSession = useSelector(currentSessionSelector)
   const accounts = useSelector(state => state.user.accounts)
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const dispatch = useDispatch()
 
   const swiperRef = useRef(null)
-
-  useEffect(() => {
-    validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-
-    clearInterval(intervalRef.current)
-
-    intervalRef.current = setInterval(() => validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end), 5 * 1000)
-  }, [currentAccount.shift_end])
-
-  useEffect(() => {
-    validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-  }, [currentAccountToken])
-
-  function validateSessionRoutine(localSessions, shiftEnd) {
-    const isValid = validateSession(localSessions, shiftEnd)
-
-    if (!isValid) {
-      if (localSessions.length === 0) {
-        setModalStatus(START)
-      } else {
-        setModalStatus(END)
-      }
-    }
-  }
-
-  const validateSession = (sessions, shiftEnd) => {
-    if (sessions.length === 0) return false
-
-    const currentAccountSession = sessions[sessions.length - 1]
-
-    const sessionStartTime = moment(currentAccountSession.startTime)
-    const startOfShift = moment()
-      .hour(currentAccountSession.shift_start.hours)
-      .minutes(currentAccountSession.shift_start.minutes)
-      .seconds(0)
-      .format('YYYY-MM-DD HH:mm')
-    const endOfShift = moment()
-      .hour(shiftEnd.hours)
-      .minutes(shiftEnd.minutes)
-      .seconds(0)
-      .format('YYYY-MM-DD HH:mm')
-
-    const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
-
-    return isValid
-  }
 
   const updateLayout = (products, cardsPerRow) => {
     function chunkArray(myArray, chunk_size) {
@@ -177,16 +123,9 @@ function SalesLayout({ navigation, }) {
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
                 account={account} updateLayout={updateLayout}
-                toastRef={toastRef} setModalStatus={setModalStatus}
+                toastRef={toastRef} setModalStatus={() => {}}
               />
-              <SessionModal
-                navigation={navigation}
-                isVisible={modalStatus !== ''}
-                index={index} intervalRef={intervalRef}
-                openChangeAccountOverview={openChangeAccountOverview}
-                modalStatus={modalStatus}
-                setModalStatus={setModalStatus}
-              />
+
               {accountWrapperVisibile && (
                 <TouchableOpacity
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}

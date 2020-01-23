@@ -59,8 +59,8 @@ function History(props) {
       contentContainerStyle={{ paddingBottom: 10000, }}
       scrollEnabled={expandedIndex === null}
     >
-      {currentAccount.localSessions.map((day, index) => {
-        const employeesLength = day.employees.length
+      {false && currentAccount.localSessions.map((day, index) => {
+        const employeesLength = day.employees ? day.employees.length : 0
         const sessionTotal = day.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false)
 
         return (

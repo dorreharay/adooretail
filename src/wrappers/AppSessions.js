@@ -5,15 +5,20 @@ import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
+let moment = require('moment-timezone');
+moment.locale('uk');
+
 
 import API from '../../rest/api'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
+import { START, END, NO_TIME } from '@statuses'
 import { syncDataWithStore } from '@reducers/UserReducer'
 import { setOrientationDimensions, } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
+import SessionModal from '../screens/SalesLayout/components/SessionModal/SessionModal';
 
 function AppSessions(props) {
   const {
@@ -23,13 +28,18 @@ function AppSessions(props) {
   } = props
 
   const syncRef = useRef(null)
+  const intervalRef = useRef(false)
+
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
+  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const accounts = useSelector(state => state.user.accounts)
 
   const dispatch = useDispatch()
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
+  const [modalStatus, setModalStatus] = useState('')
+  const [currentRoute, setCurrentRoute] = useState(false)
 
   const getPreparedSessions = () => {
     let offset = 0
@@ -70,40 +80,45 @@ function AppSessions(props) {
     return () => {
       clearInterval(syncRef.current)
     };
-  }, [currentAccount])
+  }, [])
 
-  const gotoScreen = (screen) => {
+  const asyncSync = async () => {
+    await synchronizeSessions()
+    changeInitialLoadingWrapperOpacity(false)
+    SplashScreen.hide();
+  };
+
+  const gotoScreen = async (screen, callback) => {
     setTimeout(() => {
       NavigationService.setTopLevelNavigator(navigatorRef.current)
-      setTimeout(() => {
+      setTimeout(async () => {
         NavigationService.navigate(screen)
-        setTimeout(() => {
-          changeInitialLoadingWrapperOpacity(false)
-          SplashScreen.hide();
-        }, 250)
+
+        await asyncSync()
+
+        callback()
       }, 110)
     }, 100)
   }
 
-  useEffect(() => {
+  const peek = () => {
     if (initialLoadingVisibility) {
       if (accounts.length === 0) {
-        gotoScreen('NoAccount')
+        gotoScreen('NoAccount', () => setCurrentRoute(0))
 
         return
       }
 
       if (!currentSession.endTime && currentSession.length !== 0) {
-        gotoScreen('SalesLayout')
+        gotoScreen('SalesLayout', () => setCurrentRoute(4))
       } else {
         changeInitialLoadingWrapperOpacity(false)
         SplashScreen.hide();
       }
     }
-  }, [
-      navigatorRef, currentSession, accounts,
-      initialLoadingVisibility, currentAccount
-    ])
+  }
+
+  useEffect(peek, [])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width
@@ -150,10 +165,87 @@ function AppSessions(props) {
     getBuildInfo()
   }, [])
 
+  // useEffect(() => {
+  //   if (NavigationService.state && NavigationService.state.routeName !== 'SalesLayout') {
+  //     return
+  //   }
+
+  //   validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+
+  //   clearInterval(intervalRef.current)
+
+  //   intervalRef.current = setInterval(() => {
+  //     validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end), 5 * 1000
+  //   })
+
+  //   return () => {
+  //     clearInterval(intervalRef.current)
+  //   }
+  // }, [currentAccount.shift_end, NavigationService])
+
+  useEffect(() => {
+    if (!currentRoute || currentRoute !== 4) {
+      return
+    }
+
+    console.log('Validation started')
+
+    validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+
+    clearInterval(intervalRef.current)
+
+    intervalRef.current = setInterval(() => {
+      validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end), 5 * 1000
+    })
+
+    return () => {
+      clearInterval(intervalRef.current)
+    }
+  }, [currentAccount.shift_end, currentRoute])
+
+  function validateSessionRoutine(localSessions, shiftEnd) {
+    const isValid = validateSession(localSessions, shiftEnd)
+
+    if (isValid && modalStatus !== '') {
+      setModalStatus('')
+    }
+
+    if (!isValid) {
+      if (localSessions.length === 0) {
+        setModalStatus(START)
+      } else {
+        setModalStatus(END)
+      }
+    }
+  }
+
+  const validateSession = (sessions, shiftEnd) => {
+    if (sessions.length === 0) return false
+
+    const currentAccountSession = sessions[sessions.length - 1]
+
+    const sessionStartTime = moment(currentAccountSession.startTime)
+    const startOfShift = moment()
+      .hour(currentAccountSession.shift_start.hours)
+      .minutes(currentAccountSession.shift_start.minutes)
+      .seconds(0)
+      .format('YYYY-MM-DD HH:mm')
+    const endOfShift = moment()
+      .hour(shiftEnd.hours)
+      .minutes(shiftEnd.minutes)
+      .seconds(0)
+      .format('YYYY-MM-DD HH:mm')
+
+    const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
+
+    return isValid
+  }
+
   const screenProps = {
     initialLoadingVisibility,
     initialLoadingOpacity,
     changeInitialLoadingWrapperOpacity,
+    setCurrentRoute,
   }
 
   const withProps = React.Children.map(children, child =>
@@ -181,6 +273,15 @@ function AppSessions(props) {
             {withProps}
           </View>
         </SharedBackground>
+
+        <SessionModal
+          navigation={NavigationService}
+          isVisible={modalStatus !== ''}
+          intervalRef={intervalRef}
+          openChangeAccountOverview={() => { }}
+          modalStatus={modalStatus}
+          setModalStatus={setModalStatus}
+        />
       </SharedBackground>
     </>
   )

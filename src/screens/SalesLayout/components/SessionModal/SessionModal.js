@@ -4,9 +4,12 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
 import FastImage from 'react-native-fast-image'
+let moment = require('moment-timezone');
+moment.locale('uk');
 
 import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
+import { currentAccountSelector, } from '@selectors'
 import { setEmployees, setStartCash, addFiveMinutesToShift, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
@@ -18,6 +21,8 @@ function SessionModal(props) {
   } = props
 
   const dispatch = useDispatch()
+
+  const currentAccount = useSelector(currentAccountSelector)
 
   const endSession = () => {
     dispatch(setEmployees([]))
@@ -77,7 +82,23 @@ function SessionModal(props) {
           <Fragment>
             <View>
               <Text style={styles.modalRegularText}>{modalStatus.first}</Text>
-              <Text style={styles.modalRegularText}>{modalStatus.second}</Text>
+              <Text style={styles.modalRegularText}>{modalStatus.second}
+                {moment()
+                  .hour(currentAccount.shift_start.hours)
+                  .minutes(currentAccount.shift_start.minutes)
+                  .seconds(0)
+                  .format('HH:mm')
+                }
+
+                -
+
+                {moment()
+                  .hour(currentAccount.shift_end.hours)
+                  .minutes(currentAccount.shift_end.minutes)
+                  .seconds(0)
+                  .format('HH:mm')
+                }
+              </Text>
             </View>
 
             {modalStatus.type === 'end' && (

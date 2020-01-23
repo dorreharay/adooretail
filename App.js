@@ -23,6 +23,9 @@ function MainApp(props) {
           ref={navigatorRef}
           navigation={navigation}
           screenProps={screenProps}
+          onNavigationStateChange={(state) => {
+            screenProps && setCurrentRoute(state.index)
+          }}
         />
       </AppSessions>
     </AppLoading>
