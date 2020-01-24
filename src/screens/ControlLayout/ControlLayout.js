@@ -7,6 +7,7 @@ import ContentPanel from './components/ContentPanel/ContentPanel'
 
 import AllCategories from './components/ContentPanel/Pages/AllCategories/AllCategories'
 import History from './components/ContentPanel/Pages/History/History'
+import PointScheme from './components/ContentPanel/Pages/PointScheme/PointScheme'
 
 function ControlLayout(props) {
   const { navigation } = props
@@ -19,17 +20,17 @@ function ControlLayout(props) {
     'Основні': [
       {
         index: 0,
-        title: 'Всі категорії',
-        iconSource: require('@images/house.png'),
+        title: 'Планування закладу',
+        iconSource: require('@images/book.png'),
         onPress: () => handleCategoryPress(0),
-        component: <AllCategories />,
+        component: <PointScheme />,
       },
       {
         index: 1,
-        title: 'Планування закладу',
-        iconSource: require('@images/book.png'),
+        title: 'Всі категорії',
+        iconSource: require('@images/house.png'),
         onPress: () => handleCategoryPress(1),
-        component: <View style={{ flex: 1, }}></View>,
+        component: <AllCategories />,
       },
       {
         index: 2,

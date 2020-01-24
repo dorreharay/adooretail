@@ -49,7 +49,7 @@ function ContentPanel(props) {
         vertical
         scrollEnabled={false}
         onSnapToItem={handleSlideIndex}
-        inactiveSlideScale={0.95}
+        inactiveSlideScale={1}
       />
     </View>
   )

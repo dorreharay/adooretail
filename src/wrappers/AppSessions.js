@@ -149,6 +149,7 @@ function AppSessions(props) {
 
       if (!currentSession.endTime && currentSession.length !== 0) {
         gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
+        // gotoScreen('ControlLayout', () => dispatch(setCurrentRoute(4)))
       } else {
         asyncSync()
 

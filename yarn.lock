@@ -5839,6 +5839,13 @@ react-native-device-info@^3.1.4:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-3.1.4.tgz#58a1d465ce9e2c28809132b1c68dd7ec7ce5f00f"
   integrity sha512-r+7APHkPO9EA/9w3e9K7yrFigaU+0/g8i3psrNUwCGFxoDewkCHOPj/1YZnAPUwPxgyG3svjZXeCtymI3xcSlA==
 
+react-native-draggable@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-draggable/-/react-native-draggable-3.0.0.tgz#bc57a8b662fb1140796e69b46d11e581a8c74a42"
+  integrity sha512-C64HST8yivIGARiVXyW5jkqRWGkdLkFrbQIR8pXuJ17J67ygMYe+LI66SVQBRT5ABfBvCxp1LTLfxJZSvneIWg==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-easy-toast@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-easy-toast/-/react-native-easy-toast-1.2.0.tgz#0f70bcb99e3306cda4800c244bfb4a67d42276ed"

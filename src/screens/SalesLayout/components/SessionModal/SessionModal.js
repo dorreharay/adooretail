@@ -87,26 +87,7 @@ function SessionModal(props) {
           <Fragment>
             <View>
               <Text style={styles.modalRegularText}>{modalStatus.first}</Text>
-              <Text style={styles.modalRegularText}>{modalStatus.second}
-                {currentAccount && (
-                  moment()
-                    .hour(currentAccount.shift_start.hours)
-                    .minutes(currentAccount.shift_start.minutes)
-                    .seconds(0)
-                    .format('HH:mm')
-                )
-                }
-
-                -
-
-                {currentAccount && (
-                  moment()
-                  .hour(currentAccount.shift_end.hours)
-                  .minutes(currentAccount.shift_end.minutes)
-                  .seconds(0)
-                  .format('HH:mm')
-                )}
-              </Text>
+              <Text style={styles.modalRegularText}>{modalStatus.second}</Text>
             </View>
 
             <TouchableOpacity
@@ -129,6 +110,25 @@ function SessionModal(props) {
               </LinearGradient>
             </TouchableOpacity>
           </Fragment>
+
+          <Text style={styles.modalShiftText}>Робочі години: {currentAccount && (
+            moment()
+              .hour(currentAccount.shift_start.hours)
+              .minutes(currentAccount.shift_start.minutes)
+              .seconds(0)
+              .format('HH:mm')
+          )
+          }
+
+            -
+
+                {currentAccount && (
+              moment()
+                .hour(currentAccount.shift_end.hours)
+                .minutes(currentAccount.shift_end.minutes)
+                .seconds(0)
+                .format('HH:mm')
+            )}</Text>
         </View>
       </ModalContent>
     </Modal>
@@ -166,6 +166,16 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: PROBA_MEDIUM,
     lineHeight: 37,
+  },
+  modalShiftText: {
+    position: 'absolute',
+    bottom: 120,
+    left: 40,
+    color: '#363636',
+    fontSize: 25,
+    fontFamily: PROBA_MEDIUM,
+    lineHeight: 37,
+    textDecorationLine: 'underline',
   },
   changeAccountButton: {
     position: 'absolute',
