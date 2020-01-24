@@ -73,13 +73,13 @@ const styles = StyleSheet.create({
     left: 0,
     width: 70,
     height: 70,
-    paddingTop: 22,
-    paddingLeft: 20,
+    paddingTop: 20,
+    paddingLeft: 15,
     zIndex: 50,
   },
   logo: {
-    width: 37,
-    height: 37,
+    width: 65,
+    height: 65,
   },
   navButtons: {
     position: 'absolute',

@@ -69,7 +69,7 @@ function InputCash(props) {
         // await axios.post(`${API_URL}/user/session/terminate/${token}`, { session_id, endSum: currentInput })
 
         dispatch(setEndOfSessionStatus(false))
-        dispatch(updateCurrentSession({ status: 'end' }))
+        dispatch(updateCurrentSession({ status: 'end', endCash: currentInput }))
         dispatch(restoreDefaultShift())
 
         navigation.navigate('Login')

@@ -7,6 +7,8 @@ import FastImage from 'react-native-fast-image'
 let moment = require('moment-timezone');
 moment.locale('uk');
 
+import NavigationService from '../../../../../xnavigation/NavigationService';
+
 import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
 
 import { currentAccountSelector, } from '@selectors'
@@ -15,9 +17,9 @@ import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 function SessionModal(props) {
   const {
-    navigation, intervalRef,
+    intervalRef, navigatorRef,
     modalStatus, setModalStatus,
-    openChangeAccountOverview,
+    isVisible,
   } = props
 
   const dispatch = useDispatch()
@@ -32,7 +34,9 @@ function SessionModal(props) {
 
     clearInterval(intervalRef.current)
 
-    navigation.navigate('InputCash')
+    NavigationService.setTopLevelNavigator(navigatorRef.current)
+
+    NavigationService.navigate('InputCash')
   }
 
   const startSession = () => {
@@ -42,12 +46,13 @@ function SessionModal(props) {
 
     clearInterval(intervalRef.current)
 
-    navigation.navigate('InputCash')
+    NavigationService.setTopLevelNavigator(navigatorRef.current)
+
+    NavigationService.navigate('InputCash')
   }
 
   const handleBackButton = () => {
     setModalStatus('')
-    openChangeAccountOverview()
   }
 
   const addFiveMinutes = () => {
@@ -59,7 +64,7 @@ function SessionModal(props) {
 
   return (
     <Modal
-      visible={modalStatus !== ''}
+      visible={isVisible}
       modalAnimation={new SlideAnimation({
         slideFrom: 'bottom',
         animationDuration: 30,
@@ -69,7 +74,7 @@ function SessionModal(props) {
     >
       <ModalContent>
         <View style={styles.modal}>
-          {modalStatus.type !== 'no_time' && (
+          {/* {modalStatus.type !== 'no_time' && (
             <TouchableOpacity
               style={styles.closeIconButton}
               onPress={handleBackButton}
@@ -77,38 +82,32 @@ function SessionModal(props) {
             >
               <FastImage style={styles.closeIcon} source={require('@images/back_modal.png')} />
             </TouchableOpacity>
-          )}
+          )} */}
 
           <Fragment>
             <View>
               <Text style={styles.modalRegularText}>{modalStatus.first}</Text>
               <Text style={styles.modalRegularText}>{modalStatus.second}
-                {moment()
-                  .hour(currentAccount.shift_start.hours)
-                  .minutes(currentAccount.shift_start.minutes)
-                  .seconds(0)
-                  .format('HH:mm')
+                {currentAccount && (
+                  moment()
+                    .hour(currentAccount.shift_start.hours)
+                    .minutes(currentAccount.shift_start.minutes)
+                    .seconds(0)
+                    .format('HH:mm')
+                )
                 }
 
                 -
 
-                {moment()
+                {currentAccount && (
+                  moment()
                   .hour(currentAccount.shift_end.hours)
                   .minutes(currentAccount.shift_end.minutes)
                   .seconds(0)
                   .format('HH:mm')
-                }
+                )}
               </Text>
             </View>
-
-            {modalStatus.type === 'end' && (
-              <TouchableOpacity
-                style={styles.additonalButton}
-                onPress={addFiveMinutes}
-              >
-                <Text style={styles.additonalButtonText}>Ще 5 хвилин</Text>
-              </TouchableOpacity>
-            )}
 
             <TouchableOpacity
               onPress={() => {
@@ -200,7 +199,7 @@ const styles = StyleSheet.create({
   linearButtonText: {
     color: '#FFFFFF',
     fontSize: 22,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: PROBA_MEDIUM,
   },
   additonalButton: {
     alignItems: 'center',

@@ -1,5 +1,4 @@
 import moment from 'moment-timezone'
-import Receipt from '../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/Receipt';
 
 const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
@@ -271,7 +270,7 @@ const ACTION_HANDLERS = {
     return { ...state, currentAccountToken: action.payload }
   },
   [UPDATE_CURRENT_SESSIONS]: (state, action) => {
-    const { status, newSessionProp } = action.payload
+    const { status, endCash, newSessionProp } = action.payload
     const { accounts, currentAccountIndex } = state
 
     const localSessions = accounts[currentAccountIndex].localSessions
@@ -295,11 +294,14 @@ const ACTION_HANDLERS = {
       newSession = {
         ...currentSession,
         endTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
+        endCash,
       }
 
       updatedSessions = localSessions.map((localSession, localIndex) => {
         if (localIndex === localSessions.length - 1) {
           return newSession
+        } else {
+          return localSession
         }
       })
     }

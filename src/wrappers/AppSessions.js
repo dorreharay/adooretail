@@ -16,7 +16,7 @@ import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
 import { START, END, NO_TIME } from '@statuses'
 import { syncDataWithStore } from '@reducers/UserReducer'
-import { setOrientationDimensions, } from '@reducers/TempReducer'
+import { setOrientationDimensions, setCurrentRoute } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
 import SessionModal from '../screens/SalesLayout/components/SessionModal/SessionModal';
@@ -33,7 +33,7 @@ function AppSessions(props) {
 
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
-  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
+  const currentRoute = useSelector(state => state.temp.currentRoute)
   const accounts = useSelector(state => state.user.accounts)
 
   const dispatch = useDispatch()
@@ -41,7 +41,6 @@ function AppSessions(props) {
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
   const [modalStatus, setModalStatus] = useState('')
-  const [currentRoute, setCurrentRoute] = useState(false)
   const [prevNetState, setPrevNetState] = useState(false)
 
   const getPreparedSessions = () => {
@@ -72,10 +71,24 @@ function AppSessions(props) {
       }
 
       dispatch(syncDataWithStore(payload))
+
+      // if (currentRoute && currentRoute === 4) {
+      //   setTimeout(() => {
+      //     validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+      //   }, 700)
+      // }
     } catch (error) {
       console.log('error', error)
     }
   }
+
+  useEffect(() => {
+    if (currentRoute && currentRoute === 4) {
+      if (!initialLoadingVisibility) {
+        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+      }
+    }
+  }, [currentAccount.shift_end, currentRoute, initialLoadingVisibility])
 
   useEffect(() => {
     syncRef.current = setInterval(() => {
@@ -84,12 +97,12 @@ function AppSessions(props) {
     return () => {
       clearInterval(syncRef.current)
     };
-  }, [currentSession,])
+  }, [currentSession, currentRoute, netInfo])
 
   const netCheck = () => {
-    if(!prevNetState) return
+    if (!prevNetState) return
 
-    if(!prevNetState.isConnected && netInfo.isConnected) {
+    if (!prevNetState.isConnected && netInfo.isConnected) {
       clearInterval(syncRef.current)
 
       syncRef.current = setInterval(() => {
@@ -97,17 +110,18 @@ function AppSessions(props) {
       }, 30 * 1000)
     }
 
-    if(prevNetState.isConnected && !netInfo.isConnected) {
+    if (prevNetState.isConnected && !netInfo.isConnected) {
       clearInterval(syncRef.current)
     }
 
     setPrevNetState(netInfo)
   }
 
-  useEffect(() => netCheck(), [netInfo])
+  // useEffect(() => netCheck(), [netInfo])
 
   const asyncSync = async () => {
     await synchronizeSessions()
+
     changeInitialLoadingWrapperOpacity(false)
     SplashScreen.hide();
   };
@@ -128,21 +142,23 @@ function AppSessions(props) {
   const peek = () => {
     if (initialLoadingVisibility) {
       if (accounts.length === 0) {
-        gotoScreen('NoAccount', () => setCurrentRoute(0))
+        gotoScreen('NoAccount', () => dispatch(setCurrentRoute(0)))
 
         return
       }
 
       if (!currentSession.endTime && currentSession.length !== 0) {
-        gotoScreen('SalesLayout', () => setCurrentRoute(4))
+        gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
       } else {
+        asyncSync()
+
         changeInitialLoadingWrapperOpacity(false)
         SplashScreen.hide();
       }
     }
   }
 
-  useEffect(peek, [currentSession])
+  useEffect(peek, [currentSession,])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width
@@ -189,45 +205,24 @@ function AppSessions(props) {
     getBuildInfo()
   }, [])
 
-  // useEffect(() => {
-  //   if (NavigationService.state && NavigationService.state.routeName !== 'SalesLayout') {
-  //     return
-  //   }
-
-  //   validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-
-  //   clearInterval(intervalRef.current)
-
-  //   intervalRef.current = setInterval(() => {
-  //     validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end), 5 * 1000
-  //   })
-
-  //   return () => {
-  //     clearInterval(intervalRef.current)
-  //   }
-  // }, [currentAccount.shift_end, NavigationService])
-
   useEffect(() => {
-    if (!currentRoute || currentRoute !== 4) {
-      return
+    if (currentRoute && currentRoute === 4) {
+      clearInterval(intervalRef.current)
+
+      intervalRef.current = setInterval(() => {
+        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+      }, 15 * 1000)
+    } else {
+      clearInterval(intervalRef.current)
     }
-
-    console.log('Validation started')
-
-    validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-
-    clearInterval(intervalRef.current)
-
-    intervalRef.current = setInterval(() => {
-      validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end), 5 * 1000
-    })
-
     return () => {
       clearInterval(intervalRef.current)
     }
-  }, [currentAccount.shift_end, currentRoute])
+  }, [currentAccount, currentRoute, modalStatus,])
 
   function validateSessionRoutine(localSessions, shiftEnd) {
+    console.log('Validation routine', shiftEnd)
+
     const isValid = validateSession(localSessions, shiftEnd)
 
     if (isValid && modalStatus !== '') {
@@ -269,7 +264,6 @@ function AppSessions(props) {
     initialLoadingVisibility,
     initialLoadingOpacity,
     changeInitialLoadingWrapperOpacity,
-    setCurrentRoute,
   }
 
   const withProps = React.Children.map(children, child =>
@@ -299,10 +293,9 @@ function AppSessions(props) {
         </SharedBackground>
 
         <SessionModal
-          navigation={NavigationService}
           isVisible={modalStatus !== ''}
           intervalRef={intervalRef}
-          openChangeAccountOverview={() => { }}
+          navigatorRef={navigatorRef}
           modalStatus={modalStatus}
           setModalStatus={setModalStatus}
         />
