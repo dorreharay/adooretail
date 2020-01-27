@@ -33,8 +33,9 @@ const base = {
   proceedContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: '95%',
     height: '15%',
+    marginLeft: '2.5%',
     paddingHorizontal: 15,
     marginBottom: '2%',
   },
@@ -82,7 +83,7 @@ const base = {
     alignItems: 'center',
     justifyContent: 'space-between',
     borderStyle: 'dashed',
-    borderRadius : 1,
+    borderRadius: 1,
   },
   receiptOnePriceContainer: {
     width: '20%',
@@ -111,6 +112,7 @@ const base = {
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    borderRadius: 1,
     borderColor: '#CECECE',
     borderWidth: 0.5,
   },
@@ -169,7 +171,7 @@ const base = {
   paymentModalType: {
     justifyContent: 'space-between',
     width: 140,
-    height: 80, 
+    height: 80,
   },
   paymentTypeText: {
     color: '#FFFFFF',
@@ -235,14 +237,14 @@ const base = {
     color: '#343434',
     fontSize: 25,
     fontFamily: PROBA_REGULAR,
-  }
+  },
 };
- 
+
 const styles = createStyles(
   base,
- 
+
   maxWidth(500, {
-    
+
   })
 );
 

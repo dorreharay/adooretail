@@ -143,7 +143,7 @@ function Products(props) {
         {products.map((row, index) => (
           <View style={styles.row} key={index}>
             {row.map((rowItem, key) => (
-              <SharedButton
+              <TouchableOpacity
                 style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                 onPress={() => changeActiveCategory(index, key)}
                 activeOpacity={1}
@@ -156,7 +156,7 @@ function Products(props) {
                 <View style={[styles[`categoryTitle${layout}`], { bottom: -1, }]} onPress={() => changeActiveCategory(index, key)} activeOpacity={1} key={index}>
                   <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
                 </View>
-              </SharedButton>
+              </TouchableOpacity>
             ))}
           </View>
         ))}

@@ -16,7 +16,7 @@ const initialState = {
 export function setEndOfSessionStatus(payload) {
   return {
     type: SET_END_OF_SESSION_STATUS,
-    payload 
+    payload
   }
 }
 
@@ -36,13 +36,13 @@ export function setCurrentRoute(payload) {
 
 const ACTION_HANDLERS = {
   [SET_END_OF_SESSION_STATUS]: (state, action) => {
-    return {...state, endOfSession: action.payload}
+    return { ...state, endOfSession: action.payload }
   },
   [SET_ORIENTATION_DIMENSIONS]: (state, action) => {
-    return {...state, dimensions: action.payload}
+    return { ...state, dimensions: action.payload }
   },
   [SET_CURRENT_ROUTE]: (state, action) => {
-    return {...state, currentRoute: action.payload}
+    return { ...state, currentRoute: action.payload }
   },
 };
 

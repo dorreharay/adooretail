@@ -121,7 +121,7 @@ function RightSide(props) {
         <SharedButton
           onPress={openMenu}
           style={{ width: styles.menu.width, height: styles.menu.height, backgroundColor: '#FFFFFF' }}
-          iconStyle={{ width: styles.menu.width - 24, height: styles.menu.height - 27, }}
+          iconStyle={{ width: styles.menu.width - 24, height: styles.menu.height - 30, }}
           source={require('@images/menu.png')} scale={0.9}
         />
       </View>

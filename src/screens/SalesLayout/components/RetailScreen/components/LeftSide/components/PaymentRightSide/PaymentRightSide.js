@@ -14,6 +14,7 @@ function PaymentRightSide(props) {
     selectedType, status, setStatus, initialStatuses,
     buttonAccessible, resetStatus, enteredSum, setEnteredSum,
     saveReceipt, setButtonAccessibility, clearCurrentReceipt,
+    currentEmployee,
   } = props
 
   const { statusColor, statusText, blinking, } = status

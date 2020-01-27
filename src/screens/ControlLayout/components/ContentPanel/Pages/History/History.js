@@ -56,7 +56,7 @@ function History(props) {
     <ScrollView
       ref={scrollRef}
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 10000, }}
+      contentContainerStyle={{ paddingBottom: 0, }}
       scrollEnabled={expandedIndex === null}
     >
       {currentAccount.localSessions.map((day, index) => {

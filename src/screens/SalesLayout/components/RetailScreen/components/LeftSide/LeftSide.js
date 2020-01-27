@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, ScrollView, TextInput, } from 'react-native'
+import { Text, View, Image, ScrollView, TouchableOpacity, } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
 import FastImage from 'react-native-fast-image';
@@ -105,7 +105,7 @@ function LeftSide(props) {
                   start={{ x: 2, y: 1 }}
                   end={{ x: 0, y: 2 }}
                   colors={selectedInstance === index ? ['#DB3E69', '#FD9C6C'] : ['#FF767500', '#FD9C6C00']}
-                  style={{ alignItems: 'center', justifyContent: 'center', width: headerHeight - 20, height: '100%', borderRadius: headerHeight }}
+                  style={{ alignItems: 'center', justifyContent: 'center', width: headerHeight - 20, height: '100%', paddingBottom: 3, borderRadius: headerHeight }}
                 >
                   <Text style={[styles.receiptButtonText, selectedInstance === index && { color: '#FFFFFF' }]}>{index + 1}</Text>
                 </LinearGradient>
@@ -165,11 +165,10 @@ function LeftSide(props) {
           substractProductQuantity={substractProductQuantity}
         />
       </ScrollView>
-      <SharedButton
+      <TouchableOpacity
         onPress={() => changePaymentModalState(true)}
         style={styles.proceedContainer}
-        duration={100}
-        scale={0.94}
+        activeOpacity={1}
       >
         <LinearGradient
           style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
@@ -179,7 +178,7 @@ function LeftSide(props) {
         >
           <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
         </LinearGradient>
-      </SharedButton>
+      </TouchableOpacity>
     </View>
   )
 }

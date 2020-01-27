@@ -21,14 +21,13 @@ function ContentPanel(props) {
   const _renderItem = ({ item, index }) => {
     return (
       <Fragment>
-        <View style={styles.heading} key={index}>
+        <View style={styles.heading}>
           <FastImage
-            style={{ width: 32, height: 32, }}
+            style={{ width: 30, height: 30, }}
             source={item.iconSource}
           />
           <Text style={styles.headingText}>{item.title}</Text>
         </View>
-
         {item.component}
       </Fragment>
     )
@@ -36,7 +35,10 @@ function ContentPanel(props) {
 
   return (
     <View style={[styles.container, { width: deviceWidth * 0.8, }]}>
-      <Header navigation={navigation} />
+      <Header
+        heading={<View />}
+        navigation={navigation}
+      />
 
       <Carousel
         ref={carouselRef}

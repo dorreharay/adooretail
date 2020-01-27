@@ -11,6 +11,7 @@ function PaymentType(props) {
     selectedType, enteredSum, total, invalidColor, status, setStatus,
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
     handleChangeSum, receipt, saveReceipt, clearCurrentReceipt,
+    currentEmployee,
   } = props
 
   return (
@@ -49,7 +50,7 @@ function PaymentType(props) {
         <Text style={styles.headingText}>Замовлення</Text>
 
         <ScrollView style={styles.orderContainer} contentContainerStyle={{ paddingBottom: 2, }}>
-          {receipt.map((item, index) => (
+          {receipt && receipt.map((item, index) => (
             <View style={styles.orderItem} key={index}>
               <Text style={[styles.orderItemText, { width: '65%', }]}>{item.title} x {item.quantity}</Text>
               <Text style={styles.orderItemText}>{item.price} грн</Text>

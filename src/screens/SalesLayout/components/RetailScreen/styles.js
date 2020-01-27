@@ -47,6 +47,7 @@ const base = {
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    paddingBottom: 5,
     borderRadius: 5,
   },
   paymentSubmitButtonText: {
@@ -110,6 +111,38 @@ const base = {
     fontSize: 30,
     fontFamily: PROBA_LIGHT,
   },
+  employeesListContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#00000066',
+    zIndex: 1000,
+  },
+  employeesListHeading: {
+    margin: 20,
+    marginLeft: 30,
+    fontSize: 25,
+    fontFamily: PROBA_REGULAR,
+  },
+  employeesList: {
+    width: '100%',
+    height: '100%',
+    zIndex: 1000,
+  },
+  employeesListItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    height: 70,
+    paddingLeft: 30,
+  },
+  employeesListItemName: {
+    marginLeft: 15,
+    fontSize: 20,
+    fontFamily: PROBA_REGULAR,
+  }
 };
 
 const styles = createStyles(

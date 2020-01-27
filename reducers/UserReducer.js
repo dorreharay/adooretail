@@ -12,6 +12,7 @@ const ADD_FIVE_MINUTES_TO_SHIFT = 'ADD_FIVE_MINUTES_TO_SHIFT';
 const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT';
 const SAVE_LOCAL_RECEIPT = 'SAVE_LOCAL_RECEIPT';
 const SYNC_DATA = 'SYNC_DATA';
+const SET_BOUNDS = 'SET_BOUNDS'
 
 const initialState = {
   token: '',
@@ -20,6 +21,17 @@ const initialState = {
   currentAccountIndex: 0,
   currentAccountToken: '5cb1ed89c6bf28192c152435',
   pinCode: '1111222',
+  bounds: [{
+    name: 'Кухня',
+    sizes: {
+      w: 200,
+      h: 200,
+    },
+    position: {
+      x: 0,
+      y: 0,
+    }
+  }],
   accounts: [
     {
       id: '4sd3fsgu76fg55akgjsd54jadfnu343',
@@ -112,6 +124,13 @@ const initialState = {
     },
   ],
 };
+
+export function setBounds(payload) {
+  return {
+    type: SET_BOUNDS,
+    payload
+  }
+}
 
 export function syncDataWithStore(payload) {
   return {
@@ -265,6 +284,9 @@ const ACTION_HANDLERS = {
   },
   [SAVE_CURRENT_ACCOUNT_INDEX]: (state, action) => {
     return { ...state, currentAccountIndex: action.payload }
+  },
+  [SET_BOUNDS]: (state, action) => {
+    return { ...state, bounds: action.payload }
   },
   [SAVE_CURRENT_ACCOUNT_TOKEN]: (state, action) => {
     return { ...state, currentAccountToken: action.payload }

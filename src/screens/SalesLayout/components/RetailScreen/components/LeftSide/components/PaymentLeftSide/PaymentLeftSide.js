@@ -1,13 +1,21 @@
 import React, { useState, } from 'react'
-import { View, Text, TouchableOpacity, } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, } from 'react-native'
+import { useSelector, useDispatch, } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import styles from './styles'
+
+import EditIcon from '@images/edit.svg'
 
 import SharedButton from '@shared/SharedButton';
 import PaymentSubmit from '../PaymentSubmit';
 
+import { currentAccountSelector } from '@selectors'
+
 function PaymentLeftSide(props) {
-  const { selectedType, pTypes, selectPType, } = props
+  const { selectedType, pTypes, selectPType, setEmployeesListVisibility, currentEmployee, } = props
+
+  const currentAccount = useSelector(currentAccountSelector)
+  const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
   return (
     <View style={styles.container}>
@@ -29,17 +37,26 @@ function PaymentLeftSide(props) {
           <Text style={[styles.paymentTypeName, selectedType.index === index && { color: '#FFFFFF', }]}>{item.name}</Text>
         </TouchableOpacity>
       ))}
-      {/* <Text style={styles.heading}>Працівник</Text>
+      <View style={{ position: 'relative', alignItems: 'center', flexDirection: 'row', }}>
+        <Text style={styles.heading}>Працівник</Text>
+        <SharedButton
+          style={styles.editButton}
+          onPress={() => setEmployeesListVisibility(true)}
+        >
+          <EditIcon width={15} height={15} />
+        </SharedButton>
+      </View>
+
 
       <View style={styles.currentEmployee}>
         <FastImage
           style={styles.currentEmployeeImage}
-          // source={require('@images/status_waiting.png')}
-          source={null}
+          source={{ uri: currentAccount.img_url }}
         />
-        <Text ellipsizeMode='tail' numberOfLines={1} style={styles.currentEmployeeName}>Андрій Бариста</Text>
-      </View> */}
-    </View>
+        <View style={styles.currentEmployeeBorder} />
+        <Text ellipsizeMode='tail' numberOfLines={1} style={styles.currentEmployeeName}>{currentEmployee}</Text>
+      </View>
+    </View >
   )
 }
 

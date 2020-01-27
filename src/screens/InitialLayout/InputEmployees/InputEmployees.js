@@ -1,8 +1,6 @@
 import React, { Component, useState, useRef } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch, } from 'react-redux';
-import axios from 'axios';
-import moment from 'moment-timezone'
 import { useNetInfo } from "@react-native-community/netinfo";
 import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles'

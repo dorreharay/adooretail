@@ -5,13 +5,14 @@ import styles from './styles'
 import SharedButton from '@shared/SharedButton'
 
 function Header(props) {
-  const { navigation } = props
+  const { navigation, heading } = props
 
   return (
     <View style={styles.headerContainer}>
-      <View>
+      {/* <View>
         <Text style={[styles.bussinessNameText, styles.primaryColor]}></Text>
-      </View>
+      </View> */}
+      {heading}
       <View style={styles.rightButtonsContainer}>
         <SharedButton
           style={styles.backButton}

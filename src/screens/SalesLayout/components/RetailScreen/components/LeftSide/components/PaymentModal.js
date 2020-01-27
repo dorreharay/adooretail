@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef, } from 'react'
-import { View, TouchableOpacity, } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
+import Ripple from 'react-native-material-ripple';
 let moment = require('moment-timezone');
 moment.locale('uk');
 import styles from '../../../styles'
 
 import { saveLocalReceipt } from '@reducers/UserReducer'
+import { currentSessionSelector, } from '@selectors'
 
 import PaymentLeftSide from './PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
@@ -18,6 +20,7 @@ const PaymentModal = (props) => {
 
   const dispatch = useDispatch()
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
+  const currentSession = useSelector(currentSessionSelector)
 
   const blurRef = useRef(null)
 
@@ -44,6 +47,8 @@ const PaymentModal = (props) => {
 
   const [status, setStatus] = useState(initialStatuses.waiting)
   const [enteredSum, setEnteredSum] = useState(`${currentReceipt.receiptSum}`)
+  const [employeesListVisible, setEmployeesListVisibility] = useState(false)
+  const [currentEmployee, setCurrentEmployee] = useState(currentSession.employees[0])
 
   useEffect(() => {
     setEnteredSum(`${currentReceipt.receiptSum}`)
@@ -71,6 +76,7 @@ const PaymentModal = (props) => {
       localId: guidGenerator(),
       first_product_time: timeStart,
       last_product_time: timeEnd,
+      employee: currentEmployee,
       transaction_time_end: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
     }
 
@@ -131,10 +137,8 @@ const PaymentModal = (props) => {
     resetStatus()
   }, [isVisible])
 
-  if (!isVisible) return null
-
   return (
-    <View style={styles.paymentWrapperContainer}>
+    <View style={[styles.paymentWrapperContainer, { position: 'absolute', top: 10000, }, isVisible && { top: 0, }]} pointerEvents={isVisible ? 'auto' : 'none'}>
       <TouchableOpacity
         style={styles.paymentWrapper}
         activeOpacity={1}
@@ -144,6 +148,8 @@ const PaymentModal = (props) => {
           pTypes={pTypes}
           selectedType={selectedType}
           selectPType={selectPType}
+          setEmployeesListVisibility={setEmployeesListVisibility}
+          currentEmployee={currentEmployee}
         />
         <PaymentRightSide
           selectedType={selectedType}
@@ -159,6 +165,36 @@ const PaymentModal = (props) => {
           clearCurrentReceipt={clearCurrentReceipt}
         />
       </View>
+
+
+      {employeesListVisible && (
+        <TouchableOpacity
+          style={[styles.employeesListContainer, { width: deviceWidth * 0.72, height: deviceWidth * 0.55, left: deviceWidth * 0.14, }]}
+          onPress={() => setEmployeesListVisibility(false)}
+          activeOpacity={1}
+        >
+          <View style={{ width: '50%', height: '70%', borderRadius: 3, backgroundColor: '#FFFFFF' }}>
+            <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
+
+            <ScrollView style={styles.employeesList}>
+              {currentSession.employees.map(item => (
+                <Ripple
+                  style={styles.employeesListItem}
+                  onPress={() => {
+                    setEmployeesListVisibility(false)
+                    setCurrentEmployee(item)
+                  }}
+                  rippleColor={`#C4C4C4`}
+                  rippleFades
+                >
+                  <View style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }} />
+                  <Text style={styles.employeesListItemName}>{item}</Text>
+                </Ripple>
+              ))}
+            </ScrollView>
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   )
 }

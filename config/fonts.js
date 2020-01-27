@@ -17,6 +17,11 @@ const GILROY_REGULAR = Platform.OS === 'android' ? 'gilroy_regular' : 'Gilroy-Re
 const GILROY_MEDIUM = Platform.OS === 'android' ? 'gilroy_medium' : 'Gilroy-Medium'
 const GILROY_BOLD = Platform.OS === 'android' ? 'gilroy_bold' : 'Gilroy-Bold'
 
+const GEOMETRIA_LIGHT = Platform.OS === 'android' ? 'geometria_light' : 'Geometria-Light'
+const GEOMETRIA_REGULAR = Platform.OS === 'android' ? 'geometria_regular' : 'Geometria-Regular'
+const GEOMETRIA_MEDIUM = Platform.OS === 'android' ? 'geometria_medium' : 'Geometria-Medium'
+const GEOMETRIA_BOLD = Platform.OS === 'android' ? 'geometria_bold' : 'Geometria-Bold'
+
 export {
   COMFORTAA_LIGHT,
   COMFORTAA_REGULAR,
@@ -34,4 +39,9 @@ export {
   GILROY_REGULAR,
   GILROY_MEDIUM,
   GILROY_BOLD,
+
+  GEOMETRIA_LIGHT,
+  GEOMETRIA_REGULAR,
+  GEOMETRIA_MEDIUM,
+  GEOMETRIA_BOLD
 }

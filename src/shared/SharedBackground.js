@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Image, StyleSheet, Text, Animated, Platform, } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import Logo from '@images/logo-big.svg'
 
 import LoginLoader from '@shared/LoginLoader';
 
@@ -28,10 +29,11 @@ function SharedBackground({ source, children, loading, opacity, mainWrapper, nav
 
       <Image style={{ width: '100%', height: '101%', top: -1, zIndex: 10 }} source={source}></Image>
       <Animated.View style={styles.logoContainer}>
-        <FastImage
+        {/* <FastImage
           style={styles.logo}
-          source={require('@images/logo-big.png')}
-        />
+          source={require('@images/logo-big.svg')}
+        /> */}
+        <Logo width={65} height={65} />
       </Animated.View>
 
       {/* {true && (
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     backgroundColor: '#D2D2D226',
-    transform: [{ rotate: '180deg'}]
+    transform: [{ rotate: '180deg' }]
   }
 })
 

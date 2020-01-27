@@ -20,8 +20,8 @@ const base = {
   },
   block: {
     position: 'relative',
-    width: 200,
-    height: 100,
+    width: '100%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFFFFF'
@@ -51,7 +51,7 @@ const base = {
   },
   blockText: {
     color: '#E7715E',
-    fontSize: '50%',
+    fontSize: 24,
     fontFamily: PROBA_MEDIUM,
   },
 };

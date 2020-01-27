@@ -93,8 +93,8 @@ const base = {
   },
   historyInstanceContainer: {
     width: '100%',
-    height: '100%',
-    borderTopWidth: 1,
+    height: '93%',
+    // borderTopWidth: 1,
     borderColor: '#F3F3F3'
   },
   historyInstance: {

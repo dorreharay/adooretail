@@ -10,7 +10,8 @@ const base = {
     alignItems: 'center',
     flexDirection: 'row',
     margin: 40,
-    marginBottom: 25,
+    marginLeft: 40,
+    marginBottom: 20,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -50,9 +51,10 @@ const base = {
     fontFamily: PROBA_MEDIUM,
   },
   headingText: {
+    marginLeft: 15,
     color: '#343434',
-    fontSize: 35,
-    fontFamily: PROBA_MEDIUM,
+    fontSize: 26,
+    fontFamily: PROBA_REGULAR,
   }
 };
 

@@ -13,8 +13,10 @@ const base = {
     backgroundColor: '#181619',
   },
   heading: {
+    flexDirection: 'row',
     paddingLeft: leftPadding,
-    paddingVertical: '13%',
+    paddingTop: '13%',
+    paddingBottom: '10%',
     color: '#FFFFFF',
     fontSize: 25,
     fontFamily: GILROY_MEDIUM,
@@ -45,32 +47,52 @@ const base = {
     fontFamily: GILROY_MEDIUM,
   },
   currentEmployee: {
+    position: 'relative',
     alignItems: 'center',
     flexDirection: 'row',
-    width: '75%',
+    width: '90%',
     height: 50,
-    paddingLeft: leftPadding,
+    // paddingLeft: leftPadding,
+    // backgroundColor: 'red'
   },
   currentEmployeeImage: {
-    width: 40,
-    height: 40,
+    position: 'absolute',
+    left: 34.5,
+    top: 9,
+    width: 32,
+    height: 32,
+    borderRadius: 100,
+  },
+  currentEmployeeBorder: {
+    position: 'absolute',
+    left: 30,
+    width: 40.5,
+    height: 40.5,
     borderWidth: 1,
-    borderColor: '#FFFFFF',
+    borderColor: '#E36062',
     borderRadius: 100,
   },
   currentEmployeeName: {
-    marginLeft: 15,
+    marginLeft: 85,
     color: '#FFFFFF',
     fontSize: 18,
     fontFamily: GILROY_REGULAR,
   },
+  editButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+    marginTop: 4,
+    marginLeft: 5,
+  },
 };
- 
+
 const styles = createStyles(
   base,
- 
+
   maxWidth(500, {
-    
+
   })
 );
 

@@ -1,15 +1,22 @@
 import React, { useState, useEffect, useRef, } from 'react'
-import { View, Text, Animated, TouchableOpacity, } from 'react-native'
-import Draggable from 'react-native-draggable';
+import { View, Text, Animated, TouchableOpacity, ImageBackgroundBase, } from 'react-native'
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  DragResizeBlock,
+} from './Drag';
 import styles from './styles'
 
 import { blockSizes } from '@blockSizes'
+import { setBounds } from '@reducers/UserReducer'
 
 import SharedButton from '@shared/SharedButton';
-import FastImage from 'react-native-fast-image';
 
 function PointScheme() {
   const dragRef = useRef(null)
+
+  const dispatch = useDispatch()
+
+  const bounds = useSelector(state => state.user.bounds)
 
   const [animatedWidth] = useState(new Animated.Value(100))
   const [animatedHeight] = useState(new Animated.Value(100))
@@ -57,7 +64,31 @@ function PointScheme() {
     ])
   }
 
-  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity)
+  const handleDrag = (x, y, index) => {
+    const newBounds = bounds.map((item, key) => key === index ? ({
+      ...item,
+      position: {
+        x, y
+      }
+    }) : item)
+
+    dispatch(setBounds(newBounds))
+  }
+
+  const handleResize = (w, h, index) => {
+    const newBounds = bounds.map((item, key) => key === index ? ({
+      ...item,
+      sizes: {
+        w, h
+      }
+    }) : item)
+
+    dispatch(setBounds(newBounds))
+  }
+
+  useEffect(() => {
+    console.log('--------->', bounds)
+  }, [bounds])
 
   return (
     <View style={styles.container}>
@@ -72,40 +103,34 @@ function PointScheme() {
           </SharedButton>
         )}
 
-        <Draggable disabled={activeBlockIndex !== 0}>
-          <AnimatedTouchable
-            style={[
-              styles.block,
-              activeBlockIndex === 0 && styles.activeBlockBorder,
-              {
-                width: animatedWidth,
-                height: animatedHeight,
-              }
-            ]}
-            onLongPress={() => activateBlockEdit(0)}
-            activeOpacity={1}
+        {bounds.map((item, index) => (
+          <DragResizeBlock
+            minW={100}
+            minH={100}
+            w={item.sizes.w}
+            h={item.sizes.h}
+            x={item.position.x}
+            y={item.position.y}
+            connectors={activeBlockIndex === index ? ['tl', 'tr', 'br', 'bl', 'c'] : []}
+            onDragEnd={([x, y]) => handleDrag(x, y, index)}
+            onResizeEnd={([x, y]) => handleResize(x, y, index)}
           >
-            <View style={styles.innerContainer}>
-              {/* <Text style={[styles.blockText, { fontSize: (currentSize.width + currentSize.height) / currentSize.width + currentSize.height * 0.4 }]}>Касир</Text> */}
-            </View>
+            <TouchableOpacity
+              style={[
+                styles.block,
+                activeBlockIndex === index && styles.activeBlockBorder,
+              ]}
+              onLongPress={() => activateBlockEdit(index)}
+              activeOpacity={1}
+            >
+              <View style={styles.innerContainer}>
+                <Text style={styles.blockText}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          </DragResizeBlock>
+        ))}
 
-            {activeBlockIndex === 0 && (
-              <>
-                <SharedButton
-                  style={styles.rightTopCorner}
-                  onPress={getRandomResize}
-                  scale={0.85}
-                >
-                  <FastImage
-                    style={{ width: 20, height: 20, }}
-                    source={require('@images/refresh.png')}
-                  />
-                </SharedButton>
-              </>
-            )}
 
-          </AnimatedTouchable>
-        </Draggable>
       </View>
 
     </View>

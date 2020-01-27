@@ -85,7 +85,7 @@ function AppSessions(props) {
   useEffect(() => {
     if (currentRoute && currentRoute === 4) {
       if (!initialLoadingVisibility) {
-        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+        // validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
       }
     }
   }, [currentAccount.shift_end, currentRoute, initialLoadingVisibility])
@@ -210,9 +210,9 @@ function AppSessions(props) {
     if (currentRoute && currentRoute === 4) {
       clearInterval(intervalRef.current)
 
-      intervalRef.current = setInterval(() => {
-        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-      }, 15 * 1000)
+      // intervalRef.current = setInterval(() => {
+      //   validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+      // }, 15 * 1000)
     } else {
       clearInterval(intervalRef.current)
     }
@@ -245,6 +245,7 @@ function AppSessions(props) {
     const currentAccountSession = sessions[sessions.length - 1]
 
     const sessionStartTime = moment(currentAccountSession.startTime)
+
     const startOfShift = moment()
       .hour(currentAccountSession.shift_start.hours)
       .minutes(currentAccountSession.shift_start.minutes)

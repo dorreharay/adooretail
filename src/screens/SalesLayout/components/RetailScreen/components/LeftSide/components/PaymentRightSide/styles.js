@@ -16,7 +16,6 @@ const base = {
     justifyContent: 'space-between',
     flexDirection: 'row',
     width: '100%',
-    paddingRight: '3%',
   },
   headingText: {
     paddingLeft: leftPadding,
@@ -80,8 +79,7 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
-    marginTop: 10,
-    paddingTop: 3,
+    marginTop: 7,
     paddingHorizontal: 20,
   },
   cancelButtonText: {
@@ -127,18 +125,17 @@ const base = {
     height: '80%',
   },
   cameraContainer: {
-    width: 420,
-    height: 420,
+    width: '70%',
+    height: '70%',
     backgroundColor: '#181619',
-    borderRadius: 1000,
   },
 };
- 
+
 const styles = createStyles(
   base,
- 
+
   maxWidth(500, {
-    
+
   })
 );
 

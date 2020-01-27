@@ -61,7 +61,14 @@ const base = {
   menu: {
     width: toolsBarHeight,
     height: toolsBarHeight,
+  },
+  iconContainer: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 3,
+    backgroundColor: '#FFFFFF',
   },
   optionsContainer: {
     marginTop: 55,
@@ -94,7 +101,7 @@ const base = {
   modalContainer: {
     position: 'absolute',
     top: 15,
-    right: 25,
+    right: 22,
   },
   modal: {
     width: 350,
@@ -106,13 +113,13 @@ const base = {
     width: 350,
     height: 70,
     paddingLeft: 30,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f1f1f1',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#FEFEFE',
     backgroundColor: '#FFFFFF'
   },
   withTopBorderRadius: {
-    paddingTop: 5,
-    height: 75,
+    // paddingTop: 5,
+    height: 78,
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
   },
