@@ -106,13 +106,6 @@ function SalesLayout({ navigation, }) {
                   <View style={{ position: 'absolute', top: -60 }}>
                     <Text style={styles.accountHeading}>{account.businessName}</Text>
                   </View>
-                  <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row', position: 'absolute', top: -60, right: 0 }}>
-                    <FastImage
-                      style={{ width: 25, height: 25, marginRight: 15, }}
-                      source={require('@images/delete_icon.png')}
-                    />
-                    <Text style={[styles.accountHeading, { color: '#FF7675' }]}>Видалити</Text>
-                  </TouchableOpacity>
                 </Fragment>
               )}
 

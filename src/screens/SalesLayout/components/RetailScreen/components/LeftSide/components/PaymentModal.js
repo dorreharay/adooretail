@@ -18,6 +18,8 @@ const PaymentModal = (props) => {
     currentReceipt, clearCurrentReceipt,
   } = props;
 
+  const timerRef = useRef(null)
+
   const dispatch = useDispatch()
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
   const currentSession = useSelector(currentSessionSelector)
@@ -53,6 +55,12 @@ const PaymentModal = (props) => {
   useEffect(() => {
     setEnteredSum(`${currentReceipt.receiptSum}`)
   }, [currentReceipt])
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerRef.current)
+    }
+  }, [])
 
   const saveReceipt = (paymentType) => {
     function guidGenerator() {
@@ -122,7 +130,7 @@ const PaymentModal = (props) => {
   const handleCardPayment = () => {
     setStatus(initialStatuses.success)
 
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setPaymentModalVisibility(false)
       setButtonAccessibility(true)
     }, 500)
@@ -177,7 +185,7 @@ const PaymentModal = (props) => {
             <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
 
             <ScrollView style={styles.employeesList}>
-              {currentSession.employees.map(item => (
+              {currentSession.employees.map((item, key) => (
                 <Ripple
                   style={styles.employeesListItem}
                   onPress={() => {
@@ -185,7 +193,7 @@ const PaymentModal = (props) => {
                     setCurrentEmployee(item)
                   }}
                   rippleColor={`#C4C4C4`}
-                  rippleFades
+                  rippleFades key={key}
                 >
                   <View style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }} />
                   <Text style={styles.employeesListItemName}>{item}</Text>

@@ -12,7 +12,8 @@ const ADD_FIVE_MINUTES_TO_SHIFT = 'ADD_FIVE_MINUTES_TO_SHIFT';
 const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT';
 const SAVE_LOCAL_RECEIPT = 'SAVE_LOCAL_RECEIPT';
 const SYNC_DATA = 'SYNC_DATA';
-const SET_BOUNDS = 'SET_BOUNDS'
+const SET_BOUNDS = 'SET_BOUNDS';
+const SET_AVAILABLE_TEAMS = 'SET_AVAILABLE_TEAMS'
 
 const initialState = {
   token: '',
@@ -78,6 +79,10 @@ const initialState = {
       ],
       products: [],
       localSessions: [],
+      available_teams: {
+        paydesk: true,
+        kitchen: false,
+      }
     },
     {
       id: '4sd3fsgu76fg55akgjsd54jadfnu343',
@@ -124,6 +129,13 @@ const initialState = {
     },
   ],
 };
+
+export function setAvailableTeams(payload) {
+  return {
+    type: SET_AVAILABLE_TEAMS,
+    payload
+  }
+}
 
 export function setBounds(payload) {
   return {
@@ -218,6 +230,23 @@ export function restoreDefaultShift(payload) {
 }
 
 const ACTION_HANDLERS = {
+  [SET_AVAILABLE_TEAMS]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+    const data = action.payload
+
+    const newAccounts = accounts.map((item, id) => {
+      if (id === currentAccountIndex) {
+        return ({
+          ...item,
+          available_teams: data,
+        })
+      } else {
+        return item
+      }
+    })
+
+    return { ...state, accounts: newAccounts, }
+  },
   [SYNC_DATA]: (state, action) => {
     const { accounts, currentAccountIndex } = state
     const data = action.payload
@@ -303,7 +332,7 @@ const ACTION_HANDLERS = {
       newSession = {
         ...newSessionProp,
         receipts: [],
-        startTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
+        startTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm:ss'),
       }
 
       updatedSessions = [...localSessions, newSession]
@@ -315,8 +344,9 @@ const ACTION_HANDLERS = {
 
       newSession = {
         ...currentSession,
-        endTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm'),
+        endTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm:ss'),
         endCash,
+        total: currentSession.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false),
       }
 
       updatedSessions = localSessions.map((localSession, localIndex) => {

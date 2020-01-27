@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react'
+import React, { useState, useEffect, useRef, } from 'react'
 import { Animated, } from 'react-native'
 import _ from 'lodash'
 import Orientation from 'react-native-orientation';
@@ -7,8 +7,14 @@ function AppLoading({ children, }){
   const [initialLoadingOpacity] = useState(new Animated.Value(1))
   const [initialLoadingVisibility, setInitialLoadingVisibility] = useState(true)
 
+  const timerRef = useRef(null)
+
   useEffect(() => {
     Orientation.lockToLandscape();
+
+    return () => {
+      clearTimeout(timerRef.current)
+    }
   }, [])
 
   const changeInitialLoadingWrapperOpacity = (visible) => {
@@ -20,7 +26,7 @@ function AppLoading({ children, }){
         useNativeDriver: true,
       },
     ).start()
-    setTimeout(() => setInitialLoadingVisibility(false), 800)
+    timerRef.current = setTimeout(() => setInitialLoadingVisibility(false), 800)
   }
 
   const withProps = React.Children.map(children, child =>

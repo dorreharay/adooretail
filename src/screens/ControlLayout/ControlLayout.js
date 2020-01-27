@@ -7,7 +7,7 @@ import ContentPanel from './components/ContentPanel/ContentPanel'
 
 import AllCategories from './components/ContentPanel/Pages/AllCategories/AllCategories'
 import History from './components/ContentPanel/Pages/History/History'
-import PointScheme from './components/ContentPanel/Pages/PointScheme/PointScheme'
+import Settings from './components/ContentPanel/Pages/Settings/Settings'
 
 function ControlLayout(props) {
   const { navigation } = props
@@ -16,15 +16,7 @@ function ControlLayout(props) {
 
   const [animatedX] = useState(new Animated.Value(0))
 
-  const [tabs] = useState({
-    'Основні': [
-      // {
-      //   index: 0,
-      //   title: 'Планування закладу',
-      //   iconSource: require('@images/book.png'),
-      //   onPress: () => handleCategoryPress(0),
-      //   component: <PointScheme />,
-      // },
+  const [tabs] = useState([
       {
         index: 0,
         title: 'Всі категорії',
@@ -32,66 +24,50 @@ function ControlLayout(props) {
         onPress: () => handleCategoryPress(0),
         component: <AllCategories />,
       },
+      // {
+      //   index: 1,
+      //   title: 'Банк ідей',
+      //   iconSource: require('@images/light.png'),
+      //   onPress: () => handleCategoryPress(1),
+      //   component: <View style={{ flex: 1, }}></View>,
+      // },
       {
         index: 1,
-        title: 'Банк ідей',
-        iconSource: require('@images/light.png'),
-        onPress: () => handleCategoryPress(1),
-        component: <View style={{ flex: 1, }}></View>,
-      },
-      {
-        index: 2,
         title: 'Історія замовлень',
         iconSource: require('@images/history1.png'),
-        onPress: () => handleCategoryPress(2),
+        onPress: () => handleCategoryPress(1),
         component: <History />,
       },
       {
-        index: 3,
+        index: 2,
         title: 'Склад',
         iconSource: require('@images/package.png'),
+        onPress: () => handleCategoryPress(2),
+        component: <View style={{ flex: 1, }}></View>,
+      },
+      {
+        index: 3,
+        title: 'Девайси',
+        iconSource: require('@images/printer.png'),
         onPress: () => handleCategoryPress(3),
         component: <View style={{ flex: 1, }}></View>,
       },
       {
         index: 4,
-        title: 'Девайси',
-        iconSource: require('@images/printer.png'),
+        title: 'Фідбек',
+        iconSource: require('@images/telephone.png'),
         onPress: () => handleCategoryPress(4),
         component: <View style={{ flex: 1, }}></View>,
       },
       {
         index: 5,
-        title: 'Фідбек',
-        iconSource: require('@images/telephone.png'),
-        onPress: () => handleCategoryPress(5),
-        component: <View style={{ flex: 1, }}></View>,
-      },
-    ],
-    'Налаштування': [
-      {
-        index: 6,
-        title: 'Імпортувати',
-        iconSource: require('@images/download.png'),
-        sizes: { width: 20, height: 20, },
-        onPress: () => handleCategoryPress(6),
-      },
-      {
-        index: 7,
-        title: 'Смітник',
-        iconSource: require('@images/delete.png'),
-        sizes: { width: 18, height: 18, },
-        onPress: () => handleCategoryPress(7),
-      },
-      {
-        index: 8,
         title: 'Налаштування',
         iconSource: require('@images/gear-option.png'),
         sizes: { width: 20, height: 20, },
-        onPress: () => handleCategoryPress(8),
+        onPress: () => handleCategoryPress(5),
+        component: <Settings />
       },
-    ]
-  })
+    ])
 
   const [activeCategory, setActiveCategory] = useState(0)
 

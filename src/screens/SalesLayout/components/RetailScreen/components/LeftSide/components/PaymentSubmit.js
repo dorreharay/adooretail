@@ -1,4 +1,4 @@
-import React, { useEffect, } from 'react'
+import React, { useEffect, useRef, } from 'react'
 import { View, Text } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import styles from '../../../styles'
@@ -9,10 +9,18 @@ function PaymentSubmit(props) {
   const { status, selectedType, buttonAccessible, saveReceipt, receipt, clearCurrentReceipt, } = props
   const { index, buttonText, finalButtonText } = selectedType
 
+  const timerRef = useRef(null)
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerRef.current)
+    }
+  }, [])
+
   const handlePress = () => selectedType.onPress(() => {
     saveReceipt(selectedType.apiName, receipt)
     if(selectedType.index === 1) {
-      setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         clearCurrentReceipt()
       }, 500)
     } else {

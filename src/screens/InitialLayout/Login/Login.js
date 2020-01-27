@@ -85,7 +85,7 @@ function Login(props) {
       }
 
       if (!currentSession.endTime && currentSession.length !== 0) {
-        navigation.navigate('ControlLayout')
+        navigation.navigate('SalesLayout')
       } else {
         navigation.navigate('InputCash')
       }

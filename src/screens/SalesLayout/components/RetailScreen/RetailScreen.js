@@ -9,6 +9,7 @@ import styles from './styles'
 
 import { API_URL } from '@api'
 import { NO_TIME } from '@statuses'
+import { setEmployees, setStartCash, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer';
 
 import LeftSide from './components/LeftSide/LeftSide';
@@ -21,6 +22,11 @@ function RetailScreen(props) {
     products, navigation, openChangeAccountOverview,
     account, updateLayout, toastRef, layout, setModalStatus,
   } = props;
+
+  const timerRef1 = useRef(null)
+  const timerRef2 = useRef(null)
+  const timerRef3 = useRef(null)
+  const timerRef4 = useRef(null)
 
   const dispatch = useDispatch()
 
@@ -113,114 +119,119 @@ function RetailScreen(props) {
       })
     }
 
-  const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
+    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
 
-  setReceipts(newReceipts)
-}
-
-
-const handleNewDate = (newDate) => {
-  selectDate(newDate)
-}
-
-const clearCurrentReceipt = () => {
-  const newReceipts = receipts.map((item, index) => index === selectedInstance ? ([]) : item)
-
-  setReceipts(newReceipts)
-}
-
-const openPanelInstance = (instanceName, title) => {
-  setMenuVisibility(false)
-  setPanelScreenState({ ...initialPanelScreens, [instanceName]: title })
-}
-
-const closePanelInstance = () => setPanelScreenState(initialPanelScreens)
-
-const openMenu = () => {
-  setTimeout(() => {
-    setMenuVisibility(true)
-
-    setTimeout(() => {
-      handleModalAnimation()
-    }, 10)
-  }, 50)
-}
-
-const closeMenu = () => {
-  setTimeout(() => {
-    setMenuVisibility(false)
-
-    setTimeout(() => {
-      handleModalAnimation()
-    }, 10)
-  }, 170)
-}
-
-const handleModalAnimation = () => {
-  Animated.timing(
-    modalOpacity,
-    {
-      toValue: modalOpacity._value === 1 ? 0 : 1,
-      duration: 50,
-      easing: Easing.ease
-    }
-  ).start();
-}
-
-const endSession = () => {
-  if (true) {
-    setModalStatus(NO_TIME)
-
-    return
+    setReceipts(newReceipts)
   }
 
-  closeMenu()
-  dispatch(setEndOfSessionStatus(true))
 
-  navigation.navigate('InputCash')
-}
+  const handleNewDate = (newDate) => {
+    selectDate(newDate)
+  }
 
-return (
-  <View style={styles.container}>
-    <LeftSide
-      receipts={receipts}
-      setReceipts={setReceipts}
-      selectedInstance={selectedInstance}
-      selectReceiptInstance={selectReceiptInstance}
-      setPaymentModalState={setPaymentModalState}
-      addProductQuantity={addProductQuantity}
-      substractProductQuantity={substractProductQuantity}
-    />
-    <RightSide
-      products={products}
-      loadProducts={loadProducts}
-      receipts={receipts}
-      setReceipts={setReceipts}
-      navigation={navigation}
-      selectedInstance={selectedInstance}
-      openMenu={openMenu}
-      account={account}
-      addProductQuantity={addProductQuantity}
-    />
-    {menuVisible && (
-      <Panel
-        openMenu={openMenu}
-        closeMenu={closeMenu}
-        endSession={endSession}
-        modalOpacity={modalOpacity}
-        openPanelInstance={openPanelInstance}
-        menuButtons={menuButtons}
+  const clearCurrentReceipt = () => {
+    const newReceipts = receipts.map((item, index) => index === selectedInstance ? ([]) : item)
+
+    setReceipts(newReceipts)
+  }
+
+  const openPanelInstance = (instanceName, title) => {
+    setMenuVisibility(false)
+    setPanelScreenState({ ...initialPanelScreens, [instanceName]: title })
+  }
+
+  const closePanelInstance = () => setPanelScreenState(initialPanelScreens)
+
+  const openMenu = () => {
+    timerRef1.current = setTimeout(() => {
+      setMenuVisibility(true)
+
+      timerRef2.current = setTimeout(() => {
+        handleModalAnimation()
+      }, 10)
+    }, 50)
+  }
+
+  const closeMenu = () => {
+    timerRef3.current = setTimeout(() => {
+      setMenuVisibility(false)
+
+      timerRef4.current = setTimeout(() => {
+        handleModalAnimation()
+      }, 10)
+    }, 170)
+  }
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerRef1.current)
+      clearTimeout(timerRef2.current)
+      clearTimeout(timerRef3.current)
+      clearTimeout(timerRef4.current)
+    }
+  }, [])
+
+  const handleModalAnimation = () => {
+    Animated.timing(
+      modalOpacity,
+      {
+        toValue: modalOpacity._value === 1 ? 0 : 1,
+        duration: 50,
+        easing: Easing.ease
+      }
+    ).start();
+  }
+
+  const endSession = () => {
+    dispatch(setEmployees([]))
+    dispatch(setStartCash(0))
+    dispatch(setEndOfSessionStatus(true))
+    setModalStatus('')
+
+    navigation.navigate('InputCash')
+  }
+
+  return (
+    <View style={styles.container}>
+      <LeftSide
+        receipts={receipts}
+        setReceipts={setReceipts}
+        selectedInstance={selectedInstance}
+        selectReceiptInstance={selectReceiptInstance}
+        setPaymentModalState={setPaymentModalState}
+        addProductQuantity={addProductQuantity}
+        substractProductQuantity={substractProductQuantity}
       />
-    )}
+      <RightSide
+        products={products}
+        loadProducts={loadProducts}
+        receipts={receipts}
+        setReceipts={setReceipts}
+        navigation={navigation}
+        selectedInstance={selectedInstance}
+        openMenu={openMenu}
+        account={account}
+        addProductQuantity={addProductQuantity}
+      />
+      {menuVisible && (
+        <Panel
+          openMenu={openMenu}
+          closeMenu={closeMenu}
+          endSession={endSession}
+          modalOpacity={modalOpacity}
+          openPanelInstance={openPanelInstance}
+          menuButtons={menuButtons}
+        />
+      )}
 
-    <PaymentModal
-      isVisible={paymentModalVisible}
-      setPaymentModalVisibility={setPaymentModalVisibility}
-      currentReceipt={currentReceipt}
-      clearCurrentReceipt={clearCurrentReceipt}
-    />
-  </View>
-)
+      <PaymentModal
+        isVisible={paymentModalVisible}
+        setPaymentModalVisibility={setPaymentModalVisibility}
+        currentReceipt={currentReceipt}
+        clearCurrentReceipt={clearCurrentReceipt}
+      />
+    </View>
+  )
 }
 
 export default RetailScreen

@@ -28,6 +28,9 @@ function AppSessions(props) {
     initialLoadingOpacity, initialLoadingVisibility,
   } = props
 
+  const timerRef1 = useRef(null)
+  const timerRef2 = useRef(null)
+
   const syncRef = useRef(null)
   const intervalRef = useRef(false)
 
@@ -57,6 +60,7 @@ function AppSessions(props) {
     try {
       const data = await API.synchronizeSessions({
         localSessions: getPreparedSessions(),
+        newAvailableTeams: currentAccount.available_teams,
       })
 
       const payload = {
@@ -67,6 +71,7 @@ function AppSessions(props) {
         registeredDeviceIds: data.registered_device_ids,
         employees: data.employees,
         warehouse: data.warehouse,
+        // available_teams: data.available_teams,
         // products: data.products.products,
       }
 
@@ -94,30 +99,11 @@ function AppSessions(props) {
     syncRef.current = setInterval(() => {
       synchronizeSessions()
     }, 30 * 1000)
+    
     return () => {
       clearInterval(syncRef.current)
     };
   }, [currentSession, currentRoute, netInfo])
-
-  const netCheck = () => {
-    if (!prevNetState) return
-
-    if (!prevNetState.isConnected && netInfo.isConnected) {
-      clearInterval(syncRef.current)
-
-      syncRef.current = setInterval(() => {
-        synchronizeSessions()
-      }, 30 * 1000)
-    }
-
-    if (prevNetState.isConnected && !netInfo.isConnected) {
-      clearInterval(syncRef.current)
-    }
-
-    setPrevNetState(netInfo)
-  }
-
-  // useEffect(() => netCheck(), [netInfo])
 
   const asyncSync = async () => {
     await synchronizeSessions()
@@ -127,9 +113,9 @@ function AppSessions(props) {
   };
 
   const gotoScreen = async (screen, callback) => {
-    setTimeout(() => {
+    timerRef1.current = setTimeout(() => {
       NavigationService.setTopLevelNavigator(navigatorRef.current)
-      setTimeout(async () => {
+      timerRef2.current = setTimeout(async () => {
         NavigationService.navigate(screen)
 
         await asyncSync()
@@ -138,6 +124,13 @@ function AppSessions(props) {
       }, 110)
     }, 100)
   }
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerRef1.current)
+      clearTimeout(timerRef2.current)
+    }
+  }, [])
 
   const peek = () => {
     if (initialLoadingVisibility) {

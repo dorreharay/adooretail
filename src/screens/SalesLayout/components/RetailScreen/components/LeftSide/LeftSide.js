@@ -10,7 +10,7 @@ moment.locale('uk');
 import SharedButton from '@shared/SharedButton';
 import Receipt from './components/Receipt';
 
-import PaymentModal from './components/PaymentModal'
+import { currentAccountSelector, } from '@selectors'
 
 const headerHeight = 68
 
@@ -23,6 +23,8 @@ function LeftSide(props) {
   const receiptsRef = useRef(null)
 
   const dispatch = useDispatch()
+
+  const currentAccount = useSelector(currentAccountSelector)
 
   const [entries] = useState([{}, {}, {}, {}])
 
@@ -165,20 +167,54 @@ function LeftSide(props) {
           substractProductQuantity={substractProductQuantity}
         />
       </ScrollView>
-      <TouchableOpacity
-        onPress={() => changePaymentModalState(true)}
-        style={styles.proceedContainer}
-        activeOpacity={1}
-      >
-        <LinearGradient
-          style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
-          start={{ x: 0, y: 1 }}
-          end={{ x: 1, y: 0 }}
-          colors={['#DB3E69', '#FD9C6C']}
-        >
-          <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
-        </LinearGradient>
-      </TouchableOpacity>
+
+      {currentAccount.available_teams && currentAccount.available_teams.kitchen ? (
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity
+            onPress={() => changePaymentModalState(true)}
+            style={[styles.proceedContainer, { width: '72%', paddingLeft: '8%', paddingRight: 5, height: 70, marginLeft: '0%', marginBottom: 40, justifyContent: 'flex-end' }]}
+            activeOpacity={1}
+          >
+            <LinearGradient
+              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
+              start={{ x: 0, y: 1 }}
+              end={{ x: 1, y: 0 }}
+              colors={['#DB3E69', '#FD9C6C']}
+            >
+              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => changePaymentModalState(true)}
+            style={[styles.proceedContainer, { width: '24%', paddingLeft: 5, paddingRight: 10, marginLeft: 0, height: 70, marginBottom: 40, justifyContent: 'flex-end' }]}
+            activeOpacity={1}
+          >
+            <LinearGradient
+              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
+              start={{ x: 0, y: 1 }}
+              end={{ x: 1, y: 0 }}
+              colors={['#DB3E69', '#FD9C6C']}
+            >
+              <Text style={styles.lsproceedButtonText}>З</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      ) : (
+          <TouchableOpacity
+            onPress={() => changePaymentModalState(true)}
+            style={styles.proceedContainer}
+            activeOpacity={1}
+          >
+            <LinearGradient
+              style={[styles.lsproceedButton, { marginLeft: '1%' }, receiptSum <= 0 && { opacity: 0.5 }]}
+              start={{ x: 0, y: 1 }}
+              end={{ x: 1, y: 0 }}
+              colors={['#DB3E69', '#FD9C6C']}
+            >
+              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        )}
     </View>
   )
 }

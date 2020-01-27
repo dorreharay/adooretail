@@ -5,9 +5,18 @@ const base = {
   container: {
     flex: 1,
     height: '100%',
-    paddingVertical: 20,
-    paddingHorizontal: 40,
+    paddingVertical: 60,
+    paddingHorizontal: 60,
   },
+  switchText: {
+    fontSize: 20,
+    fontFamily: PROBA_REGULAR,
+  },
+  settingsTitle: {
+    marginBottom: 40,
+    fontSize: 30,
+    fontFamily: PROBA_MEDIUM,
+  }
 };
 
 const styles = createStyles(

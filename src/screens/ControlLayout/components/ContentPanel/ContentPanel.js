@@ -21,13 +21,13 @@ function ContentPanel(props) {
   const _renderItem = ({ item, index }) => {
     return (
       <Fragment>
-        <View style={styles.heading}>
+        {/* <View style={styles.heading}>
           <FastImage
             style={{ width: 30, height: 30, }}
             source={item.iconSource}
           />
           <Text style={styles.headingText}>{item.title}</Text>
-        </View>
+        </View> */}
         {item.component}
       </Fragment>
     )
@@ -42,7 +42,7 @@ function ContentPanel(props) {
 
       <Carousel
         ref={carouselRef}
-        data={[...tabs['Основні'], ...tabs['Налаштування']]}
+        data={tabs}
         renderItem={_renderItem}
         sliderWidth={deviceWidth * 0.8}
         sliderHeight={deviceHeight * 0.93}

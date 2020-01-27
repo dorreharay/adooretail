@@ -3,10 +3,7 @@ import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGUL
 
 const base = {
   container: {
-    flex: 1,
-    height: '100%',
-    paddingVertical: 20,
-    paddingHorizontal: 40,
+
   },
 };
 
