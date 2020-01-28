@@ -15,12 +15,16 @@ import HistoryList from './HistoryList/HistoryList'
 function History(props) {
   const currentAccount = useSelector(currentAccountSelector)
 
-  // const [historyList, setHistoryList] = useState([])
   const [activeFilter, setActiveFilter] = useState(null)
   const [activeSort, setActiveSort] = useState({ code: 'time-desc', name: 'Сортувати' })
+  const [withoutEmptySessions, setWithoutStatus] = useState(false)
 
   const historyList = useMemo(() => {
     let localSessions = currentAccount.localSessions
+    
+    if(withoutEmptySessions) {
+      localSessions = localSessions.filter(item => item.receipts.length !== 0)
+    }
 
     if (localSessions) {
       if (activeSort) {
@@ -71,7 +75,11 @@ function History(props) {
 
       return localSessions
     }
-  }, [currentAccount.localSessions, activeFilter, activeSort,])
+  }, [currentAccount.localSessions, activeFilter, activeSort, withoutEmptySessions,])
+
+  const toggleEmptySessions = () => {
+    setWithoutStatus(!withoutEmptySessions)
+  }
 
   return (
     <View style={styles.container}>
@@ -80,6 +88,8 @@ function History(props) {
         setActiveFilter={setActiveFilter}
         activeSort={activeSort}
         setActiveSort={setActiveSort}
+        toggleEmptySessions={toggleEmptySessions}
+        withoutEmptySessions={withoutEmptySessions}
       />
 
       <Filters />

@@ -12,7 +12,7 @@ import { currentAccountSelector, } from '@selectors'
 import SharedButton from '@shared/SharedButton';
 
 function Details(props) {
-  const { activeSort, setActiveSort, activeFilter, setActiveFilter, } = props
+  const { activeSort, setActiveSort, activeFilter, setActiveFilter, toggleEmptySessions, withoutEmptySessions, } = props
 
   const currentAccount = useSelector(currentAccountSelector)
 
@@ -76,7 +76,7 @@ function Details(props) {
       <View style={styles.container}>
         <View style={{ width: '50%', }}>
           <SharedButton
-            style={{ alignSelf: 'flex-start', height: 30, marginBottom: 15, }}
+            style={{ alignSelf: 'flex-start', height: 40, marginBottom: 5, }}
             onPress={() => setExpandedDetailsStatus(!detailsExpanded)}
             scale={0.85}
           >
@@ -94,16 +94,19 @@ function Details(props) {
           <Menu
             ref={menuRef1}
             button={
-              <TouchableOpacity
-                style={{ marginTop: 5, flexDirection: 'row', marginRight: 40, }}
-                onPress={() => menuRef1.current.show()}
-              >
-                <Text
-                  style={styles.menuMainButton}
+              <View style={{ marginTop: 5, marginRight: 40, flexDirection: 'row' }}>
+                <SharedButton
+                  style={{ height: 20, marginTop: 5, flexDirection: 'row' }}
+                  onPress={() => menuRef1.current.show()}
+                  scale={0.85}
                 >
-                  {activeFilter ? activeFilter.name : 'Фільтрувати'}
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={styles.menuMainButton}
+                  >
+                    {activeFilter ? activeFilter.name : 'Фільтрувати'}
+                  </Text>
+                </SharedButton>
+              </View>
             }
           >
             <MenuItem
@@ -136,16 +139,19 @@ function Details(props) {
           <Menu
             ref={menuRef2}
             button={
-              <TouchableOpacity
-                style={{ marginTop: 5, flexDirection: 'row' }}
-                onPress={() => menuRef2.current.show()}
-              >
-                <Text
-                  style={styles.menuMainButton}
+              <View style={{ marginTop: 5, flexDirection: 'row' }}>
+                <SharedButton
+                  style={{ height: 20, marginTop: 5, flexDirection: 'row' }}
+                  onPress={() => menuRef2.current.show()}
+                  scale={0.85}
                 >
-                  {activeSort ? activeSort.name : 'Сортувати'}
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={styles.menuMainButton}
+                  >
+                    {activeSort ? activeSort.name : 'Сортувати'}
+                  </Text>
+                </SharedButton>
+              </View>
             }
           >
             <MenuItem
@@ -186,6 +192,14 @@ function Details(props) {
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}>Готівковий підсумок {activeFilter ? activeFilter.name.toLowerCase() : 'за сьогодні'} - <Text style={styles.paymentDetailsText}>{todayCashSum || 0} грн</Text></Text>
         </View>
+
+        <SharedButton
+          style={styles.paymentDetailsButton}
+          onPress={toggleEmptySessions}
+          scale={0.85}
+        >
+          <Text style={styles.paymentDetailsButtonText}>{withoutEmptySessions ? 'Показати ' : 'Сховати'} пусті зміни</Text>
+        </SharedButton>
       </Collapsible>
     </View>
   )

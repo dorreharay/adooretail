@@ -17,6 +17,14 @@ const base = {
     flexDirection: 'row',
     marginBottom: 20,
   },
+  paymentDetailsButton: {
+    height: 40,
+  },
+  paymentDetailsButtonText: {
+    color: '#343434',
+    fontSize: 19,
+    fontFamily: PROBA_LIGHT,
+  },
   paymentDetailsHeadingText: {
     color: '#343434',
     fontSize: 22,
