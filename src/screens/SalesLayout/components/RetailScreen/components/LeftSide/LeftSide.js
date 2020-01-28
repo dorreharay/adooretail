@@ -168,7 +168,7 @@ function LeftSide(props) {
         />
       </ScrollView>
 
-      {currentAccount.available_teams && currentAccount.available_teams.kitchen ? (
+      {currentAccount.settings.available_teams && currentAccount.settings.available_teams.kitchen ? (
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
             onPress={() => changePaymentModalState(true)}

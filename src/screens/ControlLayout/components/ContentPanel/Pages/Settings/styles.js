@@ -9,6 +9,7 @@ const base = {
     paddingHorizontal: 60,
   },
   switchText: {
+    minWidth: '15%',
     fontSize: 20,
     fontFamily: PROBA_REGULAR,
   },

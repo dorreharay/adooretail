@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './styles'
 
-import { setAvailableTeams } from '@reducers/UserReducer'
+import { setSettings } from '@reducers/UserReducer'
 import { currentAccountSelector, } from '@selectors'
 
 import SwitchWithTitle from './SwitchWithTitle';
@@ -13,12 +13,16 @@ const Settings = () => {
 
   const currentAccount = useSelector(currentAccountSelector)
 
-  useEffect(() => {
-    setTeams({ kitchen: false })
-  }, [])
+  const updateSettings = (newValue, prop) => {
+    const payload = {
+      ...currentAccount.settings,
+      [prop]: {
+        ...currentAccount.settings[prop],
+        ...newValue,
+      }
+    }
 
-  const setTeams = (newValue) => {
-    dispatch(setAvailableTeams({...currentAccount.available_teams, ...newValue }))
+    dispatch(setSettings(payload))
   }
 
   return (
@@ -27,31 +31,25 @@ const Settings = () => {
         <Text style={styles.settingsTitle}>Активовані цехи</Text>
         <SwitchWithTitle
           title={'Каса'}
-          value={currentAccount.available_teams.paydesk}
-          onValueChange={(value) => setTeams({ paydesk: value })}
+          value={currentAccount.settings.available_teams.paydesk}
+          onValueChange={(value) => updateSettings({ paydesk: value }, 'available_teams')}
         />
 
         <SwitchWithTitle
           title={'Кухня'}
-          value={currentAccount.available_teams.kitchen}
-          onValueChange={(value) => setTeams({ kitchen: value })}
+          value={currentAccount.settings.available_teams.kitchen}
+          onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
         />
       </View>
       
-      {/* <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
-        <Text style={styles.settingsTitle}>Вигляд списку продуктів</Text>
+      <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
+        <Text style={styles.settingsTitle}>Перевірка робочих годин</Text>
         <SwitchWithTitle
-          title={'Горизонтальний'}
-          value={currentAccount.available_teams.paydesk}
-          onValueChange={(value) => setTeams({ paydesk: value })}
+          title={'Увімкнута'}
+          value={currentAccount.settings.shifts.enabled}
+          onValueChange={(value) => updateSettings({ enabled: value }, 'shifts')}
         />
-
-        <SwitchWithTitle
-          title={'Вертикальний'}
-          value={currentAccount.available_teams.kitchen}
-          onValueChange={(value) => setTeams({ kitchen: value })}
-        />
-      </View> */}
+      </View>
 
     </View>
   )

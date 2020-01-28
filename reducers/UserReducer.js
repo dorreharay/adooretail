@@ -13,7 +13,7 @@ const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT';
 const SAVE_LOCAL_RECEIPT = 'SAVE_LOCAL_RECEIPT';
 const SYNC_DATA = 'SYNC_DATA';
 const SET_BOUNDS = 'SET_BOUNDS';
-const SET_AVAILABLE_TEAMS = 'SET_AVAILABLE_TEAMS'
+const SET_SETTINGS = 'SET_SETTINGS'
 
 const initialState = {
   token: '',
@@ -79,9 +79,14 @@ const initialState = {
       ],
       products: [],
       localSessions: [],
-      available_teams: {
-        paydesk: true,
-        kitchen: false,
+      settings: {
+        available_teams: {
+          paydesk: true,
+          kitchen: false,
+        },
+        shifts: {
+          enabled: true,
+        } 
       }
     },
     {
@@ -130,9 +135,9 @@ const initialState = {
   ],
 };
 
-export function setAvailableTeams(payload) {
+export function setSettings(payload) {
   return {
-    type: SET_AVAILABLE_TEAMS,
+    type: SET_SETTINGS,
     payload
   }
 }
@@ -230,7 +235,7 @@ export function restoreDefaultShift(payload) {
 }
 
 const ACTION_HANDLERS = {
-  [SET_AVAILABLE_TEAMS]: (state, action) => {
+  [SET_SETTINGS]: (state, action) => {
     const { accounts, currentAccountIndex } = state
     const data = action.payload
 
@@ -238,7 +243,7 @@ const ACTION_HANDLERS = {
       if (id === currentAccountIndex) {
         return ({
           ...item,
-          available_teams: data,
+          settings: data,
         })
       } else {
         return item

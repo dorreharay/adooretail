@@ -7,9 +7,9 @@ const SwitchWithTitle = (props) => {
   const { title, value, onValueChange, } = props
 
   return (
-    <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', marginLeft: 3, marginBottom: 20, }}>
+    <View style={{ alignItems: 'center', alignSelf: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', marginLeft: 3, marginBottom: 20, }}>
       <Text style={styles.switchText}>{title}</Text>
-      <View style={{ position: 'relative', right: 30, }}>
+      <View style={{ marginLeft: 20, }}>
         <Switch
           value={value}
           onValueChange={(val) => onValueChange(val)}

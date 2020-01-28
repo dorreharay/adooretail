@@ -60,7 +60,7 @@ function AppSessions(props) {
     try {
       const data = await API.synchronizeSessions({
         localSessions: getPreparedSessions(),
-        newAvailableTeams: currentAccount.available_teams,
+        newSettings: currentAccount.settings,
       })
 
       const payload = {
@@ -99,7 +99,7 @@ function AppSessions(props) {
     syncRef.current = setInterval(() => {
       synchronizeSessions()
     }, 30 * 1000)
-    
+
     return () => {
       clearInterval(syncRef.current)
     };
@@ -113,9 +113,9 @@ function AppSessions(props) {
   };
 
   const gotoScreen = async (screen, callback) => {
-    timerRef1.current = setTimeout(() => {
+    setTimeout(() => {
       NavigationService.setTopLevelNavigator(navigatorRef.current)
-      timerRef2.current = setTimeout(async () => {
+      setTimeout(async () => {
         NavigationService.navigate(screen)
 
         await asyncSync()
@@ -203,9 +203,9 @@ function AppSessions(props) {
     if (currentRoute && currentRoute === 4) {
       clearInterval(intervalRef.current)
 
-      // intervalRef.current = setInterval(() => {
-      //   validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-      // }, 15 * 1000)
+      intervalRef.current = setInterval(() => {
+        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+      }, 3 * 10000)
     } else {
       clearInterval(intervalRef.current)
     }
@@ -239,16 +239,24 @@ function AppSessions(props) {
 
     const sessionStartTime = moment(currentAccountSession.startTime)
 
-    const startOfShift = moment()
-      .hour(currentAccountSession.shift_start.hours)
-      .minutes(currentAccountSession.shift_start.minutes)
-      .seconds(0)
-      .format('YYYY-MM-DD HH:mm')
-    const endOfShift = moment()
-      .hour(shiftEnd.hours)
-      .minutes(shiftEnd.minutes)
-      .seconds(0)
-      .format('YYYY-MM-DD HH:mm')
+    let startOfShift = ''
+    let endOfShift = ''
+
+    if (currentAccount.settings.shifts.enabled) {
+      startOfShift = moment()
+        .hour(currentAccountSession.shift_start.hours)
+        .minutes(currentAccountSession.shift_start.minutes)
+        .seconds(0)
+        .format('YYYY-MM-DD HH:mm')
+      endOfShift = moment()
+        .hour(shiftEnd.hours)
+        .minutes(shiftEnd.minutes)
+        .seconds(0)
+        .format('YYYY-MM-DD HH:mm')
+    } else {
+      startOfShift = moment().startOf('day').format('YYYY-MM-DD HH:mm')
+      endOfShift = moment().endOf('day').format('YYYY-MM-DD HH:mm')
+    }
 
     const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
 

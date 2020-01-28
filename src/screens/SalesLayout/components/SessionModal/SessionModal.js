@@ -111,24 +111,26 @@ function SessionModal(props) {
             </TouchableOpacity>
           </Fragment>
 
-          <Text style={styles.modalShiftText}>Робочі години: {currentAccount && (
-            moment()
-              .hour(currentAccount.shift_start.hours)
-              .minutes(currentAccount.shift_start.minutes)
-              .seconds(0)
-              .format('HH:mm')
-          )
-          }
-
-            -
-
-                {currentAccount && (
+          {currentAccount.settings.shifts.enabled && (
+            <Text style={styles.modalShiftText}>Робочі години: {currentAccount && (
               moment()
-                .hour(currentAccount.shift_end.hours)
-                .minutes(currentAccount.shift_end.minutes)
+                .hour(currentAccount.shift_start.hours)
+                .minutes(currentAccount.shift_start.minutes)
                 .seconds(0)
                 .format('HH:mm')
-            )}</Text>
+            )
+            }
+
+              -
+  
+                {currentAccount && (
+                moment()
+                  .hour(currentAccount.shift_end.hours)
+                  .minutes(currentAccount.shift_end.minutes)
+                  .seconds(0)
+                  .format('HH:mm')
+              )}</Text>
+          )}
         </View>
       </ModalContent>
     </Modal>
