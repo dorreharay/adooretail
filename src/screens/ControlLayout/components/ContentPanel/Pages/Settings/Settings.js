@@ -28,7 +28,7 @@ const Settings = () => {
   return (
     <View style={styles.container}>
       <View style={{ alignSelf: 'flex-start', }}>
-        <Text style={styles.settingsTitle}>Активовані цехи</Text>
+        <Text style={styles.settingsTitle}>Активні цехи</Text>
         <SwitchWithTitle
           title={'Каса'}
           value={currentAccount.settings.available_teams.paydesk}

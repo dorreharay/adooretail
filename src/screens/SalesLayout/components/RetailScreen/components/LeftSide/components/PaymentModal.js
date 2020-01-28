@@ -3,11 +3,12 @@ import { View, Text, TouchableOpacity, ScrollView, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
 import Ripple from 'react-native-material-ripple';
 let moment = require('moment-timezone');
+import FastImage from 'react-native-fast-image'
 moment.locale('uk');
 import styles from '../../../styles'
 
 import { saveLocalReceipt } from '@reducers/UserReducer'
-import { currentSessionSelector, } from '@selectors'
+import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 
 import PaymentLeftSide from './PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
@@ -23,6 +24,7 @@ const PaymentModal = (props) => {
   const dispatch = useDispatch()
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
   const currentSession = useSelector(currentSessionSelector)
+  const currentAccount = useSelector(currentAccountSelector)
 
   const blurRef = useRef(null)
 
@@ -51,6 +53,10 @@ const PaymentModal = (props) => {
   const [enteredSum, setEnteredSum] = useState(`${currentReceipt.receiptSum}`)
   const [employeesListVisible, setEmployeesListVisibility] = useState(false)
   const [currentEmployee, setCurrentEmployee] = useState(currentSession.employees[0])
+
+  useEffect(() => {
+    setCurrentEmployee(currentSession.employees[0])
+  }, [currentSession])
 
   useEffect(() => {
     setEnteredSum(`${currentReceipt.receiptSum}`)
@@ -195,7 +201,10 @@ const PaymentModal = (props) => {
                   rippleColor={`#C4C4C4`}
                   rippleFades key={key}
                 >
-                  <View style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }} />
+                  <FastImage
+                    style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
+                    source={{ uri: currentAccount.img_url }}
+                  />
                   <Text style={styles.employeesListItemName}>{item}</Text>
                 </Ripple>
               ))}

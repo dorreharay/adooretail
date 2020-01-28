@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, } from '@fonts'
+import { COMFORTAA_LIGHT, GILROY_LIGHT, GILROY_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: { 
@@ -12,14 +12,8 @@ const base = {
   loginHeading: {
     color: '#F7F7F7',
     fontSize: 17,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: GILROY_REGULAR,
     letterSpacing: 1,
-  },
-  loginHeadingSuper: {
-    color: '#F7F7F7',
-    fontSize: 17,
-    fontFamily: COMFORTAA_LIGHT,
-    letterSpacing: 2,
   },
   idDots: {
     width: 380,
@@ -34,7 +28,7 @@ const base = {
   loginCaption: {
     color: '#F7F7F7',
     fontSize: 50,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: GILROY_LIGHT,
     marginTop: 50,
   },
   lsNumpad: {
@@ -60,6 +54,16 @@ const base = {
     textAlign: 'center',
     textAlignVertical :'center',
   },
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    right: 50,
+  },
+  backButtonText: {
+    color: '#F6F6F6',
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
+  }
 };
  
 const styles = createStyles(

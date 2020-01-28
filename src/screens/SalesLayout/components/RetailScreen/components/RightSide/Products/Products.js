@@ -178,9 +178,10 @@ function Products(props) {
                       />
                     </TouchableOpacity>
                   ) : (
+                    <View style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}>
                       <SharedButton
                         onPress={(force) => addProductQuantity(rowItem)(force)}
-                        style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
+                        style={{ flex: 1, }}
                         scale={0.95}
                         key={key}
                       >
@@ -191,7 +192,8 @@ function Products(props) {
                           <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
                         </LinearGradient>
                       </SharedButton>
-                    )
+                    </View>
+                  )
                 ))}
               </View>
             ))}

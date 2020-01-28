@@ -97,22 +97,23 @@ function LeftSide(props) {
         <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: (headerHeight - 20) * 5.2, }}>
             {receipts.map((receiptInstance, index) => (
-              <SharedButton
-                onPress={() => selectReceiptInstance(index)}
-                style={[styles.lsInstanceContainer, { width: headerHeight - 20, height: headerHeight - 20, }]}
-                borderRadius={headerHeight}
-                scale={0.8}
-              >
-                <LinearGradient
-                  start={{ x: 2, y: 1 }}
-                  end={{ x: 0, y: 2 }}
-                  colors={selectedInstance === index ? ['#DB3E69', '#FD9C6C'] : ['#FF767500', '#FD9C6C00']}
-                  style={{ alignItems: 'center', justifyContent: 'center', width: headerHeight - 20, height: '100%', paddingBottom: 3, borderRadius: headerHeight }}
+              <View style={[styles.lsInstanceContainer, { width: headerHeight - 20, height: headerHeight - 20, }]}>
+                <SharedButton
+                  onPress={() => selectReceiptInstance(index)}
+                  style={{ flex: 1, }}
+                  borderRadius={headerHeight}
+                  scale={0.8}
                 >
-                  <Text style={[styles.receiptButtonText, selectedInstance === index && { color: '#FFFFFF' }]}>{index + 1}</Text>
-                </LinearGradient>
-              </SharedButton>
-
+                  <LinearGradient
+                    start={{ x: 2, y: 1 }}
+                    end={{ x: 0, y: 2 }}
+                    colors={selectedInstance === index ? ['#DB3E69', '#FD9C6C'] : ['#FF767500', '#FD9C6C00']}
+                    style={{ alignItems: 'center', justifyContent: 'center', width: headerHeight - 20, height: '100%', paddingBottom: 3, borderRadius: headerHeight }}
+                  >
+                    <Text style={[styles.receiptButtonText, selectedInstance === index && { color: '#FFFFFF' }]}>{index + 1}</Text>
+                  </LinearGradient>
+                </SharedButton>
+              </View>
             ))}
           </View>
           <SharedButton

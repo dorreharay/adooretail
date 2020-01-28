@@ -80,6 +80,7 @@ const base = {
     justifyContent: 'center',
     height: 50,
     marginTop: 7,
+    marginRight: '3.5%',
     paddingHorizontal: 20,
   },
   cancelButtonText: {

@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import Ripple from 'react-native-material-ripple';
+import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
 import { API_URL } from '../../../../config/api';
@@ -13,6 +14,7 @@ import { setEmployees, setStartCash, updateCurrentSession, restoreDefaultShift, 
 import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 import LoginLoader from '@shared/LoginLoader';
+import SharedButton from '@shared/SharedButton';
 
 function InputCash(props) {
   const { navigation, sliderRef, } = props;
@@ -59,6 +61,14 @@ function InputCash(props) {
     setCurrentInput(newInput)
   }
 
+  const handleBackPress = () => {
+    if(endOfSession) {
+      navigation.navigate('SalesLayout')
+    } else {
+      navigation.navigate('Login')
+    }
+  }
+
   const handleProceed = async () => {
     // const { token } = currentAccount
 
@@ -98,7 +108,7 @@ function InputCash(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>C</Text>ума в касі на {endOfSession ? 'кінці' : 'початку'} зміни</Text>
+      <Text style={styles.loginHeading}>Cума в касі на {endOfSession ? 'кінці' : 'початку'} зміни</Text>
       <Text style={styles.loginCaption}>{currentInput}</Text>
       <View style={styles.lsNumpad}>
         {cashKeyboardLayout.map((num, index) => (
@@ -113,16 +123,28 @@ function InputCash(props) {
         ))}
 
         <Ripple style={styles.lsNum} onPress={handleProceed} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <Image style={{ width: 30, height: 30, marginRight: 5, }} source={require('@images/key.png')} fadeDuration={0} />
+          <FastImage style={{ width: 30, height: 30, marginRight: 5, }} source={require('@images/key.png')} fadeDuration={0} />
         </Ripple>
         <Ripple style={styles.lsNum} onPress={() => handleKeyPress('0')} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
           <Text style={styles.lsNumText}>0</Text>
         </Ripple>
         <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <Image style={{ width: 34, height: 28, marginRight: 5, }} source={require('@images/erase.png')} fadeDuration={0} />
+          <FastImage style={{ width: 34, height: 28, marginRight: 5, }} source={require('@images/back.png')} fadeDuration={0} />
         </Ripple>
       </View>
+
       <LoginLoader active={loading} />
+
+      <SharedButton
+        style={styles.backButton}
+        onPress={handleBackPress}
+        scale={0.9}
+      >
+        <View style={{ paddingHorizontal: 30, paddingVertical: 20, }}>
+          <Text style={styles.backButtonText}>Назад</Text>
+        </View>
+      </SharedButton>
+
     </View>
   )
 }

@@ -3,11 +3,13 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch, } from 'react-redux';
 import { useNetInfo } from "@react-native-community/netinfo";
 import Toast, { DURATION } from 'react-native-easy-toast'
+import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
 import { API_URL } from '../../../../config/api';
 
 import LoginLoader from '@shared/LoginLoader';
+import SharedButton from '@shared/SharedButton';
 
 import EmployeesList from "./components/EmployeesList";
 
@@ -38,6 +40,10 @@ function InputEmployees({ navigation }) {
     if (name !== 'Пусто') {
       setCheckedEmployees(newCheckedEmployees)
     }
+  }
+
+  const handleBackPress = () => {
+    navigation.navigate('InputCash')
   }
 
   const handleProceed = async () => {
@@ -105,9 +111,9 @@ function InputEmployees({ navigation }) {
       <EmployeesList employees={employees} checked={checked} handleCheck={handleCheck} />
 
       {checked.length !== 0 ? (
-        <TouchableOpacity style={styles.proceedButton} onPress={handleProceed} activeOpacity={1}>
-          <Image style={{ width: 20, height: 15, }} source={require('@images/tick_light.png')} fadeDuration={0}></Image>
-        </TouchableOpacity>
+        <SharedButton style={styles.proceedButton} onPress={handleProceed} scale={0.9}>
+          <FastImage style={{ width: 20, height: 15, }} source={require('@images/tick_light.png')} fadeDuration={0}></FastImage>
+        </SharedButton>
       ) : (
           <View style={{ width: 50, height: 50, borderRadius: 100, borderWidth: 2, borderColor: '#D2D2D226', marginTop: 45, }}></View>
         )}
@@ -118,6 +124,16 @@ function InputEmployees({ navigation }) {
 
       <LoginLoader active={loading} />
       <Toast ref={toast} />
+
+      <SharedButton
+        style={styles.backButton}
+        onPress={handleBackPress}
+        scale={0.9}
+      >
+        <View style={{ paddingHorizontal: 30, paddingVertical: 20, }}>
+          <Text style={styles.backButtonText}>Назад</Text>
+        </View>
+      </SharedButton>
     </View>
   )
 }

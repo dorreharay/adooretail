@@ -100,13 +100,21 @@ function SharedButton(props) {
   })
 
   return (
-    <View style={children ? style : {}}>
+    <View style={children ? { ...style, backgroundColor: 'transparent' } : {}}>
       <TouchableWithoutFeedback
         onPress={onPress}
         onPressIn={animateIn}
         onPressOut={animateOut}
       >
-        <Animated.View style={relativeStyles}>
+        <Animated.View style={children ? {
+          transform: [{
+            scale: animatePress
+          }],
+          width: style.width,
+          height: style.height,
+          borderRadius: style.borderRadius,
+          backgroundColor: style.backgroundColor
+        } : relativeStyles}>
           {renderContent()}
         </Animated.View>
       </TouchableWithoutFeedback>

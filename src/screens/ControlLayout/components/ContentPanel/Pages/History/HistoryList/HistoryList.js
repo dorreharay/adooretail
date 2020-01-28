@@ -58,7 +58,7 @@ function HistoryList(props) {
     <ScrollView
       ref={scrollRef}
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 1000, }}
+      contentContainerStyle={{ paddingBottom: 600, }}
       scrollEnabled={expandedIndex === null}
     >
       {data.map((day, index) => {

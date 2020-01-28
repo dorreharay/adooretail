@@ -29,20 +29,22 @@ function PaymentSubmit(props) {
   })
 
   return (
-    <SharedButton
-      style={styles.paymentSubmitButton}
-      onPress={() => buttonAccessible ? handlePress() : null}
-      scale={0.95}
-    >
-      <LinearGradient
-        start={{ x: 0, y: 1 }}
-        end={{ x: 1, y: 0 }}
-        colors={['#DB3E69', '#EF9058']}
-        style={[styles.paymentSubmitButtonGradient, !buttonAccessible && { opacity: 0.6 }]}
+    <View style={styles.paymentSubmitButton}>
+      <SharedButton
+        style={{ flex: 1, }}
+        onPress={() => buttonAccessible ? handlePress() : null}
+        scale={0.95}
       >
-        <Text style={styles.paymentSubmitButtonText}>{buttonText}</Text>
-      </LinearGradient>
-    </SharedButton>
+        <LinearGradient
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+          colors={['#DB3E69', '#EF9058']}
+          style={[styles.paymentSubmitButtonGradient, !buttonAccessible && { opacity: 0.6 }]}
+        >
+          <Text style={styles.paymentSubmitButtonText}>{buttonText}</Text>
+        </LinearGradient>
+      </SharedButton>
+    </View>
   )
 }
 

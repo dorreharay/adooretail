@@ -37,9 +37,9 @@ const base = {
   },
   paymentSubmitButton: {
     position: 'absolute',
-    left: '4%',
-    bottom: 20,
-    width: '92%',
+    left: '7.5%',
+    bottom: 40,
+    width: '85%',
     height: 70,
   },
   paymentSubmitButtonGradient: {

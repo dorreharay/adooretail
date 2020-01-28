@@ -62,8 +62,9 @@ function PaymentRightSide(props) {
       <View style={styles.heading}>
         <Text style={styles.headingText}>{selectedType.index !== 2 ? 'Деталі оплати' : 'Відскануйте QR-код'}</Text>
 
+      <View style={styles.cancelButton}>
         <SharedButton
-          style={styles.cancelButton}
+          style={{ flex: 1, }}
           onPress={() => {
             setPaymentModalVisibility(false)
             resetStatus()
@@ -72,6 +73,8 @@ function PaymentRightSide(props) {
         >
           <Text style={styles.cancelButtonText}>Скасувати</Text>
         </SharedButton>
+      </View>
+        
       </View>
 
       {selectedType.index !== 2 ? (

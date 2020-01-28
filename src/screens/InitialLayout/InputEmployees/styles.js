@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, } from '@fonts'
+import { COMFORTAA_LIGHT, GILROY_REGULAR, FUTURA_LIGHT, } from '@fonts'
 
 const base = {
   container: { 
@@ -11,7 +11,7 @@ const base = {
   loginHeading: {
     color: '#ffffff',
     fontSize: 17,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: GILROY_REGULAR,
     letterSpacing: 1,
   },
   proceedButton: {
@@ -25,15 +25,13 @@ const base = {
   },
   backButton: {
     position: 'absolute',
-    top: '45%',
-    left: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#D2D2D233',
-    transform: [{ rotate: '180deg'}]
+    top: 50,
+    right: 50,
+  },
+  backButtonText: {
+    color: '#F6F6F6',
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
   }
 };
  
