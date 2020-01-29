@@ -147,7 +147,23 @@ const base = {
     width: '100%',
     backgroundColor: '#F4F4F4',
     zIndex: 3,
-  }
+  },
+  matches: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    backgroundColor: '#C92626',
+  },
+  matchesText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: PROBA_MEDIUM,
+  },
 };
  
 const styles = createStyles(

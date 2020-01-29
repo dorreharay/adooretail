@@ -22,6 +22,7 @@ function Products(props) {
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
   const [availableVariants, setAvailableVariants] = useState([])
+  const [searchResult, setSearchResult] = useState([])
 
   useEffect(() => {
     if (products.length !== 0) {
@@ -52,37 +53,8 @@ function Products(props) {
     return newProducts
   }
 
-  const searchResult = useMemo(() => {
-    if(searchTerm.length === 0) {
-      return []
-    }
-
-    const variantsNotEmpty = availableVariants.length !== 0
-    const searchTermNotEmpty = searchTerm.length !== 0
-    const productsNotEmpty = products.length !== 0
-
-    if (variantsNotEmpty && searchTermNotEmpty) {
-      if (!productsNotEmpty) {
-        searchResult = []
-
-        return
-      }
-
-      const flattened = products.flat()
-
-      let withVariants = flattened.map(item => item.variants)
-      withVariants = withVariants.flat()
-
-      let newSearchResult = withVariants.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase()))
-
-      newSearchResult = updateLayout(newSearchResult, layout)
-
-      return newSearchResult
-    }
-  }, [searchTerm, availableVariants, products])
-
   const changeActiveCategory = (index, key) => {
-    const newActiveCategory = products[index]
+    const newActiveCategory = searchResult.length > 0 ? searchResult[index] : products[index]
 
     scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
 
@@ -100,6 +72,35 @@ function Products(props) {
       updateLayout(flattened, layout)
     }
   }, [layout])
+
+  useEffect(() => {
+    if (searchTerm.length > 0) {
+      let newProducts = products
+        .flat()
+        .map(item => ({
+          ...item,
+          variants: item.variants.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase())),
+          matches: item.variants.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase())).length,
+        }))
+        .filter(item => item.matches > 0)
+
+      function chunkArray(myArray, chunk_size) {
+        var results = [];
+
+        while (myArray.length) {
+          results.push(myArray.splice(0, chunk_size));
+        }
+
+        return results;
+      }
+
+      newProducts = chunkArray(newProducts, layout)
+
+      setSearchResult(newProducts)
+    } else {
+      setSearchResult(products)
+    }
+  }, [searchTerm, layout])
 
   const resetCategory = () => {
     scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
@@ -127,40 +128,43 @@ function Products(props) {
       showsVerticalScrollIndicator={false}
       bounces
     >
-      {/* <SearchResult
-        searchTerm={searchTerm}
-        searchResult={searchResult}
-        layout={layout}
-        addProductQuantity={addProductQuantity}
-        itemHeight={calculateColHeight(layout)}
-      /> */}
-      <View style={{ height: categoryVisible ? 0 : '100%', backgroundColor: '#F4F4F4' }}>
-        {products.map((row, index) => (
-          <View style={styles.row} key={index}>
-            {row.map((rowItem, key) => (
-              <TouchableOpacity
-                style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
-                onPress={() => changeActiveCategory(index, key)}
-                activeOpacity={1}
-                scale={0.95} key={key}
-              >
-                <FastImage
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
-                  source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
-                />
-                <View
-                  style={[styles[`categoryTitle${layout}`], { bottom: -1, }]}
+      <View style={{ backgroundColor: '#F4F4F4' }}>
+        <View style={{ position: 'relative', top: !categoryVisible ? 0 : 4000, flex: 1, }}>
+          {[searchResult.length > 0 ? searchResult : products][0].map((row, index) => (
+            <View style={styles.row} key={index}>
+              {row.map((rowItem, key) => (
+                <TouchableOpacity
+                  style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                   onPress={() => changeActiveCategory(index, key)}
-                  activeOpacity={1} key={index}
+                  activeOpacity={1}
+                  scale={0.95} key={key}
                 >
-                  <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        ))}
+                  <FastImage
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
+                    source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
+                  />
+                  <View
+                    style={[styles[`categoryTitle${layout}`], { bottom: -1, }]}
+                    onPress={() => changeActiveCategory(index, key)}
+                    activeOpacity={1} key={index}
+                  >
+                    <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
+                  </View>
 
-        <View style={{ position: 'absolute', top: categoryVisible ? 0 : 4000, backgroundColor: '#F4F4F4', width: '100%',  }}>
+                  {rowItem.matches && (
+                    <View style={styles.matches}>
+                      <Text style={styles.matchesText}>{rowItem.matches}</Text>
+                    </View>
+                  )}
+                  
+                </TouchableOpacity>
+              ))}
+            </View>
+          ))}
+        </View>
+
+
+        <View style={{ position: 'absolute', top: categoryVisible ? 0 : 4000, backgroundColor: '#F4F4F4', width: '100%', }}>
           {activeCategory && activeCategory.map((row, index) => (
             <View style={styles.row} key={index}>
               {row.map((rowItem, key) => (
@@ -183,12 +187,14 @@ function Products(props) {
                         style={{ flex: 1, }}
                         scale={0.95}
                       >
-                        <LinearGradient style={styles.variant} colors={[rowItem.color, rowItem.shadow]}>
-                          <View style={styles.variantPrice}>
-                            <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
-                          </View>
-                          <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
-                        </LinearGradient>
+                        {rowItem.color && (
+                          <LinearGradient style={styles.variant} colors={[rowItem.color, rowItem.shadow]}>
+                            <View style={styles.variantPrice}>
+                              <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
+                            </View>
+                            <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
+                          </LinearGradient>
+                        )}
                       </SharedButton>
                     </View>
                   )
