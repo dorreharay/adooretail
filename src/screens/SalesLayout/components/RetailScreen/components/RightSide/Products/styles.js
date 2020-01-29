@@ -1,5 +1,6 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { deviceWidth } from '@dimensions';
 
 const base = {
   container: {
@@ -142,11 +143,8 @@ const base = {
     fontFamily: PROBA_MEDIUM,
   },
   searchResultContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     position: 'absolute',
     width: '100%',
-    height: '100%',
     backgroundColor: '#F4F4F4',
     zIndex: 3,
   }

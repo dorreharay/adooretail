@@ -71,26 +71,33 @@ function AppSessions(props) {
         registeredDeviceIds: data.registered_device_ids,
         employees: data.employees,
         warehouse: data.warehouse,
-        // available_teams: data.available_teams,
+        settings: data.settings,
         // products: data.products.products,
       }
 
       dispatch(syncDataWithStore(payload))
 
-      // if (currentRoute && currentRoute === 4) {
-      //   setTimeout(() => {
-      //     validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-      //   }, 700)
-      // }
+      if (currentRoute && currentRoute === 4) {
+        validateSessionRoutine(currentAccount.localSessions, data.shift_start, data.shift_end)
+      }
     } catch (error) {
       console.log('error', error)
+
+      if (initialLoadingVisibility) {
+        changeInitialLoadingWrapperOpacity(false)
+        SplashScreen.hide();
+      }
+
+      if (currentRoute && currentRoute === 4) {
+        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
+      }
     }
   }
 
   useEffect(() => {
     if (currentRoute && currentRoute === 4) {
       if (!initialLoadingVisibility) {
-        // validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
+        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
       }
     }
   }, [currentAccount.shift_end, currentRoute, initialLoadingVisibility])
@@ -103,7 +110,7 @@ function AppSessions(props) {
     return () => {
       clearInterval(syncRef.current)
     };
-  }, [currentSession, currentRoute, netInfo])
+  }, [currentAccount, currentSession, currentRoute, netInfo])
 
   const asyncSync = async () => {
     await synchronizeSessions()
@@ -113,12 +120,14 @@ function AppSessions(props) {
   };
 
   const gotoScreen = async (screen, callback) => {
-    setTimeout(() => {
+    timerRef1.current = setTimeout(() => {
       NavigationService.setTopLevelNavigator(navigatorRef.current)
-      setTimeout(async () => {
+      timerRef2.current = setTimeout(async () => {
         NavigationService.navigate(screen)
 
         await asyncSync()
+
+        // validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
 
         callback()
       }, 110)
@@ -203,9 +212,9 @@ function AppSessions(props) {
     if (currentRoute && currentRoute === 4) {
       clearInterval(intervalRef.current)
 
-      intervalRef.current = setInterval(() => {
-        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_end)
-      }, 3 * 10000)
+      // intervalRef.current = setInterval(() => {
+      //   validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
+      // }, 2 * 1000)
     } else {
       clearInterval(intervalRef.current)
     }
@@ -214,10 +223,8 @@ function AppSessions(props) {
     }
   }, [currentAccount, currentRoute, modalStatus,])
 
-  function validateSessionRoutine(localSessions, shiftEnd) {
-    console.log('Validation routine', shiftEnd)
-
-    const isValid = validateSession(localSessions, shiftEnd)
+  function validateSessionRoutine(localSessions, shiftStart, shiftEnd) {
+    const isValid = validateSession(localSessions, shiftStart, shiftEnd)
 
     if (isValid && modalStatus !== '') {
       setModalStatus('')
@@ -232,7 +239,7 @@ function AppSessions(props) {
     }
   }
 
-  const validateSession = (sessions, shiftEnd) => {
+  const validateSession = (sessions, shiftStart, shiftEnd) => {
     if (sessions.length === 0) return false
 
     const currentAccountSession = sessions[sessions.length - 1]
@@ -244,8 +251,8 @@ function AppSessions(props) {
 
     if (currentAccount.settings.shifts.enabled) {
       startOfShift = moment()
-        .hour(currentAccountSession.shift_start.hours)
-        .minutes(currentAccountSession.shift_start.minutes)
+        .hour(shiftStart.hours)
+        .minutes(shiftStart.minutes)
         .seconds(0)
         .format('YYYY-MM-DD HH:mm')
       endOfShift = moment()
@@ -258,6 +265,9 @@ function AppSessions(props) {
       endOfShift = moment().endOf('day').format('YYYY-MM-DD HH:mm')
     }
 
+    console.log('%c%s', 'color: #E7715E; font: 0.9rem Tahoma;', moment(startOfShift).format('HH:mm'))
+    console.log('%c%s', 'color: #E7715E; font: 0.9rem Tahoma;', moment(endOfShift).format('HH:mm'))
+    
     const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
 
     return isValid

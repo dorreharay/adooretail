@@ -76,7 +76,7 @@ function HistoryList(props) {
                 style={{ width: 20, height: 20, marginRight: 20, }}
                 source={require('@images/session_process.png')}
               />
-              <Text style={styles.dayHeaderDate}>{moment(day.startTime).format('dd DD.MM.YY HH:mm:ss').charAt(0).toUpperCase() + moment(day.startTime).format('dd DD.MM.YY HH:mm:ss').slice(1)}</Text>
+              <Text style={styles.dayHeaderDate}>{moment(day.startTime).format('dddd').charAt(0).toUpperCase() + moment(day.startTime).format('dddd DD.MM - HH:mm').slice(1)}</Text>
               <Text style={styles.dayHeaderTotal}>Всього за зміну: {sessionTotal}</Text>
               <Text style={styles.dayHeaderEmployees}>Працівників на зміні: {employeesLength}</Text>
               <View style={styles.dayHeaderIcon}>

@@ -39,14 +39,10 @@ function LeftSide(props) {
     setReceiptSum(receipts[selectedInstance].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false))
   }, [receipts[selectedInstance]]);
 
-  const validateTime = (leftSideWidth) => {
-    const fullDate = moment(Date.now()).format('dddd DD.MM | HH:mm')
-    const shortDate = moment(Date.now()).format('DD.MM | HH:mm')
+  const validateTime = () => {
+    const fullDate = moment(Date.now()).format('dddd  |  HH:mm')
 
-    if (leftSideWidth > 350)
-      setCurrentTime(fullDate.charAt(0).toUpperCase() + fullDate.slice(1))
-    else
-      setCurrentTime(shortDate)
+    setCurrentTime(fullDate.charAt(0).toUpperCase() + fullDate.slice(1))
   }
 
   function useInterval(callback, delay) {
@@ -68,15 +64,11 @@ function LeftSide(props) {
   }
 
   useInterval(() => {
-    validateTime(leftSideWidth)
+    validateTime()
   }, 5 * 1000)
 
   const startTimer = (e) => {
-    const leftSideWidth = e.nativeEvent.layout.width
-
-    setLeftSideWidth(leftSideWidth)
-
-    validateTime(leftSideWidth)
+    validateTime()
   }
 
   const setReceiptInstance = (newReceiptInstance) => {
@@ -129,7 +121,7 @@ function LeftSide(props) {
             style={[styles.header, { height: headerHeight, }]}
             onLayout={(e) => startTimer(e)}
           >
-            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+            <View style={{ alignItems: 'center', width: '40%', flexDirection: 'row' }}>
               <SharedButton
                 onPress={() => { }}
                 style={headerButtonSizes}
@@ -137,10 +129,14 @@ function LeftSide(props) {
                 source={require('@images/clock.png')}
                 scale={0.85}
               />
-              <Text style={styles.timeText}>{currentTime}</Text>
+              <Text
+                style={styles.timeText}
+                numberOfLines={1}
+                ellipsizeMode={'head'}
+              >{currentTime}</Text>
             </View>
 
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ width: '40%', flexDirection: 'row' }}>
               <SharedButton
                 style={headerButtonSizes}
                 iconStyle={headerIcon}
