@@ -8,6 +8,7 @@ import ContentPanel from './components/ContentPanel/ContentPanel'
 import AllCategories from './components/ContentPanel/Pages/AllCategories/AllCategories'
 import History from './components/ContentPanel/Pages/History/History'
 import Settings from './components/ContentPanel/Pages/Settings/Settings'
+import Transactions from './components/ContentPanel/Pages/Transactions/Transactions'
 
 function ControlLayout(props) {
   const { navigation } = props
@@ -40,10 +41,10 @@ function ControlLayout(props) {
       },
       {
         index: 2,
-        title: 'Склад',
+        title: 'Транзакції',
         iconSource: require('@images/package.png'),
         onPress: () => handleCategoryPress(2),
-        component: <View style={{ flex: 1, }}></View>,
+        component: <Transactions />,
       },
       {
         index: 3,

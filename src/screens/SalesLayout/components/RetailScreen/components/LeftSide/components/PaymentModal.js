@@ -87,7 +87,7 @@ const PaymentModal = (props) => {
       total: currentReceipt.receiptSum,
       input: parseFloat(enteredSum),
       change: +((+enteredSum) - currentReceipt.receiptSum).toFixed(2).replace(".00", ""),
-      localId: guidGenerator(),
+      hash_id: guidGenerator(),
       first_product_time: timeStart,
       last_product_time: timeEnd,
       employee: currentEmployee,

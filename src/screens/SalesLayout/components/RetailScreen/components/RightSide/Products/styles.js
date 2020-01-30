@@ -152,7 +152,7 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 10,
+    top: 10,
     right: 10,
     width: 40,
     height: 40,

@@ -75,9 +75,11 @@ function AppSessions(props) {
         // products: data.products.products,
       }
 
-      dispatch(syncDataWithStore(payload))
+      dispatch(syncDataWithStore(payload, data.shift_start, data.shift_end))
 
       if (currentRoute && currentRoute === 4) {
+        console.log(currentRoute)
+
         validateSessionRoutine(currentAccount.localSessions, data.shift_start, data.shift_end)
       }
     } catch (error) {
@@ -105,7 +107,7 @@ function AppSessions(props) {
   useEffect(() => {
     syncRef.current = setInterval(() => {
       synchronizeSessions()
-    }, 30 * 1000)
+    }, 10 * 1000)
 
     return () => {
       clearInterval(syncRef.current)
@@ -126,8 +128,6 @@ function AppSessions(props) {
         NavigationService.navigate(screen)
 
         await asyncSync()
-
-        // validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
 
         callback()
       }, 110)
@@ -151,8 +151,12 @@ function AppSessions(props) {
 
       if (!currentSession.endTime && currentSession.length !== 0) {
         gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
+
+        // changeInitialLoadingWrapperOpacity(false)
         // gotoScreen('ControlLayout', () => dispatch(setCurrentRoute(4)))
       } else {
+        dispatch(setCurrentRoute(1))
+
         asyncSync()
 
         changeInitialLoadingWrapperOpacity(false)

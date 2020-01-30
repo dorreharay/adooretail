@@ -193,6 +193,10 @@ function Details(props) {
           <Text style={styles.paymentDetailsHeadingText}>Готівковий підсумок {activeFilter ? activeFilter.name.toLowerCase() : 'за сьогодні'} - <Text style={styles.paymentDetailsText}>{todayCashSum || 0} грн</Text></Text>
         </View>
 
+        <View style={styles.paymentDetails}>
+          <Text style={styles.paymentDetailsHeadingText}>Всього {activeFilter ? activeFilter.name.toLowerCase() : 'за сьогодні'} - <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0)} грн</Text></Text>
+        </View>
+
         <SharedButton
           style={styles.paymentDetailsButton}
           onPress={toggleEmptySessions}

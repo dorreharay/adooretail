@@ -75,12 +75,16 @@ function Products(props) {
 
   useEffect(() => {
     if (searchTerm.length > 0) {
+      function returnBySearch(array) {
+        return array.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase()))
+      }
+
       let newProducts = products
         .flat()
         .map(item => ({
           ...item,
-          variants: item.variants.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase())),
-          matches: item.variants.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase())).length,
+          variants: returnBySearch(item.variants),
+          matches: returnBySearch(item.variants).length,
         }))
         .filter(item => item.matches > 0)
 
@@ -131,7 +135,7 @@ function Products(props) {
       <View style={{ backgroundColor: '#F4F4F4' }}>
         <View style={{ position: 'relative', top: !categoryVisible ? 0 : 4000, flex: 1, }}>
           {[searchResult.length > 0 ? searchResult : products][0].map((row, index) => (
-            <View style={styles.row} key={index}>
+            <View style={[styles.row, categoryVisible && { height: 0, }]} key={index}>
               {row.map((rowItem, key) => (
                 <TouchableOpacity
                   style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
