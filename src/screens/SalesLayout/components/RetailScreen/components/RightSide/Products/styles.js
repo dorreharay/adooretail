@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, MUSEO_MEDIUM, } from '@fonts'
 import { deviceWidth } from '@dimensions';
 
 const base = {
@@ -68,23 +68,23 @@ const base = {
   },
   categoryTitleText3: {
     marginBottom: 2.5,
-    color: '#343434',
+    color: '#4E4E4E',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MUSEO_MEDIUM,
     lineHeight: 30,
   },
   categoryTitleText4: {
     marginBottom: 2.5,
-    color: '#343434',
+    color: '#4E4E4E',
     fontSize: 20,
-    fontFamily: FUTURA_REGULAR,
+    fontFamily: MUSEO_MEDIUM,
     lineHeight: 30,
   },
   categoryTitleText5: {
     marginBottom: 0,
-    color: '#343434',
+    color: '#4E4E4E',
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MUSEO_MEDIUM,
     lineHeight: 20,
   },
   variant: {
@@ -101,7 +101,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 30,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MUSEO_MEDIUM,
   },
   variantText4: {
     position: 'absolute',
@@ -110,8 +110,8 @@ const base = {
     padding: 25,
     paddingRight: 5,
     color: '#FFFFFF',
-    fontSize: 24,
-    fontFamily: PROBA_MEDIUM,
+    fontSize: 20,
+    fontFamily: MUSEO_MEDIUM,
     lineHeight: 30,
   },
   variantText5: {
@@ -122,7 +122,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MUSEO_MEDIUM,
     lineHeight: 20,
   },
   variantPrice: {
@@ -132,15 +132,15 @@ const base = {
     position: 'absolute',
     top: 12,
     right: 10,
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     borderRadius: 100,
     backgroundColor: '#FFFFFF4D',
   },
   variantPriceText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MUSEO_MEDIUM,
   },
   searchResultContainer: {
     position: 'absolute',

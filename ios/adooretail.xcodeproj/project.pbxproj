@@ -37,6 +37,15 @@
 		E92A60152C4B49C2B2A2BFC2 /* gilroy_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01AB61117BC248B1B40FB008 /* gilroy_medium.ttf */; };
 		EE65EF91327B4E94A2D61ADB /* gilroy_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24C5000F6F964FD89C581C1C /* gilroy_light.ttf */; };
 		F5F0B50E3D6048D5A8C37A4D /* gilroy_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 374866825A1945418707E35A /* gilroy_regular.ttf */; };
+		2734888426954D5593070007 /* Geometria-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 468EE77A7DEE49948BA9E67F /* Geometria-Bold.ttf */; };
+		188A66E9B244465B8DCACE1F /* Geometria-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26207D48A2534FE79A2FA186 /* Geometria-Light.ttf */; };
+		8D410A9285D64912B02A0EAA /* Geometria-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA7E3850BDF345588536632E /* Geometria-Medium.ttf */; };
+		55CD84BBE8F940BBADBC8FDE /* Geometria.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 770ABA0A538A4B5FB8B580E9 /* Geometria.ttf */; };
+		BB2C581ACDFA45ADADD939F3 /* MuseoSansCyrl-100.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10D788F650C64903ACBD911D /* MuseoSansCyrl-100.ttf */; };
+		2F81E675BA6D41728E2FF7A2 /* MuseoSansCyrl-300.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6A36D893CDC462F995E17C3 /* MuseoSansCyrl-300.ttf */; };
+		85F7095911774296B852DC32 /* MuseoSansCyrl-500.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60B57705867244D19CBD91DD /* MuseoSansCyrl-500.ttf */; };
+		701147DAC0D5487CBDAE3282 /* MuseoSansCyrl-700.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A9E4136164F4F218BA05595 /* MuseoSansCyrl-700.ttf */; };
+		EE5E913D1B1445F2BF7E0181 /* MuseoSansCyrl-900.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE0908695D364B9182A48400 /* MuseoSansCyrl-900.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +129,15 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FF2845785FD26B1C9CB1E884 /* libPods-adooretail-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretail-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		468EE77A7DEE49948BA9E67F /* Geometria-Bold.ttf */ = {isa = PBXFileReference; name = "Geometria-Bold.ttf"; path = "../assets/fonts/Geometria-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		26207D48A2534FE79A2FA186 /* Geometria-Light.ttf */ = {isa = PBXFileReference; name = "Geometria-Light.ttf"; path = "../assets/fonts/Geometria-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AA7E3850BDF345588536632E /* Geometria-Medium.ttf */ = {isa = PBXFileReference; name = "Geometria-Medium.ttf"; path = "../assets/fonts/Geometria-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		770ABA0A538A4B5FB8B580E9 /* Geometria.ttf */ = {isa = PBXFileReference; name = "Geometria.ttf"; path = "../assets/fonts/Geometria.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		10D788F650C64903ACBD911D /* MuseoSansCyrl-100.ttf */ = {isa = PBXFileReference; name = "MuseoSansCyrl-100.ttf"; path = "../assets/fonts/MuseoSansCyrl-100.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B6A36D893CDC462F995E17C3 /* MuseoSansCyrl-300.ttf */ = {isa = PBXFileReference; name = "MuseoSansCyrl-300.ttf"; path = "../assets/fonts/MuseoSansCyrl-300.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		60B57705867244D19CBD91DD /* MuseoSansCyrl-500.ttf */ = {isa = PBXFileReference; name = "MuseoSansCyrl-500.ttf"; path = "../assets/fonts/MuseoSansCyrl-500.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2A9E4136164F4F218BA05595 /* MuseoSansCyrl-700.ttf */ = {isa = PBXFileReference; name = "MuseoSansCyrl-700.ttf"; path = "../assets/fonts/MuseoSansCyrl-700.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CE0908695D364B9182A48400 /* MuseoSansCyrl-900.ttf */ = {isa = PBXFileReference; name = "MuseoSansCyrl-900.ttf"; path = "../assets/fonts/MuseoSansCyrl-900.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,6 +309,15 @@
 				24C5000F6F964FD89C581C1C /* gilroy_light.ttf */,
 				01AB61117BC248B1B40FB008 /* gilroy_medium.ttf */,
 				374866825A1945418707E35A /* gilroy_regular.ttf */,
+				468EE77A7DEE49948BA9E67F /* Geometria-Bold.ttf */,
+				26207D48A2534FE79A2FA186 /* Geometria-Light.ttf */,
+				AA7E3850BDF345588536632E /* Geometria-Medium.ttf */,
+				770ABA0A538A4B5FB8B580E9 /* Geometria.ttf */,
+				10D788F650C64903ACBD911D /* MuseoSansCyrl-100.ttf */,
+				B6A36D893CDC462F995E17C3 /* MuseoSansCyrl-300.ttf */,
+				60B57705867244D19CBD91DD /* MuseoSansCyrl-500.ttf */,
+				2A9E4136164F4F218BA05595 /* MuseoSansCyrl-700.ttf */,
+				CE0908695D364B9182A48400 /* MuseoSansCyrl-900.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -455,6 +482,15 @@
 				EE65EF91327B4E94A2D61ADB /* gilroy_light.ttf in Resources */,
 				E92A60152C4B49C2B2A2BFC2 /* gilroy_medium.ttf in Resources */,
 				F5F0B50E3D6048D5A8C37A4D /* gilroy_regular.ttf in Resources */,
+				2734888426954D5593070007 /* Geometria-Bold.ttf in Resources */,
+				188A66E9B244465B8DCACE1F /* Geometria-Light.ttf in Resources */,
+				8D410A9285D64912B02A0EAA /* Geometria-Medium.ttf in Resources */,
+				55CD84BBE8F940BBADBC8FDE /* Geometria.ttf in Resources */,
+				BB2C581ACDFA45ADADD939F3 /* MuseoSansCyrl-100.ttf in Resources */,
+				2F81E675BA6D41728E2FF7A2 /* MuseoSansCyrl-300.ttf in Resources */,
+				85F7095911774296B852DC32 /* MuseoSansCyrl-500.ttf in Resources */,
+				701147DAC0D5487CBDAE3282 /* MuseoSansCyrl-700.ttf in Resources */,
+				EE5E913D1B1445F2BF7E0181 /* MuseoSansCyrl-900.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

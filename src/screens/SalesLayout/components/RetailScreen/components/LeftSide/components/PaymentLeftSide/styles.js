@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '12%'
 
@@ -19,7 +19,7 @@ const base = {
     paddingBottom: '10%',
     color: '#FFFFFF',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MUSEO_MEDIUM,
   },
   paymentType: {
     flexDirection: 'row',
@@ -30,7 +30,7 @@ const base = {
   paymentTypeName: {
     color: '#575759',
     fontSize: 22,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 30,
   },
   cancelOrderButton: {
@@ -75,8 +75,8 @@ const base = {
   currentEmployeeName: {
     marginLeft: 85,
     color: '#FFFFFF',
-    fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontSize: 19,
+    fontFamily: MUSEO_REGULAR,
   },
   editButton: {
     alignItems: 'center',

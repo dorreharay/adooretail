@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '7.5%'
 
@@ -23,7 +23,7 @@ const base = {
     paddingBottom: '5%',
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MUSEO_MEDIUM,
   },
   toByPaid: {
     borderLeftWidth: 1,
@@ -72,7 +72,7 @@ const base = {
   changeText: {
     color: '#9A9A9A',
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MUSEO_REGULAR,
     lineHeight: 27,
   },
   cancelButton: {
@@ -86,7 +86,7 @@ const base = {
   cancelButtonText: {
     color: '#343434',
     fontSize: 15,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MUSEO_REGULAR,
   },
   orderContainer: {
     width: '85%',

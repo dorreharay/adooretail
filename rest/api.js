@@ -7,6 +7,9 @@ const API = {
   async synchronizeSessions(payload) {
     return await asyncAxiosCall('/user/synchronizeSessions/5cb1ed89c6bf28192c152435', payload)
   },
+  async sendReceiptByEmail(payload) {
+    return await asyncAxiosCall('/user/receipt/5cb1ed89c6bf28192c152435', payload)
+  },
 }
 
 export default API

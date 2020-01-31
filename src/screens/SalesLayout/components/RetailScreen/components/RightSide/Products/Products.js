@@ -102,7 +102,7 @@ function Products(props) {
 
       setSearchResult(newProducts)
     } else {
-      setSearchResult(products)
+      setSearchResult([])
     }
   }, [searchTerm, layout])
 

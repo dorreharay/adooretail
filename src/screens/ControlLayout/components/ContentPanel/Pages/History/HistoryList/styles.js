@@ -185,7 +185,7 @@ const base = {
   },
   errorText: {
     width: '100%',
-    marginTop: -15,
+    marginTop: 15,
     paddingLeft: 25,
     color: 'red',
     fontSize: 20,
@@ -206,6 +206,12 @@ const base = {
     borderWidth: 2.5,
     borderColor: '#DCDCDC',
     borderRadius: 100,
+  },
+  success: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 300,
+    height: 300,
   }
 };
 

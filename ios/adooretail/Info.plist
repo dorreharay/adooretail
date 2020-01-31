@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
 	<key>UIAppFonts</key>
@@ -77,6 +77,15 @@
 		<string>gilroy_light.ttf</string>
 		<string>gilroy_medium.ttf</string>
 		<string>gilroy_regular.ttf</string>
+		<string>Geometria-Bold.ttf</string>
+		<string>Geometria-Light.ttf</string>
+		<string>Geometria-Medium.ttf</string>
+		<string>Geometria.ttf</string>
+		<string>MuseoSansCyrl-100.ttf</string>
+		<string>MuseoSansCyrl-300.ttf</string>
+		<string>MuseoSansCyrl-500.ttf</string>
+		<string>MuseoSansCyrl-700.ttf</string>
+		<string>MuseoSansCyrl-900.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

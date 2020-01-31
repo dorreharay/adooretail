@@ -22,6 +22,11 @@ const GEOMETRIA_REGULAR = Platform.OS === 'android' ? 'geometria_regular' : 'Geo
 const GEOMETRIA_MEDIUM = Platform.OS === 'android' ? 'geometria_medium' : 'Geometria-Medium'
 const GEOMETRIA_BOLD = Platform.OS === 'android' ? 'geometria_bold' : 'Geometria-Bold'
 
+const MUSEO_LIGHT = Platform.OS === 'android' ? 'geometria_light' : 'MuseoSansCyrl-100'
+const MUSEO_REGULAR = Platform.OS === 'android' ? 'geometria_regular' : 'MuseoSansCyrl-300'
+const MUSEO_MEDIUM = Platform.OS === 'android' ? 'geometria_medium' : 'MuseoSansCyrl-500'
+const MUSEO_BOLD = Platform.OS === 'android' ? 'geometria_bold' : 'MuseoSansCyrl-900'
+
 export {
   COMFORTAA_LIGHT,
   COMFORTAA_REGULAR,
@@ -43,5 +48,10 @@ export {
   GEOMETRIA_LIGHT,
   GEOMETRIA_REGULAR,
   GEOMETRIA_MEDIUM,
-  GEOMETRIA_BOLD
+  GEOMETRIA_BOLD,
+
+  MUSEO_LIGHT,
+  MUSEO_REGULAR,
+  MUSEO_MEDIUM,
+  MUSEO_BOLD,
 }
