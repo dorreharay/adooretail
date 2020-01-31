@@ -10,6 +10,11 @@ function Pagination(props) {
   } = props
 
   const { deviceWidth } = useSelector(state => state.temp.dimensions)
+  const accounts = useSelector(state => state.user.accounts)
+
+  if(accounts.length === 1) {
+    return null
+  }
 
   return (
     <View style={[styles.paginationContainer, { left: (deviceWidth / 2) - 55, }]}>

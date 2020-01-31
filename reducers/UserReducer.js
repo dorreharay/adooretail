@@ -34,104 +34,61 @@ const initialState = {
     }
   }],
   accounts: [
-    {
-      id: '4sd3fsgu76fg55akgjsd54jadfnu343',
-      token: '5cb1ed89c6bf28192c152435',
-      businessName: 'Poilka Coffee Бариста 1',
-      registeredDeviceIds: [
-        '888f33dcebf0800b',
-        '67CA2667-D89D-4951-8112-7EA50AF8DA94',
-      ],
-      img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
-      default_shift_end: {
-        hours: 19,
-        minutes: 0,
-      },
-      shift_start: {
-        hours: 1,
-        minutes: 0,
-      },
-      shift_end: {
-        hours: 19,
-        minutes: 0,
-      },
-      employees: [
-        {
-          name: 'Ігор',
-          icon: '',
-        },
-        {
-          name: 'Іра',
-          icon: '',
-        },
-        {
-          name: 'Наташа',
-          icon: '',
-        },
-        {
-          name: 'Андрій',
-          icon: '',
-        },
-        {
-          name: 'Льоша',
-          icon: '',
-        }
-      ],
-      products: [],
-      localSessions: [],
-      settings: {
-        available_teams: {
-          paydesk: true,
-          kitchen: false,
-        },
-        shifts: {
-          enabled: true,
-        } 
-      }
-    },
-    {
-      id: '4sd3fsgu76fg55akgjsd54jadfnu343',
-      token: '5cb1ed89c6bf28192c152374',
-      businessName: 'Poilka Coffee Бариста 2',
-      img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
-      shift_start: {
-        hours: 7,
-        minutes: 0,
-      },
-      shift_end: {
-        hours: 0,
-        minutes: 42,
-      },
-      registeredDeviceIds: [
-        '888f33dcebf0800b',
-        '67CA2667-D89D-4951-8112-7EA50AF8DA94',
-      ],
-      employees: [
-        {
-          name: 'Ігор',
-          icon: '',
-        },
-        {
-          name: 'Іра',
-          icon: '',
-        },
-        {
-          name: 'Наташа',
-          icon: '',
-        },
-        {
-          name: 'Андрій',
-          icon: '',
-        },
-        {
-          name: 'Льоша',
-          icon: '',
-        }
-      ],
-      products: [],
-      localSessions: [],
-      receipts: [],
-    },
+    // {
+    //   id: '4sd3fsgu76fg55akgjsd54jadfnu343',
+    //   token: '5cb1ed89c6bf28192c152435',
+    //   businessName: 'Poilka Coffee Бариста 1',
+    //   registeredDeviceIds: [
+    //     '888f33dcebf0800b',
+    //     '67CA2667-D89D-4951-8112-7EA50AF8DA94',
+    //   ],
+    //   img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
+    //   default_shift_end: {
+    //     hours: 19,
+    //     minutes: 0,
+    //   },
+    //   shift_start: {
+    //     hours: 1,
+    //     minutes: 0,
+    //   },
+    //   shift_end: {
+    //     hours: 19,
+    //     minutes: 0,
+    //   },
+    //   employees: [
+    //     {
+    //       name: 'Ігор',
+    //       icon: '',
+    //     },
+    //     {
+    //       name: 'Іра',
+    //       icon: '',
+    //     },
+    //     {
+    //       name: 'Наташа',
+    //       icon: '',
+    //     },
+    //     {
+    //       name: 'Андрій',
+    //       icon: '',
+    //     },
+    //     {
+    //       name: 'Льоша',
+    //       icon: '',
+    //     }
+    //   ],
+    //   products: [],
+    //   localSessions: [],
+    //   settings: {
+    //     available_teams: {
+    //       paydesk: true,
+    //       kitchen: false,
+    //     },
+    //     shifts: {
+    //       enabled: true,
+    //     } 
+    //   }
+    // }
   ],
 };
 

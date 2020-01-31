@@ -9,7 +9,6 @@ import { useNetInfo } from '@react-native-community/netinfo';
 let moment = require('moment-timezone');
 moment.locale('uk');
 
-
 import API from '../../rest/api'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
@@ -80,7 +79,9 @@ function AppSessions(props) {
       if (currentRoute && currentRoute === 4) {
         console.log(currentRoute)
 
-        validateSessionRoutine(currentAccount.localSessions, data.shift_start, data.shift_end)
+        if (accounts.length !== 0) {
+          validateSessionRoutine(currentAccount.localSessions, data.shift_start, data.shift_end)
+        }
       }
     } catch (error) {
       console.log('error', error)
@@ -91,7 +92,9 @@ function AppSessions(props) {
       }
 
       if (currentRoute && currentRoute === 4) {
-        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
+        if (accounts.length !== 0) {
+          validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
+        }
       }
     }
   }
@@ -99,23 +102,30 @@ function AppSessions(props) {
   useEffect(() => {
     if (currentRoute && currentRoute === 4) {
       if (!initialLoadingVisibility) {
-        validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
+        if (accounts.length !== 0) {
+          validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
+        }
       }
     }
-  }, [currentAccount.shift_end, currentRoute, initialLoadingVisibility])
+  }, [currentAccount, currentRoute, initialLoadingVisibility])
 
   useEffect(() => {
-    syncRef.current = setInterval(() => {
-      synchronizeSessions()
-    }, 10 * 1000)
+    if (accounts.length !== 0) {
+      syncRef.current = setInterval(() => {
+        synchronizeSessions()
+      }, 10 * 1000)
+    }
+
 
     return () => {
       clearInterval(syncRef.current)
     };
-  }, [currentAccount, currentSession, currentRoute, netInfo])
+  }, [accounts, currentAccount, currentSession, currentRoute, netInfo])
 
   const asyncSync = async () => {
-    await synchronizeSessions()
+    if (accounts.length !== 0) {
+      await synchronizeSessions()
+    }
 
     changeInitialLoadingWrapperOpacity(false)
     SplashScreen.hide();
@@ -155,7 +165,7 @@ function AppSessions(props) {
         // changeInitialLoadingWrapperOpacity(false)
         // gotoScreen('ControlLayout', () => dispatch(setCurrentRoute(4)))
       } else {
-        dispatch(setCurrentRoute(1))
+        // dispatch(setCurrentRoute(1))
 
         asyncSync()
 
@@ -165,7 +175,7 @@ function AppSessions(props) {
     }
   }
 
-  useEffect(peek, [currentSession,])
+  useEffect(peek, [currentSession, accounts])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width
@@ -271,7 +281,7 @@ function AppSessions(props) {
 
     console.log('%c%s', 'color: #E7715E; font: 0.9rem Tahoma;', moment(startOfShift).format('HH:mm'))
     console.log('%c%s', 'color: #E7715E; font: 0.9rem Tahoma;', moment(endOfShift).format('HH:mm'))
-    
+
     const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
 
     return isValid
@@ -309,13 +319,16 @@ function AppSessions(props) {
           </View>
         </SharedBackground>
 
-        <SessionModal
-          isVisible={modalStatus !== ''}
-          intervalRef={intervalRef}
-          navigatorRef={navigatorRef}
-          modalStatus={modalStatus}
-          setModalStatus={setModalStatus}
-        />
+        {accounts.length !== 0 && (
+          <SessionModal
+            isVisible={modalStatus !== ''}
+            intervalRef={intervalRef}
+            navigatorRef={navigatorRef}
+            modalStatus={modalStatus}
+            setModalStatus={setModalStatus}
+          />
+        )}
+
       </SharedBackground>
     </>
   )
