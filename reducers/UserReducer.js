@@ -13,7 +13,8 @@ const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT';
 const SAVE_LOCAL_RECEIPT = 'SAVE_LOCAL_RECEIPT';
 const SYNC_DATA = 'SYNC_DATA';
 const SET_BOUNDS = 'SET_BOUNDS';
-const SET_SETTINGS = 'SET_SETTINGS'
+const SET_SETTINGS = 'SET_SETTINGS';
+const ADD_ACCOUNT = 'ADD_ACCOUNT';
 
 const initialState = {
   token: '',
@@ -37,7 +38,7 @@ const initialState = {
     // {
     //   id: '4sd3fsgu76fg55akgjsd54jadfnu343',
     //   token: '5cb1ed89c6bf28192c152435',
-    //   businessName: 'Poilka Coffee Бариста 1',
+    //   business_name: 'Poilka Coffee Бариста 1',
     //   registeredDeviceIds: [
     //     '888f33dcebf0800b',
     //     '67CA2667-D89D-4951-8112-7EA50AF8DA94',
@@ -91,6 +92,14 @@ const initialState = {
     // }
   ],
 };
+
+export function addAccount(payload) {
+  return {
+    type: ADD_ACCOUNT,
+    payload
+  }
+}
+
 
 export function setSettings(payload) {
   return {
@@ -192,6 +201,25 @@ export function restoreDefaultShift(payload) {
 }
 
 const ACTION_HANDLERS = {
+  [ADD_ACCOUNT]: (state, action) => {
+    const { accounts, } = state
+    const data = action.payload
+
+    const payload = {
+      id: data._id.slice(0, data._id.length / 2) + data._id.slice(data._id.length / 2),
+      token: data._id,
+      ...data,
+      localSessions: [],
+      products: [],
+    }
+
+    return {
+      ...state,
+      accounts: [...accounts, payload],
+      currentAccountIndex: [...accounts, {}].length - 1,
+      currentAccountToken: data._id,
+    }
+  },
   [SET_SETTINGS]: (state, action) => {
     const { accounts, currentAccountIndex } = state
     const data = action.payload

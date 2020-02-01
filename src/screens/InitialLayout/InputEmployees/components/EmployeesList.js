@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 
-import { GILROY_REGULAR, } from '@fonts'
+import { COMFORTAA_LIGHT, } from '@fonts'
 import { ScrollView } from 'react-native-gesture-handler';
 
 function EmployeesList({ employees, checked, handleCheck, }) {
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   employeeName: {
     color: '#ffffff',
     fontSize: 17,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: COMFORTAA_LIGHT,
   },
 })
 

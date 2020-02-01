@@ -10,7 +10,6 @@ import Toast, { DURATION } from 'react-native-easy-toast'
 import Svg, { Circle } from 'react-native-svg';
 import styles from './styles';
 
-import { API_URL } from '@api';
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { loginKeyboardLayout } from '../../../../helpers/keyboards'
 
@@ -67,7 +66,8 @@ function Login(props) {
   }
 
   const validateDeviceID = async (enteredPinCode) => {
-    const { registeredDeviceIds, token, } = currentAccount
+    console.log(currentAccount)
+    const { registered_device_ids, token, } = currentAccount
 
     setLoadingStatus(true)
 
@@ -78,7 +78,7 @@ function Login(props) {
 
       const deviceId = await DeviceInfo.getUniqueId();
 
-      if (!registeredDeviceIds.includes(deviceId)) {
+      if (!registered_device_ids.includes(deviceId)) {
         console.log('deviceId', deviceId)
 
         throw new Error('Не правильний Device Id')

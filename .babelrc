@@ -8,7 +8,7 @@
         ],
         "alias": {
           "@images": "./assets/images",
-          "@api": "./config/api",
+          "@api": "./rest/api",
           "@fonts": "./config/fonts",
           "@blockSizes": "./config/blockSizes",
           "@dimensions": "./helpers/dimensions",

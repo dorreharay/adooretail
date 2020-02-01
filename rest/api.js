@@ -10,6 +10,9 @@ const API = {
   async sendReceiptByEmail(payload) {
     return await asyncAxiosCall('/user/receipt/5cb1ed89c6bf28192c152435', payload)
   },
+  async requestAccount(payload) {
+    return await asyncAxiosCall('/user/requestAccount', payload)
+  },
 }
 
 export default API

@@ -12,13 +12,13 @@ const base = {
   loginHeading: {
     color: '#FFFFFF',
     fontSize: 17,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: COMFORTAA_LIGHT,
     letterSpacing: 1,
   },
   loginHeadingSuper: {
     color: '#FFFFFF',
     fontSize: 17,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: COMFORTAA_LIGHT,
     letterSpacing: 2,
   },
   dot: {
@@ -29,7 +29,7 @@ const base = {
     r: '16',
   },
   idDots: {
-    width:  380,
+    width: 380,
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginTop: 35,
@@ -87,10 +87,10 @@ const base = {
     fontFamily: FUTURA_LIGHT,
   },
 };
- 
+
 const styles = createStyles(
   base,
- 
+
   maxWidth(500, {
     loginHeading: {
       fontSize: 15,

@@ -49,7 +49,9 @@ function SalesLayout({ navigation, }) {
   }
 
   useMemo(() => {
-    updateLayout(products.flat(), layout)
+    if (products) {
+      updateLayout(products.flat(), layout)
+    }
   }, [layout])
 
   const animate = () => {
@@ -104,7 +106,7 @@ function SalesLayout({ navigation, }) {
               {accountWrapperVisibile && (
                 <Fragment>
                   <View style={{ position: 'absolute', top: -60 }}>
-                    <Text style={styles.accountHeading}>{account.businessName}</Text>
+                    <Text style={styles.accountHeading}>{account.business_name}</Text>
                   </View>
                 </Fragment>
               )}
@@ -116,7 +118,7 @@ function SalesLayout({ navigation, }) {
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
                 account={account} updateLayout={updateLayout}
-                toastRef={toastRef} setModalStatus={() => {}}
+                toastRef={toastRef} setModalStatus={() => { }}
               />
 
               {accountWrapperVisibile && (

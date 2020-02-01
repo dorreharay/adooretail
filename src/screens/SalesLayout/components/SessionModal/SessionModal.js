@@ -111,7 +111,7 @@ function SessionModal(props) {
             </TouchableOpacity>
           </Fragment>
 
-          {currentAccount.settings && currentAccount.settings.shifts.enabled && (
+          {currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled && (
             <Text style={styles.modalShiftText}>Робочі години: {currentAccount && (
               moment()
                 .hour(currentAccount.shift_start.hours)
@@ -122,7 +122,7 @@ function SessionModal(props) {
             }
 
               -
-  
+
                 {currentAccount && (
                 moment()
                   .hour(currentAccount.shift_end.hours)

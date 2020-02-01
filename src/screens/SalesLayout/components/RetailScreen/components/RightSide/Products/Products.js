@@ -79,6 +79,8 @@ function Products(props) {
         return array.filter(elem => elem.title.toLowerCase().includes(searchTerm.toLowerCase()))
       }
 
+      if (!products) return
+
       let newProducts = products
         .flat()
         .map(item => ({
@@ -135,7 +137,7 @@ function Products(props) {
       <View style={{ backgroundColor: '#F4F4F4' }}>
         <View style={{ position: 'relative', top: !categoryVisible ? 0 : 4000, flex: 1, }}>
           {[searchResult.length > 0 ? searchResult : products][0].map((row, index) => (
-            <View style={[styles.row, categoryVisible && { height: 0, }]} key={index}>
+            <View style={[styles.row,]} key={index}>
               {row.map((rowItem, key) => (
                 <TouchableOpacity
                   style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
@@ -160,7 +162,7 @@ function Products(props) {
                       <Text style={styles.matchesText}>{rowItem.matches}</Text>
                     </View>
                   )}
-                  
+
                 </TouchableOpacity>
               ))}
             </View>

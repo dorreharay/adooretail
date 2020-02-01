@@ -4,36 +4,48 @@ import axios from 'axios';
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
+import API from '@api'
 import styles from '../styles';
+
+import { addAccount } from '@reducers/UserReducer'
 
 function ConfigureAccount(props) {
   const { setLoadingStatus, navigation, } = props
+
+  const dispatch = useDispatch()
 
   const inputRef = useRef(null)
   const [cameraVisible, setCameraVisibility] = useState(true)
   const [accountCode, setAccountCode] = useState('')
 
-  const setCode = (text) => {
-    if(accountCode.length > 9 && text.length > accountCode.length) {
-      return
-    }
+  const setCode = async (text) => {
+    setAccountCode(text)
 
-    if(accountCode.length === 9) {
+    if (text.length === 10) {
       setLoadingStatus(true)
       inputRef.current.blur()
       Keyboard.dismiss()
 
-      setTimeout(() => {
+      try {
+        const data = await API.requestAccount({
+          tablet_identifier: text,
+        })
+
+        if (!data) throw new Error('Не вірні дані')
+
+        dispatch(addAccount(data))
+
         setLoadingStatus(false)
         invokeAnimation(true)
-      }, 1000)
+      } catch (error) {
+        setLoadingStatus(false)
+        invokeAnimation(false)
+      }
     }
-
-    setAccountCode(text)
   }
 
   const invokeAnimation = (success) => {
-    if(success) {
+    if (success) {
       props.invokeSuccessAnimation(gotoLogin)
     } else {
       props.invokeFailAnimation()
@@ -75,32 +87,32 @@ function ConfigureAccount(props) {
           </TouchableOpacity>
         </>
       ) : (
-        <>
-          <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>ведіть код аккаунту</Text>
-          <Text style={styles.loginHeadingCaption}>10 символів</Text>
+          <>
+            <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>ведіть код аккаунту</Text>
+            <Text style={styles.loginHeadingCaption}>10 символів</Text>
 
-          <KeyboardAvoidingView behavior="padding">
-            <View style={styles.inputContainer}>
-              <TextInput
-                ref={inputRef}
-                style={styles.input}
-                value={accountCode}
-                onChangeText={(text) => setCode(text)}
-                autoCapitalize='characters'
-                autoFocus
-              />
-            </View>
-          </KeyboardAvoidingView>
+            <KeyboardAvoidingView behavior="padding">
+              <View style={styles.inputContainer}>
+                <TextInput
+                  ref={inputRef}
+                  style={styles.input}
+                  value={accountCode}
+                  onChangeText={(text) => setCode(text)}
+                  autoCapitalize='characters'
+                  autoFocus
+                />
+              </View>
+            </KeyboardAvoidingView>
 
-          <TouchableOpacity
-            style={styles.loginCaption}
-            onPress={() => setCameraVisibility(!cameraVisible)}
-            activeOpacity={1}
-          >
-            <Text style={styles.loginCaptionText}>просканувати QR-код</Text>
-          </TouchableOpacity>
-        </>
-      )}
+            <TouchableOpacity
+              style={styles.loginCaption}
+              onPress={() => setCameraVisibility(!cameraVisible)}
+              activeOpacity={1}
+            >
+              <Text style={styles.loginCaptionText}>просканувати QR-код</Text>
+            </TouchableOpacity>
+          </>
+        )}
     </>
   )
 }

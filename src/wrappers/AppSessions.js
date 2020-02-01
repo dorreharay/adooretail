@@ -63,15 +63,7 @@ function AppSessions(props) {
       })
 
       const payload = {
-        shift_start: data.shift_start,
-        shift_end: data.shift_end,
-        default_shift_end: data.shift_end,
-        businessName: data.business_name,
-        registeredDeviceIds: data.registered_device_ids,
-        employees: data.employees,
-        warehouse: data.warehouse,
-        settings: data.settings,
-        // products: data.products.products,
+        ...data,
       }
 
       dispatch(syncDataWithStore(payload, data.shift_start, data.shift_end))
