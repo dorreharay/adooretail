@@ -86,6 +86,10 @@
 		<string>MuseoSansCyrl-500.ttf</string>
 		<string>MuseoSansCyrl-700.ttf</string>
 		<string>MuseoSansCyrl-900.ttf</string>
+		<string>museo_bold.ttf</string>
+		<string>museo_light.ttf</string>
+		<string>museo_medium.ttf</string>
+		<string>museo_regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

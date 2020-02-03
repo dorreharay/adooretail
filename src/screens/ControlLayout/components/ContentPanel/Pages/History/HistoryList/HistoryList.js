@@ -203,12 +203,12 @@ function HistoryList(props) {
         </View>
       )}
 
-      <ReceiptModal
+      {/* <ReceiptModal
         isVisible={receiptModalOpened}
         receiptModalItem={receiptModalItem}
         receiptModalState={receiptModalState}
         hideReceiptModal={hideReceiptModal}
-      />
+      /> */}
     </ScrollView>
   )
 }

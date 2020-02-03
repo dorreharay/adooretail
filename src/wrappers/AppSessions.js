@@ -35,6 +35,7 @@ function AppSessions(props) {
 
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
+  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const currentRoute = useSelector(state => state.temp.currentRoute)
   const accounts = useSelector(state => state.user.accounts)
 
@@ -60,7 +61,7 @@ function AppSessions(props) {
       const data = await API.synchronizeSessions({
         localSessions: getPreparedSessions(),
         newSettings: currentAccount.settings,
-      })
+      }, currentAccountToken)
 
       const payload = {
         ...data,

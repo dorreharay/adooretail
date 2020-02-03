@@ -21,19 +21,9 @@ const initialState = {
   startCash: 0,
   initialLoading: true,
   currentAccountIndex: 0,
-  currentAccountToken: '5cb1ed89c6bf28192c152435',
+  currentAccountToken: '',
   pinCode: '1111222',
-  bounds: [{
-    name: 'Кухня',
-    sizes: {
-      w: 200,
-      h: 200,
-    },
-    position: {
-      x: 0,
-      y: 0,
-    }
-  }],
+  bounds: [],
   accounts: [
     // {
     //   id: '4sd3fsgu76fg55akgjsd54jadfnu343',

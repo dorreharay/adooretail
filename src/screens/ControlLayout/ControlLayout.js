@@ -44,7 +44,7 @@ function ControlLayout(props) {
         title: 'Транзакції',
         iconSource: require('@images/package.png'),
         onPress: () => handleCategoryPress(2),
-        component: <Transactions />,
+        component: <View />,
       },
       {
         index: 3,

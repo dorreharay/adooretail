@@ -4,7 +4,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
-import API from '@api'
+import API from '@rest/api'
 import styles from '../styles';
 
 import { addAccount } from '@reducers/UserReducer'

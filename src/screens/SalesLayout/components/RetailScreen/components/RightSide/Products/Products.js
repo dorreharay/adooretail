@@ -188,10 +188,10 @@ function Products(props) {
                   </TouchableOpacity>
                 ) : (
                     <View style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]} key={key}>
-                      <SharedButton
+                      <TouchableOpacity
                         onPress={(force) => addProductQuantity(rowItem)(force)}
                         style={{ flex: 1, }}
-                        scale={0.95}
+                        activeOpacity={0.85}
                       >
                         {rowItem.color && (
                           <LinearGradient style={styles.variant} colors={[rowItem.color, rowItem.shadow]}>
@@ -201,7 +201,7 @@ function Products(props) {
                             <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
                           </LinearGradient>
                         )}
-                      </SharedButton>
+                      </TouchableOpacity>
                     </View>
                   )
               ))}

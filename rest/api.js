@@ -4,11 +4,13 @@ import DeviceInfo from "react-native-device-info"
 import httpClient from './index'
 
 const API = {
-  async synchronizeSessions(payload) {
-    return await asyncAxiosCall('/user/synchronizeSessions/5cb1ed89c6bf28192c152435', payload)
+  async synchronizeSessions(payload, token) {
+    if(!token) return null
+
+    return await asyncAxiosCall(`/user/synchronizeSessions/${token}`, payload)
   },
-  async sendReceiptByEmail(payload) {
-    return await asyncAxiosCall('/user/receipt/5cb1ed89c6bf28192c152435', payload)
+  async sendReceiptByEmail(payload, token) {
+    return await asyncAxiosCall(`/user/receipt/${token}`, payload)
   },
   async requestAccount(payload) {
     return await asyncAxiosCall('/user/requestAccount', payload)

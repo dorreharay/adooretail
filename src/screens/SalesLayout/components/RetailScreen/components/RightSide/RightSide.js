@@ -17,10 +17,10 @@ const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
   const {
-    products, loadProducts,
+    openMenu, loadProducts,
     receipts, setReceipts,
     selectedInstance, navigation,
-    openMenu, account, addProductQuantity,
+    account, addProductQuantity,
   } = props;
 
   const dispatch = useDispatch()

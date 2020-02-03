@@ -14,8 +14,13 @@ function ContentPanel(props) {
 
   const { deviceWidth, deviceHeight, } = useSelector(state => state.temp.dimensions)
 
+  const [swiperVisible, makeSwiperVisible] = useState(false)
+
   useEffect(() => {
-    carouselRef.current.snapToItem(activeCategory)
+    makeSwiperVisible(true)
+    if (carouselRef.current) {
+      carouselRef.current.snapToItem(activeCategory)
+    }
   }, [activeCategory])
 
   const _renderItem = ({ item, index }) => {
@@ -40,19 +45,21 @@ function ContentPanel(props) {
         navigation={navigation}
       />
 
-      <Carousel
-        ref={carouselRef}
-        data={tabs}
-        renderItem={_renderItem}
-        sliderWidth={deviceWidth * 0.8}
-        sliderHeight={deviceHeight * 0.93}
-        itemWidth={deviceWidth * 0.8}
-        itemHeight={deviceHeight * 0.93}
-        vertical
-        scrollEnabled={false}
-        onSnapToItem={handleSlideIndex}
-        inactiveSlideScale={1}
-      />
+      {swiperVisible && (
+        <Carousel
+          ref={carouselRef}
+          data={tabs}
+          renderItem={_renderItem}
+          sliderWidth={deviceWidth * 0.8}
+          sliderHeight={deviceHeight * 0.93}
+          itemWidth={deviceWidth * 0.8}
+          itemHeight={deviceHeight * 0.93}
+          vertical
+          scrollEnabled={false}
+          onSnapToItem={handleSlideIndex}
+          inactiveSlideScale={1}
+        />
+      )}
     </View>
   )
 }

@@ -8,13 +8,10 @@ moment.locale('uk');
 import styles from './styles'
 
 import { API_URL } from '@api'
-import { NO_TIME } from '@statuses'
-import { setEmployees, setStartCash, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus } from '@reducers/TempReducer';
 
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
-import Panel from './components/Panel/Panel';
+import Menu from './components/Menu/Menu';
 import PaymentModal from './components/LeftSide/components/PaymentModal';
 
 function RetailScreen(props) {
@@ -31,26 +28,11 @@ function RetailScreen(props) {
   const dispatch = useDispatch()
 
   const [receipts, setReceipts] = useState([[], [], [], []])
+  const [menuVisible, setMenuVisibility] = useState(false)
   const [selectedInstance, selectReceiptInstance] = useState(0)
-  const [selectedDate, selectDate] = useState(false)
 
-  const initialPanelScreens = { history: false, devices: false, transactions: false, }
-
-  const [panelScreenState, setPanelScreenState] = useState(initialPanelScreens)
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
   const [currentReceipt, setCurrentReceipt] = useState(0)
-
-  const [menuVisible, setMenuVisibility] = useState(false)
-  const [modalOpacity] = useState(new Animated.Value(0))
-
-  const [menuButtons] = useState([
-    {
-      name: 'Панель керування',
-      // onPress: () => openPanelInstance('history', 'ІСТОРІЯ ЗАМОВЛЕНЬ'),
-      onPress: () => navigation.navigate('ControlLayout')
-    },
-    { name: 'Змінити аккаунт', onPress: openChangeAccountOverview },
-  ])
 
   const throttleRef = useRef(_.debounce((callback) => callback(), 1000, { 'trailing': false }))
 
@@ -61,7 +43,7 @@ function RetailScreen(props) {
 
   const loadProducts = async (token) => {
     try {
-      console.log('Fetching products ---->')
+      console.log('Fetching products ---->', `${API_URL}/user/products/${token}`)
       toastRef.current.show("Синхронізація", 1000);
 
       const { data } = await axios.get(`${API_URL}/user/products/${token}`)
@@ -124,42 +106,18 @@ function RetailScreen(props) {
     setReceipts(newReceipts)
   }
 
-
-  const handleNewDate = (newDate) => {
-    selectDate(newDate)
-  }
-
   const clearCurrentReceipt = () => {
     const newReceipts = receipts.map((item, index) => index === selectedInstance ? ([]) : item)
 
     setReceipts(newReceipts)
   }
 
-  const openPanelInstance = (instanceName, title) => {
-    setMenuVisibility(false)
-    setPanelScreenState({ ...initialPanelScreens, [instanceName]: title })
-  }
-
-  const closePanelInstance = () => setPanelScreenState(initialPanelScreens)
-
   const openMenu = () => {
-    timerRef1.current = setTimeout(() => {
-      setMenuVisibility(true)
-
-      timerRef2.current = setTimeout(() => {
-        handleModalAnimation()
-      }, 10)
-    }, 50)
+    setMenuVisibility(true)
   }
 
   const closeMenu = () => {
-    timerRef3.current = setTimeout(() => {
-      setMenuVisibility(false)
-
-      timerRef4.current = setTimeout(() => {
-        handleModalAnimation()
-      }, 10)
-    }, 170)
+    setMenuVisibility(false)
   }
 
   useEffect(() => {
@@ -170,26 +128,6 @@ function RetailScreen(props) {
       clearTimeout(timerRef4.current)
     }
   }, [])
-
-  const handleModalAnimation = () => {
-    Animated.timing(
-      modalOpacity,
-      {
-        toValue: modalOpacity._value === 1 ? 0 : 1,
-        duration: 50,
-        easing: Easing.ease
-      }
-    ).start();
-  }
-
-  const endSession = () => {
-    dispatch(setEmployees([]))
-    dispatch(setStartCash(0))
-    dispatch(setEndOfSessionStatus(true))
-    setModalStatus('')
-
-    navigation.navigate('InputCash')
-  }
 
   return (
     <View style={styles.container}>
@@ -209,20 +147,16 @@ function RetailScreen(props) {
         setReceipts={setReceipts}
         navigation={navigation}
         selectedInstance={selectedInstance}
-        openMenu={openMenu}
-        account={account}
+        account={account} openMenu={openMenu}
         addProductQuantity={addProductQuantity}
       />
-      {menuVisible && (
-        <Panel
-          openMenu={openMenu}
-          closeMenu={closeMenu}
-          endSession={endSession}
-          modalOpacity={modalOpacity}
-          openPanelInstance={openPanelInstance}
-          menuButtons={menuButtons}
-        />
-      )}
+
+      <Menu
+        isVisible={menuVisible}
+        closeMenu={closeMenu}
+        navigation={navigation}
+        openChangeAccountOverview={openChangeAccountOverview}
+      />
 
       <PaymentModal
         isVisible={paymentModalVisible}

@@ -104,15 +104,16 @@ const base = {
     right: 22,
   },
   modal: {
-    width: 350,
-    height: 405,
-    borderRadius: 10,
+    position: 'relative',
+    width: 300,
+    height: 350,
+    borderRadius: 5,
   },
   modalItem: {
     justifyContent: 'center',
-    width: 350,
-    height: 70,
-    paddingLeft: 30,
+    width: 320,
+    height: 60,
+    paddingLeft: 25,
     // borderBottomWidth: 1,
     // borderBottomColor: '#FEFEFE',
     backgroundColor: '#FFFFFF'
@@ -120,17 +121,18 @@ const base = {
   withTopBorderRadius: {
     // paddingTop: 5,
     height: 78,
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
   withBottomBorderRadius: {
+    paddingLeft: 25,
     paddingBottom: 0,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
   modalItemText: {
     color: '#414141',
-    fontSize: 25,
+    fontSize: 24,
     fontFamily: PROBA_REGULAR,
   },
   redText: {
@@ -138,9 +140,9 @@ const base = {
   },
   modalItemRed: {
     justifyContent: 'center',
-    width: 350,
-    height: 75,
-    paddingLeft: 30,
+    width: 320,
+    height: 80,
+    paddingLeft: 20,
     backgroundColor: '#FFFFFF'
   },
   closeModal: {
