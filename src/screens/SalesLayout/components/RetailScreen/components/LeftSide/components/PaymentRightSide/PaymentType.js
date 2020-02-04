@@ -24,6 +24,7 @@ function PaymentType(props) {
 
   useEffect(() => {
     setActiveDiscount(0)
+    setComment('')
 
     setSpinComment(new Animated.Value(0))
     setSpinDiscount(new Animated.Value(1))
@@ -31,56 +32,112 @@ function PaymentType(props) {
     setCommentCollapsed(false)
   }, [isVisible])
 
+  const expandComment = () => {
+    Animated.timing(
+      spinDiscount,
+      {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    Animated.timing(
+      spinComment,
+      {
+        toValue: 1,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    setDiscountCollapsed(true)
+    setCommentCollapsed(false)
+  }
+
+  const collapseComment = () => {
+    Animated.timing(
+      spinComment,
+      {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    Animated.timing(
+      spinDiscount,
+      {
+        toValue: 1,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    setDiscountCollapsed(false)
+    setCommentCollapsed(true)
+  }
+
+  const expandDiscount = () => {
+    Animated.timing(
+      spinDiscount,
+      {
+        toValue: 1,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    Animated.timing(
+      spinComment,
+      {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    setDiscountCollapsed(false)
+    setCommentCollapsed(true)
+  }
+
+  const collapseDiscount = () => {
+    Animated.timing(
+      spinComment,
+      {
+        toValue: 1,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    Animated.timing(
+      spinDiscount,
+      {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    setDiscountCollapsed(true)
+    setCommentCollapsed(false)
+  }
+
   const handleExpand = (collapsed, type) => {
-    if (type === 'discount') {
+    if (type === 'comment') {
       if (collapsed) {
-        Animated.timing(
-          spinDiscount,
-          {
-            toValue: 1,
-            duration: 100,
-            easing: Easing.ease,
-          }
-        ).start()
-
-        setDiscountCollapsed(false)
+        expandComment()
       } else {
-        Animated.timing(
-          spinDiscount,
-          {
-            toValue: 0,
-            duration: 100,
-            easing: Easing.ease,
-          }
-        ).start()
-
-        setDiscountCollapsed(true)
+        collapseComment()
       }
     }
 
-    if (type === 'comment') {
+    if (type === 'discount') {
       if (collapsed) {
-        Animated.timing(
-          spinComment,
-          {
-            toValue: 1,
-            duration: 100,
-            easing: Easing.ease,
-          }
-        ).start()
-
-        setCommentCollapsed(false)
+        expandDiscount()
       } else {
-        Animated.timing(
-          spinComment,
-          {
-            toValue: 0,
-            duration: 100,
-            easing: Easing.ease,
-          }
-        ).start()
-
-        setCommentCollapsed(true)
+        collapseDiscount()
       }
     }
   }
