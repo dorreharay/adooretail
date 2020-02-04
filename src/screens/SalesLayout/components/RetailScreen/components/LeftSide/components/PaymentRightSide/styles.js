@@ -88,6 +88,45 @@ const base = {
     fontSize: 15,
     fontFamily: MUSEO_REGULAR,
   },
+  discountContainer: {
+    width: '85%',
+    marginLeft: leftPadding,
+  },
+  activeDiscountItem: {
+    borderColor: '#E35E62',
+  },
+  activeDiscountItemText: {
+    color: '#E35E62',
+  },
+  commentContainer: {
+    width: '85%',
+    height: 80,
+    marginLeft: leftPadding,
+    paddingTop: 20,
+    padding: 20,
+    borderWidth: 1.5,
+    borderColor: '#E3E3E3',
+    borderRadius: 5,
+
+    color: '#343434',
+    fontSize: 20,
+    fontFamily: PROBA_REGULAR,
+  },
+  discountItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 65,
+    height: 65,
+    marginRight: 15,
+    borderWidth: 2,
+    borderColor: '#E3E3E3',
+    borderRadius: 100,
+  },
+  discountItemText: {
+    color: '#CFCFCF',
+    fontSize: 20,
+    fontFamily: MUSEO_MEDIUM,
+  },
   orderContainer: {
     width: '85%',
     marginLeft: leftPadding,
@@ -119,12 +158,12 @@ const base = {
     fontSize: 15,
     fontFamily: PROBA_REGULAR,
   },
-  discountContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '80%',
-  },
+  // discountContainer: {
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   width: '100%',
+  //   height: '80%',
+  // },
   cameraContainer: {
     width: '70%',
     height: '70%',

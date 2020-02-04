@@ -18,7 +18,7 @@ const headerButtonSizes = { justifyContent: 'center', width: headerHeight, heigh
 const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
 
 function LeftSide(props) {
-  const { receipts, setReceipts, selectedInstance, selectReceiptInstance, setPaymentModalState, addProductQuantity, substractProductQuantity, } = props;
+  const { receipts, receiptSum, setCurrentReceipt, setReceipts, selectedInstance, selectReceiptInstance, setPaymentModalState, addProductQuantity, substractProductQuantity, } = props;
 
   const receiptsRef = useRef(null)
 
@@ -28,7 +28,6 @@ function LeftSide(props) {
 
   const [entries] = useState([{}, {}, {}, {}])
 
-  const [receiptSum, setReceiptSum] = useState(0)
   const [paymentModalVisible, setPaymentModalVisible] = useState(false)
   const [leftSideWidth, setLeftSideWidth] = useState(10)
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
@@ -36,7 +35,12 @@ function LeftSide(props) {
   const [currentTime, setCurrentTime] = useState(moment(Date.now()).format('dddd DD.MM | HH:mm').charAt(0).toUpperCase() + moment(Date.now()).format('dddd DD.MM | HH:mm').slice(1))
 
   useEffect(() => {
-    setReceiptSum(receipts[selectedInstance].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false))
+    setCurrentReceipt({
+      payload: receipts[selectedInstance],
+      receiptSum: receipts[selectedInstance].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false),
+    })
+
+    console.log('receipt sum update')
   }, [receipts[selectedInstance]]);
 
   const validateTime = () => {
@@ -80,7 +84,7 @@ function LeftSide(props) {
   const changePaymentModalState = (status) => {
     if (status && receipts[selectedInstance].length === 0) return
 
-    setPaymentModalState(status, { receiptSum, payload: receipts[selectedInstance] })
+    setPaymentModalState(status)
   }
 
   return (
@@ -89,7 +93,7 @@ function LeftSide(props) {
         <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: (headerHeight - 20) * 5.2, }}>
             {receipts.map((receiptInstance, index) => (
-              <View style={[styles.lsInstanceContainer, { width: headerHeight - 20, height: headerHeight - 20, }]}>
+              <View style={[styles.lsInstanceContainer, { width: headerHeight - 20, height: headerHeight - 20, }]} key={index}>
                 <SharedButton
                   onPress={() => selectReceiptInstance(index)}
                   style={{ flex: 1, }}

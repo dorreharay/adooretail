@@ -54,13 +54,16 @@ const PaymentModal = (props) => {
   const [employeesListVisible, setEmployeesListVisibility] = useState(false)
   const [currentEmployee, setCurrentEmployee] = useState(currentSession.employees[0])
 
+  const [activeDiscount, setActiveDiscount] = useState(0)
+  const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
+
   useEffect(() => {
     setCurrentEmployee(currentSession.employees[0])
   }, [currentSession])
 
   useEffect(() => {
-    setEnteredSum(`${currentReceipt.receiptSum}`)
-  }, [currentReceipt])
+    setEnteredSum(currentReceipt.receiptSum)
+  }, [currentReceipt.receiptSum])
 
   useEffect(() => {
     return () => {
@@ -87,6 +90,7 @@ const PaymentModal = (props) => {
       total: currentReceipt.receiptSum,
       input: parseFloat(enteredSum),
       change: +((+enteredSum) - currentReceipt.receiptSum).toFixed(2).replace(".00", ""),
+      discount: `${discounts[activeDiscount].percent}%`,
       hash_id: guidGenerator(),
       first_product_time: timeStart,
       last_product_time: timeEnd,
@@ -123,13 +127,13 @@ const PaymentModal = (props) => {
       },
       buttonText: 'Підтвердити розрахунок',
     },
-    {
-      index: 2,
-      name: 'Знижка',
-      imageSource: require('@images/gift.png'),
-      onPress: () => { },
-      buttonText: '',
-    },
+    // {
+    //   index: 2,
+    //   name: 'Знижка',
+    //   imageSource: require('@images/gift.png'),
+    //   onPress: () => { },
+    //   buttonText: '',
+    // },
   ])
   const [selectedType, selectPType] = useState(pTypes[0])
 
@@ -152,7 +156,7 @@ const PaymentModal = (props) => {
   }, [isVisible])
 
   return (
-    <View style={[styles.paymentWrapperContainer, { position: 'absolute', top: 10000, }, isVisible && { top: 0, }]} pointerEvents={isVisible ? 'auto' : 'none'}>
+    <View style={[styles.paymentWrapperContainer, { position: 'absolute', top: 4000, }, isVisible && { top: 0, }]} pointerEvents={isVisible ? 'auto' : 'none'}>
       <TouchableOpacity
         style={styles.paymentWrapper}
         activeOpacity={1}
@@ -174,9 +178,11 @@ const PaymentModal = (props) => {
           setStatus={setStatus} resetStatus={resetStatus}
           buttonAccessible={buttonAccessible}
           enteredSum={enteredSum} saveReceipt={saveReceipt}
-          setEnteredSum={setEnteredSum}
+          setEnteredSum={setEnteredSum} isVisible={isVisible}
           setButtonAccessibility={setButtonAccessibility}
           clearCurrentReceipt={clearCurrentReceipt}
+          activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
+          discounts={discounts} setDiscounts={setDiscounts}
         />
       </View>
 

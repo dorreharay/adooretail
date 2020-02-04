@@ -19,10 +19,17 @@ function Menu(props) {
   const [menuButtons] = useState([
     {
       name: 'Панель керування',
-      // onPress: () => openPanelInstance('history', 'ІСТОРІЯ ЗАМОВЛЕНЬ'),
-      onPress: () => navigation.navigate('ControlLayout')
+      onPress: () => {
+        navigation.navigate('ControlLayout')
+        closeMenu()
+      }
     },
-    { name: 'Змінити аккаунт', onPress: () => openChangeAccountOverview() },
+    {
+      name: 'Змінити аккаунт', onPress: () => {
+        openChangeAccountOverview()
+        closeMenu()
+      }
+    },
   ])
 
   const endSession = () => {

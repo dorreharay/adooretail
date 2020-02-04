@@ -32,12 +32,11 @@ function RetailScreen(props) {
   const [selectedInstance, selectReceiptInstance] = useState(0)
 
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
-  const [currentReceipt, setCurrentReceipt] = useState(0)
+  const [currentReceipt, setCurrentReceipt] = useState({})
 
   const throttleRef = useRef(_.debounce((callback) => callback(), 1000, { 'trailing': false }))
 
   const setPaymentModalState = (state, receipt) => {
-    setCurrentReceipt(receipt)
     setPaymentModalVisibility(state)
   }
 
@@ -133,7 +132,9 @@ function RetailScreen(props) {
     <View style={styles.container}>
       <LeftSide
         receipts={receipts}
+        receiptSum={currentReceipt.receiptSum}
         setReceipts={setReceipts}
+        setCurrentReceipt={setCurrentReceipt}
         selectedInstance={selectedInstance}
         selectReceiptInstance={selectReceiptInstance}
         setPaymentModalState={setPaymentModalState}

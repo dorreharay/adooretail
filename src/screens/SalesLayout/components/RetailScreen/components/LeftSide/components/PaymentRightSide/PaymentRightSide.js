@@ -14,26 +14,49 @@ function PaymentRightSide(props) {
     selectedType, status, setStatus, initialStatuses,
     buttonAccessible, resetStatus, enteredSum, setEnteredSum,
     saveReceipt, setButtonAccessibility, clearCurrentReceipt,
-    currentEmployee,
+    isVisible, activeDiscount, setActiveDiscount, 
+    discounts, setDiscounts,
   } = props
 
   const { statusColor, statusText, blinking, } = status
 
   const [invalidColor, setInvalidColor] = useState(false)
+  const [toByPaid, setToByPaid] = useState(total)
 
   useEffect(() => {
     if (selectedType.index === 1) return setButtonAccessibility(true)
 
-    if (+enteredSum >= total) {
+    if (+enteredSum >= toByPaid) {
       setButtonAccessibility(true)
       setInvalidColor(false)
     }
 
-    if (+enteredSum < total) {
+    if (+enteredSum < toByPaid) {
       setButtonAccessibility(false)
       setInvalidColor(true)
     }
+    
   }, [enteredSum, selectedType])
+  
+  useEffect(() => { 
+    if(activeDiscount === 0) {
+      setToByPaid(total)
+
+      return
+    }
+  }, [total, activeDiscount])
+
+  useEffect(() => { 
+    const percent = discounts[activeDiscount].percent
+    
+    if(activeDiscount === 0) {
+      return
+    }
+  
+    const updatedValue = ((total / 100) * percent).toFixed(2).replace('.00', '')
+
+    setToByPaid(updatedValue)
+  }, [activeDiscount])
 
   const handleChangeSum = (value) => {
     value = value.replace(/[^0-9.]/g, '')
@@ -81,13 +104,16 @@ function PaymentRightSide(props) {
         <PaymentType
           selectedType={selectedType}
           enteredSum={enteredSum} receipt={receipt}
-          total={total} buttonAccessible={buttonAccessible}
+          buttonAccessible={buttonAccessible}
           invalidColor={invalidColor}
           status={status} setStatus={setStatus}
           initialStatuses={initialStatuses} resetStatus={resetStatus}
           setPaymentModalVisibility={setPaymentModalVisibility}
           handleChangeSum={handleChangeSum} saveReceipt={saveReceipt}
-          clearCurrentReceipt={clearCurrentReceipt}
+          clearCurrentReceipt={clearCurrentReceipt} isVisible={isVisible}
+          toByPaid={toByPaid} setToByPaid={setToByPaid}
+          activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
+          discounts={discounts} setDiscounts={setDiscounts}
         />
       ) : (
           <CodePayment />

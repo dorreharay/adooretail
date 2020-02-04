@@ -272,9 +272,8 @@ function AppSessions(props) {
       endOfShift = moment().endOf('day').format('YYYY-MM-DD HH:mm')
     }
 
-    console.log('%c%s', 'color: #E7715E; font: 0.9rem Tahoma;', moment(startOfShift).format('HH:mm'))
-    console.log('%c%s', 'color: #E7715E; font: 0.9rem Tahoma;', moment(endOfShift).format('HH:mm'))
-
+    console.log('Shift validation')
+    console.log('%c%s', 'color: #E7715E; font: 0.8rem Tahoma;', `${moment(startOfShift).format('HH:mm')}  ------>  ${moment(endOfShift).format('HH:mm')}`)
     const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
 
     return isValid
