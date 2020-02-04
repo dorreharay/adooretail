@@ -53,7 +53,7 @@ function PaymentRightSide(props) {
       return
     }
   
-    const updatedValue = ((total / 100) * percent).toFixed(2).replace('.00', '')
+    const updatedValue = (total - ((total / 100) * percent)).toFixed(2).replace('.00', '')
 
     setToByPaid(updatedValue)
   }, [activeDiscount])
