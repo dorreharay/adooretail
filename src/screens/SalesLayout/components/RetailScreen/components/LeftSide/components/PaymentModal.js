@@ -56,6 +56,7 @@ const PaymentModal = (props) => {
 
   const [activeDiscount, setActiveDiscount] = useState(0)
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
+  const [comment, setComment] = useState('')
 
   useEffect(() => {
     setCurrentEmployee(currentSession.employees[0])
@@ -94,8 +95,9 @@ const PaymentModal = (props) => {
       hash_id: guidGenerator(),
       first_product_time: timeStart,
       last_product_time: timeEnd,
-      employee: currentEmployee,
       transaction_time_end: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+      employee: currentEmployee,
+      comment: comment,
     }
 
     if (!payload) return
@@ -183,6 +185,7 @@ const PaymentModal = (props) => {
           clearCurrentReceipt={clearCurrentReceipt}
           activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
           discounts={discounts} setDiscounts={setDiscounts}
+          comment={comment} setComment={setComment}
         />
       </View>
 

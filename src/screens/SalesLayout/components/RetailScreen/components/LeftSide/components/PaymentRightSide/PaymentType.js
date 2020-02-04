@@ -14,7 +14,7 @@ function PaymentType(props) {
     selectedType, enteredSum, toByPaid, invalidColor, status, setStatus,
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
     handleChangeSum, receipt, saveReceipt, clearCurrentReceipt,
-    isVisible, discounts, setActiveDiscount, activeDiscount,
+    isVisible, discounts, setActiveDiscount, activeDiscount, comment, setComment,
   } = props
 
   const [spinComment, setSpinComment] = useState(new Animated.Value(0))
@@ -83,7 +83,10 @@ function PaymentType(props) {
         setCommentCollapsed(true)
       }
     }
+  }
 
+  const handleChangeText = (value) => {
+    setComment(value)
   }
 
   const spinD = spinDiscount.interpolate({
@@ -183,6 +186,8 @@ function PaymentType(props) {
 
         <Collapsible style={{ paddingTop: '5%' }} collapsed={commentCollapsed}>
           <TextInput
+            value={comment}
+            onChangeText={handleChangeText}
             style={styles.commentContainer}
             placeholder='Ваш коментар'
             multiline

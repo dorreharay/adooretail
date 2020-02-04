@@ -15,7 +15,7 @@ function PaymentRightSide(props) {
     buttonAccessible, resetStatus, enteredSum, setEnteredSum,
     saveReceipt, setButtonAccessibility, clearCurrentReceipt,
     isVisible, activeDiscount, setActiveDiscount, 
-    discounts, setDiscounts,
+    discounts, setDiscounts, comment, setComment,
   } = props
 
   const { statusColor, statusText, blinking, } = status
@@ -114,6 +114,7 @@ function PaymentRightSide(props) {
           toByPaid={toByPaid} setToByPaid={setToByPaid}
           activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
           discounts={discounts} setDiscounts={setDiscounts}
+          comment={comment} setComment={setComment}
         />
       ) : (
           <CodePayment />
