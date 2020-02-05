@@ -56,11 +56,6 @@ function HistoryList(props) {
     }
   }
 
-  const spin = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg']
-  })
-
   const AnimatedImage = Animated.createAnimatedComponent(FastImage)
 
   const showReceiptModal = (type, receipt) => {
@@ -89,11 +84,16 @@ function HistoryList(props) {
         setScrollTopButtonVisibility(e.nativeEvent.contentOffset.y > 50)
       }}
       scrollEventThrottle={100}
-      // onScrollEndDrag={() => setScrollTopButtonVisibility(true)}
+    // onScrollEndDrag={() => setScrollTopButtonVisibility(true)}
     >
       {data.map((day, index) => {
         const employeesLength = day.employees ? day.employees.length : 0
         const sessionTotal = day.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false) || 0
+
+        const spin = spinValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: ['0deg', '360deg']
+        })
 
         return (
           <Fragment key={index}>
@@ -103,7 +103,7 @@ function HistoryList(props) {
               activeOpacity={1}
             >
               <FastImage
-                style={{ width: 20, height: 20, marginRight: 43, }}
+                style={{ width: 20, height: 20, marginRight: 28, }}
                 source={require('@images/session_process.png')}
               />
               <Text style={styles.dayHeaderDate}>{moment(day.startTime).format('dddd').charAt(0).toUpperCase() + moment(day.startTime).format('dddd DD.MM - HH:mm').slice(1)}</Text>
@@ -129,19 +129,19 @@ function HistoryList(props) {
                     removeClippedSubviews
                     renderItem={({ item }) => (
                       <View style={styles.historyInstance}>
-                        <View style={{ marginRight: 20, }}>
+                        <View style={{ marginRight: 5, }}>
                           <SharedButton
-                            style={{ marginTop: -15, width: 68, height: 68, }}
+                            style={{ marginTop: -15, width: 69, height: 69, }}
                             onPress={() => showReceiptModal('qr', item)}
                             scale={0.8}
                           >
                             <FastImage
-                              style={{ width: '30%', height: '30%', }}
-                              source={require('@images/receipt.png')}
+                              style={{ width: '26%', height: '26%', }}
+                              source={require('@images/qr-code.png')}
                             />
                           </SharedButton>
-                          <SharedButton
-                            style={{ marginTop: -15, width: 68, height: 68, }}
+                          {/* <SharedButton
+                            style={{ marginTop: -15, width: 58, height: 58, }}
                             onPress={() => showReceiptModal('email', item)}
                             scale={0.8}
                           >
@@ -149,7 +149,7 @@ function HistoryList(props) {
                               style={{ width: '30%', height: '30%', }}
                               source={require('@images/email.png')}
                             />
-                          </SharedButton>
+                          </SharedButton> */}
                         </View>
 
 
@@ -163,18 +163,30 @@ function HistoryList(props) {
                           ))}
                         </View>
 
-                        <View style={{ width: '53%', padding: 10, }}>
-                          <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ width: '58%', padding: 10, }}>
+                          <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, }}>
                             <Text style={styles.receiptDetailHeading}>Тип оплати: <Text style={styles.receiptDetailContent}>{item.payment_type === 'cash' ? 'Готівка' : 'Картка'}</Text></Text>
                             <Text style={styles.receiptDetailHeading}>Внесено: <Text style={styles.receiptDetailContent}>{item.receipt.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)} грн</Text></Text>
                           </View>
 
-                          <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, }}>
+                          <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, marginTop: 20, }}>
                             <Text style={styles.receiptDetailHeading}>Час: <Text style={styles.receiptDetailContent}>{moment(item.transaction_time_end).format('HH:mm')}</Text></Text>
                             <Text style={styles.receiptDetailHeading}>До сплати: <Text style={styles.receiptDetailContent}>{item.receipt.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)} грн</Text></Text>
                           </View>
-                        </View>
 
+                          <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, marginTop: 20, }}>
+                            <Text style={styles.receiptDetailHeading}>Знижка: <Text style={styles.receiptDetailContent}>{item.discount}</Text></Text>
+                            <Text style={styles.receiptDetailHeading}>Здача: <Text style={styles.receiptDetailContent}>{item.change} грн</Text></Text>
+                          </View>
+
+                          {item.comment !== '' && (
+                            <View style={{ width: '100%', marginTop: 20, }}>
+                              <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, }}>
+                                <Text style={styles.receiptDetailHeadingComment}>Коментар: <Text style={styles.receiptDetailContent}>{item.comment}</Text></Text>
+                              </View>
+                            </View>
+                          )}
+                        </View>
                       </View>
                     )}
                     listKey={item => item.localId}
@@ -203,12 +215,12 @@ function HistoryList(props) {
         </View>
       )}
 
-      {/* <ReceiptModal
+      <ReceiptModal
         isVisible={receiptModalOpened}
         receiptModalItem={receiptModalItem}
         receiptModalState={receiptModalState}
         hideReceiptModal={hideReceiptModal}
-      /> */}
+      />
     </ScrollView>
   )
 }

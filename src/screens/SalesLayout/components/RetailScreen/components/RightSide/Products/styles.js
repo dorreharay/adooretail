@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, MUSEO_MEDIUM, } from '@fonts'
+import { GILROY_MEDIUM, GILROY_BOLD, PROBA_REGULAR, PROBA_MEDIUM, MUSEO_MEDIUM, } from '@fonts'
 import { deviceWidth } from '@dimensions';
 
 const base = {
@@ -70,21 +70,21 @@ const base = {
     marginBottom: 2.5,
     color: '#4E4E4E',
     fontSize: 20,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 30,
   },
   categoryTitleText4: {
     marginBottom: 2.5,
     color: '#4E4E4E',
     fontSize: 20,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 30,
   },
   categoryTitleText5: {
     marginBottom: 0,
     color: '#4E4E4E',
     fontSize: 16,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 20,
   },
   variant: {
@@ -101,7 +101,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 30,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   variantText4: {
     position: 'absolute',
@@ -111,7 +111,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 20,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 30,
   },
   variantText5: {
@@ -122,7 +122,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 20,
   },
   variantPrice: {
@@ -135,12 +135,12 @@ const base = {
     width: 45,
     height: 45,
     borderRadius: 100,
-    backgroundColor: '#FFFFFF4D',
+    backgroundColor: '#FFFFFF33',
   },
   variantPriceText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   searchResultContainer: {
     position: 'absolute',

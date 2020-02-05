@@ -7,6 +7,8 @@ import moment from 'moment/min/moment-with-locales';
 import styles from './styles'
 moment.locale('uk');
 
+import ClockIcon from '@images/hour.svg'
+
 import SharedButton from '@shared/SharedButton';
 import Receipt from './components/Receipt';
 
@@ -91,7 +93,7 @@ function LeftSide(props) {
     <View style={styles.container}>
       {isReceiptInstancesVisible ? (
         <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: (headerHeight - 20) * 5.2, }}>
+          <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '75%', flexDirection: 'row' }}>
             {receipts.map((receiptInstance, index) => (
               <View style={[styles.lsInstanceContainer, { width: headerHeight - 20, height: headerHeight - 20, }]} key={index}>
                 <SharedButton
@@ -112,41 +114,46 @@ function LeftSide(props) {
               </View>
             ))}
           </View>
-          <SharedButton
-            onPress={() => setReceiptInstancesVisibility(!isReceiptInstancesVisible)}
-            style={headerButtonSizes}
-            borderRadius={headerHeight}
-            iconStyle={{ width: headerIcon.width - 9, height: headerIcon.height, }}
-            source={require('@images/back_thin.png')}
-          />
+          <View style={{ width: '25%', marginLeft: 0.5, flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <SharedButton
+              onPress={() => setReceiptInstancesVisibility(!isReceiptInstancesVisible)}
+              style={headerButtonSizes}
+              iconStyle={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
+              source={require('@images/x_icon.png')}
+            />
+          </View>
         </View>
       ) : (
           <View
             style={[styles.header, { height: headerHeight, }]}
             onLayout={(e) => startTimer(e)}
           >
-            <View style={{ alignItems: 'center', width: '40%', flexDirection: 'row' }}>
-              <SharedButton
-                onPress={() => { }}
-                style={headerButtonSizes}
-                iconStyle={{ width: headerIcon.width + 1.3, height: headerIcon.height + 1, }}
-                source={require('@images/clock.png')}
-                scale={0.85}
-              />
-              <Text
-                style={styles.timeText}
-                numberOfLines={1}
-                ellipsizeMode={'head'}
-              >{currentTime}</Text>
-            </View>
+            <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '80%', flexDirection: 'row' }}>
+              <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', }}>
+                <SharedButton
+                  onPress={() => { }}
+                  style={headerButtonSizes}
+                  scale={0.85}
+                >
+                  <ClockIcon width={20} height={20} />
+                </SharedButton>
+                <Text
+                  style={styles.timeText}
+                  numberOfLines={1}
+                  ellipsizeMode={'head'}
+                >{currentTime}</Text>
+              </View>
 
-            <View style={{ width: '40%', flexDirection: 'row' }}>
+
               <SharedButton
                 style={headerButtonSizes}
-                iconStyle={headerIcon}
+                iconStyle={{ width: headerIcon.width - 1.5, height: headerIcon.height - 1.5, }}
                 onPress={() => setReceiptInstancesVisibility(!isReceiptInstancesVisible)}
                 source={require('@images/split_orders.png')}
               />
+            </View>
+
+            <View style={{ width: '20%', flexDirection: 'row', justifyContent: 'flex-end' }}>
               <SharedButton
                 onPress={() => setReceiptInstance([])}
                 style={headerButtonSizes}

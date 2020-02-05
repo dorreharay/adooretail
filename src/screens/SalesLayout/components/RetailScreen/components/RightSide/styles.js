@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
 
 const toolsBarHeight = 45
 
@@ -34,7 +34,7 @@ const base = {
     marginTop: 0.5,
     flex: 1,
     fontSize: 17,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_MEDIUM,
   },
   connection: {
     flexDirection: 'row',
@@ -50,7 +50,7 @@ const base = {
     marginTop: Platform.OS === 'ios' ? 1 : 0,
     paddingBottom: Platform.OS === 'android' ? 2.5 : 0,
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   update: {
     width: toolsBarHeight,

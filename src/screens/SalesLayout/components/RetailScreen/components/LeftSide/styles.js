@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -20,12 +20,12 @@ const base = {
   timeText: {
     color: '#343434',
     fontSize: 17,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_MEDIUM,
   },
   receiptButtonText: {
     color: '#343434',
     fontSize: 22,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   receipts: {
     flex: 1,
@@ -71,11 +71,12 @@ const base = {
   },
   receiptTitle: {
     width: '100%',
+    // paddingBottom: 5,
   },
   receiptTitleText: {
     color: '#343434',
-    fontSize: 22,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 20,
+    fontFamily: GILROY_MEDIUM,
   },
   receiptDetails: {
     width: '100%',
@@ -91,7 +92,7 @@ const base = {
   receiptOnePrice: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: FUTURA_LIGHT,
+    fontFamily: GILROY_REGULAR,
   },
   receiptQtyContainer: {
     alignItems: 'center',
@@ -119,7 +120,7 @@ const base = {
   receiptQtyText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: GILROY_REGULAR,
   },
   receiptPrice: {
     alignItems: 'center',
@@ -135,7 +136,7 @@ const base = {
     height: 50,
   },
   selectedText: {
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_REGULAR,
   },
   paymentModal: {
     position: 'absolute',

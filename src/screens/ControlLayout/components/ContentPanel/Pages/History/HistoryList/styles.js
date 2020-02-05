@@ -116,6 +116,13 @@ const base = {
     fontSize: 20,
     fontFamily: PROBA_REGULAR,
   },
+  receiptDetailHeadingComment: {
+    width: '100%',
+    color: '#000000',
+    fontSize: 20,
+    fontFamily: PROBA_REGULAR,
+    lineHeight: 25,
+  },
   receiptDetailContent: {
     fontFamily: PROBA_LIGHT,
     // textDecorationLine: 'underline',
