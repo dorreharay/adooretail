@@ -4,16 +4,16 @@ import { Switch } from 'react-native-switch';
 import styles from './styles';
 
 const SwitchWithTitle = (props) => {
-  const { title, value, onValueChange, } = props
+  const { title, value, onValueChange, disabled = false } = props
 
   return (
-    <View style={{ alignItems: 'center', alignSelf: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', marginLeft: 3, marginBottom: 20, }}>
+    <View style={[{ alignItems: 'center', alignSelf: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', marginLeft: 3, marginBottom: 20, }, disabled && { opacity: 0.5 }]}>
       <Text style={styles.switchText}>{title}</Text>
       <View style={{ marginLeft: 20, }}>
         <Switch
           value={value}
           onValueChange={(val) => onValueChange(val)}
-          disabled={false}
+          disabled={disabled}
           circleSize={30}
           barHeight={34}
           circleBorderWidth={0}

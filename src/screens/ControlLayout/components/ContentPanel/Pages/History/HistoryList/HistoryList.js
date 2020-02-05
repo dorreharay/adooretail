@@ -176,7 +176,7 @@ function HistoryList(props) {
 
                           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, marginTop: 20, }}>
                             <Text style={styles.receiptDetailHeading}>Знижка: <Text style={styles.receiptDetailContent}>{item.discount}</Text></Text>
-                            <Text style={styles.receiptDetailHeading}>Здача: <Text style={styles.receiptDetailContent}>{item.change} грн</Text></Text>
+                            <Text style={styles.receiptDetailHeading}>Решта: <Text style={styles.receiptDetailContent}>{item.change} грн</Text></Text>
                           </View>
 
                           {item.comment !== '' && (

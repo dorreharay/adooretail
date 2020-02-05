@@ -33,7 +33,7 @@ function PaymentSubmit(props) {
       <SharedButton
         style={{ flex: 1, }}
         onPress={() => buttonAccessible ? handlePress() : null}
-        scale={0.95}
+        scale={0.99}
       >
         <LinearGradient
           start={{ x: 0, y: 1 }}

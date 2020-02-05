@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { View, Text, Dimensions, StyleSheet, } from 'react-native'
+import { View, Text, Dimensions, StyleSheet, Alert } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
 import _ from 'lodash'
 import SplashScreen from 'react-native-splash-screen'
@@ -58,6 +58,10 @@ function AppSessions(props) {
 
   const synchronizeSessions = async () => {
     try {
+      if(!netInfo.isConnected) {
+        throw new Error('no internet')
+      }
+
       const data = await API.synchronizeSessions({
         localSessions: getPreparedSessions(),
         newSettings: currentAccount.settings,
@@ -104,6 +108,8 @@ function AppSessions(props) {
 
   useEffect(() => {
     if (accounts.length !== 0) {
+      clearInterval(syncRef.current)
+
       syncRef.current = setInterval(() => {
         synchronizeSessions()
       }, 10 * 1000)

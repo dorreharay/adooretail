@@ -91,8 +91,9 @@ function RightSide(props) {
               source={require('@images/x_icon.png')}
             />
           )}
-
         </View>
+
+        {console.log(netInfo.isConnected)}
 
         <SharedButton onPress={() => { }} scale={0.85}>
           <View style={styles.connection}>
