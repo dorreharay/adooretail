@@ -4,14 +4,16 @@ import { useSelector, useDispatch, } from 'react-redux'
 import Ripple from 'react-native-material-ripple';
 let moment = require('moment-timezone');
 import FastImage from 'react-native-fast-image'
+import LinearGradient from 'react-native-linear-gradient';
 moment.locale('uk');
-import styles from '../../../styles'
+import styles from './styles'
 
 import { saveLocalReceipt } from '@reducers/UserReducer'
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 
-import PaymentLeftSide from './PaymentLeftSide/PaymentLeftSide';
-import PaymentRightSide from './PaymentRightSide/PaymentRightSide';
+import PaymentLeftSide from '../PaymentLeftSide/PaymentLeftSide';
+import PaymentRightSide from '../PaymentRightSide/PaymentRightSide';
+import SharedButton from '@shared/SharedButton'
 
 const PaymentModal = (props) => {
   const {
@@ -58,9 +60,9 @@ const PaymentModal = (props) => {
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
   const [comment, setComment] = useState('')
 
-  useEffect(() => {
-    setCurrentEmployee(currentSession.employees[0])
-  }, [currentSession])
+  // useEffect(() => {
+  //   setCurrentEmployee(currentSession.employees[0])
+  // }, [currentSession])
 
   useEffect(() => {
     setEnteredSum(currentReceipt.receiptSum)
@@ -204,17 +206,33 @@ const PaymentModal = (props) => {
                 <Ripple
                   style={styles.employeesListItem}
                   onPress={() => {
+                    if(currentEmployee === item) return
+
                     setEmployeesListVisibility(false)
                     setCurrentEmployee(item)
                   }}
                   rippleColor={`#C4C4C4`}
                   rippleFades key={key}
                 >
-                  <FastImage
-                    style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
-                    source={{ uri: currentAccount.img_url }}
-                  />
-                  <Text style={styles.employeesListItemName}>{item}</Text>
+                  <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                    <FastImage
+                      style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
+                      source={{ uri: currentAccount.img_url }}
+                    />
+                    <Text style={styles.employeesListItemName}>{item}</Text>
+                  </View>
+                  <View style={styles.pickEmployeeButton}>
+                    <SharedButton>
+                      <LinearGradient
+                        style={styles.pickEmployeeButtonLinear}
+                        start={{ x: 1, y: 1 }}
+                        end={{ x: 0, y: 2 }}
+                        colors={currentEmployee !== item ? ['#DB3E69', '#FD9C6C'] : ['#f4f4f4', '#f4f4f4']}
+                      >
+                        <Text style={[styles.pickEmployeeButtonText, currentEmployee === item && { color: '#A4A4A4' }]}>обрати</Text>
+                      </LinearGradient>
+                    </SharedButton>
+                  </View>
                 </Ripple>
               ))}
             </ScrollView>

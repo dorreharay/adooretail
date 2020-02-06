@@ -93,24 +93,6 @@ const base = {
     fontSize: 32,
     fontFamily: PROBA_LIGHT,
   },
-  dot: {
-    width: '60',
-    height: '60',
-    cx: '38',
-    cy: '38',
-    r: '35',
-  },
-  paymentTotalContainer: {
-    width: '100%',
-    paddingHorizontal: '4%',
-    marginTop: 30
-  },
-  paymentTotalText: {
-    marginBottom: 15,
-    marginLeft: 20,
-    fontSize: 30,
-    fontFamily: PROBA_LIGHT,
-  },
   employeesListContainer: {
     position: 'absolute',
     left: 0,
@@ -136,7 +118,7 @@ const base = {
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    height: 70,
+    height: 75,
     paddingLeft: 30,
     paddingRight: 40,
   },
@@ -144,6 +126,19 @@ const base = {
     marginLeft: 15,
     fontSize: 20,
     fontFamily: GILROY_REGULAR,
+  },
+  pickEmployeeButton: {
+
+  },
+  pickEmployeeButtonLinear: {
+    padding: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  pickEmployeeButtonText: {
+    color: '#FFF',
+    fontSize: 15,
+    fontFamily: GILROY_MEDIUM,
   }
 };
 

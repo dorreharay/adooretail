@@ -12,7 +12,7 @@ import { API_URL } from '@api'
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
 import Menu from './components/Menu/Menu';
-import PaymentModal from './components/LeftSide/components/PaymentModal';
+import PaymentModal from './components/LeftSide/components/PaymentModal/PaymentModal';
 
 function RetailScreen(props) {
   const {
