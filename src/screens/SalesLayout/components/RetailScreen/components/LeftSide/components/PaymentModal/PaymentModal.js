@@ -194,11 +194,11 @@ const PaymentModal = (props) => {
 
       {employeesListVisible && (
         <TouchableOpacity
-          style={[styles.employeesListContainer, { width: deviceWidth * 0.72, height: deviceWidth * 0.55, left: deviceWidth * 0.14, }]}
+          style={[styles.employeesListContainer, { width: deviceWidth, height: deviceHeight, left: 0, }]}
           onPress={() => setEmployeesListVisibility(false)}
           activeOpacity={1}
         >
-          <View style={{ width: '50%', height: '70%', borderRadius: 3, backgroundColor: '#FFFFFF' }}>
+          <View style={{ width: '37%', height: '50%', borderRadius: 3, backgroundColor: '#FFFFFF' }}>
             <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
 
             <ScrollView style={styles.employeesList}>

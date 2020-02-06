@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef, } from 'react'
+import React, { Fragment, useState, useEffect, useRef, Suspense, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
 import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
@@ -45,21 +45,19 @@ function ContentPanel(props) {
         navigation={navigation}
       />
 
-      {swiperVisible && (
-        <Carousel
-          ref={carouselRef}
-          data={tabs}
-          renderItem={_renderItem}
-          sliderWidth={deviceWidth * 0.8}
-          sliderHeight={deviceHeight * 0.93}
-          itemWidth={deviceWidth * 0.8}
-          itemHeight={deviceHeight * 0.93}
-          vertical
-          scrollEnabled={false}
-          onSnapToItem={handleSlideIndex}
-          inactiveSlideScale={1}
-        />
-      )}
+      <Carousel
+        ref={carouselRef}
+        data={tabs}
+        renderItem={_renderItem}
+        sliderWidth={deviceWidth * 0.8}
+        sliderHeight={deviceHeight * 0.93}
+        itemWidth={deviceWidth * 0.8}
+        itemHeight={deviceHeight * 0.93}
+        vertical
+        scrollEnabled={false}
+        onSnapToItem={handleSlideIndex}
+        inactiveSlideScale={1}
+      />
     </View>
   )
 }

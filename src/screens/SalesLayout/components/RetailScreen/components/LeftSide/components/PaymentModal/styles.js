@@ -123,7 +123,7 @@ const base = {
     paddingRight: 40,
   },
   employeesListItemName: {
-    marginLeft: 15,
+    marginLeft: 20,
     fontSize: 20,
     fontFamily: GILROY_REGULAR,
   },

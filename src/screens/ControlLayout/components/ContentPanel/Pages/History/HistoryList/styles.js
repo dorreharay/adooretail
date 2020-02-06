@@ -129,7 +129,7 @@ const base = {
   },
   collapsedReceiptContent: {
     flexDirection: 'column',
-    width: '35%',
+    width: '33%',
     paddingRight: 20,
   },
   collapsedReceiptContenHeading: {

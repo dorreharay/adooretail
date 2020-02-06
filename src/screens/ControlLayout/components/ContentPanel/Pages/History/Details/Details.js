@@ -12,7 +12,10 @@ import { currentAccountSelector, } from '@selectors'
 import SharedButton from '@shared/SharedButton';
 
 function Details(props) {
-  const { activeSort, setActiveSort, activeFilter, setActiveFilter, toggleEmptySessions, withoutEmptySessions, } = props
+  const {
+    activeSort, setActiveSort, activeFilter, setActiveFilter,
+    toggleEmptySessions, withoutEmptySessions, loading, setLoadingStatus,
+  } = props
 
   const currentAccount = useSelector(currentAccountSelector)
 
@@ -182,6 +185,20 @@ function Details(props) {
               Зростання за сумою
           </MenuItem>
           </Menu>
+
+          {loading ? (
+            <View style={{ justifyContent: 'center', marginLeft: 30, height: 40, }}>
+              <View style={{ width: 25, height: 25, borderRadius: 100, borderWidth: 2, borderColor: '#E36062' }}>
+
+              </View>
+            </View>
+          ) : (
+              <View style={{ justifyContent: 'center', marginLeft: 30, height: 40, }}>
+                <View style={{ width: 25, height: 25, borderRadius: 100, borderWidth: 1, borderColor: '#cccc' }}>
+
+                </View>
+              </View>
+            )}
         </View>
       </View>
       <Collapsible style={{ paddingVertical: 15, }} collapsed={!detailsExpanded}>

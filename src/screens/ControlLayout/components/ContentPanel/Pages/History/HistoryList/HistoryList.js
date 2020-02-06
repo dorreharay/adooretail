@@ -74,6 +74,16 @@ function HistoryList(props) {
     }, 300)
   }
 
+  const renderTimeSpent = (startTime, endTime) => {
+    let timeSpent = moment(endTime).diff(moment(startTime), 'seconds')
+    
+    if(timeSpent < 60) {
+      return timeSpent + ' сек'
+    } else {
+      return moment(endTime).diff(moment(startTime), 'minutes') + ' хв'
+    }
+  }
+
   return (
     <ScrollView
       ref={scrollRef}
@@ -125,7 +135,7 @@ function HistoryList(props) {
                 >
                   <FlatList
                     data={day.receipts.slice(day.receipts.length - 20, day.receipts.length).reverse()}
-                    initialNumToRender={20}
+                    initialNumToRender={10}
                     removeClippedSubviews
                     renderItem={({ item }) => (
                       <View style={styles.historyInstance}>
@@ -163,25 +173,32 @@ function HistoryList(props) {
                           ))}
                         </View>
 
-                        <View style={{ width: '58%', padding: 10, }}>
+                        <View style={{ width: '62%', padding: 10, }}>
                           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, }}>
                             <Text style={styles.receiptDetailHeading}>Тип оплати: <Text style={styles.receiptDetailContent}>{item.payment_type === 'cash' ? 'Готівка' : 'Картка'}</Text></Text>
                             <Text style={styles.receiptDetailHeading}>Внесено: <Text style={styles.receiptDetailContent}>{item.receipt.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)} грн</Text></Text>
                           </View>
 
                           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, marginTop: 20, }}>
-                            <Text style={styles.receiptDetailHeading}>Час: <Text style={styles.receiptDetailContent}>{moment(item.transaction_time_end).format('HH:mm')}</Text></Text>
+                            <Text style={styles.receiptDetailHeading}>Час транзакції: <Text style={styles.receiptDetailContent}>{moment(item.transaction_time_end).format('HH:mm')}</Text></Text>
                             <Text style={styles.receiptDetailHeading}>До сплати: <Text style={styles.receiptDetailContent}>{item.receipt.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)} грн</Text></Text>
                           </View>
 
                           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, marginTop: 20, }}>
-                            <Text style={styles.receiptDetailHeading}>Знижка: <Text style={styles.receiptDetailContent}>{item.discount}</Text></Text>
+                            <Text style={styles.receiptDetailHeading}>Час оформлення: <Text style={styles.receiptDetailContent}>
+                              {renderTimeSpent(item.first_product_time, item.transaction_time_end)}
+                            </Text></Text>
                             <Text style={styles.receiptDetailHeading}>Решта: <Text style={styles.receiptDetailContent}>{item.change} грн</Text></Text>
+                          </View>
+
+                          <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 16, marginTop: 20, }}>
+                            <Text style={styles.receiptDetailHeading}>Працівник: <Text style={styles.receiptDetailContent}>{item.employee}</Text></Text>
+                            <Text style={styles.receiptDetailHeading}>Знижка: <Text style={styles.receiptDetailContent}>{item.discount}</Text></Text>
                           </View>
 
                           {item.comment !== '' && (
                             <View style={{ width: '100%', marginTop: 20, }}>
-                              <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, }}>
+                              <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 17, }}>
                                 <Text style={styles.receiptDetailHeadingComment}>Коментар: <Text style={styles.receiptDetailContent}>{item.comment}</Text></Text>
                               </View>
                             </View>

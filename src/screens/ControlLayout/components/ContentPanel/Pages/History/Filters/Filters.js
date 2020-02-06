@@ -4,9 +4,9 @@ import { useSelector, } from 'react-redux'
 import styles from './styles'
 
 
-function Details(props) {
+function Filters(props) {
 
   return null
 }
 
-export default Details
+export default Filters

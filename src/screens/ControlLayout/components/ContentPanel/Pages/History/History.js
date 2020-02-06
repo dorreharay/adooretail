@@ -1,4 +1,4 @@
-import React, { useState, useMemo, Fragment, } from 'react'
+import React, { useState, useMemo, Fragment, useEffect, } from 'react'
 import { View, Text, } from 'react-native'
 import { useSelector, } from 'react-redux'
 import _ from 'lodash'
@@ -18,11 +18,20 @@ function History(props) {
   const [activeFilter, setActiveFilter] = useState(null)
   const [activeSort, setActiveSort] = useState({ code: 'time-desc', name: 'Сортувати' })
   const [withoutEmptySessions, setWithoutStatus] = useState(false)
+  const [loading, setLoadingStatus] = useState(false)
+
+  useEffect(() => {
+    setLoadingStatus(true)
+
+    setTimeout(() => {
+      setLoadingStatus(false)
+    }, 500)
+  }, [activeFilter, activeSort,])
 
   const historyList = useMemo(() => {
     let localSessions = currentAccount.localSessions
     
-    if(withoutEmptySessions) {
+    if (withoutEmptySessions) {
       localSessions = localSessions.filter(item => item.receipts.length !== 0)
     }
 
@@ -36,7 +45,7 @@ function History(props) {
           localSessions = _.orderBy(localSessions, 'startTime', 'asc')
         }
 
-        if(activeSort.code === 'sum-desc') {
+        if (activeSort.code === 'sum-desc') {
           localSessions === localSessions.sort((a, b) => {
             const prev = a.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false)
             const next = b.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false)
@@ -45,7 +54,7 @@ function History(props) {
           })
         }
 
-        if(activeSort.code === 'sum-asc') {
+        if (activeSort.code === 'sum-asc') {
           localSessions === localSessions.sort((a, b) => {
             const prev = a.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false)
             const next = b.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false)
@@ -55,20 +64,20 @@ function History(props) {
         }
       }
 
-      if(activeFilter) {
-        if(activeFilter.code === 'day') {
+      if (activeFilter) {
+        if (activeFilter.code === 'day') {
           localSessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf('day'), moment().endOf('day')))
         }
 
-        if(activeFilter.code === 'week') {
+        if (activeFilter.code === 'week') {
           localSessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf('week'), moment().endOf('week')))
         }
 
-        if(activeFilter.code === 'month') {
+        if (activeFilter.code === 'month') {
           localSessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf('month'), moment().endOf('month')))
         }
 
-        if(activeFilter.code === 'year') {
+        if (activeFilter.code === 'year') {
           localSessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf('year'), moment().endOf('year')))
         }
       }
@@ -90,6 +99,7 @@ function History(props) {
         setActiveSort={setActiveSort}
         toggleEmptySessions={toggleEmptySessions}
         withoutEmptySessions={withoutEmptySessions}
+        loading={loading} setLoadingStatus={setLoadingStatus}
       />
 
       <Filters />

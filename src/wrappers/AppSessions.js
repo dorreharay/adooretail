@@ -58,9 +58,9 @@ function AppSessions(props) {
 
   const synchronizeSessions = async () => {
     try {
-      if(!netInfo.isConnected) {
-        throw new Error('no internet')
-      }
+      // if(!netInfo.isConnected) {
+      //   throw new Error('no internet')
+      // }
 
       const data = await API.synchronizeSessions({
         localSessions: getPreparedSessions(),
