@@ -56,6 +56,12 @@ function AppSessions(props) {
     return currentAccount.localSessions.slice(offset, currentAccount.localSessions.length)
   }
 
+  useEffect(() => {
+    return () => {
+      dispatch(setCurrentRoute(0))
+    }
+  }, [])
+
   const synchronizeSessions = async () => {
     try {
       // if(!netInfo.isConnected) {
@@ -74,7 +80,7 @@ function AppSessions(props) {
       dispatch(syncDataWithStore(payload, data.shift_start, data.shift_end))
 
       if (currentRoute && currentRoute === 4) {
-        console.log(currentRoute)
+        // Alert.alert(`${currentRoute} ---- 1`)
 
         if (accounts.length !== 0) {
           validateSessionRoutine(currentAccount.localSessions, data.shift_start, data.shift_end)
@@ -90,6 +96,8 @@ function AppSessions(props) {
 
       if (currentRoute && currentRoute === 4) {
         if (accounts.length !== 0) {
+          // Alert.alert(`${currentRoute} ---- 2`)
+
           validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
         }
       }
@@ -124,10 +132,10 @@ function AppSessions(props) {
   const asyncSync = async () => {
     if (accounts.length !== 0) {
       await synchronizeSessions()
-    }
 
-    changeInitialLoadingWrapperOpacity(false)
-    SplashScreen.hide();
+      changeInitialLoadingWrapperOpacity(false)
+      SplashScreen.hide();
+    }
   };
 
   const gotoScreen = async (screen, callback) => {
@@ -137,6 +145,9 @@ function AppSessions(props) {
         NavigationService.navigate(screen)
 
         await asyncSync()
+
+        changeInitialLoadingWrapperOpacity(false)
+        SplashScreen.hide();
 
         callback()
       }, 110)
@@ -160,21 +171,13 @@ function AppSessions(props) {
 
       if (!currentSession.endTime && currentSession.length !== 0) {
         gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
-
-        // changeInitialLoadingWrapperOpacity(false)
-        // gotoScreen('ControlLayout', () => dispatch(setCurrentRoute(4)))
       } else {
-        // dispatch(setCurrentRoute(1))
-
         asyncSync()
-
-        changeInitialLoadingWrapperOpacity(false)
-        SplashScreen.hide();
       }
     }
   }
 
-  useEffect(peek, [currentSession, accounts])
+  useEffect(peek, [currentSession])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width

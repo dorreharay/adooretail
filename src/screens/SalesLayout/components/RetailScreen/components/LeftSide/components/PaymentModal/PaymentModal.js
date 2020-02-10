@@ -21,7 +21,8 @@ const PaymentModal = (props) => {
     currentReceipt, clearCurrentReceipt,
   } = props;
 
-  const timerRef = useRef(null)
+  const timerRef1 = useRef(null)
+  const timerRef2 = useRef(null)
 
   const dispatch = useDispatch()
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
@@ -70,7 +71,8 @@ const PaymentModal = (props) => {
 
   useEffect(() => {
     return () => {
-      clearTimeout(timerRef.current)
+      clearTimeout(timerRef1.current)
+      clearTimeout(timerRef2.current)
     }
   }, [])
 
@@ -104,7 +106,9 @@ const PaymentModal = (props) => {
 
     if (!payload) return
 
-    dispatch(saveLocalReceipt(payload))
+    timerRef2.current = setTimeout(() => {
+      dispatch(saveLocalReceipt(payload))
+    }, 300)
   }
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)
@@ -144,7 +148,7 @@ const PaymentModal = (props) => {
   const handleCardPayment = () => {
     setStatus(initialStatuses.success)
 
-    timerRef.current = setTimeout(() => {
+    timerRef1.current = setTimeout(() => {
       setPaymentModalVisibility(false)
       setButtonAccessibility(true)
     }, 500)
@@ -206,7 +210,7 @@ const PaymentModal = (props) => {
                 <Ripple
                   style={styles.employeesListItem}
                   onPress={() => {
-                    if(currentEmployee === item) return
+                    if (currentEmployee === item) return
 
                     setEmployeesListVisibility(false)
                     setCurrentEmployee(item)

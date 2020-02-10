@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import styles from '../../../styles'
 
@@ -17,23 +17,29 @@ function PaymentSubmit(props) {
     }
   }, [])
 
-  const handlePress = () => selectedType.onPress(() => {
-    saveReceipt(selectedType.apiName, receipt)
-    if(selectedType.index === 1) {
-      timerRef.current = setTimeout(() => {
-        clearCurrentReceipt()
-      }, 500)
-    } else {
-      clearCurrentReceipt()
+  const handlePress = () => {
+    if(!buttonAccessible) {
+      return () => {}
     }
-  })
+
+    return selectedType.onPress(() => {
+      saveReceipt(selectedType.apiName, receipt)
+      if (selectedType.index === 1) {
+        timerRef.current = setTimeout(() => {
+          clearCurrentReceipt()
+        }, 300)
+      } else {
+        clearCurrentReceipt()
+      }
+    })
+  }
 
   return (
     <View style={styles.paymentSubmitButton}>
-      <SharedButton
+      <TouchableOpacity
         style={{ flex: 1, }}
-        onPress={() => buttonAccessible ? handlePress() : null}
-        scale={0.99}
+        onPress={handlePress}
+        activeOpacity={0.8}
       >
         <LinearGradient
           start={{ x: 0, y: 1 }}
@@ -43,7 +49,7 @@ function PaymentSubmit(props) {
         >
           <Text style={styles.paymentSubmitButtonText}>{buttonText}</Text>
         </LinearGradient>
-      </SharedButton>
+      </TouchableOpacity>
     </View>
   )
 }
