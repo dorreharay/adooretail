@@ -55,6 +55,16 @@ function AppSessions(props) {
     return currentAccount.localSessions.slice(offset, currentAccount.localSessions.length)
   }
 
+  const getPreparedTransactions = () => {
+    let offset = 0
+
+    if (currentAccount.transactions.length >= 5) {
+      offset = currentAccount.transactions.length - 5
+    }
+
+    return currentAccount.transactions.slice(offset, currentAccount.transactions.length)
+  }
+
   useEffect(() => {
     return () => {
       dispatch(setCurrentRoute(0))
@@ -69,6 +79,7 @@ function AppSessions(props) {
 
       const data = await API.synchronizeSessions({
         localSessions: getPreparedSessions(),
+        localTransactions: getPreparedTransactions(),
         newSettings: currentAccount.settings,
       }, currentAccountToken)
 

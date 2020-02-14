@@ -1,17 +1,16 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
     width: '100%',
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 30,
   },
   button: {
     height: 55,
-    marginRight: 10,
+    marginBottom: 10,
   },
   buttonInnerStyles: {
     alignItems: 'center',
@@ -23,11 +22,12 @@ const base = {
   buttonText: {
     color: '#343434',
     fontSize: 22,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   activeButton: {
-    color: '#FFFFFF',
-    fontFamily: PROBA_MEDIUM,
+    color: '#E46162',
+    fontFamily: GILROY_MEDIUM,
+    textDecorationLine: 'underline'
   },
 };
 

@@ -1,14 +1,23 @@
 import React, { useState, useEffect, } from 'react'
 import { View, Text, TextInput, KeyboardAvoidingView, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
+import { useSelector, useDispatch } from 'react-redux'
 import styles from './styles'
 
-import TransactionButtons from './TransactionButtons/TransactionButtons'
+import { getFormattedDate, } from '@dateFormatter'
+import { deviceWidth, deviceHeight, } from '@dimensions'
+
+import { saveTransaction } from '@reducers/UserReducer'
+import { currentSessionSelector, } from '@selectors'
 
 import SharedButton from '@shared/SharedButton';
-import { dispatch } from 'rxjs/internal/observable/pairs';
+import TransactionButtons from './TransactionButtons/TransactionButtons'
 
 function Transactions() {
+  const dispatch = useDispatch()
+
+  const currentSession = useSelector(currentSessionSelector)
+
   const [invalidColor, setInvalidColor] = useState(true)
   const [enteredSum, setEnteredSum] = useState('0')
   const [comment, setEnteredComment] = useState('')
@@ -24,7 +33,7 @@ function Transactions() {
       setInvalidColor(true)
     }
 
-    if(comment.length > 0) {
+    if (comment.length > 0) {
       setCommentValidity(true)
     } else {
       setCommentValidity(false)
@@ -52,29 +61,33 @@ function Transactions() {
   }
 
   const handleSubmit = () => {
-    if(invalidColor || !commentValid) {
-      return 
+    if (invalidColor || !commentValid) {
+      return
     }
 
     let type = ''
 
-    if(activeButton === 0) type = 'Поставка'
-    if(activeButton === 1) type = 'Витрата'
-    if(activeButton === 2) type = 'Прибуток'
+    if (activeButton === 0) type = 'delivery'
+    if (activeButton === 1) type = 'incasation'
+    if (activeButton === 2) type = 'income'
 
-    // dispatch(saveTransaction({
-    //   type,
-    //   sum: enteredSum,
-    //   comment,
-    // }))
+    dispatch(saveTransaction({
+      type,
+      sum: enteredSum,
+      comment,
+      time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
+      session_id: currentSession.localId,
+    }))
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        <TransactionButtons activeButton={activeButton} setActiveButton={setActiveButton} />
-
+      <KeyboardAvoidingView style={styles.leftContainer} behavior="position" keyboardVerticalOffset={-200}>
         <View style={styles.inputContainer}>
+          <Text style={styles.screenHeading}>
+            Транзакції
+          </Text>
+
           <Text style={styles.inputHeading}>
             Введіть суму
             {activeButton === 0 && ' поставки'}
@@ -97,7 +110,7 @@ function Transactions() {
         <View style={styles.inputContainer}>
           <Text style={styles.inputHeading}>Коментар</Text>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 35, maxWidth: 200 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 35, maxWidth: 200, }}>
             <TextInput
               style={[comment.length === 0 ? styles.placeholderStyles : styles.commentInput]}
               value={comment}
@@ -111,7 +124,7 @@ function Transactions() {
 
         <View style={styles.submitContainer}>
           <SharedButton
-            style={{ flex: 1, }}
+            style={{ flex: 1, width: deviceWidth * 0.4, }}
             onPress={handleSubmit}
             scale={0.95}
           >
@@ -121,14 +134,14 @@ function Transactions() {
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}
             >
-              <Text style={[styles.buttonText, styles.activeButton]}>Підтвердити</Text>
+              <Text style={[styles.submitText, styles.activeButton]}>Підтвердити</Text>
             </LinearGradient>
           </SharedButton>
         </View>
-      </View>
+      </KeyboardAvoidingView>
 
       <View style={styles.rightContainer}>
-
+        <TransactionButtons activeButton={activeButton} setActiveButton={setActiveButton} />
       </View>
     </View>
   )

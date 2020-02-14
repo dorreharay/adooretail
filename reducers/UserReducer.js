@@ -15,6 +15,7 @@ const SYNC_DATA = 'SYNC_DATA';
 const SET_BOUNDS = 'SET_BOUNDS';
 const SET_SETTINGS = 'SET_SETTINGS';
 const ADD_ACCOUNT = 'ADD_ACCOUNT';
+const SAVE_TRANSACTION = 'SAVE_TRANSACTION'
 
 const initialState = {
   token: '',
@@ -24,63 +25,7 @@ const initialState = {
   currentAccountToken: '',
   pinCode: '1111222',
   bounds: [],
-  accounts: [
-    // {
-    //   id: '4sd3fsgu76fg55akgjsd54jadfnu343',
-    //   token: '5cb1ed89c6bf28192c152435',
-    //   business_name: 'Poilka Coffee Бариста 1',
-    //   registeredDeviceIds: [
-    //     '888f33dcebf0800b',
-    //     '67CA2667-D89D-4951-8112-7EA50AF8DA94',
-    //   ],
-    //   img_url: 'https://20.ua/ru/media-resize/company_show_new/poilka-coffee-point-kofeynya-250530.png?timestamp=1568043128',
-    //   default_shift_end: {
-    //     hours: 19,
-    //     minutes: 0,
-    //   },
-    //   shift_start: {
-    //     hours: 1,
-    //     minutes: 0,
-    //   },
-    //   shift_end: {
-    //     hours: 19,
-    //     minutes: 0,
-    //   },
-    //   employees: [
-    //     {
-    //       name: 'Ігор',
-    //       icon: '',
-    //     },
-    //     {
-    //       name: 'Іра',
-    //       icon: '',
-    //     },
-    //     {
-    //       name: 'Наташа',
-    //       icon: '',
-    //     },
-    //     {
-    //       name: 'Андрій',
-    //       icon: '',
-    //     },
-    //     {
-    //       name: 'Льоша',
-    //       icon: '',
-    //     }
-    //   ],
-    //   products: [],
-    //   localSessions: [],
-    //   settings: {
-    //     available_teams: {
-    //       paydesk: true,
-    //       kitchen: false,
-    //     },
-    //     shifts: {
-    //       enabled: true,
-    //     } 
-    //   }
-    // }
-  ],
+  accounts: [],
 };
 
 export function addAccount(payload) {
@@ -190,7 +135,33 @@ export function restoreDefaultShift(payload) {
   }
 }
 
+export function saveTransaction(payload) {
+  return {
+    type: SAVE_TRANSACTION,
+    payload
+  }
+}
+
 const ACTION_HANDLERS = {
+  [SAVE_TRANSACTION]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+    const newTransaction = action.payload
+
+    const newAccounts = accounts.map((item, id) => {
+      if (id === currentAccountIndex) {
+        const newTransactions = [...item.transactions, newTransaction]
+
+        return ({
+          ...item,
+          transactions: newTransactions
+        })
+      } else {
+        return item
+      }
+    })
+
+    return { ...state, accounts: newAccounts, }
+  },
   [ADD_ACCOUNT]: (state, action) => {
     const { accounts, } = state
     const data = action.payload

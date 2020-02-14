@@ -18,7 +18,8 @@ function TransactionButtons({ activeButton, setActiveButton }) {
             style={styles.buttonInnerStyles}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 0 }}
-            colors={activeButton === 0 ? ['#DB3E69', '#FD9C6C'] : ['#00000000', '#00000000']}
+            // colors={activeButton === 0 ? ['#DB3E69', '#FD9C6C'] : ['#00000000', '#00000000']}
+            colors={['#00000000', '#00000000']}
           >
             <Text style={[styles.buttonText, activeButton === 0 && styles.activeButton]}>Поставка</Text>
           </LinearGradient>
@@ -34,9 +35,9 @@ function TransactionButtons({ activeButton, setActiveButton }) {
             style={styles.buttonInnerStyles}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 0 }}
-            colors={activeButton === 1 ? ['#DB3E69', '#FD9C6C'] : ['#00000000', '#00000000']}
+            colors={['#00000000', '#00000000']}
           >
-            <Text style={[styles.buttonText, activeButton === 1 && styles.activeButton]}>Витрата</Text>
+            <Text style={[styles.buttonText, activeButton === 1 && styles.activeButton]}>Інкасація</Text>
           </LinearGradient>
         </SharedButton>
       </View>
@@ -50,7 +51,7 @@ function TransactionButtons({ activeButton, setActiveButton }) {
             style={styles.buttonInnerStyles}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 0 }}
-            colors={activeButton === 2 ? ['#DB3E69', '#FD9C6C'] : ['#00000000', '#00000000']}
+            colors={['#00000000', '#00000000']}
           >
             <Text style={[styles.buttonText, activeButton === 2 && styles.activeButton]}>Прибуток</Text>
           </LinearGradient>

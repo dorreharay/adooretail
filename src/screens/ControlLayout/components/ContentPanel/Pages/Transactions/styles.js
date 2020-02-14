@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 import { deviceWidth, deviceHeight } from '@dimensions';
 
 const base = {
@@ -8,25 +8,31 @@ const base = {
     flexDirection: 'row'
   },
   leftContainer: {
-    width: '60%',
+    width: '70%',
     height: '100%',
     // backgroundColor: 'red'
   },
   rightContainer: {
-    width: '40%',
+    width: '30%',
     height: '100%',
-    borderLeftWidth: 1,
-    borderLeftColor: '#ECECEC'
+    // borderLeftWidth: 1,
+    // borderLeftColor: '#ECECEC'
     // backgroundColor: 'yellow'
   },
+  screenHeading: {
+    marginBottom: 50,
+    color: '#343434',
+    fontSize: 32,
+    fontFamily: GILROY_REGULAR,
+  },
   inputContainer: {
-    paddingTop: 65,
-    paddingLeft: 35,
+    paddingTop: 55,
+    paddingLeft: 55,
   },
   inputHeading: {
     color: '#343434',
-    fontSize: 25,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 22,
+    fontFamily: GILROY_REGULAR,
   },
   textInput: {
     alignSelf: 'flex-start',
@@ -42,12 +48,13 @@ const base = {
   textInputAfterText: {
     marginLeft: 20,
     color: '#343434',
-    fontSize: 30,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 28,
+    fontFamily: GILROY_REGULAR,
+    lineHeight: 27,
   },
   commentInput: {
     width: deviceWidth * 0.4,
-    height: deviceHeight * 0.25,
+    minHeight: deviceHeight * 0.25,
     paddingTop: 30,
     padding: 30,
     borderWidth: 1,
@@ -56,7 +63,7 @@ const base = {
 
     color: '#343434',
     fontSize: 25,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   placeholderStyles: {
     width: deviceWidth * 0.4,
@@ -69,14 +76,19 @@ const base = {
 
     color: '#C5C5C5',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   submitContainer: {
     marginTop: 30,
-    paddingLeft: 35,
+    paddingLeft: 55,
     paddingRight: 50,
     width: '100%',
     height: 80,
+  },
+  submitText: {
+    color: '#343434',
+    fontSize: 26,
+    fontFamily: PROBA_REGULAR,
   },
   buttonInnerStyles: {
     alignItems: 'center',
@@ -88,11 +100,11 @@ const base = {
   buttonText: {
     color: '#343434',
     fontSize: 26,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   activeButton: {
     color: '#FFFFFF',
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
 };
 
