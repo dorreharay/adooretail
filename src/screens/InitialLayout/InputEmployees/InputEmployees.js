@@ -67,6 +67,7 @@ function InputEmployees({ navigation }) {
         shift_start,
         shift_end,
         localId: guidGenerator(),
+        transactions: [],
       }
 
       dispatch(updateCurrentSession({ status: 'new', newSessionProp: newSession }))

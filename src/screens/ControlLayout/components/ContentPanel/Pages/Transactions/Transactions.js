@@ -1,7 +1,8 @@
-import React, { useState, useEffect, } from 'react'
+import React, { useState, useRef, useEffect, } from 'react'
 import { View, Text, TextInput, KeyboardAvoidingView, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector, useDispatch } from 'react-redux'
+import Toast from 'react-native-easy-toast';
 import styles from './styles'
 
 import { getFormattedDate, } from '@dateFormatter'
@@ -14,6 +15,8 @@ import SharedButton from '@shared/SharedButton';
 import TransactionButtons from './TransactionButtons/TransactionButtons'
 
 function Transactions() {
+  const toastRef = useRef(null)
+
   const dispatch = useDispatch()
 
   const currentSession = useSelector(currentSessionSelector)
@@ -71,13 +74,26 @@ function Transactions() {
     if (activeButton === 1) type = 'incasation'
     if (activeButton === 2) type = 'income'
 
+    function guidGenerator() {
+      let S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      };
+      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    }
+
     dispatch(saveTransaction({
       type,
       sum: enteredSum,
       comment,
       time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
       session_id: currentSession.localId,
+      localId: guidGenerator(),
     }))
+
+    toastRef.current.show("Транзакцію збережено", 1000);
+
+    setEnteredSum('0')
+    setEnteredComment('')
   }
 
   return (
@@ -143,6 +159,17 @@ function Transactions() {
       <View style={styles.rightContainer}>
         <TransactionButtons activeButton={activeButton} setActiveButton={setActiveButton} />
       </View>
+
+      <Toast
+        ref={toastRef}
+        opacity={1}
+        style={{ paddingHorizontal: 40, backgroundColor: '#00000088' }}
+        position='bottom'
+        positionValue={150}
+        textStyle={styles.toastText}
+        fadeInDuration={200}
+        fadeOutDuration={800}
+      />
     </View>
   )
 }

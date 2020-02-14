@@ -145,20 +145,26 @@ export function saveTransaction(payload) {
 const ACTION_HANDLERS = {
   [SAVE_TRANSACTION]: (state, action) => {
     const { accounts, currentAccountIndex } = state
+    const localSessions = accounts[currentAccountIndex].localSessions
     const newTransaction = action.payload
 
-    const newAccounts = accounts.map((item, id) => {
-      if (id === currentAccountIndex) {
-        const newTransactions = [...item.transactions, newTransaction]
+    const lastIndex = localSessions.length - 1
+    const currentSession = localSessions[lastIndex]
 
-        return ({
-          ...item,
-          transactions: newTransactions
-        })
+    newSession = {
+      ...currentSession,
+      transactions: [...currentSession.transactions, newTransaction]
+    }
+
+    updatedSessions = localSessions.map((localSession, localIndex) => {
+      if (localIndex === localSessions.length - 1) {
+        return newSession
       } else {
-        return item
+        return localSession
       }
     })
+
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, localSessions: updatedSessions }) : item)
 
     return { ...state, accounts: newAccounts, }
   },

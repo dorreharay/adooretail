@@ -106,6 +106,12 @@ const base = {
     color: '#FFFFFF',
     fontFamily: GILROY_MEDIUM,
   },
+  toastText: {
+    marginBottom: 2,
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontFamily: PROBA_REGULAR,
+  }
 };
 
 const styles = createStyles(
