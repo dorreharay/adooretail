@@ -1,13 +1,17 @@
 import React, { useState, useEffect, } from 'react'
-import { View, Text, Animated, TouchableOpacity, } from 'react-native'
+import { View, Text, Animated, } from 'react-native'
 import styles from './styles'
-import SharedButton from '@shared/SharedButton';
 
 function CardPaymentStatus(props) {
-  const { status, setStatus, initialStatuses, resetStatus, } = props
-  const { statusColor, statusText, blinking, buttonText, } = status
+  const { status, setStatus, initialStatuses, } = props
+  const { statusColor, statusText, blinking, } = status
 
   const [statusDotOpacity, setStatusDotOpacity] = useState(new Animated.Value(1))
+
+  const stopBlinking = () => {
+    statusDotOpacity.stopAnimation()
+    setStatusDotOpacity(new Animated.Value(1))
+  }
 
   useEffect(() => {
     return () => {
@@ -41,11 +45,6 @@ function CardPaymentStatus(props) {
       stopBlinking()
     }
   }, [blinking])
-
-  const stopBlinking = () => {
-    statusDotOpacity.stopAnimation()
-    setStatusDotOpacity(new Animated.Value(1))
-  }
 
   return (
     <View style={[styles.secondContainer, { justifyContent: 'space-between', paddingRight: '7%', }]}>

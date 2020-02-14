@@ -1,5 +1,5 @@
-import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
+import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '12%'
 
@@ -91,7 +91,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxWidth(500, {
+ maxWidth(500, {
 
   })
 );

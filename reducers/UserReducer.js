@@ -1,4 +1,4 @@
-import moment from 'moment-timezone'
+import { getFormattedDate, } from '@dateFormatter'
 
 const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
@@ -312,7 +312,7 @@ const ACTION_HANDLERS = {
       newSession = {
         ...newSessionProp,
         receipts: [],
-        startTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm:ss'),
+        startTime: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
       }
 
       updatedSessions = [...localSessions, newSession]
@@ -324,7 +324,7 @@ const ACTION_HANDLERS = {
 
       newSession = {
         ...currentSession,
-        endTime: moment(Date.now()).tz('Europe/Kiev').format('YYYY-MM-DD HH:mm:ss'),
+        endTime: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
         endCash,
         total: currentSession.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false),
       }

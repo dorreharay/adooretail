@@ -4,12 +4,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
 import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
 import FastImage from 'react-native-fast-image'
-let moment = require('moment-timezone');
-moment.locale('uk');
 
 import NavigationService from '../../../../../xnavigation/NavigationService';
 
 import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
+import { getFormattedDate, } from '@dateFormatter'
 
 import { currentAccountSelector, } from '@selectors'
 import { setEmployees, setStartCash, addFiveMinutesToShift, } from '@reducers/UserReducer'
@@ -112,24 +111,17 @@ function SessionModal(props) {
           </Fragment>
 
           {currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled && (
-            <Text style={styles.modalShiftText}>Робочі години: {currentAccount && (
-              moment()
-                .hour(currentAccount.shift_start.hours)
-                .minutes(currentAccount.shift_start.minutes)
-                .seconds(0)
-                .format('HH:mm')
-            )
-            }
+            <Text style={styles.modalShiftText}>Робочі години:
+              {currentAccount && currentAccount.shift_start && (
+                getFormattedDate(' HH:mm', { hours: currentAccount.shift_start.hours, minutes: currentAccount.shift_start.minutes, seconds: 0, })
+              )}
 
               -
 
-                {currentAccount && (
-                moment()
-                  .hour(currentAccount.shift_end.hours)
-                  .minutes(currentAccount.shift_end.minutes)
-                  .seconds(0)
-                  .format('HH:mm')
-              )}</Text>
+              {currentAccount && currentAccount.shift_end && (
+                getFormattedDate('HH:mm', { hours: currentAccount.shift_end.hours, minutes: currentAccount.shift_end.minutes, seconds: 0, })
+              )}
+            </Text>
           )}
         </View>
       </ModalContent>

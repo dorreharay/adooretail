@@ -1,5 +1,5 @@
-import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { GILROY_MEDIUM, GILROY_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
+import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { GILROY_MEDIUM, GILROY_REGULAR, PROBA_LIGHT, PROBA_MEDIUM } from '@fonts'
 
 const base = {
   container: {
@@ -145,7 +145,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxWidth(500, {
+ maxWidth(500, {
 
   })
 );

@@ -11,18 +11,16 @@ import SharedButton from '@shared/SharedButton';
 function SearchResult(props) {
   const { searchTerm, searchResult, layout, addProductQuantity, itemHeight, } = props
 
-  console.log(searchTerm.length)
-
   return (
     <ScrollView 
       style={[styles.searchResultContainer, { height: deviceWidth, top: searchTerm.length !== 0 ? 0 : -3000 }]}
     >
       {searchResult && searchResult.map((row, index) => (
         <View style={styles.row} key={index}>
-          {row.map((rowItem, key) => (
+          {row && row.map((rowItem, key) => (
             <View style={[styles[`colsProduct${layout}`], { height: itemHeight, }, key % 4 === 0 && { marginLeft: 0, }]}>
               <SharedButton
-                onPress={(force) => addProductQuantity(rowItem)(force)}
+                onPress={() => addProductQuantity(rowItem)}
                 style={{ flex: 1, height: '100%', }}
                 scale={0.95} onStart
               >

@@ -1,18 +1,13 @@
-import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { GILROY_MEDIUM, GILROY_BOLD, PROBA_REGULAR, PROBA_MEDIUM, MUSEO_MEDIUM, } from '@fonts'
-import { deviceWidth } from '@dimensions';
+import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { GILROY_MEDIUM, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
     flex: 1,
     marginTop: 20,
   },
-  products: {
-
-  },
   row: {
     flexDirection: 'row',
-    // justifyContent: 'space-between',
     width: '100%',
   },
   colsProduct3: {
@@ -169,7 +164,7 @@ const base = {
 const styles = createStyles(
   base,
  
-  maxWidth(500, {
+ maxWidth(500, {
     
   })
 );

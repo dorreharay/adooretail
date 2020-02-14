@@ -1,18 +1,16 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, ScrollView, TouchableOpacity, } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
+import { Text, View, ScrollView, TouchableOpacity, } from 'react-native'
+import { useSelector, } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
-import FastImage from 'react-native-fast-image';
-import moment from 'moment/min/moment-with-locales';
 import styles from './styles'
-moment.locale('uk');
+
+import { getUpperCaseDate } from '@dateFormatter'
+import { currentAccountSelector, } from '@selectors'
 
 import ClockIcon from '@images/hour.svg'
 
 import SharedButton from '@shared/SharedButton';
 import Receipt from './components/Receipt';
-
-import { currentAccountSelector, } from '@selectors'
 
 const headerHeight = 68
 
@@ -20,35 +18,21 @@ const headerButtonSizes = { justifyContent: 'center', width: headerHeight, heigh
 const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
 
 function LeftSide(props) {
-  const { receipts, receiptSum, setCurrentReceipt, setReceipts, selectedInstance, selectReceiptInstance, setPaymentModalState, addProductQuantity, substractProductQuantity, } = props;
-
-  const receiptsRef = useRef(null)
-
-  const dispatch = useDispatch()
+  const { 
+    receipts, receiptSum, setCurrentReceipt, setReceipts,
+    selectedInstance, selectReceiptInstance, setPaymentModalState,
+    addProductQuantity, substractProductQuantity,
+  } = props;
 
   const currentAccount = useSelector(currentAccountSelector)
 
-  const [entries] = useState([{}, {}, {}, {}])
-
-  const [paymentModalVisible, setPaymentModalVisible] = useState(false)
-  const [leftSideWidth, setLeftSideWidth] = useState(10)
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
-  const [paymentNotice, setPaymentNotice] = useState('')
-  const [currentTime, setCurrentTime] = useState(moment(Date.now()).format('dddd DD.MM | HH:mm').charAt(0).toUpperCase() + moment(Date.now()).format('dddd DD.MM | HH:mm').slice(1))
-
-  useEffect(() => {
-    setCurrentReceipt({
-      payload: receipts[selectedInstance],
-      receiptSum: receipts[selectedInstance].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false),
-    })
-
-    console.log('receipt sum update')
-  }, [receipts[selectedInstance]]);
+  const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))
 
   const validateTime = () => {
-    const fullDate = moment(Date.now()).format('dddd  |  HH:mm')
+    const fullDate = getUpperCaseDate('dddd  |  HH:mm')
 
-    setCurrentTime(fullDate.charAt(0).toUpperCase() + fullDate.slice(1))
+    setCurrentTime(fullDate)
   }
 
   function useInterval(callback, delay) {
@@ -69,10 +53,6 @@ function LeftSide(props) {
     }, [delay]);
   }
 
-  useInterval(() => {
-    validateTime()
-  }, 5 * 1000)
-
   const startTimer = (e) => {
     validateTime()
   }
@@ -88,6 +68,17 @@ function LeftSide(props) {
 
     setPaymentModalState(status)
   }
+
+  useInterval(() => {
+    validateTime()
+  }, 5 * 1000)
+
+  useEffect(() => {
+    setCurrentReceipt({
+      payload: receipts[selectedInstance],
+      receiptSum: receipts[selectedInstance].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false),
+    })
+  }, [receipts[selectedInstance]]);
 
   return (
     <View style={styles.container}>

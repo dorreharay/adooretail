@@ -4,35 +4,19 @@ import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
-let moment = require('moment-timezone');
-moment.locale('uk');
 import styles from './styles'
 
-import SharedButton from '@shared/SharedButton';
-import SearchResult from './SearchResult'
-
 function Products(props) {
-  const { receipts, products, setReceipts, selectedInstance, searchTerm, addProductQuantity, } = props;
-
-  const layout = useSelector(state => state.orders.layout)
-  const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
+  const { products, searchTerm, addProductQuantity, } = props;
 
   const scrollView = useRef(null)
-  const debounce = useRef(_.debounce((callback) => callback(), 300))
+  
+  const layout = useSelector(state => state.orders.layout)
+  const { deviceWidth, } = useSelector(state => state.temp.dimensions)
+
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
-  const [availableVariants, setAvailableVariants] = useState([])
   const [searchResult, setSearchResult] = useState([])
-
-  useEffect(() => {
-    if (products.length !== 0) {
-      const flattened = products.flat()
-
-      const newAvailableVariants = flattened.map(item => item.variants)
-
-      setAvailableVariants(newAvailableVariants)
-    }
-  }, [products])
 
   const updateLayout = (productsArg, cardsPerRow) => {
     function chunkArray(myArray, chunk_size) {
@@ -63,6 +47,24 @@ function Products(props) {
     const withback = [{ title: 'back', }, ...newItem.variants]
 
     updateLayout(withback, layout)
+  }
+
+  const resetCategory = () => {
+    scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
+    setCategoryVisibility(false)
+    setActiveCategory(null)
+  }
+
+  const calculateColHeight = (appliedLayout) => {
+    if (appliedLayout === 3) {
+      return deviceWidth * 0.2
+    }
+    if (appliedLayout === 4) {
+      return deviceWidth * 0.15
+    }
+    if (appliedLayout === 5) {
+      return deviceWidth * 0.12
+    }
   }
 
   useEffect(() => {
@@ -108,24 +110,6 @@ function Products(props) {
     }
   }, [searchTerm, layout])
 
-  const resetCategory = () => {
-    scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
-    setCategoryVisibility(false)
-    setActiveCategory(null)
-  }
-
-  const calculateColHeight = (appliedLayout) => {
-    if (appliedLayout === 3) {
-      return deviceWidth * 0.2
-    }
-    if (appliedLayout === 4) {
-      return deviceWidth * 0.15
-    }
-    if (appliedLayout === 5) {
-      return deviceWidth * 0.12
-    }
-  }
-
   return (
     <ScrollView
       ref={scrollView}
@@ -138,7 +122,7 @@ function Products(props) {
         <View style={{ position: 'relative', top: !categoryVisible ? 0 : 4000, flex: 1, }}>
           {[searchResult.length > 0 ? searchResult : products][0].map((row, index) => (
             <View style={[styles.row,]} key={index}>
-              {row.map((rowItem, key) => (
+              {row && row.map((rowItem, key) => (
                 <TouchableOpacity
                   style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                   onPress={() => changeActiveCategory(index, key)}
@@ -173,7 +157,7 @@ function Products(props) {
         <View style={{ position: 'absolute', top: categoryVisible ? 0 : 4000, backgroundColor: '#F4F4F4', width: '100%', }}>
           {activeCategory && activeCategory.map((row, index) => (
             <View style={styles.row} key={index}>
-              {row.map((rowItem, key) => (
+              {row && row.map((rowItem, key) => (
                 rowItem.title === 'back' ? (
                   <TouchableOpacity
                     style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, { alignItems: 'center', justifyContent: 'center', }, { marginLeft: 0, backgroundColor: 'white' }]}
@@ -189,7 +173,7 @@ function Products(props) {
                 ) : (
                     <View style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]} key={key}>
                       <TouchableOpacity
-                        onPress={(force) => addProductQuantity(rowItem)(force)}
+                        onPress={() => addProductQuantity(rowItem)}
                         style={{ flex: 1, }}
                         activeOpacity={0.85}
                       >

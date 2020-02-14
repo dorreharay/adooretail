@@ -3,10 +3,8 @@ import { View, Text, } from 'react-native'
 import { useSelector, } from 'react-redux'
 import _ from 'lodash'
 import styles from './styles'
-import moment from 'moment/min/moment-with-locales';
-moment.locale('uk');
-
 import { currentAccountSelector, } from '@selectors'
+import { getIsBetweenAdvanced, } from '@dateFormatter'
 
 import Details from './Details/Details'
 import Filters from './Filters/Filters'
@@ -66,19 +64,19 @@ function History(props) {
 
       if (activeFilter) {
         if (activeFilter.code === 'day') {
-          localSessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf('day'), moment().endOf('day')))
+          localSessions = localSessions.filter(item => getIsBetweenAdvanced(item.startTime, { start: 'day', end: 'day' }))
         }
 
         if (activeFilter.code === 'week') {
-          localSessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf('week'), moment().endOf('week')))
+          localSessions = localSessions.filter(item => getIsBetweenAdvanced(item.startTime, { start: 'week', end: 'week' }))
         }
 
         if (activeFilter.code === 'month') {
-          localSessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf('month'), moment().endOf('month')))
+          localSessions = localSessions.filter(item => getIsBetweenAdvanced(item.startTime, { start: 'month', end: 'month' }))
         }
 
         if (activeFilter.code === 'year') {
-          localSessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf('year'), moment().endOf('year')))
+          localSessions = localSessions.filter(item => getIsBetweenAdvanced(item.startTime, { start: 'year', end: 'year' }))
         }
       }
 

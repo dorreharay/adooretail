@@ -1,8 +1,8 @@
 import React, { useState, } from 'react'
-import { Text, View, Animated, TouchableOpacity, } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
+import { Text, View, TouchableOpacity, } from 'react-native'
+import { useDispatch } from 'react-redux'
 import Modal from "react-native-simple-modal";
-import styles from '../RightSide/styles'
+import styles from './styles'
 
 import { deviceHeight } from '@dimensions';
 
@@ -44,38 +44,18 @@ function Menu(props) {
   return (
     <>
       <Modal
+        open={isVisible}
+        modalStyle={styles.modalComponent}
+        overlayStyle={styles.overlayStyles}
         animationDuration={200}
         animationTension={100}
         closeOnTouchOutside={true}
         closeModal={closeMenu}
         containerProps={undefined}
-        containerStyle={{
-          justifyContent: "center"
-        }}
+        containerStyle={{ justifyContent: "center" }}
         disableOnBackPress={false}
         modalDidClose={closeMenu}
-        modalDidOpen={() => undefined}
-        modalProps={undefined}
-        modalStyle={{
-          width: 320,
-          height: 200,
-          position: 'absolute',
-          // top: 187,
-          top: 242,
-          right: 12,
-          borderRadius: 2,
-          margin: 20,
-          // padding: 10,
-          borderRadius: 5,
-          // backgroundColor: "#FFFFFF",
-          backgroundColor: "transparent",
-        }}
         offset={-(deviceHeight * 0.23)}
-        open={isVisible}
-        overlayStyle={{
-          backgroundColor: "rgba(0, 0, 0, 0.55)",
-          flex: 1
-        }}
       >
         <View style={styles.modal}>
           {menuButtons.map((button, index) => (
@@ -98,14 +78,16 @@ function Menu(props) {
           </TouchableOpacity>
         </View>
       </Modal>
+
       {isVisible && (
         <SharedButton
           onPress={closeMenu}
-          style={{ position: 'absolute', zIndex: 1000, top: 15, right: 23, width: styles.menu.width, height: styles.menu.height, backgroundColor: '#FFFFFF' }}
-          iconStyle={{ width: styles.menu.width - 24, height: styles.menu.height - 30, }}
+          style={styles.menuPlaceholder}
+          iconStyle={styles.menuPlaceholderIcon}
           source={require('@images/menu.png')} scale={0.9}
         />
       )}
+
     </>
 
   )

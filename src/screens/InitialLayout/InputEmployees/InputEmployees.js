@@ -2,11 +2,9 @@ import React, { Component, useState, useRef } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch, } from 'react-redux';
 import { useNetInfo } from "@react-native-community/netinfo";
-import Toast, { DURATION } from 'react-native-easy-toast'
+import Toast from 'react-native-easy-toast'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
-
-import { API_URL } from '../../../../config/api';
 
 import LoginLoader from '@shared/LoginLoader';
 import SharedButton from '@shared/SharedButton';
@@ -17,6 +15,9 @@ import { currentAccountSelector } from '@selectors'
 import { updateCurrentSession, setEmployees, setStartCash, } from '@reducers/UserReducer';
 
 function InputEmployees({ navigation }) {
+  const toast = useRef(null)
+
+  const dispatch = useDispatch();
 
   const currentAccount = useSelector(currentAccountSelector)
   const employees = currentAccount.employees
@@ -25,11 +26,6 @@ function InputEmployees({ navigation }) {
   const { startCash, } = useSelector(state => ({
     startCash: state.user.startCash,
   }))
-
-  const toast = useRef(null)
-
-  const dispatch = useDispatch();
-  const netInfo = useNetInfo();
 
   const [checked, setCheckedEmployees] = useState([])
   const [loading, setLoadingStatus] = useState(false)
@@ -47,8 +43,6 @@ function InputEmployees({ navigation }) {
   }
 
   const handleProceed = async () => {
-    const { token, } = currentAccount
-
     if (checked.length === 0) {
       return
     }
@@ -74,17 +68,6 @@ function InputEmployees({ navigation }) {
         shift_end,
         localId: guidGenerator(),
       }
-
-      // if(netInfo.isConnected && netInfo.isInternetReachable) {
-      //   await axios.post(`${API_URL}/user/session/init/${token}`, newSessionObj)
-
-      //   const { data } = await axios.get(`${API_URL}/user/session/${token}`)
-      //   newSessionObj = data.current_session;
-      // } else {
-      //   newSessionObj = {
-      //     ...newSessionObj,
-      //   }
-      // }
 
       dispatch(updateCurrentSession({ status: 'new', newSessionProp: newSession }))
       dispatch(setEmployees([]))
@@ -117,10 +100,6 @@ function InputEmployees({ navigation }) {
       ) : (
           <View style={{ width: 50, height: 50, borderRadius: 100, borderWidth: 2, borderColor: '#D2D2D226', marginTop: 45, }}></View>
         )}
-
-      {/* <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputCash')} activeOpacity={1}>
-        <Image style={{ width: 18, height: 18, transform: [{ rotate: '180deg' }] }} source={require('@images/erase.png')} fadeDuration={0}></Image>
-      </TouchableOpacity> */}
 
       <LoginLoader active={loading} />
       <Toast ref={toast} />

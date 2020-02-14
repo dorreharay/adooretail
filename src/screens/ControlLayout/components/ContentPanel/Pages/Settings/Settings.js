@@ -31,14 +31,14 @@ const Settings = () => {
         <Text style={styles.settingsTitle}>Активні цехи</Text>
         <SwitchWithTitle
           title={'Каса'}
-          disabled
+          // disabled
           value={currentAccount.settings.available_teams.paydesk}
           onValueChange={(value) => updateSettings({ paydesk: value }, 'available_teams')}
         />
 
         <SwitchWithTitle
           title={'Кухня'}
-          disabled
+          // disabled
           value={currentAccount.settings.available_teams.kitchen}
           onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
         />

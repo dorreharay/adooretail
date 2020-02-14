@@ -101,7 +101,7 @@ namespace boost { namespace spirit { namespace karma
         template <typename OutputIterator, typename Context, typename Delimiter, 
             typename Attribute, typename Embedded, typename Rest>
         inline static bool 
-        maxwidth_generate(OutputIterator& sink, Context& ctx, 
+       maxWidth_generate(OutputIterator& sink, Context& ctx, 
             Delimiter const& d, Attribute const& attr, Embedded const& e, 
             unsigned int const maxwidth, Rest& restdest) 
         {
@@ -150,7 +150,7 @@ namespace boost { namespace spirit { namespace karma
           : traits::attribute_of<subject_type, Context, Iterator>
         {};
 
-        maxwidth_width(Subject const& subject, Width const& w = Width()
+       maxWidth_width(Subject const& subject, Width const& w = Width()
             , Rest const& r = Rest())
           : subject(subject), width(w), rest(r) {}
 

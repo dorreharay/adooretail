@@ -4,9 +4,9 @@ import { useSelector, } from 'react-redux'
 import FastImage from 'react-native-fast-image';
 import Collapsible from 'react-native-collapsible';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
-let moment = require('moment-timezone');
-moment.locale('uk');
 import styles from './styles'
+
+import { getDateByCondition, } from '@dateFormatter'
 
 import { currentAccountSelector, } from '@selectors'
 import SharedButton from '@shared/SharedButton';
@@ -31,7 +31,7 @@ function Details(props) {
   const { todayCardSum, todayCashSum } = useMemo(() => {
     const localSessions = currentAccount.localSessions
 
-    const todaySessions = localSessions.filter(item => moment(item.startTime).isBetween(moment().startOf(activeFilter ? activeFilter.code : 'day'), moment().endOf(activeFilter ? activeFilter.code : 'day')))
+    const todaySessions = localSessions.filter(item => getDateByCondition(item.startTime, activeFilter))
 
     if (!localSessions) return
 

@@ -1,12 +1,10 @@
-import React, { Component, useState, useEffect, useRef, } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Animated, Easing, Alert, } from "react-native";
-import axios from 'axios';
+import React, { useState, useEffect, useRef, } from "react";
+import { View, Text, Image, Animated, Easing, } from "react-native";
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNetInfo } from "@react-native-community/netinfo";
 import Ripple from 'react-native-material-ripple';
 import DeviceInfo from 'react-native-device-info';
-import Toast, { DURATION } from 'react-native-easy-toast'
+import Toast from 'react-native-easy-toast'
 import Svg, { Circle } from 'react-native-svg';
 import styles from './styles';
 
@@ -15,11 +13,10 @@ import { loginKeyboardLayout } from '../../../../helpers/keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
 
-import { setCurrentSession, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 function Login(props) {
-  const { navigation, screenProps, } = props;
+  const { navigation, } = props;
 
   const initialPassword = [
     { entered: false, },
@@ -31,14 +28,14 @@ function Login(props) {
     { entered: false, },
   ]
 
+  const toast = useRef(null)
+
   const dispatch = useDispatch();
-  const netInfo = useNetInfo();
 
   const currentAccount = useSelector(currentAccountSelector)
   const currentSession = useSelector(currentSessionSelector)
   const { pinCode: validPinCode } = useSelector(state => state.user)
 
-  const toast = useRef(null)
   const [passwordArray, setPasswordArray] = useState(initialPassword)
   const [loading, setLoadingStatus] = useState(false)
   const [error, setError] = useState(false)
@@ -66,7 +63,6 @@ function Login(props) {
   }
 
   const validateDeviceID = async (enteredPinCode) => {
-    console.log(currentAccount)
     const { registered_device_ids, token, } = currentAccount
 
     setLoadingStatus(true)
@@ -89,7 +85,6 @@ function Login(props) {
       } else {
         navigation.navigate('InputCash')
       }
-      // }
 
       resetState()
     } catch (e) {
@@ -140,13 +135,7 @@ function Login(props) {
     setCurrentInput(newInput)
     setPasswordArray(newPass)
   }
-
-  useEffect(() => {
-    // validateDeviceID('1111222')
-
-    return () => { };
-  }, [])
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>хід за допомогою Device ID</Text>

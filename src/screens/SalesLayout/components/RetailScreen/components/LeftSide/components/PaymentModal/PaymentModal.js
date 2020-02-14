@@ -2,18 +2,18 @@ import React, { useState, useEffect, useRef, } from 'react'
 import { View, Text, TouchableOpacity, ScrollView, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
 import Ripple from 'react-native-material-ripple';
-let moment = require('moment-timezone');
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient';
-moment.locale('uk');
 import styles from './styles'
 
 import { saveLocalReceipt } from '@reducers/UserReducer'
-import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 
+import { currentSessionSelector, currentAccountSelector, } from '@selectors'
+import { getFormattedDate, } from '@dateFormatter'
+
+import SharedButton from '@shared/SharedButton'
 import PaymentLeftSide from '../PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from '../PaymentRightSide/PaymentRightSide';
-import SharedButton from '@shared/SharedButton'
 
 const PaymentModal = (props) => {
   const {
@@ -28,8 +28,6 @@ const PaymentModal = (props) => {
   const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
-
-  const blurRef = useRef(null)
 
   const initialStatuses = {
     initial: {
@@ -61,21 +59,6 @@ const PaymentModal = (props) => {
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
   const [comment, setComment] = useState('')
 
-  // useEffect(() => {
-  //   setCurrentEmployee(currentSession.employees[0])
-  // }, [currentSession])
-
-  useEffect(() => {
-    setEnteredSum(currentReceipt.receiptSum)
-  }, [currentReceipt.receiptSum])
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(timerRef1.current)
-      clearTimeout(timerRef2.current)
-    }
-  }, [])
-
   const saveReceipt = (paymentType) => {
     function guidGenerator() {
       let S4 = function () {
@@ -99,7 +82,7 @@ const PaymentModal = (props) => {
       hash_id: guidGenerator(),
       first_product_time: timeStart,
       last_product_time: timeEnd,
-      transaction_time_end: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+      transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
       employee: currentEmployee,
       comment: comment,
     }
@@ -135,13 +118,6 @@ const PaymentModal = (props) => {
       },
       buttonText: 'Підтвердити розрахунок',
     },
-    // {
-    //   index: 2,
-    //   name: 'Знижка',
-    //   imageSource: require('@images/gift.png'),
-    //   onPress: () => { },
-    //   buttonText: '',
-    // },
   ])
   const [selectedType, selectPType] = useState(pTypes[0])
 
@@ -158,6 +134,18 @@ const PaymentModal = (props) => {
     setStatus(initialStatuses.waiting)
     setButtonAccessibility(true)
   }
+
+  useEffect(() => {
+    setEnteredSum(currentReceipt.receiptSum)
+  }, [currentReceipt.receiptSum])
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerRef1.current)
+      clearTimeout(timerRef2.current)
+    }
+  }, [])
+
 
   useEffect(() => {
     resetStatus()

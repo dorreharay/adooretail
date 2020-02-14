@@ -1,58 +1,30 @@
-import React, { useRef, useState, useEffect, useMemo, Fragment, } from 'react';
-import { Text, View, Image, StyleSheet, Alert, Animated, Easing, TouchableOpacity, ScrollView, } from 'react-native';
-import { connect, useSelector, useDispatch } from 'react-redux';
-import Toast, { DURATION } from 'react-native-easy-toast';
+import React, { useRef, useState, useMemo, Fragment, } from 'react';
+import { Text, View, Animated, Easing, TouchableOpacity, } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import Toast from 'react-native-easy-toast';
 import Swiper from 'react-native-swiper'
-import _ from 'lodash'
-let moment = require('moment-timezone');
-moment.locale('uk');
+import styles from './styles'
 
-import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
+import { currentAccountSelector } from '@selectors'
+import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '@reducers/UserReducer'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
-
-import { currentAccountSelector, currentSessionSelector } from '@selectors'
-import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '@reducers/UserReducer'
-import Pagination from './components/Pagination'
-import FastImage from 'react-native-fast-image';
+import Pagination from './components/Pagination/Pagination'
 
 function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
-  const throttleRef = useRef(_.debounce((callback) => callback(), 1000, { 'trailing': false }))
+  const swiperRef = useRef(null)
 
-  const [animatedScale] = useState(new Animated.Value(1))
-  const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
+  const dispatch = useDispatch()
+
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
   const products = currentAccount.products
   const accounts = useSelector(state => state.user.accounts)
   const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
-  const dispatch = useDispatch()
-
-  const swiperRef = useRef(null)
-
-  const updateLayout = (products, cardsPerRow) => {
-    function chunkArray(myArray, chunk_size) {
-      var results = [];
-
-      while (myArray.length) {
-        results.push(myArray.splice(0, chunk_size));
-      }
-
-      return results;
-    }
-
-    const newProducts = chunkArray(products, cardsPerRow);
-
-    dispatch(setProducts(newProducts))
-  }
-
-  useMemo(() => {
-    if (products) {
-      updateLayout(products.flat(), layout)
-    }
-  }, [layout])
+  const [animatedScale] = useState(new Animated.Value(1))
+  const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
 
   const animate = () => {
     Animated.parallel([
@@ -77,6 +49,28 @@ function SalesLayout({ navigation, }) {
 
     setAccountWrapperVisibility(false)
   }
+
+  const updateLayout = (products, cardsPerRow) => {
+    function chunkArray(myArray, chunk_size) {
+      var results = [];
+
+      while (myArray.length) {
+        results.push(myArray.splice(0, chunk_size));
+      }
+
+      return results;
+    }
+
+    const newProducts = chunkArray(products, cardsPerRow);
+
+    dispatch(setProducts(newProducts))
+  }
+
+  useMemo(() => {
+    if (products) {
+      updateLayout(products.flat(), layout)
+    }
+  }, [layout])
 
   return (
     <View style={styles.container}>
@@ -138,39 +132,12 @@ function SalesLayout({ navigation, }) {
         style={{ paddingHorizontal: 40, backgroundColor: '#00000088' }}
         position='bottom'
         positionValue={100}
-        textStyle={{
-          marginBottom: 2,
-          color: '#FFFFFF',
-          fontSize: 17,
-          fontFamily: PROBA_REGULAR,
-        }}
+        textStyle={styles.toastText}
         fadeInDuration={200}
         fadeOutDuration={800}
       />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  slider: {
-    borderRadius: 50,
-    zIndex: 1000,
-  },
-  goBack: {
-    position: 'absolute',
-    right: 40,
-    top: 40,
-    width: 50,
-    height: 50,
-  },
-  accountHeading: {
-    color: '#FFFFFF',
-    fontSize: 30,
-    fontFamily: PROBA_MEDIUM,
-  },
-})
 
 export default SalesLayout

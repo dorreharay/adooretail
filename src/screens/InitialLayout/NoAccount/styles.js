@@ -1,4 +1,4 @@
-import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxWidth, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 import { deviceWidth } from '@dimensions';
 
@@ -136,7 +136,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxWidth(500, {
+ maxWidth(500, {
     loginHeading: {
       fontSize: 15,
     },

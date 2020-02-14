@@ -6,14 +6,13 @@ import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
-let moment = require('moment-timezone');
-moment.locale('uk');
 
-import API from '../../rest/api'
+import API from '@api'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
 import { START, END, NO_TIME } from '@statuses'
+import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } from '@dateFormatter'
 import { syncDataWithStore } from '@reducers/UserReducer'
 import { setOrientationDimensions, setCurrentRoute } from '@reducers/TempReducer'
 
@@ -260,30 +259,23 @@ function AppSessions(props) {
 
     const currentAccountSession = sessions[sessions.length - 1]
 
-    const sessionStartTime = moment(currentAccountSession.startTime)
-
     let startOfShift = ''
     let endOfShift = ''
 
+    
+
     if (currentAccount.settings.shifts.enabled) {
-      startOfShift = moment()
-        .hour(shiftStart.hours)
-        .minutes(shiftStart.minutes)
-        .seconds(0)
-        .format('YYYY-MM-DD HH:mm')
-      endOfShift = moment()
-        .hour(shiftEnd.hours)
-        .minutes(shiftEnd.minutes)
-        .seconds(0)
-        .format('YYYY-MM-DD HH:mm')
+      startOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shiftStart.hours, minutes: shiftStart.minutes, seconds: 0, })
+      endOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shiftEnd.hours, minutes: shiftEnd.minutes, seconds: 0, })
     } else {
-      startOfShift = moment().startOf('day').format('YYYY-MM-DD HH:mm')
-      endOfShift = moment().endOf('day').format('YYYY-MM-DD HH:mm')
+      startOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
+      endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day')
     }
 
     console.log('Shift validation')
-    console.log('%c%s', 'color: #E7715E; font: 0.8rem Tahoma;', `${moment(startOfShift).format('HH:mm')}  ------>  ${moment(endOfShift).format('HH:mm')}`)
-    const isValid = sessionStartTime.isBetween(startOfShift, endOfShift) && moment().isBetween(startOfShift, endOfShift)
+    console.log('%c%s', 'color: #E7715E; font: 0.8rem Tahoma;', `${getFormattedDate('HH:mm', startOfShift)}  ------>  ${getFormattedDate('HH:mm', endOfShift)}`)
+    
+    const isValid = getIsBetween(currentAccountSession.startTime, startOfShift, endOfShift) && getIsBetween(null, startOfShift, endOfShift)
 
     return isValid
   }

@@ -1,5 +1,5 @@
-import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
+import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_MEDIUM } from '@fonts'
 
 const toolsBarHeight = 45
 
@@ -98,61 +98,6 @@ const base = {
     height: '100%',
     backgroundColor: '#00000044'
   },
-  modalContainer: {
-    position: 'absolute',
-    top: 15,
-    right: 22,
-  },
-  modal: {
-    position: 'relative',
-    width: 300,
-    height: 350,
-    borderRadius: 5,
-  },
-  modalItem: {
-    justifyContent: 'center',
-    width: 320,
-    height: 60,
-    paddingLeft: 25,
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#FEFEFE',
-    backgroundColor: '#FFFFFF'
-  },
-  withTopBorderRadius: {
-    // paddingTop: 5,
-    height: 78,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-  },
-  withBottomBorderRadius: {
-    paddingLeft: 25,
-    paddingBottom: 0,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-  },
-  modalItemText: {
-    color: '#414141',
-    fontSize: 24,
-    fontFamily: PROBA_REGULAR,
-  },
-  redText: {
-    color: '#E25B63'
-  },
-  modalItemRed: {
-    justifyContent: 'center',
-    width: 320,
-    height: 80,
-    paddingLeft: 20,
-    backgroundColor: '#FFFFFF'
-  },
-  closeModal: {
-    alignSelf: 'flex-end',
-    marginBottom: 20,
-    width: 45,
-    height: 45,
-    borderRadius: 5,
-    backgroundColor: '#FFFFFF',
-  },
   layoutNumberText: {
     color: '#414141',
     fontSize: 18,
@@ -163,7 +108,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxWidth(500, {
+ maxWidth(500, {
 
   })
 );

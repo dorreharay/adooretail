@@ -1,6 +1,5 @@
 import React, { useState, useEffect, } from 'react'
-import { View, Text, TouchableOpacity, TextInput, ScrollView, } from 'react-native'
-import FastImage from 'react-native-fast-image';
+import { View, Text, } from 'react-native'
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton';
@@ -17,8 +16,6 @@ function PaymentRightSide(props) {
     isVisible, activeDiscount, setActiveDiscount, 
     discounts, setDiscounts, comment, setComment,
   } = props
-
-  const { statusColor, statusText, blinking, } = status
 
   const [invalidColor, setInvalidColor] = useState(false)
   const [toByPaid, setToByPaid] = useState(total)

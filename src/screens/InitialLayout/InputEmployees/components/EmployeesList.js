@@ -1,11 +1,12 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet, } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient';
-
-import { COMFORTAA_LIGHT, } from '@fonts'
 import { ScrollView } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
+import styles from './styles'
 
-function EmployeesList({ employees, checked, handleCheck, }) {
+function EmployeesList(props) {
+  const { employees, checked, handleCheck, } = props
+
   return (
     <View style={styles.сontainer}>
       <ScrollView
@@ -62,43 +63,6 @@ function EmployeesList({ employees, checked, handleCheck, }) {
 
   )
 }
-
-const styles = StyleSheet.create({
-  сontainer: {
-    marginTop: 45,
-    width: 350,
-    height: 360,
-    zIndex: 100,
-  },
-  scrollview: {
-    width: 350,
-    height: 360,
-    zIndex: 100,
-    borderRadius: 22,
-  },
-  employee: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    width: '100%',
-    height: 70,
-    paddingLeft: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#4D4D4D44',
-    backgroundColor: '#D2D2D21A',
-  },
-  iconPlaceholder: {
-    width: 41,
-    height: 41,
-    marginRight: 20,
-    borderRadius: 22,
-    backgroundColor: '#9F9F9F33',
-  },
-  employeeName: {
-    color: '#ffffff',
-    fontSize: 17,
-    fontFamily: COMFORTAA_LIGHT,
-  },
-})
 
 
 

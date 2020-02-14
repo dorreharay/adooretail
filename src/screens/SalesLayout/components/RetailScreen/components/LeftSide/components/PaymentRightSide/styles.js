@@ -1,5 +1,5 @@
-import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
+import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '7.5%'
 
@@ -158,12 +158,6 @@ const base = {
     fontSize: 15,
     fontFamily: PROBA_REGULAR,
   },
-  // discountContainer: {
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   width: '100%',
-  //   height: '80%',
-  // },
   cameraContainer: {
     width: '70%',
     height: '70%',
@@ -174,7 +168,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxWidth(500, {
+ maxWidth(500, {
 
   })
 );

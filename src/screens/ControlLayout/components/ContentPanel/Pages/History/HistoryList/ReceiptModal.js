@@ -7,7 +7,7 @@ import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
 
-import API from '../../../../../../../../rest/api'
+import API from '@api'
 
 import SharedButton from '@shared/SharedButton'
 

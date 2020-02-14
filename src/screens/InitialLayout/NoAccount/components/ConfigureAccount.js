@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, } from "react";
 import { View, Text, Keyboard, TouchableOpacity, KeyboardAvoidingView, TextInput, } from "react-native";
-import axios from 'axios';
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
-import API from '@rest/api'
 import styles from '../styles';
+
+import API from '@api'
 
 import { addAccount } from '@reducers/UserReducer'
 
@@ -15,6 +15,7 @@ function ConfigureAccount(props) {
   const dispatch = useDispatch()
 
   const inputRef = useRef(null)
+  
   const [cameraVisible, setCameraVisibility] = useState(true)
   const [accountCode, setAccountCode] = useState('')
 

@@ -1,15 +1,14 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, TextInput, Alert, Animated, TouchableOpacity, } from 'react-native'
+import { Text, View, Image, TextInput, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
 import styles from './styles'
 
-import SharedButton from '@shared/SharedButton';
-
-import Products from './Products/Products'
-
 import { setLayout } from '@reducers/OrdersReducer'
+
+import SharedButton from '@shared/SharedButton';
+import Products from './Products/Products'
 
 const onlineIcon = require('@images/status_online.png')
 const offlineIcon = require('@images/status_offline.png')
@@ -17,10 +16,8 @@ const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
   const {
-    openMenu, loadProducts,
-    receipts, setReceipts,
-    selectedInstance, navigation,
-    account, addProductQuantity,
+    openMenu, loadProducts, receipts, setReceipts,
+    selectedInstance, account, addProductQuantity,
   } = props;
 
   const dispatch = useDispatch()
@@ -35,8 +32,6 @@ function RightSide(props) {
 
   const [searchTerm, setSearchTerm] = useState('')
 
-  const loadProductsThrottled = useRef(_.throttle((token) => loadProducts(token), 5000))
-
   const loadAgain = () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
       toast.current && toast.current.show("Потрібне інтернет з'єднання", 1000);
@@ -44,7 +39,6 @@ function RightSide(props) {
       return
     }
     loadProducts(account.token)
-    // loadProductsThrottled.current(currentAccountToken)
   }
 
   useEffect(() => {
@@ -79,7 +73,6 @@ function RightSide(props) {
             style={styles.inputText}
             value={searchTerm}
             placeholder=''
-            // onBlur={handleBlur}
             onChangeText={(text) => setSearchTerm(text)}
           />
 
@@ -92,9 +85,7 @@ function RightSide(props) {
             />
           )}
         </View>
-
-        {console.log(netInfo.isConnected)}
-
+        
         <SharedButton onPress={() => { }} scale={0.85}>
           <View style={styles.connection}>
             <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
@@ -105,7 +96,6 @@ function RightSide(props) {
         <SharedButton
           onPress={changeLayout}
           style={{ width: styles.update.width, height: styles.update.height, marginRight: 10, }}
-          // iconStyle={{ width: styles.update.width, height: styles.update.height - 20, }}
           scale={0.8}
         >
           <View style={{ width: '100%', flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', }}>

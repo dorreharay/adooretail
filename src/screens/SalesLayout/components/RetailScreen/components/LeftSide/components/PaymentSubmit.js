@@ -3,11 +3,9 @@ import { View, Text, TouchableOpacity, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import styles from '../../../styles'
 
-import SharedButton from '@shared/SharedButton';
-
 function PaymentSubmit(props) {
-  const { status, selectedType, buttonAccessible, saveReceipt, receipt, clearCurrentReceipt, } = props
-  const { index, buttonText, finalButtonText } = selectedType
+  const { selectedType, buttonAccessible, saveReceipt, receipt, clearCurrentReceipt, } = props
+  const { buttonText, } = selectedType
 
   const timerRef = useRef(null)
 

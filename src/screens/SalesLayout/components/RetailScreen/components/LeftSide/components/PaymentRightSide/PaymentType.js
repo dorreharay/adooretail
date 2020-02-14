@@ -22,16 +22,6 @@ function PaymentType(props) {
   const [discountCollapsed, setDiscountCollapsed] = useState(true)
   const [commentCollapsed, setCommentCollapsed] = useState(false)
 
-  useEffect(() => {
-    setActiveDiscount(0)
-    setComment('')
-
-    setSpinComment(new Animated.Value(0))
-    setSpinDiscount(new Animated.Value(1))
-    setDiscountCollapsed(true)
-    setCommentCollapsed(false)
-  }, [isVisible])
-
   const expandComment = () => {
     Animated.timing(
       spinDiscount,
@@ -145,6 +135,16 @@ function PaymentType(props) {
   const handleChangeText = (value) => {
     setComment(value)
   }
+
+  useEffect(() => {
+    setActiveDiscount(0)
+    setComment('')
+
+    setSpinComment(new Animated.Value(0))
+    setSpinDiscount(new Animated.Value(1))
+    setDiscountCollapsed(true)
+    setCommentCollapsed(false)
+  }, [isVisible])
 
   const spinD = spinDiscount.interpolate({
     inputRange: [0, 1],

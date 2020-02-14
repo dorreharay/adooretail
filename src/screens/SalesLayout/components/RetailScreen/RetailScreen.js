@@ -1,13 +1,10 @@
 import React, { useRef, useState, useEffect, } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Text, View, Image, StyleSheet, Animated, Easing, TouchableOpacity, } from 'react-native'
+import { View, } from 'react-native'
 import _ from 'lodash'
-import axios from 'axios'
-let moment = require('moment-timezone');
-moment.locale('uk');
 import styles from './styles'
 
-import { API_URL } from '@api'
+import API from '@api'
+import { getFormattedDate, } from '@dateFormatter'
 
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
@@ -17,7 +14,7 @@ import PaymentModal from './components/LeftSide/components/PaymentModal/PaymentM
 function RetailScreen(props) {
   const {
     products, navigation, openChangeAccountOverview,
-    account, updateLayout, toastRef, layout, setModalStatus,
+    account, updateLayout, toastRef, layout,
   } = props;
 
   const timerRef1 = useRef(null)
@@ -25,38 +22,32 @@ function RetailScreen(props) {
   const timerRef3 = useRef(null)
   const timerRef4 = useRef(null)
 
-  const dispatch = useDispatch()
-
   const [receipts, setReceipts] = useState([[], [], [], []])
   const [menuVisible, setMenuVisibility] = useState(false)
   const [selectedInstance, selectReceiptInstance] = useState(0)
-
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
   const [currentReceipt, setCurrentReceipt] = useState({})
 
-  const throttleRef = useRef(_.debounce((callback) => callback(), 1000, { 'trailing': false }))
-
-  const setPaymentModalState = (state, receipt) => {
-    setPaymentModalVisibility(state)
-  }
+  const setPaymentModalState = (state) => setPaymentModalVisibility(state)
 
   const loadProducts = async (token) => {
     try {
-      console.log('Fetching products ---->', `${API_URL}/user/products/${token}`)
       toastRef.current.show("Синхронізація", 1000);
 
-      const { data } = await axios.get(`${API_URL}/user/products/${token}`)
+      const data = await API.getProducts({}, token)
 
-      console.log('Fetch succeded')
+      if (!data) {
+        throw new Error('Not valid request')
+      }
 
-      updateLayout(data.products, layout)
+      updateLayout(data, layout)
     } catch (error) {
       console.warn('Failed to fetch products', error)
       toastRef.current.show("Помилка мережі", 1000);
     }
   }
 
-  const addProductQuantity = (product) => (force) => {
+  const addProductQuantity = (product) => {
     const productExists = !!receipts[selectedInstance].find(item => item.title === product.title)
 
     let newReceiptsInstance = []
@@ -74,7 +65,7 @@ function RetailScreen(props) {
         title: product.title,
         price: product.price,
         quantity: 1,
-        time: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
+        time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
       }
 
       newReceiptsInstance = [...receipts[selectedInstance], initialReceiptItem]
@@ -85,7 +76,7 @@ function RetailScreen(props) {
     setReceipts(newReceipts)
   }
 
-  const substractProductQuantity = (product) => (force) => {
+  const substractProductQuantity = (product) => {
     let newReceiptsInstance = []
 
     if (product.quantity === 1) {
@@ -111,13 +102,8 @@ function RetailScreen(props) {
     setReceipts(newReceipts)
   }
 
-  const openMenu = () => {
-    setMenuVisibility(true)
-  }
-
-  const closeMenu = () => {
-    setMenuVisibility(false)
-  }
+  const openMenu = () => setMenuVisibility(true)
+  const closeMenu = () => setMenuVisibility(false)
 
   useEffect(() => {
     return () => {
@@ -131,32 +117,28 @@ function RetailScreen(props) {
   return (
     <View style={styles.container}>
       <LeftSide
-        receipts={receipts}
+        receipts={receipts} setReceipts={setReceipts}
         receiptSum={currentReceipt.receiptSum}
-        setReceipts={setReceipts}
         setCurrentReceipt={setCurrentReceipt}
-        selectedInstance={selectedInstance}
-        selectReceiptInstance={selectReceiptInstance}
+        selectedInstance={selectedInstance} selectReceiptInstance={selectReceiptInstance}
         setPaymentModalState={setPaymentModalState}
         addProductQuantity={addProductQuantity}
         substractProductQuantity={substractProductQuantity}
       />
       <RightSide
-        products={products}
-        loadProducts={loadProducts}
-        receipts={receipts}
-        setReceipts={setReceipts}
-        navigation={navigation}
+        products={products} loadProducts={loadProducts}
+        receipts={receipts} setReceipts={setReceipts}
         selectedInstance={selectedInstance}
         account={account} openMenu={openMenu}
         addProductQuantity={addProductQuantity}
+        navigation={navigation}
       />
 
       <Menu
         isVisible={menuVisible}
         closeMenu={closeMenu}
-        navigation={navigation}
         openChangeAccountOverview={openChangeAccountOverview}
+        navigation={navigation}
       />
 
       <PaymentModal

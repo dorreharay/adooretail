@@ -4,13 +4,13 @@ import { useSelector, } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 import Collapsible from 'react-native-collapsible'
-import moment from 'moment/min/moment-with-locales';
-moment.locale('uk');
 
 import SharedButton from '@shared/SharedButton'
 
-import ReceiptModal from './ReceiptModal'
 import { deviceHeight } from '@dimensions';
+import { getDiff, getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
+
+import ReceiptModal from './ReceiptModal'
 
 function HistoryList(props) {
   const { data } = props
@@ -75,12 +75,12 @@ function HistoryList(props) {
   }
 
   const renderTimeSpent = (startTime, endTime) => {
-    let timeSpent = moment(endTime).diff(moment(startTime), 'seconds')
+    let timeSpent = getDiff(endTime, startTime, 'seconds')
     
     if(timeSpent < 60) {
       return timeSpent + ' сек'
     } else {
-      return moment(endTime).diff(moment(startTime), 'minutes') + ' хв'
+      return getDiff(endTime, startTime, 'minutes') + ' хв'
     }
   }
 
@@ -116,7 +116,7 @@ function HistoryList(props) {
                 style={{ width: 20, height: 20, marginRight: 28, }}
                 source={require('@images/session_process.png')}
               />
-              <Text style={styles.dayHeaderDate}>{moment(day.startTime).format('dddd').charAt(0).toUpperCase() + moment(day.startTime).format('dddd DD.MM - HH:mm').slice(1)}</Text>
+              <Text style={styles.dayHeaderDate}>{getUpperCaseDate('dddd DD.MM - HH:mm', day.startTime)}</Text>
               <Text style={styles.dayHeaderTotal}>Всього за зміну: {sessionTotal}</Text>
               <Text style={styles.dayHeaderEmployees}>Працівників на зміні: {employeesLength}</Text>
               <View style={styles.dayHeaderIcon}>
@@ -180,7 +180,7 @@ function HistoryList(props) {
                           </View>
 
                           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, marginTop: 20, }}>
-                            <Text style={styles.receiptDetailHeading}>Час транзакції: <Text style={styles.receiptDetailContent}>{moment(item.transaction_time_end).format('HH:mm')}</Text></Text>
+                            <Text style={styles.receiptDetailHeading}>Час транзакції: <Text style={styles.receiptDetailContent}>{getFormattedDate('HH:mm', item.transaction_time_end)}</Text></Text>
                             <Text style={styles.receiptDetailHeading}>До сплати: <Text style={styles.receiptDetailContent}>{item.receipt.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)} грн</Text></Text>
                           </View>
 

@@ -9,11 +9,12 @@
         "alias": {
           "@images": "./assets/images",
           "@rest": "./rest",
-          "@api": "./config/api",
+          "@api": "./rest/api",
           "@fonts": "./config/fonts",
           "@blockSizes": "./config/blockSizes",
           "@dimensions": "./helpers/dimensions",
           "@keyboards": "./helpers/keyboards",
+          "@dateFormatter": "./helpers/dateFormatter",
           "@shared": "./src/shared",
           "@selectors": "./store/selectors",
           "@statuses": "./config/statuses",

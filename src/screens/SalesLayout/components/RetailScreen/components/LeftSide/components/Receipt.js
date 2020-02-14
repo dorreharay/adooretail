@@ -7,17 +7,18 @@ import { GILROY_REGULAR } from '@fonts'
 
 import SharedButton from '@shared/SharedButton';
 
-function Receipt({ receipt, setReceiptInstance, addProductQuantity, substractProductQuantity, }) {
+function Receipt(props) {
+  const { receipt, setReceiptInstance, addProductQuantity, substractProductQuantity, } = props
 
   const activatedRef = useRef(null)
+
+  const [activatedIndex, setActivatedIndex] = useState(false)
 
   const deleteItem = (receiptIndex) => {
     const newReceipt = receipt.filter((item, index) => index !== receiptIndex)
 
     setReceiptInstance(newReceipt)
   }
-
-  const [activatedIndex, setActivatedIndex] = useState(false)
 
   const handleActivate = (index) => {
     setActivatedIndex(index)
@@ -31,9 +32,9 @@ function Receipt({ receipt, setReceiptInstance, addProductQuantity, substractPro
 
   const handlePress = (type, rowItem) => {
     if (type === 'plus') {
-      addProductQuantity(rowItem)(false)
+      addProductQuantity(rowItem)
     } else {
-      substractProductQuantity(rowItem)(false)
+      substractProductQuantity(rowItem)
     }
 
     clearTimeout(activatedRef.current)
@@ -91,17 +92,23 @@ function Receipt({ receipt, setReceiptInstance, addProductQuantity, substractPro
             </View>
             <View style={styles.receiptPrice}>
               <Text 
-                style={{ height: '100%', textAlign: 'center', color: '#343434', fontSize: 18, fontFamily: GILROY_REGULAR }}
+                style={styles.receiptTotal}
                 ellipsizeMode='tail'
                 numberOfLines={1}
-              >{item.quantity * item.price} грн</Text>
+              >
+                {item.quantity * item.price} грн
+              </Text>
             </View>
             <TouchableOpacity
               style={styles.receiptDeleteIcon}
               onPress={() => deleteItem(index)}
               activeOpacity={1}
             >
-              <Image style={{ width: '30%', height: '30%', }} source={require('@images/x_icon.png')} fadeDuration={0} />
+              <Image
+                style={{ width: '30%', height: '30%', }}
+                source={require('@images/x_icon.png')}
+                fadeDuration={0}
+              />
             </TouchableOpacity>
           </View>
         </View>

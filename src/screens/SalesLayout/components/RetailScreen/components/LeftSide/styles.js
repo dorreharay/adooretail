@@ -1,5 +1,5 @@
-import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -135,6 +135,14 @@ const base = {
     width: '16%',
     height: 50,
   },
+  receiptTotal: {
+    height: '100%',
+    
+    color: '#343434',
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
+    textAlign: 'center',
+  },
   selectedText: {
     fontFamily: GILROY_REGULAR,
   },
@@ -244,7 +252,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxWidth(500, {
+ maxWidth(500, {
 
   })
 );

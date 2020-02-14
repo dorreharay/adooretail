@@ -1,21 +1,22 @@
-import React, { useState, } from 'react'
-import { View, Text, TouchableOpacity, ScrollView, } from 'react-native'
-import { useSelector, useDispatch, } from 'react-redux';
+import React from 'react'
+import { View, Text, TouchableOpacity, } from 'react-native'
+import { useSelector, } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import styles from './styles'
+
+import { currentAccountSelector } from '@selectors'
 
 import EditIcon from '@images/edit.svg'
 
 import SharedButton from '@shared/SharedButton';
-import PaymentSubmit from '../PaymentSubmit';
-
-import { currentAccountSelector } from '@selectors'
 
 function PaymentLeftSide(props) {
-  const { selectedType, pTypes, selectPType, setEmployeesListVisibility, currentEmployee, } = props
+  const { 
+    selectedType, pTypes, selectPType,
+    setEmployeesListVisibility, currentEmployee,
+  } = props
 
   const currentAccount = useSelector(currentAccountSelector)
-  const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
   return (
     <View style={styles.container}>

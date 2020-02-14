@@ -4,6 +4,11 @@ import DeviceInfo from "react-native-device-info"
 import httpClient from './index'
 
 const API = {
+  async getProducts(payload, token) {
+    if(!token) return null
+
+    return await asyncAxiosCall(`/user/products/${token}`, payload)
+  },
   async synchronizeSessions(payload, token) {
     if(!token) return null
 

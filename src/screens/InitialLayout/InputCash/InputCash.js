@@ -1,29 +1,25 @@
-import React, { Component, useState, useEffect, } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, } from "react";
+import { View, Text, } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
-import { API_URL } from '../../../../config/api';
-import { cashKeyboardLayout } from '../../../../helpers/keyboards'
+import { cashKeyboardLayout } from '@keyboards'
 
 import { currentAccountSelector } from '@selectors'
-import { setEmployees, setStartCash, updateCurrentSession, restoreDefaultShift, } from '@reducers/UserReducer'
+import { setStartCash, updateCurrentSession, restoreDefaultShift, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 import LoginLoader from '@shared/LoginLoader';
 import SharedButton from '@shared/SharedButton';
 
 function InputCash(props) {
-  const { navigation, sliderRef, } = props;
-
-  const currentAccount = useSelector(currentAccountSelector)
-  const endOfSession = useSelector(state => state.temp.endOfSession)
-  const startCash = useSelector(state => state.user.startCash)
+  const { navigation, } = props;
 
   const dispatch = useDispatch();
+
+  const endOfSession = useSelector(state => state.temp.endOfSession)
 
   const [currentInput, setCurrentInput] = useState('0')
   const [loading, setLoadingStatus] = useState(false)
@@ -70,13 +66,9 @@ function InputCash(props) {
   }
 
   const handleProceed = async () => {
-    // const { token } = currentAccount
-
     if (endOfSession) {
       try {
         setLoadingStatus(true)
-
-        // await axios.post(`${API_URL}/user/session/terminate/${token}`, { session_id, endSum: currentInput })
 
         dispatch(setEndOfSessionStatus(false))
         dispatch(updateCurrentSession({ status: 'end', endCash: currentInput }))
@@ -111,6 +103,7 @@ function InputCash(props) {
       <Text style={styles.loginHeading}>Cума в касі на {endOfSession ? 'кінці' : 'початку'} зміни</Text>
       <Text style={styles.loginCaption}>{currentInput}</Text>
       <View style={styles.lsNumpad}>
+
         {cashKeyboardLayout.map((num, index) => (
           <Ripple
             style={styles.lsNum}
@@ -144,7 +137,6 @@ function InputCash(props) {
           <Text style={styles.backButtonText}>Назад</Text>
         </View>
       </SharedButton>
-
     </View>
   )
 }

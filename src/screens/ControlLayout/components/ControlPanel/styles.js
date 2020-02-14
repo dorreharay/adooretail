@@ -1,4 +1,4 @@
-import { createStyles, maxHeight, minWidth, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxWidth, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, PROBA_BOLD, } from '@fonts'
 
 const base = {
@@ -27,6 +27,7 @@ const base = {
     color: '#909090',
     fontSize: 18,
     fontFamily: PROBA_REGULAR,
+    width: '85%',
   },
   tabsContainer: {
 
@@ -69,7 +70,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxWidth(500, {
+ maxWidth(500, {
 
   })
 );

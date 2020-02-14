@@ -19,7 +19,13 @@ function ControlPanel(props) {
           style={styles.businessIcon}
           source={require('@images/session_process.png')}
         />
-        <Text style={[styles.bussinessNameText, styles.primaryColor]}>{currentAccount.business_name}</Text>
+        <Text 
+          style={[styles.bussinessNameText, styles.primaryColor]}
+          numberOfLines={1}
+          ellipsizeMode='tail'
+        >
+          {currentAccount.business_name}
+        </Text>
       </View>
       <View style={{ justifyContent: 'space-between', flex: 1, paddingVertical: 30, }}>
         <View style={styles.tabsContainer}>

@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, Text, TextInput, } from 'react-native'
+import { View, } from 'react-native'
 import { RNCamera } from 'react-native-camera';
 import styles from './styles'
 
 function CodePayment(props) {
-  const { invalidColor, enteredSum, total, handleChangeSum, } = props
+  const {  } = props
 
   return (
     <View style={styles.discountContainer}>
