@@ -6,6 +6,7 @@ import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
+// import Orientation from 'react-native-orientation';
 
 import API from '@api'
 
@@ -145,6 +146,8 @@ function AppSessions(props) {
 
         await asyncSync()
 
+        Orientation.lockToLandscape();
+
         changeInitialLoadingWrapperOpacity(false)
         SplashScreen.hide();
 
@@ -188,7 +191,7 @@ function AppSessions(props) {
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {
       Orientation.lockToLandscape()
-      saveDimensions()
+      // saveDimensions()
     }
   }
 
@@ -197,10 +200,6 @@ function AppSessions(props) {
 
       if (orientation === 'PORTRAIT') {
         Orientation.lockToLandscape()
-
-        saveDimensions()
-      } else {
-        saveDimensions()
       }
     });
 

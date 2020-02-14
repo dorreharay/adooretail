@@ -71,7 +71,7 @@ const base = {
   categoryTitleText4: {
     marginBottom: 2.5,
     color: '#4E4E4E',
-    fontSize: 20,
+    fontSize: 19,
     fontFamily: GILROY_MEDIUM,
     lineHeight: 30,
   },

@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import styles from './styles'
 
 import API from '@api'
+import { deviceWidth, deviceHeight } from '@dimensions'
 
 import SharedButton from '@shared/SharedButton'
 
@@ -21,8 +22,6 @@ function ReceiptModal(props) {
     receiptModalState,
     hideReceiptModal,
   } = props
-
-  const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const [customerEmail, setCustomerEmail] = useState('')
   const [error, setErrorStatus] = useState(false)

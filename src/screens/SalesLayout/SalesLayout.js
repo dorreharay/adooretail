@@ -11,6 +11,8 @@ import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '@
 import RetailScreen from './components/RetailScreen/RetailScreen';
 import Pagination from './components/Pagination/Pagination'
 
+import { deviceWidth, deviceHeight } from '@dimensions'
+
 function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
   const swiperRef = useRef(null)
@@ -21,7 +23,6 @@ function SalesLayout({ navigation, }) {
   const currentAccount = useSelector(currentAccountSelector)
   const products = currentAccount.products
   const accounts = useSelector(state => state.user.accounts)
-  const { deviceHeight } = useSelector(state => state.temp.dimensions)
 
   const [animatedScale] = useState(new Animated.Value(1))
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)

@@ -15,6 +15,8 @@ import SharedButton from '@shared/SharedButton'
 import PaymentLeftSide from '../PaymentLeftSide/PaymentLeftSide';
 import PaymentRightSide from '../PaymentRightSide/PaymentRightSide';
 
+import { deviceWidth, deviceHeight } from '@dimensions'
+
 const PaymentModal = (props) => {
   const {
     setPaymentModalVisibility, isVisible,
@@ -25,7 +27,6 @@ const PaymentModal = (props) => {
   const timerRef2 = useRef(null)
 
   const dispatch = useDispatch()
-  const { deviceWidth, deviceHeight } = useSelector(state => state.temp.dimensions)
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
 

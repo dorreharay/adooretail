@@ -7,12 +7,12 @@ import styles from './styles'
 
 import Header from './Header'
 
+import { deviceWidth, deviceHeight } from '@dimensions'
+
 function ContentPanel(props) {
   const { activeCategory, handleSlideIndex, tabs, navigation, } = props
 
   const carouselRef = useRef(null)
-
-  const { deviceWidth, deviceHeight, } = useSelector(state => state.temp.dimensions)
 
   const [swiperVisible, makeSwiperVisible] = useState(false)
 

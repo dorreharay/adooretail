@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux'
 import styles from './styles'
 import FastImage from 'react-native-fast-image'
 
+import { deviceWidth, deviceHeight } from '@dimensions'
 import { currentAccountSelector } from '@selectors';
 
 function ControlPanel(props) {
   const { activeCategory, tabs } = props
 
-  const { deviceWidth } = useSelector(state => state.temp.dimensions)
   const currentAccount = useSelector(currentAccountSelector)
 
   return (

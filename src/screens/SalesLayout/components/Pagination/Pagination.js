@@ -4,11 +4,12 @@ import { View, TouchableOpacity, } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
+import { deviceWidth, deviceHeight } from '@dimensions'
+
 function Pagination(props) {
   const { swiperRef, accountWrapperVisibile, index, total, } = props
 
   const accounts = useSelector(state => state.user.accounts)
-  const { deviceWidth } = useSelector(state => state.temp.dimensions)
 
   if (accounts.length === 1) {
     return null

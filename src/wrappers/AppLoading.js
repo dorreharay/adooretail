@@ -10,7 +10,7 @@ function AppLoading({ children, }){
   const timerRef = useRef(null)
 
   useEffect(() => {
-    Orientation.lockToLandscape();
+    // Orientation.lockToLandscape();
 
     return () => {
       clearTimeout(timerRef.current)

@@ -6,13 +6,14 @@ import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
+import { deviceWidth } from '@dimensions'
+
 function Products(props) {
   const { products, searchTerm, addProductQuantity, } = props;
 
   const scrollView = useRef(null)
   
   const layout = useSelector(state => state.orders.layout)
-  const { deviceWidth, } = useSelector(state => state.temp.dimensions)
 
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
@@ -138,7 +139,7 @@ function Products(props) {
                     onPress={() => changeActiveCategory(index, key)}
                     activeOpacity={1} key={index}
                   >
-                    <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
+                    <Text numberOfLines={2} ellipsizeMode='tail' style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
                   </View>
 
                   {rowItem.matches && (

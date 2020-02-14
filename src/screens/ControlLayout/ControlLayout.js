@@ -10,10 +10,10 @@ import History from './components/ContentPanel/Pages/History/History'
 import Settings from './components/ContentPanel/Pages/Settings/Settings'
 import Transactions from './components/ContentPanel/Pages/Transactions/Transactions'
 
+import { deviceWidth, deviceHeight } from '@dimensions'
+
 function ControlLayout(props) {
   const { navigation } = props
-
-  const { deviceWidth } = useSelector(state => state.temp.dimensions)
 
   const [animatedX] = useState(new Animated.Value(0))
 
