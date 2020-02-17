@@ -1,7 +1,7 @@
 import React, { useRef, useState, useMemo, Fragment, } from 'react';
 import { Text, View, Animated, Easing, TouchableOpacity, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import Toast from 'react-native-easy-toast';
+import Toast, { DURATION } from 'react-native-easy-toast'
 import Swiper from 'react-native-swiper'
 import styles from './styles'
 

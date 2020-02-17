@@ -2,7 +2,7 @@ import React, { Component, useState, useRef } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch, } from 'react-redux';
 import { useNetInfo } from "@react-native-community/netinfo";
-import Toast from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 

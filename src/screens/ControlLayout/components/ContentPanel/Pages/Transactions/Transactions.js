@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, } from 'react'
 import { View, Text, TextInput, KeyboardAvoidingView, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector, useDispatch } from 'react-redux'
-import Toast from 'react-native-easy-toast';
+import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles'
 
 import { getFormattedDate, } from '@dateFormatter'

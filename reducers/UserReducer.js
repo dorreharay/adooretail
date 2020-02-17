@@ -15,7 +15,8 @@ const SYNC_DATA = 'SYNC_DATA';
 const SET_BOUNDS = 'SET_BOUNDS';
 const SET_SETTINGS = 'SET_SETTINGS';
 const ADD_ACCOUNT = 'ADD_ACCOUNT';
-const SAVE_TRANSACTION = 'SAVE_TRANSACTION'
+const SAVE_TRANSACTION = 'SAVE_TRANSACTION';
+const SET_NEED_TO_REENTER = 'SET_NEED_TO_REENTER';
 
 const initialState = {
   token: '',
@@ -23,7 +24,7 @@ const initialState = {
   initialLoading: true,
   currentAccountIndex: 0,
   currentAccountToken: '',
-  pinCode: '1111222',
+  passcode: '121512',
   bounds: [],
   accounts: [],
 };
@@ -142,6 +143,13 @@ export function saveTransaction(payload) {
   }
 }
 
+export function setNeedToReenter(payload) {
+  return {
+    type: SET_NEED_TO_REENTER,
+    payload
+  }
+}
+
 const ACTION_HANDLERS = {
   [SAVE_TRANSACTION]: (state, action) => {
     const { accounts, currentAccountIndex } = state
@@ -168,9 +176,18 @@ const ACTION_HANDLERS = {
 
     return { ...state, accounts: newAccounts, }
   },
+  [SET_NEED_TO_REENTER]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+    const newNeedToReenter = action.payload
+
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, needToReenter: newNeedToReenter }) : item)
+
+    return { ...state, accounts: newAccounts, }
+  },
   [ADD_ACCOUNT]: (state, action) => {
     const { accounts, } = state
-    const data = action.payload
+    const data = action.payload.result
+    const client_data = action.payload.client_data
 
     const payload = {
       id: data._id.slice(0, data._id.length / 2) + data._id.slice(data._id.length / 2),
@@ -178,6 +195,8 @@ const ACTION_HANDLERS = {
       ...data,
       localSessions: [],
       products: [],
+      passcode: client_data.passcode,
+      needToReenter: false,
     }
 
     return {
@@ -213,6 +232,7 @@ const ACTION_HANDLERS = {
         return ({
           ...item,
           ...data,
+          passcode: data.client_data.passcode
         })
       } else {
         return item

@@ -14,7 +14,7 @@ import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
 import { START, END, NO_TIME } from '@statuses'
 import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } from '@dateFormatter'
-import { syncDataWithStore } from '@reducers/UserReducer'
+import { syncDataWithStore, setNeedToReenter, } from '@reducers/UserReducer'
 import { setOrientationDimensions, setCurrentRoute } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
@@ -55,19 +55,24 @@ function AppSessions(props) {
 
     return currentAccount.localSessions.slice(offset, currentAccount.localSessions.length)
   }
-  
+
   useEffect(() => {
     return () => {
       dispatch(setCurrentRoute(0))
     }
   }, [])
 
+  useEffect(() => {
+    if (currentAccount) {
+      if (currentAccount.needToReenter) {
+        NavigationService.setTopLevelNavigator(navigatorRef.current)
+        NavigationService.navigate('Login')
+      }
+    }
+  }, [currentAccount])
+
   const synchronizeSessions = async () => {
     try {
-      // if(!netInfo.isConnected) {
-      //   throw new Error('no internet')
-      // }
-
       const data = await API.synchronizeSessions({
         localSessions: getPreparedSessions(),
         newSettings: currentAccount.settings,
@@ -79,9 +84,13 @@ function AppSessions(props) {
 
       dispatch(syncDataWithStore(payload, data.shift_start, data.shift_end))
 
-      if (currentRoute && currentRoute === 4) {
-        // Alert.alert(`${currentRoute} ---- 1`)
+      if (currentAccount) {
+        if (data.client_data.passcode != currentAccount.passcode) {
+          dispatch(setNeedToReenter(true))
+        }
+      }
 
+      if (currentRoute && currentRoute === 4) {
         if (accounts.length !== 0) {
           validateSessionRoutine(currentAccount.localSessions, data.shift_start, data.shift_end)
         }
@@ -120,7 +129,7 @@ function AppSessions(props) {
 
       syncRef.current = setInterval(() => {
         synchronizeSessions()
-      }, 10 * 1000)
+      }, 60 * 1000)
     }
 
 
@@ -172,6 +181,15 @@ function AppSessions(props) {
       }
 
       if (!currentSession.endTime && currentSession.length !== 0) {
+        if (currentAccount.needToReenter) {
+          Orientation.lockToLandscape();
+
+          changeInitialLoadingWrapperOpacity(false)
+          SplashScreen.hide();
+
+          return
+        }
+
         gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
       } else {
         asyncSync()
@@ -261,7 +279,7 @@ function AppSessions(props) {
     let startOfShift = ''
     let endOfShift = ''
 
-    
+
 
     if (currentAccount.settings.shifts.enabled) {
       startOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shiftStart.hours, minutes: shiftStart.minutes, seconds: 0, })
@@ -273,7 +291,7 @@ function AppSessions(props) {
 
     console.log('Shift validation')
     console.log('%c%s', 'color: #E7715E; font: 0.8rem Tahoma;', `${getFormattedDate('HH:mm', startOfShift)}  ------>  ${getFormattedDate('HH:mm', endOfShift)}`)
-    
+
     const isValid = getIsBetween(currentAccountSession.startTime, startOfShift, endOfShift) && getIsBetween(null, startOfShift, endOfShift)
 
     return isValid

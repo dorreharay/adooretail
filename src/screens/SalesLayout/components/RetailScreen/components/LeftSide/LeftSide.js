@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, ScrollView, TouchableOpacity, } from 'react-native'
 import { useSelector, } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
+import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
 import { getUpperCaseDate } from '@dateFormatter'
@@ -168,14 +169,14 @@ function LeftSide(props) {
       </ScrollView>
 
       {currentAccount.settings.available_teams && currentAccount.settings.available_teams.kitchen ? (
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ width: '100%', paddingHorizontal: '7%', flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity
             onPress={() => changePaymentModalState(true)}
-            style={[styles.proceedContainer, { width: '72%', paddingLeft: '8%', paddingRight: 5, height: 70, marginLeft: '0%', marginBottom: 40, justifyContent: 'flex-end' }]}
+            style={[styles.proceedContainer, styles.zProceed]}
             activeOpacity={1}
           >
             <LinearGradient
-              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
+              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 },  {  paddingLeft: '8%', },]}
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}
@@ -184,18 +185,16 @@ function LeftSide(props) {
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => changePaymentModalState(true)}
-            style={[styles.proceedContainer, { width: '24%', paddingLeft: 5, paddingRight: 10, marginLeft: 0, height: 70, marginBottom: 40, justifyContent: 'flex-end' }]}
+            onPress={() => {}}
+            style={[styles.proceedContainer, styles.zProceedEx, receiptSum <= 0 && { borderColor: '#E4616280' },]}
             activeOpacity={1}
           >
-            <LinearGradient
-              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
-              start={{ x: 0, y: 1 }}
-              end={{ x: 1, y: 0 }}
-              colors={['#DB3E69', '#FD9C6C']}
-            >
-              <Text style={styles.lsproceedButtonText}>З</Text>
-            </LinearGradient>
+            <View style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}>
+              <FastImage
+                style={{ width: 30, height: 30, }}
+                source={require('@images/print.png')}
+              />
+            </View>
           </TouchableOpacity>
         </View>
       ) : (
@@ -205,7 +204,7 @@ function LeftSide(props) {
             activeOpacity={1}
           >
             <LinearGradient
-              style={[styles.lsproceedButton, { marginLeft: '1%' }, receiptSum <= 0 && { opacity: 0.5 }]}
+              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}

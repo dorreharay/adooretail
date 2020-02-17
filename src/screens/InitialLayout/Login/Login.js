@@ -4,15 +4,16 @@ import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import Ripple from 'react-native-material-ripple';
 import DeviceInfo from 'react-native-device-info';
-import Toast from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import Svg, { Circle } from 'react-native-svg';
 import styles from './styles';
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
-import { loginKeyboardLayout } from '../../../../helpers/keyboards'
+import { loginKeyboardLayout } from '@keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
 
+import { setNeedToReenter, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 function Login(props) {
@@ -34,7 +35,6 @@ function Login(props) {
 
   const currentAccount = useSelector(currentAccountSelector)
   const currentSession = useSelector(currentSessionSelector)
-  const { pinCode: validPinCode } = useSelector(state => state.user)
 
   const [passwordArray, setPasswordArray] = useState(initialPassword)
   const [loading, setLoadingStatus] = useState(false)
@@ -68,7 +68,7 @@ function Login(props) {
     setLoadingStatus(true)
 
     try {
-      if (enteredPinCode !== validPinCode) {
+      if (enteredPinCode != currentAccount.passcode) {
         throw new Error('Не дійсний пін код')
       }
 
@@ -79,6 +79,8 @@ function Login(props) {
 
         throw new Error('Не правильний Device Id')
       }
+      
+      dispatch(setNeedToReenter(false))
 
       if (!currentSession.endTime && currentSession.length !== 0) {
         navigation.navigate('SalesLayout')
