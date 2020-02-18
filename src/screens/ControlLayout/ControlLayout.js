@@ -16,7 +16,7 @@ function ControlLayout(props) {
   const { route, navigation } = props
 
   useEffect(() => {
-    if(navigation.state) {
+    if(navigation.state.params) {
       setActiveCategory({ index: navigation.state.params.screen, animated: false, })
     }
   }, [navigation])

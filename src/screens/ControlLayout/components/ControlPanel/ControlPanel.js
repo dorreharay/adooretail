@@ -47,7 +47,7 @@ function ControlPanel(props) {
         </View>
         <View style={styles.settingsContainer}>
           <TouchableOpacity
-            style={[styles.tab, activeCategory === tabs[tabs.length - 1].index && { backgroundColor: '#2E2C2F', }]}
+            style={[styles.tab, activeCategory.index === tabs[tabs.length - 1].index && { backgroundColor: '#2E2C2F', }]}
             onPress={tabs[tabs.length - 1].onPress}
             activeOpacity={1}
             key={tabs[tabs.length - 1].index}
