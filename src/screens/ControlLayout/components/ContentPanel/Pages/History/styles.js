@@ -6,7 +6,6 @@ const base = {
     flex: 1,
     height: '100%',
     paddingVertical: 20,
-    paddingHorizontal: 40,
   },
 };
 

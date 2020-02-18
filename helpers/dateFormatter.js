@@ -33,7 +33,7 @@ export function getIsBetween(compared, start, end) {
 export function getIsBetweenAdvanced(compared, start, end) {
   if (typeof start === 'object') {
     if(compared) {
-      return dayjs(compared).isBetween(dayjs().startOf(start.start), dayjs().end(start.start))
+      return dayjs(compared).isBetween(dayjs().startOf(start.start), dayjs().endOf(start.start))
     }
 
     return dayjs().isBetween(dayjs().startOf(start.start), dayjs().end(start.start))

@@ -88,7 +88,7 @@ function HistoryList(props) {
     <ScrollView
       ref={scrollRef}
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 600, }}
+      contentContainerStyle={{ paddingHorizontal: 40, paddingBottom: 600, }}
       scrollEnabled={expandedIndex === null}
       onScroll={(e) => {
         setScrollTopButtonVisibility(e.nativeEvent.contentOffset.y > 50)

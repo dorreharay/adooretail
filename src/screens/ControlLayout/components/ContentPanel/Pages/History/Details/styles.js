@@ -7,6 +7,7 @@ const base = {
     justifyContent: 'space-between',
     width: '100%',
     paddingTop: 20,
+    paddingHorizontal: 45,
   },
   paymentHeadingText: {
     color: '#343434',

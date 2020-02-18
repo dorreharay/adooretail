@@ -19,7 +19,7 @@ function ContentPanel(props) {
   useEffect(() => {
     makeSwiperVisible(true)
     if (carouselRef.current) {
-      carouselRef.current.snapToItem(activeCategory)
+      carouselRef.current.snapToItem(activeCategory.index, activeCategory.animated)
     }
   }, [activeCategory])
 
@@ -57,6 +57,7 @@ function ContentPanel(props) {
         scrollEnabled={false}
         onSnapToItem={handleSlideIndex}
         inactiveSlideScale={1}
+        removeClippedSubviews={false}
       />
     </View>
   )

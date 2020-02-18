@@ -12,24 +12,24 @@ import { getFormattedDate, } from '@dateFormatter'
 
 import { currentAccountSelector, } from '@selectors'
 import { setEmployees, setStartCash, addFiveMinutesToShift, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus } from '@reducers/TempReducer'
+import { setModalStatus, setEndOfSessionStatus } from '@reducers/TempReducer'
 
 function SessionModal(props) {
   const {
     intervalRef, navigatorRef,
-    modalStatus, setModalStatus,
     isVisible,
   } = props
 
   const dispatch = useDispatch()
 
   const currentAccount = useSelector(currentAccountSelector)
+  const modalStatus = useSelector(state => state.temp.modalStatus)
 
   const endSession = () => {
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
-    setModalStatus('')
+    dispatch(setModalStatus(''))
 
     clearInterval(intervalRef.current)
 
@@ -41,7 +41,7 @@ function SessionModal(props) {
   const startSession = () => {
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
-    setModalStatus('')
+    dispatch(setModalStatus(''))
 
     clearInterval(intervalRef.current)
 
@@ -51,11 +51,11 @@ function SessionModal(props) {
   }
 
   const handleBackButton = () => {
-    setModalStatus('')
+    dispatch(setModalStatus(''))
   }
 
   const addFiveMinutes = () => {
-    setModalStatus('')
+    dispatch(setModalStatus(''))
 
     clearInterval(intervalRef.current)
     dispatch(addFiveMinutesToShift())
@@ -63,7 +63,7 @@ function SessionModal(props) {
 
   return (
     <Modal
-      visible={isVisible}
+      visible={modalStatus !== ''}
       modalAnimation={new SlideAnimation({
         slideFrom: 'bottom',
         animationDuration: 30,
@@ -85,17 +85,21 @@ function SessionModal(props) {
 
           <Fragment>
             <View>
-              <Text style={styles.modalRegularText}>{modalStatus.first}</Text>
-              <Text style={styles.modalRegularText}>{modalStatus.second}</Text>
+              <Text style={styles.modalRegularText}>{modalStatus ? modalStatus.first : ''}</Text>
+              <Text style={styles.modalRegularText}>{modalStatus ? modalStatus.second : ''}</Text>
             </View>
 
             <TouchableOpacity
               onPress={() => {
+                if(!modalStatus) {
+                  return
+                }
+
                 if (modalStatus.type === 'start') startSession()
 
                 if (modalStatus.type === 'end') endSession()
 
-                if (modalStatus.type === 'no_time') setModalStatus('')
+                if (modalStatus.type === 'no_time') dispatch(setModalStatus(''))
               }}
               style={styles.linearButton}
               activeOpacity={1}
@@ -105,7 +109,7 @@ function SessionModal(props) {
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                 colors={['#DB3E47', '#EF9058']}
               >
-                <Text style={styles.linearButtonText}>{modalStatus.button}</Text>
+                <Text style={styles.linearButtonText}>{modalStatus ? modalStatus.button : ''}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </Fragment>

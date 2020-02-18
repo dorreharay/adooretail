@@ -24,7 +24,6 @@ const initialState = {
   initialLoading: true,
   currentAccountIndex: 0,
   currentAccountToken: '',
-  passcode: '121512',
   bounds: [],
   accounts: [],
 };
@@ -35,7 +34,6 @@ export function addAccount(payload) {
     payload
   }
 }
-
 
 export function setSettings(payload) {
   return {
@@ -232,7 +230,8 @@ const ACTION_HANDLERS = {
         return ({
           ...item,
           ...data,
-          passcode: data.client_data.passcode
+          passcode: data.client_data.passcode,
+          updatePeriod: data.client_data.update_period,
         })
       } else {
         return item

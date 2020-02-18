@@ -201,7 +201,7 @@ function Details(props) {
             )}
         </View>
       </View>
-      <Collapsible style={{ paddingVertical: 15, }} collapsed={!detailsExpanded}>
+      <Collapsible style={{ paddingVertical: 15, paddingHorizontal: 45, }} collapsed={!detailsExpanded}>
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}>Безготівковий підсумок {activeFilter ? activeFilter.name.toLowerCase() : 'за сьогодні'} - <Text style={styles.paymentDetailsText}>{todayCardSum || 0} грн</Text></Text>
         </View>

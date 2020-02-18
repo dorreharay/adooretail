@@ -3,6 +3,7 @@
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
 const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
 const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
+const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
 
 const initialState = {
   endOfSession: false,
@@ -11,7 +12,15 @@ const initialState = {
     deviceHeight: 0,
   },
   currentRoute: 0,
+  modalStatus: '',
 };
+
+export function setModalStatus(payload) {
+  return {
+    type: SET_MODAL_STATUS,
+    payload
+  }
+}
 
 export function setEndOfSessionStatus(payload) {
   return {
@@ -43,6 +52,9 @@ const ACTION_HANDLERS = {
   },
   [SET_CURRENT_ROUTE]: (state, action) => {
     return { ...state, currentRoute: action.payload }
+  },
+  [SET_MODAL_STATUS]: (state, action) => {
+    return { ...state, modalStatus: action.payload }
   },
 };
 

@@ -21,9 +21,12 @@ const base = {
     width: toolsBarHeight - 24,
     height: toolsBarHeight - 30,
   },
+  overlayStyles: {
+    backgroundColor: "rgba(0, 0, 0, 0.55)",
+    flex: 1
+  },
   modalComponent: {
     width: 320,
-    height: 200,
     position: 'absolute',
     top: 242,
     right: 12,
@@ -32,25 +35,20 @@ const base = {
     borderRadius: 5,
     backgroundColor: "transparent",
   },
-  overlayStyles: {
-    backgroundColor: "rgba(0, 0, 0, 0.55)",
-    flex: 1
-  },
   modal: {
     position: 'relative',
-    width: 300,
-    height: 350,
     borderRadius: 5,
   },
   modalItem: {
     justifyContent: 'center',
     width: 320,
-    height: 60,
+    height: 70,
     paddingLeft: 25,
     backgroundColor: '#FFFFFF'
   },
   withTopBorderRadius: {
-    height: 78,
+    height: 75,
+    paddingTop: 15,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
@@ -66,13 +64,14 @@ const base = {
     fontFamily: PROBA_REGULAR,
   },
   redText: {
-    color: '#E25B63'
+    color: '#E25B63',
+    paddingBottom: 15,
   },
   modalItemRed: {
     justifyContent: 'center',
     width: 320,
-    height: 80,
-    paddingLeft: 20,
+    height: 70,
+    paddingLeft: 20,    
     backgroundColor: '#FFFFFF'
   },
   closeModal: {

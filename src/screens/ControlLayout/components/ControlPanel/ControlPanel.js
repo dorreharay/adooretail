@@ -32,7 +32,7 @@ function ControlPanel(props) {
           <Text style={styles.sectionTitle}>{'ОСНОВНІ'}</Text>
           {tabs.slice(0, tabs.length - 1).map((tab, index) => (
             <TouchableOpacity
-              style={[styles.tab, activeCategory === tab.index && { backgroundColor: '#2E2C2F', }]}
+              style={[styles.tab, activeCategory.index === tab.index && { backgroundColor: '#2E2C2F', }]}
               onPress={tab.onPress}
               activeOpacity={1}
               key={index}

@@ -13,7 +13,7 @@ import HistoryList from './HistoryList/HistoryList'
 function History(props) {
   const currentAccount = useSelector(currentAccountSelector)
 
-  const [activeFilter, setActiveFilter] = useState(null)
+  const [activeFilter, setActiveFilter] = useState({ code: 'day', name: 'За сьогодні' })
   const [activeSort, setActiveSort] = useState({ code: 'time-desc', name: 'Сортувати' })
   const [withoutEmptySessions, setWithoutStatus] = useState(false)
   const [loading, setLoadingStatus] = useState(false)

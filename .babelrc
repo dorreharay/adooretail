@@ -15,10 +15,12 @@
           "@dimensions": "./helpers/dimensions",
           "@keyboards": "./helpers/keyboards",
           "@dateFormatter": "./helpers/dateFormatter",
+          "@requests": "./helpers/requests",
           "@shared": "./src/shared",
           "@selectors": "./store/selectors",
           "@statuses": "./config/statuses",
           "@reducers": "./reducers",
+          "@store": "./index",
         }
       }
     ]

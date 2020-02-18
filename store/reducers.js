@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage';
 import OrdersReducer from '@reducers/OrdersReducer';
@@ -24,17 +24,15 @@ const ordersPersistConfig = {
 
 const usersPersistConfig = {
   key: 'users',
-  storage: AsyncStorage
+  storage: AsyncStorage,
+  blacklist: ['modalStatus']
 }
 
-const appReducer = persistReducer(
-  persistConfig,
-  combineReducers({
-    orders: persistReducer(ordersPersistConfig, OrdersReducer),
-    user: persistReducer(usersPersistConfig, UserReducer),
-    temp: TempReducer,
-  })
-)
+const appReducer = combineReducers({
+  orders: persistReducer(ordersPersistConfig, OrdersReducer),
+  user: persistReducer(usersPersistConfig, UserReducer),
+  temp: TempReducer
+})
 
 export const resetStore = () => ({
   type: RESET_STORE
@@ -42,8 +40,8 @@ export const resetStore = () => ({
 
 export default (state, action) => {
   if (action.type === RESET_STORE) {
-    const {maya} = state;
-    state = {maya};
+    const { maya } = state;
+    state = { maya };
   }
 
   return appReducer(state, action);

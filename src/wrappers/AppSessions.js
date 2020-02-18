@@ -8,14 +8,11 @@ import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
 // import Orientation from 'react-native-orientation';
 
-import API from '@api'
+import { syncSessions, } from '@requests'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
-import { START, END, NO_TIME } from '@statuses'
-import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } from '@dateFormatter'
-import { syncDataWithStore, setNeedToReenter, } from '@reducers/UserReducer'
-import { setOrientationDimensions, setCurrentRoute } from '@reducers/TempReducer'
+import { setOrientationDimensions, setCurrentRoute, setModalStatus } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
 import SessionModal from '../screens/SalesLayout/components/SessionModal/SessionModal';
@@ -35,7 +32,7 @@ function AppSessions(props) {
 
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
-  const currentAccountToken = useSelector(state => state.user.currentAccountToken)
+  const modalStatus = useSelector(state => state.temp.modalStatus)
   const currentRoute = useSelector(state => state.temp.currentRoute)
   const accounts = useSelector(state => state.user.accounts)
 
@@ -43,24 +40,7 @@ function AppSessions(props) {
   const netInfo = useNetInfo()
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
-  const [modalStatus, setModalStatus] = useState('')
   const [prevNetState, setPrevNetState] = useState(false)
-
-  const getPreparedSessions = () => {
-    let offset = 0
-
-    if (currentAccount.localSessions.length >= 5) {
-      offset = currentAccount.localSessions.length - 5
-    }
-
-    return currentAccount.localSessions.slice(offset, currentAccount.localSessions.length)
-  }
-
-  useEffect(() => {
-    return () => {
-      dispatch(setCurrentRoute(0))
-    }
-  }, [])
 
   useEffect(() => {
     if (currentAccount) {
@@ -72,80 +52,35 @@ function AppSessions(props) {
   }, [currentAccount])
 
   const synchronizeSessions = async () => {
-    try {
-      const data = await API.synchronizeSessions({
-        localSessions: getPreparedSessions(),
-        newSettings: currentAccount.settings,
-      }, currentAccountToken)
-
-      const payload = {
-        ...data,
-      }
-
-      dispatch(syncDataWithStore(payload, data.shift_start, data.shift_end))
-
-      if (currentAccount) {
-        if (data.client_data.passcode != currentAccount.passcode) {
-          dispatch(setNeedToReenter(true))
-        }
-      }
-
-      if (currentRoute && currentRoute === 4) {
-        if (accounts.length !== 0) {
-          validateSessionRoutine(currentAccount.localSessions, data.shift_start, data.shift_end)
-        }
-      }
-    } catch (error) {
-      console.log('error', error)
-
-      if (initialLoadingVisibility) {
+    if (accounts.length !== 0) {
+      await syncSessions(() => {
         changeInitialLoadingWrapperOpacity(false)
         SplashScreen.hide();
-      }
-
-      if (currentRoute && currentRoute === 4) {
-        if (accounts.length !== 0) {
-          // Alert.alert(`${currentRoute} ---- 2`)
-
-          validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
-        }
-      }
+      })
     }
   }
 
   useEffect(() => {
-    if (currentRoute && currentRoute === 4) {
-      if (!initialLoadingVisibility) {
-        if (accounts.length !== 0) {
-          validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
-        }
+    if (accounts.length !== 0) {
+      if (modalStatus !== '') {
+        clearInterval(syncRef.current)
+
+        syncRef.current = setInterval(() => {
+          synchronizeSessions()
+        }, 5000)
+      } else {
+        clearInterval(syncRef.current)
+
+        syncRef.current = setInterval(() => {
+          synchronizeSessions()
+        }, (currentAccount.client_data.update_period ? currentAccount.client_data.update_period : (10 * 1000)))
       }
     }
-  }, [currentAccount, currentRoute, initialLoadingVisibility])
-
-  useEffect(() => {
-    if (accounts.length !== 0) {
-      clearInterval(syncRef.current)
-
-      syncRef.current = setInterval(() => {
-        synchronizeSessions()
-      }, 60 * 1000)
-    }
-
 
     return () => {
       clearInterval(syncRef.current)
     };
-  }, [accounts, currentAccount, currentSession, currentRoute, netInfo])
-
-  const asyncSync = async () => {
-    if (accounts.length !== 0) {
-      await synchronizeSessions()
-
-      changeInitialLoadingWrapperOpacity(false)
-      SplashScreen.hide();
-    }
-  };
+  }, [accounts, currentAccount, modalStatus, currentSession, currentRoute, netInfo])
 
   const gotoScreen = async (screen, callback) => {
     timerRef1.current = setTimeout(() => {
@@ -153,12 +88,14 @@ function AppSessions(props) {
       timerRef2.current = setTimeout(async () => {
         NavigationService.navigate(screen)
 
-        await asyncSync()
+        try {
+          await synchronizeSessions()
+        } catch (error) {
+          changeInitialLoadingWrapperOpacity(false)
+          SplashScreen.hide();
+        }
 
         Orientation.lockToLandscape();
-
-        changeInitialLoadingWrapperOpacity(false)
-        SplashScreen.hide();
 
         callback()
       }, 110)
@@ -172,7 +109,7 @@ function AppSessions(props) {
     }
   }, [])
 
-  const peek = () => {
+  useEffect(() => {
     if (initialLoadingVisibility) {
       if (accounts.length === 0) {
         gotoScreen('NoAccount', () => dispatch(setCurrentRoute(0)))
@@ -192,12 +129,10 @@ function AppSessions(props) {
 
         gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
       } else {
-        asyncSync()
+        synchronizeSessions()
       }
     }
-  }
-
-  useEffect(peek, [currentSession])
+  }, [])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width
@@ -209,7 +144,7 @@ function AppSessions(props) {
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {
       Orientation.lockToLandscape()
-      // saveDimensions()
+      saveDimensions()
     }
   }
 
@@ -241,61 +176,11 @@ function AppSessions(props) {
   }, [])
 
   useEffect(() => {
-    if (currentRoute && currentRoute === 4) {
-      clearInterval(intervalRef.current)
-
-      // intervalRef.current = setInterval(() => {
-      //   validateSessionRoutine(currentAccount.localSessions, currentAccount.shift_start, currentAccount.shift_end)
-      // }, 2 * 1000)
-    } else {
-      clearInterval(intervalRef.current)
-    }
+    clearInterval(intervalRef.current)
     return () => {
       clearInterval(intervalRef.current)
     }
   }, [currentAccount, currentRoute, modalStatus,])
-
-  function validateSessionRoutine(localSessions, shiftStart, shiftEnd) {
-    const isValid = validateSession(localSessions, shiftStart, shiftEnd)
-
-    if (isValid && modalStatus !== '') {
-      setModalStatus('')
-    }
-
-    if (!isValid) {
-      if (localSessions.length === 0) {
-        setModalStatus(START)
-      } else {
-        setModalStatus(END)
-      }
-    }
-  }
-
-  const validateSession = (sessions, shiftStart, shiftEnd) => {
-    if (sessions.length === 0) return false
-
-    const currentAccountSession = sessions[sessions.length - 1]
-
-    let startOfShift = ''
-    let endOfShift = ''
-
-
-
-    if (currentAccount.settings.shifts.enabled) {
-      startOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shiftStart.hours, minutes: shiftStart.minutes, seconds: 0, })
-      endOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shiftEnd.hours, minutes: shiftEnd.minutes, seconds: 0, })
-    } else {
-      startOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
-      endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day')
-    }
-
-    console.log('Shift validation')
-    console.log('%c%s', 'color: #E7715E; font: 0.8rem Tahoma;', `${getFormattedDate('HH:mm', startOfShift)}  ------>  ${getFormattedDate('HH:mm', endOfShift)}`)
-
-    const isValid = getIsBetween(currentAccountSession.startTime, startOfShift, endOfShift) && getIsBetween(null, startOfShift, endOfShift)
-
-    return isValid
-  }
 
   const screenProps = {
     initialLoadingVisibility,
@@ -334,8 +219,6 @@ function AppSessions(props) {
             isVisible={modalStatus !== ''}
             intervalRef={intervalRef}
             navigatorRef={navigatorRef}
-            modalStatus={modalStatus}
-            setModalStatus={setModalStatus}
           />
         )}
 

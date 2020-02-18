@@ -18,18 +18,38 @@ function Menu(props) {
 
   const [menuButtons] = useState([
     {
-      name: 'Панель керування',
+      name: 'Історія замолень',
       onPress: () => {
-        navigation.navigate('ControlLayout')
+        navigation.navigate('ControlLayout', {
+          screen: 0,
+        })
         closeMenu()
       }
     },
     {
-      name: 'Змінити аккаунт', onPress: () => {
-        openChangeAccountOverview()
+      name: 'Транзакції',
+      onPress: () => {
+        navigation.navigate('ControlLayout', {
+          screen: 1,
+        })
         closeMenu()
       }
     },
+    {
+      name: 'Налаштування',
+      onPress: () => {
+        navigation.navigate('ControlLayout', {
+          screen: 4,
+        })
+        closeMenu()
+      }
+    },
+    // {
+    //   name: 'Змінити аккаунт', onPress: () => {
+    //     openChangeAccountOverview()
+    //     closeMenu()
+    //   }
+    // },
   ])
 
   const endSession = () => {
@@ -47,7 +67,7 @@ function Menu(props) {
         open={isVisible}
         modalStyle={styles.modalComponent}
         overlayStyle={styles.overlayStyles}
-        animationDuration={200}
+        animationDuration={100}
         animationTension={100}
         closeOnTouchOutside={true}
         closeModal={closeMenu}
