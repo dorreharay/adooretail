@@ -47,7 +47,7 @@ function Receipt(props) {
       {receipt.map((item, index) => (
         <View style={styles.receiptItem} key={index}>
           <View style={styles.receiptTitle}>
-            <Text style={styles.receiptTitleText}>{item.title}</Text>
+            <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}</Text>
           </View>
           <View style={styles.receiptDetails}>
             <View style={styles.receiptOnePriceContainer}>

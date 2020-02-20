@@ -183,7 +183,16 @@ function Products(props) {
                             <View style={styles.variantPrice}>
                               <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
                             </View>
-                            <Text style={styles[`variantText${layout}`]}>{rowItem.title}</Text>
+                            <Text 
+                              numberOfLines={4}
+                              textBreakStrategy='balanced'
+                              ellipsizeMode='tail'
+                              style={styles[`variantText${layout}`]}
+                              selectable
+                              // selectionColor='#FFFFFF'
+                            >
+                              {rowItem.title}
+                            </Text>
                           </LinearGradient>
                         )}
                       </TouchableOpacity>

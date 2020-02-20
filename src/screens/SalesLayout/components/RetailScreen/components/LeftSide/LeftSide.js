@@ -110,8 +110,8 @@ function LeftSide(props) {
             <SharedButton
               onPress={() => setReceiptInstancesVisibility(!isReceiptInstancesVisible)}
               style={headerButtonSizes}
-              iconStyle={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
-              source={require('@images/x_icon.png')}
+              iconStyle={{ width: headerIcon.width - 1, height: headerIcon.height - 1, }}
+              source={require('@images/prev.png')}
             />
           </View>
         </View>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, } from 'react'
-import { View, Text, TouchableOpacity, ScrollView, } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Keyboard, Animated, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles'
 
-import { saveLocalReceipt } from '@reducers/UserReducer'
+import { syncReceipt } from '@reducers/UserReducer'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { getFormattedDate, } from '@dateFormatter'
@@ -25,6 +25,8 @@ const PaymentModal = (props) => {
 
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
+  const willShowRef = useRef(null)
+  const willHideRef = useRef(null)
 
   const dispatch = useDispatch()
   const currentSession = useSelector(currentSessionSelector)
@@ -55,6 +57,7 @@ const PaymentModal = (props) => {
   const [enteredSum, setEnteredSum] = useState(`${currentReceipt.receiptSum}`)
   const [employeesListVisible, setEmployeesListVisibility] = useState(false)
   const [currentEmployee, setCurrentEmployee] = useState(currentSession.employees[0])
+  const [modalOffset, setModalOffset] = useState(new Animated.Value(0))
 
   const [activeDiscount, setActiveDiscount] = useState(0)
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
@@ -91,7 +94,7 @@ const PaymentModal = (props) => {
     if (!payload) return
 
     timerRef2.current = setTimeout(() => {
-      dispatch(saveLocalReceipt(payload))
+      dispatch(syncReceipt(payload))
     }, 300)
   }
 
@@ -147,18 +150,58 @@ const PaymentModal = (props) => {
     }
   }, [])
 
+  useEffect(() => {
+    willShowRef.current = Keyboard.addListener('keyboardWillShow', () => {
+      Animated.timing(
+        modalOffset,
+        {
+          toValue: -200,
+          duration: 200,
+        },
+      ).start()
+    });
+    willHideRef.current = Keyboard.addListener('keyboardWillHide', () => Animated.timing(
+      modalOffset,
+      {
+        toValue: 0,
+        duration: 200,
+      },
+    ).start());
+
+    return () => {
+      willShowRef.current.remove();
+      willHideRef.current.remove();
+    }
+  }, [])
 
   useEffect(() => {
+    if(isVisible) {
+      Animated.timing(
+        modalOffset,
+        {
+          toValue: 0,
+          duration: 0,
+        },
+      ).start()
+    } else {
+      Animated.timing(
+        modalOffset,
+        {
+          toValue: 2000,
+          duration: 0,
+        },
+      ).start()
+    }
     resetStatus()
   }, [isVisible])
 
   return (
-    <View style={[styles.paymentWrapperContainer, { position: 'absolute', top: 4000, }, isVisible && { top: 0, }]} pointerEvents={isVisible ? 'auto' : 'none'}>
+    <View style={[styles.paymentWrapperContainer, { top: 4000, }, isVisible && { top: 0 },]}>
       <TouchableOpacity
         style={styles.paymentWrapper}
         activeOpacity={1}
       />
-      <View style={[styles.paymentModal, { width: deviceWidth * 0.72, height: deviceWidth * 0.55, }]}>
+      <Animated.View style={[styles.paymentModal, { top: modalOffset, width: deviceWidth * 0.72, height: deviceWidth * 0.55, }]}>
         <PaymentLeftSide
           pTypes={pTypes}
           selectedType={selectedType}
@@ -182,7 +225,7 @@ const PaymentModal = (props) => {
           discounts={discounts} setDiscounts={setDiscounts}
           comment={comment} setComment={setComment}
         />
-      </View>
+      </Animated.View>
 
 
       {employeesListVisible && (

@@ -16,7 +16,7 @@ export default createStore = (initialState = {}) => {
     rootReducer,
     initialState,
     composeEnhancers(
-      applyMiddleware(logger),
+      applyMiddleware(logger, thunk),
       ...enhancers
     )
   );

@@ -5,7 +5,7 @@ import { setModalStatus } from '@reducers/TempReducer'
 import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } from '@dateFormatter'
 import { START, END, NO_TIME } from '@statuses'
 
-export async function syncSessions(callback) {
+export async function syncSessions(callback, newLocalSessions) {
   if (!store) return
 
   const currentStore = store.getState()
@@ -14,13 +14,19 @@ export async function syncSessions(callback) {
   const { accounts, currentAccountToken, currentAccountIndex, } = currentStore.user
   const { currentRoute, } = currentStore.temp
 
+  if(accounts.length === 0) {
+    callback()
+
+    return
+  }
+
   const currentAccount = accounts[currentAccountIndex]
 
   const { localSessions, settings, passcode } = currentAccount
 
   try {
     const data = await API.synchronizeSessions({
-      localSessions: getLastItems(localSessions, 5),
+      localSessions: getLastItems(newLocalSessions ? newLocalSessions : localSessions, 5),
       newSettings: settings,
     }, currentAccountToken)
 
@@ -38,7 +44,7 @@ export async function syncSessions(callback) {
     validateByRoute(shift_start, shift_end, callback)
   } catch (error) {
     console.log(error)
-    // validateByRoute(currentAccount.shift_start, currentAccount.shift_end, callback)
+    validateByRoute(currentAccount.shift_start, currentAccount.shift_end, callback)
   }
 }
 
@@ -48,15 +54,16 @@ export function validateByRoute(shift_start, shift_end, callback) {
 
   const { accounts, } = currentStore.user
   const { currentRoute, } = currentStore.temp
-
+  
   if (accounts.length !== 0) {
     validateSessionRoutine(shift_start, shift_end, callback)
+    callback()
   } else {
     callback()
   }
 }
 
-const validateSessionRoutine = (shift_start, shift_end, callback) => {
+export function  validateSessionRoutine(shift_start, shift_end, callback) {
   const dispatch = store.dispatch
   const currentStore = store.getState()
   const { accounts, currentAccountIndex, } = currentStore.user
@@ -72,6 +79,11 @@ const validateSessionRoutine = (shift_start, shift_end, callback) => {
   let startOfShift = ''
   let endOfShift = ''
 
+  if(!shift_start || !shift_end) {
+    shift_start = currentAccount.shift_start
+    shift_end = currentAccount.shift_end
+  }
+ 
   if (settings.shifts.enabled) {
     startOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shift_start.hours, minutes: shift_start.minutes, seconds: 0, })
     endOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shift_end.hours, minutes: shift_end.minutes, seconds: 0, })
@@ -97,7 +109,7 @@ const validateSessionRoutine = (shift_start, shift_end, callback) => {
     }
   }
 
-  callback()
+  callback && callback()
 }
 
 function getLastItems(array, slice) {

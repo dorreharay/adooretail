@@ -1,4 +1,5 @@
 import { getFormattedDate, } from '@dateFormatter'
+import { syncSessions, } from '@requests'
 
 const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
@@ -56,11 +57,31 @@ export function syncDataWithStore(payload) {
   }
 }
 
-export function saveLocalReceipt(payload) {
+function saveLocalReceipt(payload) {
   return {
     type: SAVE_LOCAL_RECEIPT,
     payload
   }
+}
+
+export function syncReceipt(receipt) {
+  return async function(dispatch, getState) {
+    try {
+      const store = getState()
+
+      const { accounts, currentAccountIndex } = store.user
+
+      const newLocalSessions = accounts[currentAccountIndex].localSessions.map((elem, key) => {
+        return accounts[currentAccountIndex].localSessions.length - 1 === key ? ({ ...elem, receipts: [...elem.receipts, receipt] }) : elem
+      })
+  
+      dispatch(saveLocalReceipt(receipt))
+
+      await syncSessions(() => {}, newLocalSessions)
+    } catch (error) {
+      console.log(error)
+    }
+  };
 }
 
 export function setProducts(payload) {
@@ -247,10 +268,12 @@ const ACTION_HANDLERS = {
     const newAccounts = accounts.map((item, id) => {
       if (id === currentAccountIndex) {
         const lastSessionIndex = item.localSessions.length - 1
+        
+        const newLocalSessions = item.localSessions.map((elem, key) => lastSessionIndex === key ? ({ ...elem, receipts: [...elem.receipts, newReceipt] }) : elem)
 
         return ({
           ...item,
-          localSessions: item.localSessions.map((elem, key) => lastSessionIndex === key ? ({ ...elem, receipts: [...elem.receipts, newReceipt] }) : elem)
+          localSessions: newLocalSessions
         })
       } else {
         return item

@@ -8,7 +8,7 @@ import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
 // import Orientation from 'react-native-orientation';
 
-import { syncSessions, } from '@requests'
+import { syncSessions, validateSessionRoutine, } from '@requests'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
@@ -29,6 +29,7 @@ function AppSessions(props) {
 
   const syncRef = useRef(null)
   const intervalRef = useRef(false)
+  const validationRef = useRef(null)
 
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
@@ -62,23 +63,20 @@ function AppSessions(props) {
 
   useEffect(() => {
     if (accounts.length !== 0) {
-      if (modalStatus !== '') {
-        clearInterval(syncRef.current)
+      validationRef.current = setInterval(() => {
+        validateSessionRoutine()
+      }, (currentAccount && currentAccount.client_data && currentAccount.client_data.shift_validation_period || (30 * 1000)))
 
-        syncRef.current = setInterval(() => {
-          synchronizeSessions()
-        }, 5000)
-      } else {
-        clearInterval(syncRef.current)
+      clearInterval(syncRef.current)
 
-        syncRef.current = setInterval(() => {
-          synchronizeSessions()
-        }, (currentAccount.client_data.update_period ? currentAccount.client_data.update_period : (10 * 1000)))
-      }
+      syncRef.current = setInterval(() => {
+        synchronizeSessions()
+      }, (currentAccount && currentAccount.client_data && currentAccount.client_data.update_period || (10 * 1000)))
     }
 
     return () => {
       clearInterval(syncRef.current)
+      clearInterval(validationRef.current)
     };
   }, [accounts, currentAccount, modalStatus, currentSession, currentRoute, netInfo])
 
@@ -87,6 +85,11 @@ function AppSessions(props) {
       NavigationService.setTopLevelNavigator(navigatorRef.current)
       timerRef2.current = setTimeout(async () => {
         NavigationService.navigate(screen)
+
+        if (accounts.length === 0) {
+          changeInitialLoadingWrapperOpacity(false)
+          SplashScreen.hide();
+        }
 
         try {
           await synchronizeSessions()

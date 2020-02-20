@@ -85,17 +85,17 @@ const base = {
     width: '100%',
     paddingLeft: 35,
     paddingRight: 10,
-    paddingTop: 20,
+    paddingTop: 15,
     paddingBottom: 10,
   },
   receiptTitle: {
     width: '100%',
-    // paddingBottom: 5,
   },
   receiptTitleText: {
     color: '#343434',
     fontSize: 20,
     fontFamily: GILROY_MEDIUM,
+    lineHeight: 30,
   },
   receiptDetails: {
     width: '100%',
