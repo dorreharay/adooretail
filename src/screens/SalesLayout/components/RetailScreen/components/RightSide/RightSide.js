@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, } from 'react'
 import { Text, View, Image, TextInput, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
+import { syncSessions, } from '@requests'
 import _ from 'lodash'
 import styles from './styles'
 
@@ -24,6 +25,7 @@ function RightSide(props) {
 
   const toast = useRef(null)
   const inputRef = useRef(null)
+  const throttleParams = useRef((callback) => _.throttle(() => callback(), 3000, { trailing: false, leading: false }));
 
   const netInfo = useNetInfo();
 
@@ -32,13 +34,15 @@ function RightSide(props) {
 
   const [searchTerm, setSearchTerm] = useState('')
 
-  const loadAgain = () => {
+  const loadAgain = async () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
       toast.current && toast.current.show("Потрібне інтернет з'єднання", 1000);
 
       return
     }
+
     loadProducts(account.token)
+    await syncSessions(() => { })
   }
 
   useEffect(() => {
@@ -89,7 +93,7 @@ function RightSide(props) {
             />
           )}
         </View>
-        
+
         <SharedButton onPress={() => { }} scale={0.85}>
           <View style={styles.connection}>
             <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
