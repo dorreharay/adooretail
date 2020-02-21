@@ -13,6 +13,7 @@ import { syncSessions, validateSessionRoutine, } from '@requests'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
+import { setNeedToReenter, } from '@reducers/UserReducer'
 import { setOrientationDimensions, setCurrentRoute, } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
@@ -199,11 +200,12 @@ function AppSessions(props) {
   return (
     <>
       <UserInactivity
-        timeForInactivity={30000}
+        timeForInactivity={currentAccount && currentAccount.client_data && currentAccount.client_data.allowed_inactivity_period || (30 * 1000)}
         timeoutHandler={BackgroundTimer}
         onAction={active => {
           if (!active) {
             if (accounts.length !== 0) {
+              dispatch(setNeedToReenter(true))
               NavigationService.setTopLevelNavigator(navigatorRef.current)
               NavigationService.navigate('Login')
             }
