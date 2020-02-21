@@ -13,7 +13,7 @@ import { syncSessions, validateSessionRoutine, } from '@requests'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
-import { setOrientationDimensions, setCurrentRoute, setUserInactivity } from '@reducers/TempReducer'
+import { setOrientationDimensions, setCurrentRoute, } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
 import SessionModal from '../screens/SalesLayout/components/SessionModal/SessionModal';

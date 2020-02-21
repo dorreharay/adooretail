@@ -23,7 +23,6 @@ function SalesLayout({ navigation, }) {
   const currentAccount = useSelector(currentAccountSelector)
   const products = currentAccount.products
   const accounts = useSelector(state => state.user.accounts)
-  const userInactive = useSelector(state => state.temp.userInactive)
 
   const [animatedScale] = useState(new Animated.Value(1))
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)

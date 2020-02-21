@@ -4,7 +4,6 @@ const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
 const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
 const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
 const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
-const SET_USER_INACTIVITY = 'SET_USER_INACTIVITY'
 
 const initialState = {
   endOfSession: false,
@@ -14,15 +13,7 @@ const initialState = {
   },
   currentRoute: 0,
   modalStatus: '',
-  userInactive: false,
 };
-
-export function setUserInactivity(payload) {
-  return {
-    type: SET_USER_INACTIVITY,
-    payload
-  }
-}
 
 export function setModalStatus(payload) {
   return {
@@ -64,9 +55,6 @@ const ACTION_HANDLERS = {
   },
   [SET_MODAL_STATUS]: (state, action) => {
     return { ...state, modalStatus: action.payload }
-  },
-  [SET_USER_INACTIVITY]: (state, action) => {
-    return { ...state, userInactive: action.payload }
   },
 };
 
