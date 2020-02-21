@@ -199,7 +199,10 @@ function LeftSide(props) {
         </View>
       ) : (
           <TouchableOpacity
-            onPress={() => changePaymentModalState(true)}
+            onPress={() => {
+              if(receiptSum <= 0) return
+              changePaymentModalState(true)
+            }}
             style={styles.proceedContainer}
             activeOpacity={1}
           >

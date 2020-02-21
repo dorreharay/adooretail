@@ -38,7 +38,7 @@ const Settings = () => {
 
         <SwitchWithTitle
           title={'Кухня'}
-          // disabled
+          disabled
           value={currentAccount.settings.available_teams.kitchen}
           onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
         />
