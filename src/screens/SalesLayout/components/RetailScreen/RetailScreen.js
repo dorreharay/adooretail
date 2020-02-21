@@ -22,7 +22,10 @@ function RetailScreen(props) {
   const timerRef3 = useRef(null)
   const timerRef4 = useRef(null)
 
-  const [receipts, setReceipts] = useState([[], [], [], []])
+  const [receipts1, setReceipts1] = useState([])
+  const [receipts2, setReceipts2] = useState([])
+  const [receipts3, setReceipts3] = useState([])
+  const [receipts4, setReceipts4] = useState([])
   const [menuVisible, setMenuVisibility] = useState(false)
   const [selectedInstance, selectReceiptInstance] = useState(0)
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
@@ -47,13 +50,55 @@ function RetailScreen(props) {
     }
   }
 
+  const getCurrentReceipt = () => {
+    let receipts = []
+
+    if(selectedInstance === 0) {
+      receipts = receipts1
+    }
+
+    if(selectedInstance === 1) {
+      receipts = receipts2
+    }
+
+    if(selectedInstance === 2) {
+      receipts = receipts3
+    }
+
+    if(selectedInstance === 3) {
+      receipts = receipts4
+    }
+
+    return receipts
+  }
+
+  const applyCurrentReceipt = (receipts) => {
+    if(selectedInstance === 0) {
+      setReceipts1(receipts)
+    }
+
+    if(selectedInstance === 1) {
+      setReceipts2(receipts)
+    }
+
+    if(selectedInstance === 2) {
+      setReceipts3(receipts)
+    }
+
+    if(selectedInstance === 3) {
+      setReceipts4(receipts)
+    }
+  }
+
   const addProductQuantity = (product) => {
-    const productExists = !!receipts[selectedInstance].find(item => item.title === product.title)
+    let receipts = getCurrentReceipt()
+
+    const productExists = !!receipts.find(item => item.title === product.title)
 
     let newReceiptsInstance = []
 
     if (productExists) {
-      newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
+      newReceiptsInstance = receipts.map((item, index) => {
         if (item.title === product.title) {
           return ({ ...item, quantity: item.quantity + 1 })
         }
@@ -68,21 +113,22 @@ function RetailScreen(props) {
         time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
       }
 
-      newReceiptsInstance = [...receipts[selectedInstance], initialReceiptItem]
+      newReceiptsInstance = [...receipts, initialReceiptItem]
     }
 
-    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
+    const newReceipts = newReceiptsInstance
 
-    setReceipts(newReceipts)
+    applyCurrentReceipt(newReceipts)
   }
 
   const substractProductQuantity = (product) => {
+    let receipts = getCurrentReceipt()
     let newReceiptsInstance = []
 
     if (product.quantity === 1) {
-      newReceiptsInstance = receipts[selectedInstance].filter((item, index) => item.title !== product.title)
+      newReceiptsInstance = receipts.filter((item, index) => item.title !== product.title)
     } else {
-      newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
+      newReceiptsInstance = receipts.map((item, index) => {
         if (item.title === product.title) {
           return ({ ...item, quantity: item.quantity - 1 })
         }
@@ -91,15 +137,15 @@ function RetailScreen(props) {
       })
     }
 
-    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
+    const newReceipts = newReceiptsInstance
 
-    setReceipts(newReceipts)
+    applyCurrentReceipt(newReceipts)
   }
 
   const clearCurrentReceipt = () => {
-    const newReceipts = receipts.map((item, index) => index === selectedInstance ? ([]) : item)
+    const newReceipts = []
 
-    setReceipts(newReceipts)
+    applyCurrentReceipt(newReceipts)
   }
 
   const openMenu = () => setMenuVisibility(true)
@@ -117,7 +163,7 @@ function RetailScreen(props) {
   return (
     <View style={styles.container}>
       <LeftSide
-        receipts={receipts} setReceipts={setReceipts}
+        receipts={getCurrentReceipt()} setReceipts={applyCurrentReceipt}
         receiptSum={currentReceipt.receiptSum}
         setCurrentReceipt={setCurrentReceipt}
         selectedInstance={selectedInstance} selectReceiptInstance={selectReceiptInstance}
@@ -127,7 +173,7 @@ function RetailScreen(props) {
       />
       <RightSide
         products={products} loadProducts={loadProducts}
-        receipts={receipts} setReceipts={setReceipts}
+        receipts={getCurrentReceipt()} setReceipts={applyCurrentReceipt}
         selectedInstance={selectedInstance}
         account={account} openMenu={openMenu}
         addProductQuantity={addProductQuantity}

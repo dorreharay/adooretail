@@ -27,7 +27,7 @@ function ControlLayout(props) {
       {
         index: 0,
         title: 'Історія замовлень',
-        iconSource: require('@images/history1.png'),
+        iconSource: require('@images/history.png'),
         onPress: () => handleCategoryPress(0),
         component: <History />,
       },

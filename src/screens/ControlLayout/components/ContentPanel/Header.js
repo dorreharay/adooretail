@@ -14,7 +14,7 @@ function Header(props) {
       </View> */}
       {heading}
       <View style={styles.rightButtonsContainer}>
-        <SharedButton
+        {/* <SharedButton
           style={styles.backButton}
           iconStyle={{ width: 20, height: 20, }}
           onPress={() => { }}
@@ -22,7 +22,7 @@ function Header(props) {
           scale={0.9}
         >
           <Text style={styles.menuButtonText}>Оновлення</Text>
-        </SharedButton>
+        </SharedButton> */}
         <SharedButton
           style={styles.backButton}
           iconStyle={{ width: 20, height: 20, }}

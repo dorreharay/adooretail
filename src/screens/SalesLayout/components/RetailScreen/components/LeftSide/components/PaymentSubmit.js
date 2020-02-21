@@ -25,7 +25,7 @@ function PaymentSubmit(props) {
       if (selectedType.index === 1) {
         timerRef.current = setTimeout(() => {
           clearCurrentReceipt()
-        }, 300)
+        }, 500)
       } else {
         clearCurrentReceipt()
       }

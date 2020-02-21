@@ -8,7 +8,7 @@ import styles from './styles'
 import { getUpperCaseDate } from '@dateFormatter'
 import { currentAccountSelector, } from '@selectors'
 
-import ClockIcon from '@images/hour.svg'
+import ClockIcon from '@images/wall-clock.svg'
 
 import SharedButton from '@shared/SharedButton';
 import Receipt from './components/Receipt';
@@ -59,13 +59,13 @@ function LeftSide(props) {
   }
 
   const setReceiptInstance = (newReceiptInstance) => {
-    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptInstance : item)
+    const newReceipts = newReceiptInstance
 
     setReceipts(newReceipts)
   }
 
   const changePaymentModalState = (status) => {
-    if (status && receipts[selectedInstance].length === 0) return
+    // if (status && receipts[selectedInstance].length === 0) return
 
     setPaymentModalState(status)
   }
@@ -76,17 +76,17 @@ function LeftSide(props) {
 
   useEffect(() => {
     setCurrentReceipt({
-      payload: receipts[selectedInstance],
-      receiptSum: receipts[selectedInstance].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false),
+      payload: receipts,
+      receiptSum: receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false),
     })
-  }, [receipts[selectedInstance]]);
+  }, [receipts]);
 
   return (
     <View style={styles.container}>
       {isReceiptInstancesVisible ? (
         <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
           <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '75%', flexDirection: 'row' }}>
-            {receipts.map((receiptInstance, index) => (
+            {[{}, {}, {}, {}].map((receiptInstance, index) => (
               <View style={[styles.lsInstanceContainer, { width: headerHeight - 20, height: headerHeight - 20, }]} key={index}>
                 <SharedButton
                   onPress={() => selectReceiptInstance(index)}
@@ -139,7 +139,7 @@ function LeftSide(props) {
 
               <SharedButton
                 style={headerButtonSizes}
-                iconStyle={{ width: headerIcon.width - 1.5, height: headerIcon.height - 1.5, }}
+                iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
                 onPress={() => setReceiptInstancesVisibility(!isReceiptInstancesVisible)}
                 source={require('@images/split_orders.png')}
               />
@@ -161,7 +161,7 @@ function LeftSide(props) {
         contentContainerStyle={{ paddingBottom: 10, }}
       >
         <Receipt
-          receipt={receipts[selectedInstance]}
+          receipt={receipts}
           setReceiptInstance={setReceiptInstance}
           addProductQuantity={addProductQuantity}
           substractProductQuantity={substractProductQuantity}
