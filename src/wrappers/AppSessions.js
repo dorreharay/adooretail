@@ -6,13 +6,14 @@ import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
-// import Orientation from 'react-native-orientation';
+import UserInactivity from 'react-native-user-inactivity';
+import BackgroundTimer from 'react-native-user-inactivity/lib/BackgroundTimer';
 
 import { syncSessions, validateSessionRoutine, } from '@requests'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
-import { setOrientationDimensions, setCurrentRoute, setModalStatus } from '@reducers/TempReducer'
+import { setOrientationDimensions, setCurrentRoute, setUserInactivity } from '@reducers/TempReducer'
 
 import SharedBackground from '@shared/SharedBackground';
 import SessionModal from '../screens/SalesLayout/components/SessionModal/SessionModal';
@@ -197,35 +198,49 @@ function AppSessions(props) {
 
   return (
     <>
-      <SharedBackground
-        loading={initialLoadingVisibility}
-        opacity={initialLoadingOpacity}
-        source={require('@images/background-adv7.png')}
-        mainWrapper
+      <UserInactivity
+        timeForInactivity={30000}
+        timeoutHandler={BackgroundTimer}
+        onAction={active => {
+          if (!active) {
+            if (accounts.length !== 0) {
+              NavigationService.setTopLevelNavigator(navigatorRef.current)
+              NavigationService.navigate('Login')
+            }
+          }
+        }}
+        style={{ flex: 1, }}
       >
         <SharedBackground
           loading={initialLoadingVisibility}
           opacity={initialLoadingOpacity}
           source={require('@images/background-adv7.png')}
-          navigation={NavigationService}
+          mainWrapper
         >
-          <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
-            <View style={styles.versionContainer}>
-              <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
+          <SharedBackground
+            loading={initialLoadingVisibility}
+            opacity={initialLoadingOpacity}
+            source={require('@images/background-adv7.png')}
+            navigation={NavigationService}
+          >
+            <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
+              <View style={styles.versionContainer}>
+                <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
+              </View>
+              {withProps}
             </View>
-            {withProps}
-          </View>
+          </SharedBackground>
+
+          {accounts.length !== 0 && (
+            <SessionModal
+              isVisible={modalStatus !== ''}
+              intervalRef={intervalRef}
+              navigatorRef={navigatorRef}
+            />
+          )}
         </SharedBackground>
+      </UserInactivity>
 
-        {accounts.length !== 0 && (
-          <SessionModal
-            isVisible={modalStatus !== ''}
-            intervalRef={intervalRef}
-            navigatorRef={navigatorRef}
-          />
-        )}
-
-      </SharedBackground>
     </>
   )
 }

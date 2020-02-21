@@ -67,10 +67,6 @@ function RightSide(props) {
     dispatch(setLayout(newLayout))
   }
 
-  useEffect(() => {
-    console.log(netInfo)
-  }, [netInfo])
-
   return (
     <View style={styles.container}>
       <View style={styles.toolsBar}>
