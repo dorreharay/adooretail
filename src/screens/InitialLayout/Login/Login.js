@@ -63,12 +63,12 @@ function Login(props) {
   }
 
   const validateDeviceID = async (enteredPinCode) => {
-    const { registered_device_ids, token, client_data } = currentAccount
+    const { registered_device_ids, passcodes } = currentAccount
 
     setLoadingStatus(true)
 
     try {
-      if (!client_data.passcodes.includes(enteredPinCode)) {
+      if (!passcodes.includes(enteredPinCode)) {
         throw new Error('Не дійсний пін код')
       }
 

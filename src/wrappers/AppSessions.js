@@ -205,9 +205,9 @@ function AppSessions(props) {
         onAction={active => {
           if (!active) {
             if (accounts.length !== 0) {
-              dispatch(setNeedToReenter(true))
-              NavigationService.setTopLevelNavigator(navigatorRef.current)
-              NavigationService.navigate('Login')
+              // dispatch(setNeedToReenter(true))
+              // NavigationService.setTopLevelNavigator(navigatorRef.current)
+              // NavigationService.navigate('Login')
             }
           }
         }}

@@ -172,26 +172,14 @@ const PaymentModal = (props) => {
     }
   }, [])
 
-  useEffect(() => {
-    if(isVisible) {
-      Animated.timing(
-        modalOffset,
-        {
-          toValue: 0,
-          duration: 0,
-        },
-      ).start()
-    } else {
-      Animated.timing(
-        modalOffset,
-        {
-          toValue: 2000,
-          duration: 0,
-        },
-      ).start()
-    }
-    resetStatus()
-  }, [isVisible])
+  // useEffect(() => {
+  //   if(isVisible) {
+  //     setModalOffset(new Animated.Value(0))
+  //   } else {
+  //     setModalOffset(new Animated.Value(2000))
+  //   }
+  //   resetStatus()
+  // }, [isVisible])
 
   const receiptSum = useMemo(() => {
     const newSum = receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)

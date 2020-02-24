@@ -214,7 +214,7 @@ const ACTION_HANDLERS = {
       ...data,
       localSessions: [],
       products: [],
-      passcode: client_data.passcode,
+      passcodes: client_data.passcodes,
       needToReenter: false,
     }
 
