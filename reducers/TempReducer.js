@@ -1,9 +1,12 @@
-
+import { getFormattedDate, } from '@dateFormatter'
 
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
 const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
 const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
 const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
+
+const SET_SELECTED_RECEIPT = 'SET_SELECTED_RECEIPT'
+const SET_RECEIPTS = 'SET_RECEIPTS'
 
 const initialState = {
   endOfSession: false,
@@ -13,6 +16,8 @@ const initialState = {
   },
   currentRoute: 0,
   modalStatus: '',
+  selectedReceiptIndex: 0,
+  receipts: [[], [], [], []],
 };
 
 export function setModalStatus(payload) {
@@ -43,6 +48,114 @@ export function setCurrentRoute(payload) {
   }
 }
 
+export function setSelectedReceipt(payload) {
+  return {
+    type: SET_SELECTED_RECEIPT,
+    payload
+  }
+}
+
+export function setReceipts(payload) {
+  return {
+    type: SET_RECEIPTS,
+    payload
+  }
+}
+
+export function addProductQuantity(payload) {
+  return function (dispatch, getState) {
+    const state = getState().temp
+
+    const { selectedReceiptIndex, receipts, } = state
+    const product = payload
+
+    let receipt = receipts[selectedReceiptIndex]
+
+    const productExists = !!receipt.find(item => item.title === product.title)
+  
+    let newReceiptsInstance = []
+  
+    if (productExists) {
+      newReceiptsInstance = receipt.map((item, index) => {
+        if (item.title === product.title) {
+          return ({ ...item, quantity: item.quantity + 1 })
+        }
+  
+        return item
+      })
+    } else {
+      let firstReceiptItem = {
+        title: product.title,
+        price: product.price,
+        quantity: 1,
+        time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
+      }
+  
+      newReceiptsInstance = [...receipt, firstReceiptItem]
+    }
+  
+    const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? newReceiptsInstance : item)
+  
+    dispatch(setReceipts(newReceipts))
+  }
+}
+
+export function substractProductQuantity(payload) {
+  return function (dispatch, getState) {
+    const state = getState().temp
+
+    const { selectedReceiptIndex, receipts, } = state
+    const product = payload
+
+    let receipt = receipts[selectedReceiptIndex]
+  
+    let newReceiptsInstance = []
+  
+    if (product.quantity === 1) {
+      newReceiptsInstance = receipt.filter((item, index) => item.title !== product.title)
+    } else {
+      newReceiptsInstance = receipt.map((item, index) => {
+        if (item.title === product.title) {
+          return ({ ...item, quantity: item.quantity - 1 })
+        }
+
+        return item
+      })
+    }
+  
+    const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? newReceiptsInstance : item)
+  
+    dispatch(setReceipts(newReceipts))
+  }
+}
+
+export function deleteCurrentReceiptItem(payload) {
+  return function (dispatch, getState) {
+    const state = getState().temp
+    const receiptIndex = payload
+
+    const { selectedReceiptIndex, receipts, } = state
+
+    const updatedReceipt = receipts[selectedReceiptIndex].filter((item, index) => index !== receiptIndex)
+  
+    const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? updatedReceipt : item)
+  
+    dispatch(setReceipts(newReceipts))
+  }
+}
+
+export function clearCurrentReceipt() {
+  return function (dispatch, getState) {
+    const state = getState().temp
+
+    const { selectedReceiptIndex, receipts, } = state
+  
+    const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? [] : item)
+  
+    dispatch(setReceipts(newReceipts))
+  }
+}
+
 const ACTION_HANDLERS = {
   [SET_END_OF_SESSION_STATUS]: (state, action) => {
     return { ...state, endOfSession: action.payload }
@@ -55,6 +168,13 @@ const ACTION_HANDLERS = {
   },
   [SET_MODAL_STATUS]: (state, action) => {
     return { ...state, modalStatus: action.payload }
+  },
+
+  [SET_SELECTED_RECEIPT]: (state, action) => {
+    return { ...state, selectedReceiptIndex: action.payload }
+  },
+  [SET_RECEIPTS]: (state, action) => {
+    return { ...state, receipts: action.payload }
   },
 };
 

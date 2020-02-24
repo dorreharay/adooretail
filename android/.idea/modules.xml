@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/../node_modules/@react-native-community/viewpager/android/@react-native-community_viewpager.iml" filepath="$PROJECT_DIR$/../node_modules/@react-native-community/viewpager/android/@react-native-community_viewpager.iml" />
       <module fileurl="file://$PROJECT_DIR$/adooretail.iml" filepath="$PROJECT_DIR$/adooretail.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-background-timer/android/react-native-background-timer.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-background-timer/android/react-native-background-timer.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-camera/android/react-native-camera.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-camera/android/react-native-camera.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-device-info/android/react-native-device-info.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-device-info/android/react-native-device-info.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-fast-image/android/react-native-fast-image.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-fast-image/android/react-native-fast-image.iml" />

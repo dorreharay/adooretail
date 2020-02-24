@@ -13,7 +13,7 @@ function PaymentType(props) {
   const {
     selectedType, enteredSum, toByPaid, invalidColor, status, setStatus,
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
-    handleChangeSum, receipt, saveReceipt, clearCurrentReceipt,
+    handleChangeSum, receipt, saveReceipt,
     isVisible, discounts, setActiveDiscount, activeDiscount, comment, setComment,
   } = props
 
@@ -271,7 +271,6 @@ function PaymentType(props) {
         selectedType={selectedType}
         setPaymentModalVisibility={setPaymentModalVisibility}
         saveReceipt={saveReceipt} receipt={receipt}
-        clearCurrentReceipt={clearCurrentReceipt}
       />
     </>
   )
