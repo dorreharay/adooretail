@@ -137,7 +137,7 @@ function AppSessions(props) {
         synchronizeSessions()
       }
     }
-  }, [])
+  }, [accounts])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width
@@ -203,13 +203,13 @@ function AppSessions(props) {
         timeForInactivity={currentAccount && currentAccount.client_data && currentAccount.client_data.allowed_inactivity_period || (30 * 1000)}
         timeoutHandler={BackgroundTimer}
         onAction={active => {
-          if (!active) {
-            if (accounts.length !== 0) {
-              dispatch(setNeedToReenter(true))
-              NavigationService.setTopLevelNavigator(navigatorRef.current)
-              NavigationService.navigate('Login')
-            }
-          }
+          // if (!active) {
+          //   if (accounts.length !== 0) {
+          //     dispatch(setNeedToReenter(true))
+          //     NavigationService.setTopLevelNavigator(navigatorRef.current)
+          //     NavigationService.navigate('Login')
+          //   }
+          // }
         }}
         style={{ flex: 1, }}
       >

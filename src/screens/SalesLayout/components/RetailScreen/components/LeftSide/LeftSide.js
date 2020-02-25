@@ -19,7 +19,7 @@ const headerButtonSizes = { justifyContent: 'center', width: headerHeight, heigh
 const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
 
 function LeftSide(props) {
-  const { 
+  const {
     receipts, receiptSum, setCurrentReceipt, setReceipts,
     selectedInstance, selectReceiptInstance, setPaymentModalState,
     addProductQuantity, substractProductQuantity,
@@ -176,20 +176,20 @@ function LeftSide(props) {
             activeOpacity={1}
           >
             <LinearGradient
-              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 },  {  paddingLeft: '8%', },]}
+              style={[styles.lsproceedButton, receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) <= 0 && { opacity: 0.5 }, { paddingLeft: '8%', },]}
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}
             >
-              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
+              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) ? receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) : 0}₴ </Text>
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => {}}
-            style={[styles.proceedContainer, styles.zProceedEx, receiptSum <= 0 && { borderColor: '#E4616280' },]}
+            onPress={() => { }}
+            style={[styles.proceedContainer, styles.zProceedEx, receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) <= 0 && { borderColor: '#E4616280' },]}
             activeOpacity={1}
           >
-            <View style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}>
+            <View style={[styles.lsproceedButton, receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) <= 0 && { opacity: 0.5 }]}>
               <FastImage
                 style={{ width: 30, height: 30, }}
                 source={require('@images/print.png')}
@@ -200,19 +200,19 @@ function LeftSide(props) {
       ) : (
           <TouchableOpacity
             onPress={() => {
-              if(receiptSum <= 0) return
+              if (receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) <= 0) return
               changePaymentModalState(true)
             }}
             style={styles.proceedContainer}
             activeOpacity={1}
           >
             <LinearGradient
-              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
+              style={[styles.lsproceedButton, receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) <= 0 && { opacity: 0.5 }]}
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}
             >
-              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴</Text>
+              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) ? receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) : 0}₴</Text>
             </LinearGradient>
           </TouchableOpacity>
         )}
