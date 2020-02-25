@@ -1,24 +1,22 @@
 import React, { useRef, useState, useEffect, } from 'react';
 import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useDispatch, useSelector, } from 'react-redux'
 import styles from '../styles'
 
-import { GILROY_REGULAR } from '@fonts'
+import { addProductQuantity, substractProductQuantity, deleteCurrentReceiptItem } from '@reducers/TempReducer' 
 
 import SharedButton from '@shared/SharedButton';
 
 function Receipt(props) {
-  const { receipt, setReceiptInstance, addProductQuantity, substractProductQuantity, } = props
+  const { receipt, setReceiptInstance, } = props
 
   const activatedRef = useRef(null)
+  const dispatch = useDispatch()
+
+  const { selectedReceiptIndex, receipts } = useSelector(state => state.temp)
 
   const [activatedIndex, setActivatedIndex] = useState(false)
-
-  const deleteItem = (receiptIndex) => {
-    const newReceipt = receipt.filter((item, index) => index !== receiptIndex)
-
-    setReceiptInstance(newReceipt)
-  }
 
   const handleActivate = (index) => {
     setActivatedIndex(index)
@@ -32,9 +30,9 @@ function Receipt(props) {
 
   const handlePress = (type, rowItem) => {
     if (type === 'plus') {
-      addProductQuantity(rowItem)
+      dispatch(addProductQuantity(rowItem))
     } else {
-      substractProductQuantity(rowItem)
+      dispatch(substractProductQuantity(rowItem))
     }
 
     clearTimeout(activatedRef.current)
@@ -44,7 +42,7 @@ function Receipt(props) {
 
   return (
     <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingRight: 10, }}>
-      {receipt.map((item, index) => (
+      {receipts[selectedReceiptIndex].map((item, index) => (
         <View style={styles.receiptItem} key={index}>
           <View style={styles.receiptTitle}>
             <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}</Text>
@@ -101,7 +99,7 @@ function Receipt(props) {
             </View>
             <TouchableOpacity
               style={styles.receiptDeleteIcon}
-              onPress={() => deleteItem(index)}
+              onPress={() => dispatch(deleteCurrentReceiptItem(index))}
               activeOpacity={1}
             >
               <Image

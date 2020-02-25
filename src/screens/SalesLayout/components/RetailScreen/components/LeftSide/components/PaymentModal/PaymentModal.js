@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, } from 'react'
+import React, { useState, useEffect, useRef, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, ScrollView, Keyboard, Animated, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
 import Ripple from 'react-native-material-ripple';
@@ -18,10 +18,7 @@ import PaymentRightSide from '../PaymentRightSide/PaymentRightSide';
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 const PaymentModal = (props) => {
-  const {
-    setPaymentModalVisibility, isVisible,
-    currentReceipt, clearCurrentReceipt,
-  } = props;
+  const { isVisible, setPaymentModalVisibility, } = props;
 
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -31,6 +28,8 @@ const PaymentModal = (props) => {
   const dispatch = useDispatch()
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
+  const receipts = useSelector(state => state.temp.receipts)
+  const selectedReceiptIndex = useSelector(state => state.temp.selectedReceiptIndex)
 
   const initialStatuses = {
     initial: {
@@ -54,7 +53,7 @@ const PaymentModal = (props) => {
   }
 
   const [status, setStatus] = useState(initialStatuses.waiting)
-  const [enteredSum, setEnteredSum] = useState(`${currentReceipt.receiptSum}`)
+  const [enteredSum, setEnteredSum] = useState('0')
   const [employeesListVisible, setEmployeesListVisibility] = useState(false)
   const [currentEmployee, setCurrentEmployee] = useState(currentSession.employees[0])
   const [modalOffset, setModalOffset] = useState(new Animated.Value(0))
@@ -71,17 +70,19 @@ const PaymentModal = (props) => {
       return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     }
 
-    const firstReceipt = currentReceipt.payload[0]
-    const lastReceipt = currentReceipt.payload[currentReceipt.payload.length - 1]
+    const currentReceipt = receipts[selectedReceiptIndex]
+
+    const firstReceipt = currentReceipt[0]
+    const lastReceipt = currentReceipt[currentReceipt.length - 1]
     const timeStart = firstReceipt.time
     const timeEnd = lastReceipt.time
 
     const payload = {
       payment_type: paymentType,
-      receipt: currentReceipt.payload,
-      total: currentReceipt.receiptSum,
+      receipt: currentReceipt,
+      total: receiptSum,
       input: parseFloat(enteredSum),
-      change: +((+enteredSum) - currentReceipt.receiptSum).toFixed(2).replace(".00", ""),
+      change: +((+enteredSum) - receiptSum).toFixed(2).replace(".00", ""),
       discount: `${discounts[activeDiscount].percent}%`,
       hash_id: guidGenerator(),
       first_product_time: timeStart,
@@ -99,7 +100,8 @@ const PaymentModal = (props) => {
   }
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)
-  const [pTypes, setPTypes] = useState([
+
+  const [pTypes] = useState([
     {
       index: 0,
       name: 'Готівка',
@@ -140,10 +142,6 @@ const PaymentModal = (props) => {
   }
 
   useEffect(() => {
-    setEnteredSum(currentReceipt.receiptSum)
-  }, [currentReceipt.receiptSum])
-
-  useEffect(() => {
     return () => {
       clearTimeout(timerRef1.current)
       clearTimeout(timerRef2.current)
@@ -174,26 +172,22 @@ const PaymentModal = (props) => {
     }
   }, [])
 
-  useEffect(() => {
-    if(isVisible) {
-      Animated.timing(
-        modalOffset,
-        {
-          toValue: 0,
-          duration: 0,
-        },
-      ).start()
-    } else {
-      Animated.timing(
-        modalOffset,
-        {
-          toValue: 2000,
-          duration: 0,
-        },
-      ).start()
-    }
-    resetStatus()
-  }, [isVisible])
+  // useEffect(() => {
+  //   if(isVisible) {
+  //     setModalOffset(new Animated.Value(0))
+  //   } else {
+  //     setModalOffset(new Animated.Value(2000))
+  //   }
+  //   resetStatus()
+  // }, [isVisible])
+
+  const receiptSum = useMemo(() => {
+    const newSum = receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)
+
+    setEnteredSum(newSum)
+
+    return newSum
+  }, [receipts])
 
   return (
     <View style={[styles.paymentWrapperContainer, { top: 4000, }, isVisible && { top: 0 },]}>
@@ -213,14 +207,12 @@ const PaymentModal = (props) => {
           selectedType={selectedType}
           setPaymentModalVisibility={setPaymentModalVisibility}
           initialStatuses={initialStatuses}
-          status={status} total={currentReceipt.receiptSum}
-          receipt={currentReceipt.payload}
+          status={status} total={receiptSum}
           setStatus={setStatus} resetStatus={resetStatus}
           buttonAccessible={buttonAccessible}
           enteredSum={enteredSum} saveReceipt={saveReceipt}
           setEnteredSum={setEnteredSum} isVisible={isVisible}
           setButtonAccessibility={setButtonAccessibility}
-          clearCurrentReceipt={clearCurrentReceipt}
           activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
           discounts={discounts} setDiscounts={setDiscounts}
           comment={comment} setComment={setComment}

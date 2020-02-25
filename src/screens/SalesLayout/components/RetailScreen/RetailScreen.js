@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useMemo, } from 'react'
 import { View, } from 'react-native'
+import { useDispatch, useSelector, } from 'react-redux'
 import _ from 'lodash'
 import styles from './styles'
 import API from '@api'
-import { getFormattedDate, } from '@dateFormatter'
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
 import Menu from './components/Menu/Menu';
@@ -19,11 +19,8 @@ function RetailScreen(props) {
   const timerRef3 = useRef(null)
   const timerRef4 = useRef(null)
 
-  const [receipts, setReceipts] = useState([[], [], [], []])
   const [menuVisible, setMenuVisibility] = useState(false)
-  const [selectedInstance, selectReceiptInstance] = useState(0)
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
-  const [currentReceipt, setCurrentReceipt] = useState({})
   const setPaymentModalState = (state) => setPaymentModalVisibility(state)
   const loadProducts = async (token) => {
     try {
@@ -39,62 +36,6 @@ function RetailScreen(props) {
     }
   }
 
-
-  const addProductQuantity = (product) => {
-    const productExists = !!receipts[selectedInstance].find(item => item.title === product.title)
-
-    let newReceiptsInstance = []
-
-    if (productExists) {
-      newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
-        if (item.title === product.title) {
-          return ({ ...item, quantity: item.quantity + 1 })
-        }
-        return item
-      })
-    } else {
-      let initialReceiptItem = {
-        title: product.title,
-        price: product.price,
-        quantity: 1,
-        time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
-      }
-
-      newReceiptsInstance = [...receipts[selectedInstance], initialReceiptItem]
-    }
-
-    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
-
-    setReceipts(newReceipts)
-  }
-
-  const substractProductQuantity = (product) => {
-    let newReceiptsInstance = []
-
-    if (product.quantity === 1) {
-      newReceiptsInstance = receipts[selectedInstance].filter((item, index) => item.title !== product.title)
-    } else {
-      newReceiptsInstance = receipts[selectedInstance].map((item, index) => {
-        if (item.title === product.title) {
-          return ({ ...item, quantity: item.quantity - 1 })
-        }
-        return item
-      })
-    }
-
-    const newReceipts = receipts.map((item, index) => selectedInstance === index ? newReceiptsInstance : item)
-
-    setReceipts(newReceipts)
-    applyCurrentReceipt(newReceipts)
-  }
-
-  const clearCurrentReceipt = () => {
-    const newReceipts = receipts.map((item, index) => index === selectedInstance ? ([]) : item)
-
-    setReceipts(newReceipts)
-    applyCurrentReceipt(newReceipts)
-  }
-
   const openMenu = () => setMenuVisibility(true)
   const closeMenu = () => setMenuVisibility(false)
   useEffect(() => {
@@ -108,22 +49,11 @@ function RetailScreen(props) {
   return (
     <View style={styles.container}>
       <LeftSide
-        receipts={receipts} setReceipts={setReceipts}
-        setReceipts={applyCurrentReceipt}
-        receiptSum={currentReceipt.receiptSum}
-        setCurrentReceipt={setCurrentReceipt}
-        selectedInstance={selectedInstance} selectReceiptInstance={selectReceiptInstance}
         setPaymentModalState={setPaymentModalState}
-        addProductQuantity={addProductQuantity}
-        substractProductQuantity={substractProductQuantity}
       />
       <RightSide
         products={products} loadProducts={loadProducts}
-        receipts={receipts} setReceipts={setReceipts}
-        setReceipts={applyCurrentReceipt}
-        selectedInstance={selectedInstance}
         account={account} openMenu={openMenu}
-        addProductQuantity={addProductQuantity}
         navigation={navigation}
       />
       <Menu
@@ -135,8 +65,6 @@ function RetailScreen(props) {
       <PaymentModal
         isVisible={paymentModalVisible}
         setPaymentModalVisibility={setPaymentModalVisibility}
-        currentReceipt={currentReceipt}
-        clearCurrentReceipt={clearCurrentReceipt}
       />
     </View>
   )

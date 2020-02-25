@@ -214,7 +214,7 @@ const ACTION_HANDLERS = {
       ...data,
       localSessions: [],
       products: [],
-      passcode: client_data.passcode,
+      passcodes: client_data.passcodes,
       needToReenter: false,
     }
 
@@ -251,7 +251,7 @@ const ACTION_HANDLERS = {
         return ({
           ...item,
           ...data,
-          passcode: data.client_data.passcode,
+          passcodes: data.client_data.passcodes,
           updatePeriod: data.client_data.update_period,
         })
       } else {

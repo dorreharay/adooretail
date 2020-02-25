@@ -3,8 +3,8 @@ import { getSocket } from './index'
 import DeviceInfo from "react-native-device-info";
 
 const API = {
-  async makePing(payload) {
-    return await promisifiedSocketEmit('ping', payload)
+  async sendMessage(payload) {
+    return await promisifiedSocketEmit('message', payload)
   },
 };
 
@@ -12,7 +12,7 @@ export default API
 
 async function promisifiedSocketEmit(event, payload) {
   const deviceToken = await DeviceInfo.getUniqueId();
-
+  
   return new Promise(((resolve, reject) => {
     const socket = getSocket()
 

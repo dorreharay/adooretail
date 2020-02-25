@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
+import { useDispatch, useSelector, } from 'react-redux'
 import styles from '../../../styles'
 
+import { clearCurrentReceipt } from '@reducers/TempReducer'
+
 function PaymentSubmit(props) {
-  const { selectedType, buttonAccessible, saveReceipt, receipt, clearCurrentReceipt, } = props
+  const { selectedType, buttonAccessible, saveReceipt, receipt, } = props
   const { buttonText, } = selectedType
 
   const timerRef = useRef(null)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     return () => {
@@ -24,10 +29,10 @@ function PaymentSubmit(props) {
       saveReceipt(selectedType.apiName, receipt)
       if (selectedType.index === 1) {
         timerRef.current = setTimeout(() => {
-          clearCurrentReceipt()
+          dispatch(clearCurrentReceipt())
         }, 500)
       } else {
-        clearCurrentReceipt()
+        dispatch(clearCurrentReceipt())
       }
     })
   }

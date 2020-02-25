@@ -1,18 +1,22 @@
 import React, { useState, useRef, useEffect, useMemo, } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, } from 'react-native';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
+import { addProductQuantity } from '@reducers/TempReducer' 
+
 import { deviceWidth } from '@dimensions'
 
 function Products(props) {
-  const { products, searchTerm, addProductQuantity, } = props;
+  const { products, searchTerm, } = props;
 
   const scrollView = useRef(null)
   
+  const dispatch = useDispatch()
+
   const layout = useSelector(state => state.orders.layout)
 
   const [activeCategory, setActiveCategory] = useState(null)
@@ -174,7 +178,7 @@ function Products(props) {
                 ) : (
                     <View style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]} key={key}>
                       <TouchableOpacity
-                        onPress={() => addProductQuantity(rowItem)}
+                        onPress={() => dispatch(addProductQuantity(rowItem))}
                         style={{ flex: 1, }}
                         activeOpacity={0.85}
                       >
@@ -188,7 +192,6 @@ function Products(props) {
                               textBreakStrategy='balanced'
                               ellipsizeMode='tail'
                               style={styles[`variantText${layout}`]}
-                              selectable
                               // selectionColor='#FFFFFF'
                             >
                               {rowItem.title}
