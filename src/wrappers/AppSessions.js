@@ -225,7 +225,7 @@ function AppSessions(props) {
             source={require('@images/background-adv7.png')}
             navigation={NavigationService}
           >
-            <View style={{ width: '100%', height: '100%', zIndex: 10 }}>
+            <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
               <View style={styles.versionContainer}>
                 <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
               </View>

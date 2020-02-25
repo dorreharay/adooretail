@@ -2,11 +2,12 @@ import io from 'socket.io-client';
 
 let socket = null;
 
+const api = 'http://192.168.1.197:4100'
+
 export function getSocket() {
   if (!socket) {
-
-    console.log('Socket.io connecting to', 'http://localhost');
-    socket = io.connect('http://192.168.1.107:3000', {
+    console.log('Socket.io connecting to', api);
+    socket = io.connect(api, {
       path: '',
       jsonp: false,
       agent: '-',
@@ -37,9 +38,13 @@ export const setupSocket = () => {
     return
   }
 
+  console.log('%c%s', 'color: red; font: 1.5rem Tahoma;', 'connecting')
+
   socket = getSocket();
 
-  socket.emit('ping', () => 'lox')
+  console.log('%c%s', 'color: green; font: 1.5rem Tahoma;', 'connected')
+
+  // socket.emit('message', 'message')
 
   socket.on('connect_failed', function () {
     console.error('[Socket.io] connect_failed');
@@ -47,22 +52,22 @@ export const setupSocket = () => {
   });
 
   socket.on('connect', function () {
-    console.log('Socket.io connected to ' + 'localhost');
+    console.log('Socket.io connected to ' + api);
     // store.dispatch(changeConnectionStatus({ status: true, socketId: socket.id }));
   });
 
   socket.on('disconnect', function () {
-    console.log('Socket.io disconnected from ' + 'localhost');
+    console.log('Socket.io disconnected from ' + api);
     // store.dispatch(changeConnectionStatus({ status: false, socketId: '' }));
   });
 
   socket.on('close', function () {
-    console.log('Socket.io closed connection to ' + 'localhost');
+    console.log('Socket.io closed connection to ' + api);
     // store.dispatch(changeConnectionStatus({ status: false, socketId: '' }));
   });
 
   socket.on('reconnect', function () {
-    console.log('Attempting to reconnect to ' + 'localhost');
+    console.log('Attempting to reconnect to ' + api);
     // store.dispatch(changeConnectionStatus({ status: false, socketId: '' }));
   });
 };
