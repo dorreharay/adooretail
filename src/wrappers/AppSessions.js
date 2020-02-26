@@ -100,7 +100,7 @@ function AppSessions(props) {
           SplashScreen.hide();
         }
 
-        Orientation.lockToLandscape();
+        Orientation.lockToLandscapeLeft();
 
         callback()
       }, 110)
@@ -124,7 +124,7 @@ function AppSessions(props) {
 
       if (!currentSession.endTime && currentSession.length !== 0) {
         if (currentAccount.needToReenter) {
-          Orientation.lockToLandscape();
+          Orientation.lockToLandscapeLeft();
 
           changeInitialLoadingWrapperOpacity(false)
           SplashScreen.hide();
@@ -148,7 +148,7 @@ function AppSessions(props) {
 
   const onOrientationChange = (orientation) => {
     if (orientation === 'PORTRAIT') {
-      Orientation.lockToLandscape()
+      Orientation.lockToLandscapeLeft()
       saveDimensions()
     }
   }
@@ -157,7 +157,7 @@ function AppSessions(props) {
     Orientation.getOrientation((err, orientation) => {
 
       if (orientation === 'PORTRAIT') {
-        Orientation.lockToLandscape()
+        Orientation.lockToLandscapeLeft()
       }
     });
 

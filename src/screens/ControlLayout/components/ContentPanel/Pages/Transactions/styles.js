@@ -54,7 +54,7 @@ const base = {
   },
   commentInput: {
     width: deviceWidth * 0.4,
-    minHeight: deviceHeight * 0.25,
+    minHeight: deviceHeight * 0.15,
     paddingTop: 30,
     padding: 30,
     borderWidth: 1,
@@ -67,12 +67,13 @@ const base = {
   },
   placeholderStyles: {
     width: deviceWidth * 0.4,
-    height: deviceHeight * 0.25,
+    height: deviceHeight * 0.15,
     paddingTop: 30,
     padding: 30,
     borderWidth: 1,
     borderColor: '#C5C5C5',
     borderRadius: 3,
+    textAlignVertical: 'top',
 
     color: '#C5C5C5',
     fontSize: 20,

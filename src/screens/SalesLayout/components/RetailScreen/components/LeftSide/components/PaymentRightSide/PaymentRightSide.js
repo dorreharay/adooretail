@@ -18,17 +18,17 @@ function PaymentRightSide(props) {
   } = props
 
   const [invalidColor, setInvalidColor] = useState(false)
-  const [toByPaid, setToByPaid] = useState(total)
+  const [toBePaid, setToByPaid] = useState(total)
 
   useEffect(() => {
     if (selectedType.index === 1) return setButtonAccessibility(true)
 
-    if (+enteredSum >= toByPaid) {
+    if (+enteredSum >= toBePaid) {
       setButtonAccessibility(true)
       setInvalidColor(false)
     }
 
-    if (+enteredSum < toByPaid) {
+    if (+enteredSum < toBePaid) {
       setButtonAccessibility(false)
       setInvalidColor(true)
     }
@@ -107,7 +107,7 @@ function PaymentRightSide(props) {
           initialStatuses={initialStatuses} resetStatus={resetStatus}
           setPaymentModalVisibility={setPaymentModalVisibility}
           handleChangeSum={handleChangeSum} saveReceipt={saveReceipt}
-          isVisible={isVisible} toByPaid={toByPaid} setToByPaid={setToByPaid}
+          isVisible={isVisible} toBePaid={toBePaid} setToByPaid={setToByPaid}
           activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
           discounts={discounts} setDiscounts={setDiscounts}
           comment={comment} setComment={setComment}

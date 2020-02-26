@@ -98,7 +98,7 @@ function HistoryList(props) {
     >
       {data.map((day, index) => {
         const employeesLength = day.employees ? day.employees.length : 0
-        const sessionTotal = day.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false) || 0
+        const sessionTotal = day.receipts.length
 
         const spin = spinValue.interpolate({
           inputRange: [0, 1],
@@ -117,7 +117,7 @@ function HistoryList(props) {
                 source={require('@images/session_process.png')}
               />
               <Text style={styles.dayHeaderDate}>{getUpperCaseDate('dddd DD.MM - HH:mm', day.startTime)}</Text>
-              <Text style={styles.dayHeaderTotal}>Всього за зміну: {sessionTotal}</Text>
+              <Text style={styles.dayHeaderTotal}>Всього транзакцій: {sessionTotal}</Text>
               <Text style={styles.dayHeaderEmployees}>Працівників на зміні: {employeesLength}</Text>
               <View style={styles.dayHeaderIcon}>
                 <AnimatedImage

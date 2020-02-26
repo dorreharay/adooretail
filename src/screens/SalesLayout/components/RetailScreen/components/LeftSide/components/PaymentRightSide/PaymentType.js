@@ -11,7 +11,7 @@ import FastImage from 'react-native-fast-image';
 
 function PaymentType(props) {
   const {
-    selectedType, enteredSum, toByPaid, invalidColor, status, setStatus,
+    selectedType, enteredSum, toBePaid, invalidColor, status, setStatus,
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
     handleChangeSum, receipt, saveReceipt,
     isVisible, discounts, setActiveDiscount, activeDiscount, comment, setComment,
@@ -162,7 +162,7 @@ function PaymentType(props) {
     <>
       <View style={styles.totalDetails}>
         <View style={styles.toByPaid}>
-          <Text style={styles.toByPaidText}>{toByPaid} грн до сплати</Text>
+          <Text style={styles.toByPaidText}>{toBePaid} грн до сплати</Text>
         </View>
 
         {selectedType.index === 0 && (
@@ -173,10 +173,16 @@ function PaymentType(props) {
                 value={`${enteredSum}`}
                 onChangeText={handleChangeSum}
                 keyboardType='number-pad'
+                onFocus={() => handleChangeSum('')}
+                onBlur={() => {
+                  if(enteredSum == '') {
+                    handleChangeSum(`${toBePaid}`)
+                  }
+                }}
               />
               <Text style={styles.paidText}>грн внесено</Text>
             </View>
-            <Text style={styles.changeText}>Решта: {((+enteredSum) - toByPaid).toFixed(2).replace(".00", "")}</Text>
+            <Text style={styles.changeText}>Решта: {((+enteredSum) - toBePaid).toFixed(2).replace(".00", "")}</Text>
           </View>
         )}
 

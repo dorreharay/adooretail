@@ -170,7 +170,7 @@ function LeftSide(props) {
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}
             >
-              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) ? receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) : 0}₴ </Text>
+              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum}₴ </Text>
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
@@ -196,12 +196,12 @@ function LeftSide(props) {
             activeOpacity={1}
           >
             <LinearGradient
-              style={[styles.lsproceedButton, receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) <= 0 && { opacity: 0.5 }]}
+              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
               start={{ x: 0, y: 1 }}
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}
             >
-              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) ? receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) : 0}₴</Text>
+              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴</Text>
             </LinearGradient>
           </TouchableOpacity>
         )}

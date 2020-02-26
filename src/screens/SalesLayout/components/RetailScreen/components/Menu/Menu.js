@@ -18,7 +18,7 @@ function Menu(props) {
 
   const [menuButtons] = useState([
     {
-      name: 'Історія замолень',
+      name: 'Історія замовлень',
       onPress: () => {
         navigation.navigate('ControlLayout', {
           screen: 0,

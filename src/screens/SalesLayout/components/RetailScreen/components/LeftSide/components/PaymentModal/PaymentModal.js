@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, } from 'react'
-import { View, Text, TouchableOpacity, ScrollView, Keyboard, Animated, } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Keyboard, Animated, KeyboardAvoidingView, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image'
@@ -127,6 +127,18 @@ const PaymentModal = (props) => {
   ])
   const [selectedType, selectPType] = useState(pTypes[0])
 
+  useMemo(() => {
+    setStatus(initialStatuses.waiting)
+
+    if (!currentAccount.settings.default_payment_types.unset) {
+      if (currentAccount.settings.default_payment_types.cash) {
+        selectPType(pTypes[0])
+      } else {
+        selectPType(pTypes[1])
+      }
+    }
+  }, [isVisible, currentAccount])
+
   const handleCardPayment = () => {
     setStatus(initialStatuses.success)
 
@@ -195,30 +207,29 @@ const PaymentModal = (props) => {
         style={styles.paymentWrapper}
         activeOpacity={1}
       />
-      <Animated.View style={[styles.paymentModal, { top: modalOffset, width: deviceWidth * 0.72, height: deviceWidth * 0.55, }]}>
-        <PaymentLeftSide
-          pTypes={pTypes}
-          selectedType={selectedType}
-          selectPType={selectPType}
-          setEmployeesListVisibility={setEmployeesListVisibility}
-          currentEmployee={currentEmployee}
-        />
-        <PaymentRightSide
-          selectedType={selectedType}
-          setPaymentModalVisibility={setPaymentModalVisibility}
-          initialStatuses={initialStatuses}
-          status={status} total={receiptSum}
-          setStatus={setStatus} resetStatus={resetStatus}
-          buttonAccessible={buttonAccessible}
-          enteredSum={enteredSum} saveReceipt={saveReceipt}
-          setEnteredSum={setEnteredSum} isVisible={isVisible}
-          setButtonAccessibility={setButtonAccessibility}
-          activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
-          discounts={discounts} setDiscounts={setDiscounts}
-          comment={comment} setComment={setComment}
-        />
-      </Animated.View>
-
+        <View style={[styles.paymentModal, { top: modalOffset, width: deviceWidth * 0.72, height: deviceWidth * 0.55, }]}>
+          <PaymentLeftSide
+            pTypes={pTypes}
+            selectedType={selectedType}
+            selectPType={selectPType}
+            setEmployeesListVisibility={setEmployeesListVisibility}
+            currentEmployee={currentEmployee}
+          />
+          <PaymentRightSide
+            selectedType={selectedType}
+            setPaymentModalVisibility={setPaymentModalVisibility}
+            initialStatuses={initialStatuses}
+            status={status} total={receiptSum}
+            setStatus={setStatus} resetStatus={resetStatus}
+            buttonAccessible={buttonAccessible}
+            enteredSum={enteredSum} saveReceipt={saveReceipt}
+            setEnteredSum={setEnteredSum} isVisible={isVisible}
+            setButtonAccessibility={setButtonAccessibility}
+            activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
+            discounts={discounts} setDiscounts={setDiscounts}
+            comment={comment} setComment={setComment}
+          />
+        </View>
 
       {employeesListVisible && (
         <TouchableOpacity

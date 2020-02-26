@@ -35,7 +35,6 @@ const base = {
     color: '#343434',
     fontSize: 22,
     fontFamily: PROBA_REGULAR,
-    textDecorationLine: 'underline'
   },
   menuMainButton: {
     color: '#343434',

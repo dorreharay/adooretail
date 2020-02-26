@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM } from '@fonts'
 
 const base = {
   container: {
@@ -11,13 +11,35 @@ const base = {
   switchText: {
     minWidth: '15%',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   settingsTitle: {
     marginBottom: 40,
     fontSize: 30,
-    fontFamily: PROBA_MEDIUM,
-  }
+    fontFamily: GILROY_MEDIUM,
+  },
+  buttonsContainer: {
+    flexDirection: 'row'
+  },
+  button: {
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderWidth: 1,
+    borderColor: '#BFBFBF',
+  },
+  buttonText: {
+    color: '#BFBFBF',
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
+  },
+  active: {
+    backgroundColor: '#E66960',
+    borderColor: '#E66960',
+  },
+  activeText: {
+    color: '#FFFFFF',
+    fontFamily: GILROY_MEDIUM,
+  },
 };
 
 const styles = createStyles(
