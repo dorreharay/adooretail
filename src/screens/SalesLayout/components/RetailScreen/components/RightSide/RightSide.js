@@ -11,7 +11,7 @@ import { setLayout } from '@reducers/OrdersReducer'
 import SharedButton from '@shared/SharedButton';
 import Products from './Products/Products'
 
-import API from '../../../../../../../sockets/api'
+// import API from '../../../../../../../sockets/api'
 
 const onlineIcon = require('@images/status_online.png')
 const offlineIcon = require('@images/status_offline.png')
@@ -98,7 +98,7 @@ function RightSide(props) {
           )}
         </View>
 
-        <SharedButton onPress={() => {}} scale={0.85}>
+        <SharedButton onPress={() => { }} scale={0.85}>
           <View style={styles.connection}>
             <Image style={{ width: 10, height: 10.5, marginRight: 10 }} source={netInfo.isConnected ? netInfo.isInternetReachable ? onlineIcon : waitingIcon : offlineIcon} />
             <Text style={styles.connectionText}>{netInfo.isConnected ? netInfo.isInternetReachable ? 'online' : 'waiting' : 'offline'}</Text>

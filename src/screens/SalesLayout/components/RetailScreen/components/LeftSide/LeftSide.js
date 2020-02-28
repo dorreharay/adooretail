@@ -172,7 +172,7 @@ function LeftSide(props) {
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}
             >
-              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum}₴ </Text>
+              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
@@ -180,7 +180,7 @@ function LeftSide(props) {
             style={[styles.proceedContainer, styles.zProceedEx, receiptSum <= 0 && { borderColor: '#E4616280' },]}
             activeOpacity={1}
           >
-            <View style={[styles.lsproceedButton, receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false) <= 0 && { opacity: 0.5 }]}>
+            <View style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}>
               <FastImage
                 style={{ width: 30, height: 30, }}
                 source={require('@images/print.png')}

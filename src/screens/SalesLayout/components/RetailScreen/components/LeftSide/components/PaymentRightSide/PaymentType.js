@@ -194,6 +194,7 @@ function PaymentType(props) {
             setStatus={setStatus}
             initialStatuses={initialStatuses}
             resetStatus={resetStatus}
+            isVisible={isVisible}
           />
         )}
       </View>
