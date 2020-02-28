@@ -67,6 +67,10 @@ function Login(props) {
 
     setLoadingStatus(true)
 
+    if(!currentAccount) {
+      navigation.navigate('NoAccount')
+    }
+
     try {
       const deviceId = await DeviceInfo.getUniqueId();
 

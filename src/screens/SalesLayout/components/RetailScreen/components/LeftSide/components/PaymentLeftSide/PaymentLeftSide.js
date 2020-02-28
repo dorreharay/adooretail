@@ -7,6 +7,7 @@ import styles from './styles'
 import { currentAccountSelector } from '@selectors'
 
 import EditIcon from '@images/edit.svg'
+import { deviceHeight } from '@dimensions'
 
 import SharedButton from '@shared/SharedButton';
 
@@ -44,7 +45,7 @@ function PaymentLeftSide(props) {
           style={styles.editButton}
           onPress={() => setEmployeesListVisibility(true)}
         >
-          <EditIcon width={15} height={15} />
+          <EditIcon width={deviceHeight < 500 ? 10 : 15} height={deviceHeight < 500 ? 10 : 15} />
         </SharedButton>
       </View>
 

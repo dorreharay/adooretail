@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '7.5%'
@@ -168,8 +168,28 @@ const base = {
 const styles = createStyles(
   base,
 
- maxWidth(500, {
-
+  maxHeight(500, {
+    headingText: {
+      paddingTop: '2%',
+      paddingBottom: 0,
+      fontSize: 15,
+    },
+    toByPaidText: {
+      fontSize: 15,
+    },
+    paidText: {
+      fontSize: 20,
+      lineHeight: 20,
+    },
+    changeText: {
+      fontSize: 15,
+      lineHeight: 27,
+    },
+    paidInput: {
+      color: '#343434',
+      fontSize: 20,
+      fontFamily: GILROY_MEDIUM,
+    },
   })
 );
 

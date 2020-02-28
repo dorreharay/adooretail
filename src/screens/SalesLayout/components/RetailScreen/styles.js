@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { GILROY_MEDIUM, GILROY_REGULAR, PROBA_LIGHT, PROBA_MEDIUM } from '@fonts'
 
 const base = {
@@ -150,8 +150,16 @@ const base = {
 const styles = createStyles(
   base,
 
- maxWidth(500, {
-
+  maxHeight(500, {
+    paymentSubmitButton: {
+      height: 60,
+      bottom: 30,
+    },
+    paymentSubmitButtonText: {
+      color: '#FFFFFF',
+      fontSize: 20,
+      fontFamily: PROBA_MEDIUM,
+    },
   })
 );
 

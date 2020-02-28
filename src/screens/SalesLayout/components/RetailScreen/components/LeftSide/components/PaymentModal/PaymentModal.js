@@ -207,7 +207,7 @@ const PaymentModal = (props) => {
         style={styles.paymentWrapper}
         activeOpacity={1}
       />
-        <View style={[styles.paymentModal, { width: deviceWidth * 0.72, height: deviceWidth * 0.55, }]}>
+        <View style={[styles.paymentModal, { width: deviceHeight < 500 ? deviceWidth * 0.72 : deviceWidth * 0.7, height: deviceHeight < 500 ? deviceHeight * 0.9 : deviceWidth * 0.55, }]}>
           <PaymentLeftSide
             pTypes={pTypes}
             selectedType={selectedType}

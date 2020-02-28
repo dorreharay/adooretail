@@ -366,6 +366,12 @@ const styles = createStyles(
     receiptButtonText: {
       fontSize: 15,
     },
+    receiptItem: {
+      paddingLeft: 20,
+      paddingRight: 5,
+      paddingTop: 15,
+      paddingBottom: 10,
+    },
   })
 );
 

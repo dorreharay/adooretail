@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '12%'
@@ -91,8 +91,52 @@ const base = {
 const styles = createStyles(
   base,
 
- maxWidth(500, {
-
+  maxHeight(500, {
+    heading: {
+      fontSize: 15,
+    },
+    paymentType: {
+      paddingLeft: leftPadding,
+      padding: 10,
+    },
+    paymentTypeName: {
+      fontSize: 15,
+      lineHeight: 30,
+    },
+    currentEmployee: {
+      height: 30,
+    },
+    currentEmployeeImage: {
+      position: 'absolute',
+      left: 30.5,
+      top: -1,
+      width: 32,
+      height: 32,
+      borderRadius: 100,
+    },
+    currentEmployeeBorder: {
+      position: 'absolute',
+      left: 26,
+      width: 40.5,
+      height: 40.5,
+      borderWidth: 1,
+      borderColor: '#E36062',
+      borderRadius: 100,
+    },
+    currentEmployeeName: {
+      marginLeft: 80,
+      color: '#FFFFFF',
+      fontSize: 14,
+      fontFamily: MUSEO_REGULAR,
+    },
+    editButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 30,
+      height: 30,
+      marginTop: 4,
+      marginLeft: 5,
+    },
   })
 );
 
