@@ -3,7 +3,7 @@ import { View, Text, Animated, } from 'react-native'
 import styles from './styles'
 
 function CardPaymentStatus(props) {
-  const { status, setStatus, initialStatuses, } = props
+  const { status, setStatus, initialStatuses, isVisible, } = props
   const { statusColor, statusText, blinking, } = status
 
   const [statusDotOpacity, setStatusDotOpacity] = useState(new Animated.Value(1))
@@ -18,7 +18,7 @@ function CardPaymentStatus(props) {
       stopBlinking()
       setStatus(initialStatuses.waiting)
     }
-  }, [])
+  }, [isVisible])
 
   useEffect(() => {
     if (status.index === 1) {

@@ -69,3 +69,5 @@ function RetailScreen(props) {
     </View>
   )
 }
+
+export default RetailScreen

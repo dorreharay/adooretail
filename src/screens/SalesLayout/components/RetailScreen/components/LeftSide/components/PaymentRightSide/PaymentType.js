@@ -186,6 +186,7 @@ function PaymentType(props) {
             setStatus={setStatus}
             initialStatuses={initialStatuses}
             resetStatus={resetStatus}
+            isVisible={isVisible}
           />
         )}
       </View>
@@ -213,7 +214,7 @@ function PaymentType(props) {
             {discounts && discounts.map((item, index) => (
               <View style={[styles.discountItem, index === activeDiscount && styles.activeDiscountItem]}>
                 <SharedButton
-                  style={{ flex: 1, width: '100%',}}
+                  style={{ flex: 1, width: '100%', }}
                   onPress={() => setActiveDiscount(index)}
                   scale={0.8}
                   key={index}

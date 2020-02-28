@@ -26,7 +26,7 @@ const base = {
     fontFamily: GILROY_REGULAR,
   },
   inputContainer: {
-    paddingTop: 55,
+    paddingTop: 35,
     paddingLeft: 55,
   },
   inputHeading: {
@@ -54,8 +54,8 @@ const base = {
   },
   commentInput: {
     width: deviceWidth * 0.4,
-    minHeight: deviceHeight * 0.25,
-    paddingTop: 30,
+    minHeight: deviceHeight * 0.15,
+    paddingTop: 10,
     padding: 30,
     borderWidth: 1,
     borderColor: '#C5C5C5',
@@ -67,8 +67,8 @@ const base = {
   },
   placeholderStyles: {
     width: deviceWidth * 0.4,
-    height: deviceHeight * 0.25,
-    paddingTop: 30,
+    height: deviceHeight * 0.15,
+    paddingTop: 10,
     padding: 30,
     borderWidth: 1,
     borderColor: '#C5C5C5',
@@ -117,7 +117,7 @@ const base = {
 const styles = createStyles(
   base,
 
- maxWidth(500, {
+  maxWidth(500, {
 
   })
 );

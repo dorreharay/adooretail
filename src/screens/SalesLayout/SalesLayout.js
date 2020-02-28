@@ -113,7 +113,7 @@ function SalesLayout({ navigation, }) {
                 navigation={navigation}
                 openChangeAccountOverview={openChangeAccountOverview}
                 account={account} updateLayout={updateLayout}
-                toastRef={toastRef} setModalStatus={() => { }}
+                setModalStatus={() => { }}
               />
 
               {accountWrapperVisibile && (
