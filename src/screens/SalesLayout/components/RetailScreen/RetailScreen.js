@@ -12,7 +12,7 @@ import PaymentModal from './components/LeftSide/components/PaymentModal/PaymentM
 function RetailScreen(props) {
   const {
     products, navigation, openChangeAccountOverview,
-    account, updateLayout, toastRef, layout,
+    account, updateLayout, toastRef, layout, 
   } = props;
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -54,7 +54,7 @@ function RetailScreen(props) {
       <RightSide
         products={products} loadProducts={loadProducts}
         account={account} openMenu={openMenu}
-        navigation={navigation}
+        navigation={navigation} paymentModalVisible={paymentModalVisible}
       />
       <Menu
         isVisible={menuVisible}

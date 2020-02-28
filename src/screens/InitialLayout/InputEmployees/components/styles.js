@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, } from '@fonts'
 
 const base = {
@@ -41,8 +41,28 @@ const base = {
 const styles = createStyles(
   base,
 
- maxWidth(500, {
-
+  maxHeight(500, {
+    сontainer: {
+      width: 270,
+      height: 150,
+    },
+    scrollview: {
+      width: 270,
+      height: 150,
+      zIndex: 100,
+      borderRadius: 22,
+    },
+    employee: {
+      height: 50,
+    },
+    iconPlaceholder: {
+      width: 31,
+      height: 31,
+      marginRight: 20,
+    },
+    employeeName: {
+      fontSize: 12,
+    },
   })
 );
 

@@ -21,8 +21,8 @@ function InputEmployees({ navigation }) {
 
   const currentAccount = useSelector(currentAccountSelector)
   const employees = currentAccount && currentAccount.employees || []
-  const shift_start = currentAccount.shift_start
-  const shift_end = currentAccount.shift_end
+  const shift_start = currentAccount && currentAccount.shift_start
+  const shift_end = currentAccount && currentAccount.shift_end
   const { startCash, } = useSelector(state => ({
     startCash: state.user.startCash,
   }))
@@ -96,10 +96,10 @@ function InputEmployees({ navigation }) {
 
       {checked.length !== 0 ? (
         <SharedButton style={styles.proceedButton} onPress={handleProceed} scale={0.9}>
-          <FastImage style={{ width: 20, height: 15, }} source={require('@images/tick_light.png')} fadeDuration={0}></FastImage>
+          <FastImage style={styles.proceedButtonTick} source={require('@images/tick_light.png')} fadeDuration={0}></FastImage>
         </SharedButton>
       ) : (
-          <View style={{ width: 50, height: 50, borderRadius: 100, borderWidth: 2, borderColor: '#D2D2D226', marginTop: 45, }}></View>
+          <View style={styles.proceedButtonPlaceholder}></View>
         )}
 
       <LoginLoader active={loading} />

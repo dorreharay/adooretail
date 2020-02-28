@@ -102,7 +102,7 @@ function NoAccount(props) {
       {successVisible && (
         <Animated.View style={[styles.success , { opacity: successOpacity }]}>
           <Image
-            style={{ width: 130, height: 130, }} 
+            style={styles.successImage} 
             source={successVisible === 'success' ? successWhite : failWhite}
           />
         </Animated.View>

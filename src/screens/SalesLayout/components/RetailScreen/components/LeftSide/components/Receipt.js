@@ -54,12 +54,12 @@ function Receipt(props) {
             <View style={styles.receiptQtyContainer}>
               {activatedIndex === index && (
                 <SharedButton
-                  style={{ width: 28, height: 28, }}
+                  style={styles.qtyButton}
                   onPress={() => handlePress('plus', item)}
                   scale={0.85}
                 >
                   <FastImage
-                    style={{ width: 15, height: 15, }}
+                    style={styles.qtyButtonIcon}
                     source={require('@images/plus.png')}
                   />
                 </SharedButton>
@@ -77,12 +77,12 @@ function Receipt(props) {
 
               {activatedIndex === index && (
                 <SharedButton
-                  style={{ width: 28, height: 28, }}
+                  style={styles.qtyButton}
                   onPress={() => handlePress('minus', item)}
                   scale={0.85}
                 >
                   <FastImage
-                    style={{ width: 15, height: 15, }}
+                    style={styles.qtyButtonIcon}
                     source={require('@images/minus.png')}
                   />
                 </SharedButton>

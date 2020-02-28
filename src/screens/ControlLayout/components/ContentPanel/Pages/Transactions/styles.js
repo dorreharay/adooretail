@@ -73,6 +73,7 @@ const base = {
     borderWidth: 1,
     borderColor: '#C5C5C5',
     borderRadius: 3,
+    textAlignVertical: 'top',
 
     color: '#C5C5C5',
     fontSize: 20,

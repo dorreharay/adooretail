@@ -116,13 +116,13 @@ function InputCash(props) {
         ))}
 
         <Ripple style={styles.lsNum} onPress={handleProceed} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <FastImage style={{ width: 30, height: 30, marginRight: 5, }} source={require('@images/key.png')} fadeDuration={0} />
+          <FastImage style={styles.buttonImageKey} source={require('@images/key.png')} fadeDuration={0} />
         </Ripple>
         <Ripple style={styles.lsNum} onPress={() => handleKeyPress('0')} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
           <Text style={styles.lsNumText}>0</Text>
         </Ripple>
         <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <FastImage style={{ width: 34, height: 28, marginRight: 5, }} source={require('@images/back.png')} fadeDuration={0} />
+          <FastImage style={styles.buttonImageArrow} source={require('@images/back.png')} fadeDuration={0} />
         </Ripple>
       </View>
 

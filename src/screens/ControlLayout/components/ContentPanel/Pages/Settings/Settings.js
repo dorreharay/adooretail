@@ -1,5 +1,5 @@
 import React, { useEffect, } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView, } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './styles'
 
@@ -7,6 +7,7 @@ import { setSettings } from '@reducers/UserReducer'
 import { currentAccountSelector, } from '@selectors'
 
 import SwitchWithTitle from './SwitchWithTitle';
+import SwitchButtons from './SwitchButtons';
 
 const Settings = () => {
   const dispatch = useDispatch()
@@ -26,7 +27,7 @@ const Settings = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={{ alignSelf: 'flex-start', }}>
         <Text style={styles.settingsTitle}>Активні цехи</Text>
         <SwitchWithTitle
@@ -53,7 +54,16 @@ const Settings = () => {
         />
       </View>
 
-    </View>
+      <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
+        <Text style={styles.settingsTitle}>Стандартний спосіб оплати</Text>
+
+        <SwitchButtons
+          buttons={['Готівка', 'Картка', 'Немає']}
+          updateSettings={updateSettings}
+        />
+      </View>
+
+    </ScrollView>
   )
 }
 

@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, GILROY_LIGHT, } from '@fonts'
 
 const base = {
@@ -23,6 +23,18 @@ const base = {
     borderRadius: 25,
     backgroundColor: '#D2D2D226',
   },
+  proceedButtonTick: {
+    width: 20,
+    height: 15,
+  },
+  proceedButtonPlaceholder: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: '#D2D2D226',
+    marginTop: 45,
+  },
   backButton: {
     position: 'absolute',
     top: 50,
@@ -38,8 +50,40 @@ const base = {
 const styles = createStyles(
   base,
 
- maxWidth(500, {
-
+  maxHeight(500, {
+    loginHeading: {
+      color: '#ffffff',
+      fontSize: 10,
+      fontFamily: COMFORTAA_LIGHT,
+      letterSpacing: 1,
+    },
+    proceedButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 40,
+      height: 40,
+      borderRadius: 25,
+      backgroundColor: '#D2D2D226',
+      marginTop: 30,
+    },
+    proceedButtonTick: {
+      width: 15,
+      height: 12,
+    },
+    proceedButtonPlaceholder: {
+      width: 40,
+      height: 40,
+      borderRadius: 100,
+      borderWidth: 2,
+      borderColor: '#D2D2D226',
+      marginTop: 30,
+    },
+    backButton: {
+      top: 25,
+    },
+    backButtonText: {
+      fontSize: 14,
+    },
   })
 );
 

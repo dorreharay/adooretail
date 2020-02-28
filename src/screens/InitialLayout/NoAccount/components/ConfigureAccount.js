@@ -74,7 +74,9 @@ function ConfigureAccount(props) {
                 buttonNegative: 'Відхилити',
               }}
               onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                // setTimeout(() => navigation.navigate('Login'), 250)
+                if(!loading) {
+                  setCode(barcodes[0].data)
+                }
               }}
             />
           </View>

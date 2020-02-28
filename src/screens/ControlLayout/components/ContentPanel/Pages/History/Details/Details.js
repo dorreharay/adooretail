@@ -28,7 +28,7 @@ function Details(props) {
     cash: 0,
   })
 
-  const { todayCardSum, todayCashSum } = useMemo(() => {
+  const { todayCardSum, todayCashSum, transactionsDelivery, transactionsIncasations, transactionsIncome } = useMemo(() => {
     const localSessions = currentAccount.localSessions
 
     const todaySessions = localSessions.filter(item => getDateByCondition(item.startTime, activeFilter))
@@ -55,7 +55,37 @@ function Details(props) {
 
     todayCashSum = todayCashSum.reduce((accumulator, currentValue) => accumulator + (currentValue), false)
 
-    return { todayCardSum, todayCashSum }
+    let transactionsDelivery = todaySessions.map(item => {
+      return item.transactions
+        .filter(elem => elem.type === 'delivery')
+        .map(elem => elem.sum)
+    }).flat()
+
+    if (!transactionsDelivery) return
+
+    transactionsDelivery = transactionsDelivery.reduce((accumulator, currentValue) => accumulator + (+currentValue), false)
+
+    let transactionsIncasations = todaySessions.map(item => {
+      return item.transactions
+        .filter(elem => elem.type === 'incasation')
+        .map(elem => elem.sum)
+    }).flat()
+
+    if (!transactionsIncasations) return
+
+    transactionsIncasations = transactionsIncasations.reduce((accumulator, currentValue) => accumulator + (+currentValue), false)
+
+    let transactionsIncome = todaySessions.map(item => {
+      return item.transactions
+        .filter(elem => elem.type === 'income')
+        .map(elem => elem.sum)
+    }).flat()
+
+    if (!transactionsIncome) return
+
+    transactionsIncome = transactionsIncome.reduce((accumulator, currentValue) => accumulator + (+currentValue), false)
+
+    return { todayCardSum, todayCashSum, transactionsDelivery, transactionsIncasations, transactionsIncome }
   }, [currentAccount.localSessions, activeFilter])
 
   const openMenu = () => {
@@ -203,15 +233,27 @@ function Details(props) {
       </View>
       <Collapsible style={{ paddingVertical: 15, paddingHorizontal: 45, }} collapsed={!detailsExpanded}>
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}>Безготівковий підсумок {activeFilter ? activeFilter.name.toLowerCase() : 'за сьогодні'} - <Text style={styles.paymentDetailsText}>{todayCardSum || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Безготівковий підсумок</Text> - <Text style={styles.paymentDetailsText}>{todayCardSum || 0} грн</Text></Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}>Готівковий підсумок {activeFilter ? activeFilter.name.toLowerCase() : 'за сьогодні'} - <Text style={styles.paymentDetailsText}>{todayCashSum || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Готівковий підсумок</Text> - <Text style={styles.paymentDetailsText}>{todayCashSum || 0} грн</Text></Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}>Всього {activeFilter ? activeFilter.name.toLowerCase() : 'за сьогодні'} - <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0)} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Поставки</Text> - <Text style={styles.paymentDetailsText}>{transactionsDelivery || 0} грн</Text></Text>
+        </View>
+        
+        <View style={styles.paymentDetails}>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Інкасації</Text> - <Text style={styles.paymentDetailsText}>{transactionsIncasations || 0} грн</Text></Text>
+        </View>
+
+        <View style={styles.paymentDetails}>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Прибуток</Text> - <Text style={styles.paymentDetailsText}>{transactionsIncome || 0} грн</Text></Text>
+        </View>
+
+        <View style={styles.paymentDetails}>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Всього</Text>: <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) - (transactionsDelivery || 0) - (transactionsIncasations || 0) + (transactionsIncome || 0)} грн</Text></Text>
         </View>
 
         <SharedButton

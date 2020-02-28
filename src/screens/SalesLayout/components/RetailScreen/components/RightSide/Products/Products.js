@@ -11,7 +11,7 @@ import { addProductQuantity } from '@reducers/TempReducer'
 import { deviceWidth } from '@dimensions'
 
 function Products(props) {
-  const { products, searchTerm, } = props;
+  const { products, searchTerm, paymentModalVisible, } = props;
 
   const scrollView = useRef(null)
   
@@ -22,6 +22,13 @@ function Products(props) {
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
   const [searchResult, setSearchResult] = useState([])
+
+
+  useMemo(() => {
+    if(!paymentModalVisible) {
+      setCategoryVisibility(false)
+    }
+  }, [paymentModalVisible])
 
   const updateLayout = (productsArg, cardsPerRow) => {
     function chunkArray(myArray, chunk_size) {
@@ -171,7 +178,7 @@ function Products(props) {
                     key={key}
                   >
                     <FastImage
-                      style={{ width: 15, height: 30, }}
+                      style={styles.backCategoryIcon}
                       source={require('@images/back_thin.png')}
                     />
                   </TouchableOpacity>
