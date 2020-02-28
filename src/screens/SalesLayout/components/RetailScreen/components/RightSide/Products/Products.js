@@ -178,7 +178,7 @@ function Products(props) {
                     key={key}
                   >
                     <FastImage
-                      style={{ width: 15, height: 30, }}
+                      style={styles.backCategoryIcon}
                       source={require('@images/back_thin.png')}
                     />
                   </TouchableOpacity>

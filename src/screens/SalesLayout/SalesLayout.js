@@ -21,7 +21,7 @@ function SalesLayout({ navigation, }) {
 
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
-  const products = currentAccount.products
+  const products = currentAccount ? currentAccount.products : []
   const accounts = useSelector(state => state.user.accounts)
 
   const [animatedScale] = useState(new Animated.Value(1))

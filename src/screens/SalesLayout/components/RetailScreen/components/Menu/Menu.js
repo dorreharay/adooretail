@@ -75,7 +75,7 @@ function Menu(props) {
         containerStyle={{ justifyContent: "center" }}
         disableOnBackPress={false}
         modalDidClose={closeMenu}
-        offset={-(deviceHeight * 0.23)}
+        offset={deviceHeight < 500 ? -(deviceHeight * 0.46) : -(deviceHeight * 0.23)}
       >
         <View style={styles.modal}>
           {menuButtons.map((button, index) => (

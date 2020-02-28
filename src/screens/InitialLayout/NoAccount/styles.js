@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 import { deviceWidth } from '@dimensions';
 
@@ -130,42 +130,42 @@ const base = {
     justifyContent: 'center',
     width: 300,
     height: 300,
+  },
+  successImage: {
+    width: 130,
+    height: 130,
   }
 };
 
 const styles = createStyles(
   base,
 
- maxWidth(500, {
+  maxHeight(500, {
     loginHeading: {
-      fontSize: 15,
+      fontSize: 10,
     },
     loginHeadingSuper: {
-      fontSize: 15,
+      fontSize: 10,
     },
     loginCaption: {
-      fontSize: 9,
+      height: 50,
     },
-    dot: {
-      width: '35',
-      height: '35',
-      cx: '20',
-      cy: '20',
-      r: '14',
+    loginCaptionText: {
+      fontSize: 15,
     },
-    idDots: {
-      width: 320,
+    cameraContainer: {
+      width: 300,
+      height: 200,
+      marginVertical: 25,
     },
-    lsNumpad: {
-      width: 380,
+    success: {
+      width: 150,
+      height: 150,
     },
-    lsNum: {
+    successImage: {
       width: 80,
       height: 80,
-    },
-    lsNumText: {
-      fontSize: 35,
-    },
+    }
   })
 );
 

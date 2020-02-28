@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, PROBA_LIGHT, FUTURA_LIGHT, } from '@fonts'
 
 const base = {
@@ -63,64 +63,57 @@ const base = {
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-  startPagePrompt: {
-    alignItems: 'center',
-    position: 'absolute',
-    top: 200,
-    width: 280,
-    height: 300,
-    backgroundColor: '#D2D2D233',
-    borderRadius: 3,
-    zIndex: 100,
-  },
-  promptButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '86%',
-    height: '40%',
-    borderRadius: 3,
-    backgroundColor: '#D2D2D233',
-  },
-  promptButtonText: {
-    color: '#ffffff',
-    fontSize: 20,
-    fontFamily: FUTURA_LIGHT,
-  },
+  erase: {
+    width: 32,
+    height: 27,
+    marginRight: 5,
+  }
 };
 
 const styles = createStyles(
   base,
 
- maxWidth(500, {
+  maxHeight(500, {
+    container: {
+      paddingTop: 0,
+    },
     loginHeading: {
-      fontSize: 15,
+      fontSize: 10,
     },
     loginHeadingSuper: {
-      fontSize: 15,
+      fontSize: 10,
     },
     loginCaption: {
       fontSize: 9,
+      height: 0,
     },
     dot: {
-      width: '35',
-      height: '35',
-      cx: '20',
-      cy: '20',
-      r: '14',
+      width: '30',
+      height: '30',
+      cx: '15',
+      cy: '15',
+      r: '11',
     },
     idDots: {
-      width: 320,
+      width: 240,
+      marginTop: 25,
     },
     lsNumpad: {
-      width: 380,
+      width: 280,
+      marginTop: -30,
     },
     lsNum: {
-      width: 80,
-      height: 80,
+      width: 50,
+      height: 60,
     },
     lsNumText: {
-      fontSize: 35,
+      fontSize: 25,
     },
+    erase: {
+      width: 20,
+      height: 20,
+      marginRight: 5,
+    }
   })
 );
 

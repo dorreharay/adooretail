@@ -5,6 +5,8 @@ import LinearGradient from 'react-native-linear-gradient'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
+import { deviceHeight } from '@dimensions'
+
 import { getUpperCaseDate } from '@dateFormatter'
 import { currentAccountSelector, } from '@selectors'
 import { clearCurrentReceipt, setSelectedReceipt, } from '@reducers/TempReducer'
@@ -16,8 +18,8 @@ import Receipt from './components/Receipt';
 
 const headerHeight = 68
 
-const headerButtonSizes = { justifyContent: 'center', width: headerHeight, height: headerHeight, }
-const headerIcon = { width: headerHeight - 50, height: headerHeight - 50, }
+const headerButtonSizes = { justifyContent: 'center', width: deviceHeight < 500 ? headerHeight - 30 : headerHeight, height: deviceHeight < 500 ? headerHeight - 30 : headerHeight, }
+const headerIcon = { width: deviceHeight < 500 ? headerHeight - 55 : headerHeight - 50, height: deviceHeight < 500 ? headerHeight - 55 : headerHeight - 50, }
 
 function LeftSide(props) {
   const {
@@ -81,7 +83,7 @@ function LeftSide(props) {
         <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
           <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '75%', flexDirection: 'row' }}>
             {receipts.map((receiptInstance, index) => (
-              <View style={[styles.lsInstanceContainer, { width: headerHeight - 20, height: headerHeight - 20, }]} key={index}>
+              <View style={[styles.lsInstanceContainer, { width: deviceHeight < 500 ? headerHeight - 30 : headerHeight - 20, height: deviceHeight < 500 ? headerHeight - 30 : headerHeight - 20, }]} key={index}>
                 <SharedButton
                   onPress={() => dispatch(setSelectedReceipt(index))}
                   style={{ flex: 1, }}
@@ -115,13 +117,13 @@ function LeftSide(props) {
             onLayout={(e) => startTimer(e)}
           >
             <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '80%', flexDirection: 'row' }}>
-              <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', }}>
+              <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginLeft: deviceHeight < 500 ? 10 : 0, }}>
                 <SharedButton
                   onPress={() => { }}
-                  style={headerButtonSizes}
+                  style={{ width: headerButtonSizes.width - 15, height: headerButtonSizes.height - 10, }}
                   scale={0.85}
                 >
-                  <ClockIcon width={20} height={20} />
+                  <ClockIcon width={deviceHeight < 500 ? 13 : 20} height={deviceHeight < 500 ? 13 : 20} />
                 </SharedButton>
                 <Text
                   style={styles.timeText}

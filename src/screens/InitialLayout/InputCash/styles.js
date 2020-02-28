@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { COMFORTAA_LIGHT, GILROY_REGULAR, } from '@fonts'
 
 const base = {
@@ -10,6 +10,12 @@ const base = {
     paddingTop: '2%',
   },
   loginHeading: {
+    color: '#F7F7F7',
+    fontSize: 17,
+    fontFamily: COMFORTAA_LIGHT,
+    letterSpacing: 1,
+  },
+  loginHeadingSuper: {
     color: '#F7F7F7',
     fontSize: 17,
     fontFamily: COMFORTAA_LIGHT,
@@ -27,7 +33,7 @@ const base = {
   },
   loginCaption: {
     color: '#F7F7F7',
-    fontSize: 50,
+    fontSize: 45,
     fontFamily: COMFORTAA_LIGHT,
     marginTop: 50,
   },
@@ -63,14 +69,73 @@ const base = {
     color: '#F6F6F6',
     fontSize: 18,
     fontFamily: GILROY_REGULAR,
+  },
+  buttonImageKey: {
+    width: 30,
+    height: 30,
+    marginRight: 5,
+  },
+  buttonImageArrow: {
+    width: 34,
+    height: 28,
+    marginRight: 5,
   }
 };
 
 const styles = createStyles(
   base,
 
- maxWidth(500, {
-
+  maxHeight(500, {
+    container: {
+      paddingTop: 0,
+    },
+    loginHeading: {
+      fontSize: 10,
+    },
+    loginHeadingSuper: {
+      fontSize: 10,
+    },
+    loginCaption: {
+      color: '#F7F7F7',
+      fontSize: 25,
+      fontFamily: COMFORTAA_LIGHT,
+      marginTop: 20,
+    },
+    dot: {
+      width: '20',
+      height: '20',
+      cx: '10',
+      cy: '10',
+      r: '9',
+    },
+    idDots: {
+      width: 240,
+    },
+    lsNumpad: {
+      width: 280,
+      marginTop: 10,
+    },
+    lsNum: {
+      width: 50,
+      height: 60,
+    },
+    lsNumText: {
+      fontSize: 25,
+    },
+    buttonImageKey: {
+      width: 18,
+      height: 18,
+    },
+    buttonImageArrow: {
+      width: 20,
+      height: 20,
+    },
+    backButton: {
+      top: 25,
+    },
+    backButtonText: {
+      fontSize: 14,
+    },
   })
 );
 

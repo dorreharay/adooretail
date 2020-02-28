@@ -71,7 +71,9 @@ function Login(props) {
       const deviceId = await DeviceInfo.getUniqueId();
 
       if(enteredPinCode == '2050203') {
-        throw new Error(deviceId)
+        toast.current && toast.current.show(deviceId, DURATION.FOREVER)
+        resetState()
+        return
       }
 
       if (!passcodes.includes(enteredPinCode)) {
@@ -79,8 +81,6 @@ function Login(props) {
       }
 
       if (!registered_device_ids.includes(deviceId)) {
-        console.log('deviceId', deviceId)
-
         throw new Error('Не правильний Device Id')
       }
       
@@ -173,7 +173,7 @@ function Login(props) {
           </Ripple>
         ))}
         <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <Image style={{ width: 32, height: 27, marginRight: 5, }} source={require('@images/erase.png')} fadeDuration={0} />
+          <Image style={styles.erase} source={require('@images/erase.png')} fadeDuration={0} />
         </Ripple>
       </View>
       <LoginLoader active={loading} />

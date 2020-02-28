@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { GILROY_MEDIUM, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
@@ -160,13 +160,89 @@ const base = {
     fontSize: 18,
     fontFamily: PROBA_MEDIUM,
   },
+  backCategoryIcon: {
+    width: 15,
+    height: 30,
+  }
 };
  
 const styles = createStyles(
   base,
  
- maxWidth(500, {
-    
+ maxHeight(500, {
+  categoryTitle3: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  categoryTitle4: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  categoryTitle5: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  categoryTitleText3: {
+    fontSize: 15,
+    lineHeight: 20,
+  },
+  categoryTitleText4: {
+    fontSize: 13,
+    lineHeight: 20,
+  },
+  categoryTitleText5: {
+    fontSize: 12,
+    lineHeight: 15,
+  },
+  variant: {
+    padding: 10,
+  },
+  variantText3: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    padding: 35,
+    paddingRight: 5,
+    color: '#FFFFFF',
+    fontSize: 30,
+    fontFamily: GILROY_MEDIUM,
+    lineHeight: 38,
+  },
+  variantText4: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    padding: 15,
+    paddingRight: 0,
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontFamily: GILROY_MEDIUM,
+    lineHeight: 28,
+  },
+  variantText5: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    padding: 20,
+    paddingRight: 5,
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontFamily: GILROY_MEDIUM,
+    lineHeight: 20,
+  },
+  variantPrice: {
+    top: 12,
+    right: 10,
+    width: 35,
+    height: 35,
+  },
+  variantPriceText: {
+    fontSize: 12,
+  },
+  backCategoryIcon: {
+    width: 10,
+    height: 20,
+  }
   })
 );
 

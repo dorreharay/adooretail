@@ -55,7 +55,7 @@ const PaymentModal = (props) => {
   const [status, setStatus] = useState(initialStatuses.waiting)
   const [enteredSum, setEnteredSum] = useState('0')
   const [employeesListVisible, setEmployeesListVisibility] = useState(false)
-  const [currentEmployee, setCurrentEmployee] = useState(currentSession.employees[0])
+  const [currentEmployee, setCurrentEmployee] = useState((currentSession && currentSession.employees) ? currentSession.employees[0] : '-')
   const [modalOffset, setModalOffset] = useState(new Animated.Value(0))
 
   const [activeDiscount, setActiveDiscount] = useState(0)
@@ -207,7 +207,7 @@ const PaymentModal = (props) => {
         style={styles.paymentWrapper}
         activeOpacity={1}
       />
-        <View style={[styles.paymentModal, { top: modalOffset, width: deviceWidth * 0.72, height: deviceWidth * 0.55, }]}>
+        <View style={[styles.paymentModal, { width: deviceWidth * 0.72, height: deviceWidth * 0.55, }]}>
           <PaymentLeftSide
             pTypes={pTypes}
             selectedType={selectedType}
@@ -241,7 +241,7 @@ const PaymentModal = (props) => {
             <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
 
             <ScrollView style={styles.employeesList}>
-              {currentSession.employees.map((item, key) => (
+              {currentSession && currentSession.employees && currentSession.employees.map((item, key) => (
                 <Ripple
                   style={styles.employeesListItem}
                   onPress={() => {

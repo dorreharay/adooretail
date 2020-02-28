@@ -1,4 +1,4 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
+import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
@@ -156,7 +156,7 @@ const base = {
   },
   receiptTotal: {
     height: '100%',
-    
+
     color: '#343434',
     fontSize: 18,
     fontFamily: GILROY_REGULAR,
@@ -271,8 +271,101 @@ const base = {
 const styles = createStyles(
   base,
 
- maxWidth(500, {
+  maxHeight(500, {
+    timeText: {
+      fontSize: 10,
+      marginLeft: 10,
+    },
+    zProceed: {
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      paddingRight: 5,
+      width: '76%',
+      height: 50,
+      paddingLeft: 0,
+      marginLeft: '0%',
+      marginBottom: 40,
+    },
+    zProceedEx: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '23%',
+      height: 50,
+      padding: 0,
+      marginBottom: 40,
+      borderRadius: 3,
+      borderWidth: 2,
+      borderColor: '#E46162',
+    },
+    proceedContainer: {
+      marginBottom: '4%',
+    },
+    lsproceedButton: {
+      height: 50,
+    },
+    lsproceedButtonText: {
+      fontSize: 17,
+    },
+    receiptItem: {
+      display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      paddingLeft: 35,
+      paddingRight: 10,
+      paddingTop: 15,
+      paddingBottom: 10,
+    },
+    receiptTitle: {
+      width: '100%',
+    },
+    receiptTitleText: {
+      fontSize: 15,
+      lineHeight: 20,
+    },
+    receiptOnePrice: {
+      fontSize: 12,
+    },
+    qtyButton: {
+      width: 28,
+      height: 28,
+    },
+    qtyButtonIcon: {
+      width: 15,
+      height: 15,
+    },
+    receiptQtyText: {
+      color: '#343434',
+      fontSize: 13,
+      fontFamily: GILROY_REGULAR,
+    },
+    receiptTotal: {
+      height: '100%',
 
+      color: '#343434',
+      fontSize: 13,
+      fontFamily: GILROY_REGULAR,
+      textAlign: 'center',
+    },
+    selectedText: {
+      fontFamily: GILROY_REGULAR,
+    },
+    qtyButton: {
+      width: 20,
+      height: 20,
+    },
+    qtyButtonIcon: {
+      width: 10,
+      height: 10,
+    },
+    lsInstanceContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 0,
+      borderColor: '#FE8B70',
+    },
+    receiptButtonText: {
+      fontSize: 15,
+    },
   })
 );
 
