@@ -4,22 +4,6 @@
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/InputCash/InputCash.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/InputCash/InputCash.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/InputCash/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/InputCash/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/InputEmployees.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/InputEmployees.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/components/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/components/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/NoAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/NoAccount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/components/ConfigureAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/components/ConfigureAccount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/SalesLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/SalesLayout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/LeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/LeftSide.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/PaymentModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/PaymentModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/styles.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +14,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Adoo_Tablet" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_29_x86" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -41,9 +25,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="215" />
-    <option name="y" value="60" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="220" />
+    <option name="y" value="5" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -53,10 +37,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -151,7 +135,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="263" y="80" width="1400" height="1000" extended-state="1" />
+    <frame x="220" y="5" width="1400" height="1000" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.3298969" />

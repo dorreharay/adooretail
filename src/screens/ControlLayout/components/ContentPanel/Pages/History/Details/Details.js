@@ -241,6 +241,10 @@ function Details(props) {
         </View>
 
         <View style={styles.paymentDetails}>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Всього</Text> - <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) || 0} грн</Text></Text>
+        </View>
+
+        <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Поставки</Text> - <Text style={styles.paymentDetailsText}>{transactionsDelivery || 0} грн</Text></Text>
         </View>
         
@@ -253,7 +257,7 @@ function Details(props) {
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Всього</Text>: <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) - (transactionsDelivery || 0) - (transactionsIncasations || 0) + (transactionsIncome || 0)} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Підсумок</Text>: <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) - (transactionsDelivery || 0) - (transactionsIncasations || 0) + (transactionsIncome || 0)} грн</Text></Text>
         </View>
 
         <SharedButton
