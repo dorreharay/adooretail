@@ -95,11 +95,11 @@ const PaymentModal = (props) => {
 
     if (!payload) return
 
-    // await printReceipt(payload)
-
     timerRef2.current = setTimeout(() => {
       dispatch(syncReceipt(payload))
     }, 300)
+
+    // await printReceipt(payload)
   }
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)
