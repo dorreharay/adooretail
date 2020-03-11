@@ -22,10 +22,10 @@ const GEOMETRIA_REGULAR = Platform.OS === 'android' ? 'geometria_regular' : 'Geo
 const GEOMETRIA_MEDIUM = Platform.OS === 'android' ? 'geometria_medium' : 'Geometria-Medium'
 const GEOMETRIA_BOLD = Platform.OS === 'android' ? 'geometria_bold' : 'Geometria-Bold'
 
-const MUSEO_LIGHT = Platform.OS === 'android' ? 'museo_light' : 'MuseoSansCyrl-100'
-const MUSEO_REGULAR = Platform.OS === 'android' ? 'museo_regular' : 'MuseoSansCyrl-300'
-const MUSEO_MEDIUM = Platform.OS === 'android' ? 'museo_medium' : 'MuseoSansCyrl-500'
-const MUSEO_BOLD = Platform.OS === 'android' ? 'museo_bold' : 'MuseoSansCyrl-700'
+const CIRCE_LIGHT = Platform.OS === 'android' ? 'museo_light' : 'Circe-Bold'
+const CIRCE_REGULAR = Platform.OS === 'android' ? 'museo_regular' : 'Circe-Regular'
+// const CIRCE_MEDIUM = Platform.OS === 'android' ? 'museo_medium' : 'Circe-Medium'
+const CIRCE_BOLD = Platform.OS === 'android' ? 'museo_bold' : 'Circe-Bold'
 
 export {
   COMFORTAA_LIGHT,
@@ -50,8 +50,7 @@ export {
   GEOMETRIA_MEDIUM,
   GEOMETRIA_BOLD,
 
-  MUSEO_LIGHT,
-  MUSEO_REGULAR,
-  MUSEO_MEDIUM,
-  MUSEO_BOLD,
+  CIRCE_LIGHT,
+  CIRCE_REGULAR,
+  CIRCE_BOLD,
 }

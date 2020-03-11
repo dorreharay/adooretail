@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, PROBA_BOLD, } from '@fonts'
+import { CIRCE_REGULAR, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, PROBA_BOLD, } from '@fonts'
 
 const base = {
   container: {
@@ -26,7 +26,7 @@ const base = {
   bussinessNameText: {
     color: '#909090',
     fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: CIRCE_REGULAR,
     width: '85%',
   },
   tabsContainer: {
@@ -59,7 +59,7 @@ const base = {
   tabText: {
     color: '#68686A',
     fontSize: 18,
-    fontFamily: PROBA_REGULAR
+    fontFamily: CIRCE_REGULAR
   },
   settingsContainer: {
     justifyContent: 'flex-end',

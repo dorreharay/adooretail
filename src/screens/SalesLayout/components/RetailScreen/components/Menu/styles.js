@@ -61,7 +61,7 @@ const base = {
   modalItemText: {
     color: '#414141',
     fontSize: 24,
-    fontFamily: PROBA_REGULAR,
+  fontFamily: GILROY_REGULAR,
   },
   redText: {
     color: '#E25B63',

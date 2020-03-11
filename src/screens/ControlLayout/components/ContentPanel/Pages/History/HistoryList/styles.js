@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 import { deviceHeight } from '@dimensions';
 
@@ -22,21 +22,21 @@ const base = {
     width: '25%',
     marginRight: 30,
     color: '#343434',
-    fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 16,
+    fontFamily: GILROY_REGULAR,
   },
   dayHeaderTotal: {
     minWidth: '25%',
     marginRight: 30,
     color: '#343434',
-    fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 16,
+    fontFamily: GILROY_REGULAR,
   },
   dayHeaderEmployees: {
     marginRight: 30,
     color: '#343434',
-    fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 16,
+    fontFamily: GILROY_REGULAR,
   },
   dayHeaderIcon: {
     alignItems: 'center',
@@ -82,7 +82,7 @@ const base = {
     marginLeft: 15,
     color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   total: {
     position: 'absolute',
@@ -106,21 +106,21 @@ const base = {
   },
   receiptItem: {
     color: '#535353',
-    fontSize: 19,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 17,
+    fontFamily: GILROY_REGULAR,
     lineHeight: 35,
   },
   receiptDetailHeading: {
     width: '53%',
     color: '#000000',
-    fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
   },
   receiptDetailHeadingComment: {
     width: '100%',
     color: '#000000',
-    fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
     lineHeight: 25,
   },
   receiptDetailContent: {
@@ -135,14 +135,14 @@ const base = {
   collapsedReceiptContenHeading: {
     marginVertical: 10,
     color: '#000000',
-    fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
   },
   receiptModalHeading: {
     width: '60%',
     marginBottom: 30,
     color: '#000000',
-    fontSize: 23,
+    fontSize: 20,
     fontFamily: PROBA_MEDIUM,
     textAlign: 'center',
     lineHeight: 30,
@@ -163,8 +163,8 @@ const base = {
     borderRadius: 3,
     borderColor: '#E8E8E8',
 
-    fontSize: 25,
-    fontFamily: PROBA_REGULAR
+    fontSize: 22,
+    fontFamily: GILROY_REGULAR
   },
   qrCodeInputPlaceholder: {
     width: '90%',
@@ -174,7 +174,7 @@ const base = {
     borderRadius: 3,
     borderColor: '#E8E8E8',
 
-    fontSize: 25,
+    fontSize: 22,
     fontFamily: PROBA_LIGHT
   },
   qrCodeButton: {
@@ -187,7 +187,7 @@ const base = {
   },
   qrCodeButtonText: {
     color: '#FFFFFF',
-    fontSize: 23,
+    fontSize: 20,
     fontFamily: PROBA_MEDIUM,
   },
   errorText: {
@@ -195,7 +195,7 @@ const base = {
     marginTop: 15,
     paddingLeft: 25,
     color: 'red',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: PROBA_LIGHT,
   },
   scrollTopButton: {

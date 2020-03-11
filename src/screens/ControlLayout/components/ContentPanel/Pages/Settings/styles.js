@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM } from '@fonts'
+import { CIRCE_BOLD, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM } from '@fonts'
 
 const base = {
   container: {
@@ -16,7 +16,7 @@ const base = {
   settingsTitle: {
     marginBottom: 40,
     fontSize: 30,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: CIRCE_BOLD,
   },
   buttonsContainer: {
     flexDirection: 'row'

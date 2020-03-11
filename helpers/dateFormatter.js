@@ -56,7 +56,7 @@ export function getEndOfPeriod(format, period) {
 
 export function getUpperCaseDate(format, date) {
   if(date) {
-    return dayjs().format(format).charAt(0).toUpperCase() + dayjs(date).format(format).slice(1)
+    return dayjs(date).format(format).charAt(0).toUpperCase() + dayjs(date).format(format).slice(1)
   }
 
   return dayjs().format(format).charAt(0).toUpperCase() + dayjs().format(format).slice(1)

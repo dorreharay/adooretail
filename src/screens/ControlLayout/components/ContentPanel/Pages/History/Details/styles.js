@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -12,7 +12,7 @@ const base = {
   paymentHeadingText: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   paymentDetails: {
     flexDirection: 'row',
@@ -24,27 +24,27 @@ const base = {
   paymentDetailsButtonText: {
     color: '#343434',
     fontSize: 19,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: GILROY_REGULAR,
   },
   paymentDetailsHeadingText: {
     color: '#343434',
-    fontSize: 22,
-    fontFamily: PROBA_MEDIUM,
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
   },
   paymentDetailsText: {
     color: '#343434',
-    fontSize: 22,
-    fontFamily: PROBA_REGULAR,
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
   },
   menuMainButton: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   menuItemText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   }
 };
 
