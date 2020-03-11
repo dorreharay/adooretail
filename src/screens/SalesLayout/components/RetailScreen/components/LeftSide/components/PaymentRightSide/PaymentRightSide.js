@@ -107,7 +107,7 @@ function PaymentRightSide(props) {
           initialStatuses={initialStatuses} resetStatus={resetStatus}
           setPaymentModalVisibility={setPaymentModalVisibility}
           handleChangeSum={handleChangeSum} saveReceipt={saveReceipt}
-          isVisible={isVisible} toBePaid={toBePaid} setToByPaid={setToByPaid}
+          isVisible={isVisible} toBePaid={toBePaid}  setToByPaid={setToByPaid}
           activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
           discounts={discounts} setDiscounts={setDiscounts}
           comment={comment} setComment={setComment}

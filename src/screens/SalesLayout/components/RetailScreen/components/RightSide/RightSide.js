@@ -7,6 +7,7 @@ import _ from 'lodash'
 import styles from './styles'
 
 import { setLayout } from '@reducers/OrdersReducer'
+import { currentAccountSelector, } from '@selectors'
 
 import SharedButton from '@shared/SharedButton';
 import Products from './Products/Products'
@@ -21,7 +22,7 @@ function RightSide(props) {
   const {
     openMenu, loadProducts, receipts, setReceipts,
     selectedInstance, account, addProductQuantity,
-    paymentModalVisible,
+    paymentModalVisible, navigation,
   } = props;
 
   const dispatch = useDispatch()
@@ -34,6 +35,7 @@ function RightSide(props) {
 
   const layout = useSelector(state => state.orders.layout)
   const currentAccountToken = useSelector(state => state.user.currentAccountToken)
+  const currentAccount = useSelector(currentAccountSelector)
 
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -104,6 +106,18 @@ function RightSide(props) {
             <Text style={styles.connectionText}>{netInfo.isConnected ? netInfo.isInternetReachable ? 'online' : 'waiting' : 'offline'}</Text>
           </View>
         </SharedButton>
+
+        {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled && (
+          <SharedButton onPress={() => navigation.navigate('ControlLayout', { screen: 2, })} scale={0.85}>
+            <View style={styles.printer}>
+              <Image style={{ width: 17, height: 17, }} source={require('@images/tprinter.png')} />
+
+              <View style={styles.printersAmount}>
+                <Text style={styles.printersAmountText}>1</Text>
+              </View>
+            </View>
+          </SharedButton>
+        )}
 
         <SharedButton
           onPress={changeLayout}

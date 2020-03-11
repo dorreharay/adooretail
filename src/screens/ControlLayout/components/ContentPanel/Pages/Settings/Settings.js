@@ -15,11 +15,20 @@ const Settings = () => {
   const currentAccount = useSelector(currentAccountSelector)
 
   const updateSettings = (newValue, prop) => {
-    const payload = {
-      ...currentAccount.settings,
-      [prop]: {
-        ...currentAccount.settings[prop],
-        ...newValue,
+    let payload = null
+
+    if (typeof newValue === 'object') {
+      payload = {
+        ...currentAccount.settings,
+        [prop]: {
+          ...currentAccount.settings[prop],
+          ...newValue,
+        }
+      }
+    } else {
+      payload = {
+        ...currentAccount.settings,
+        [prop]: newValue
       }
     }
 
@@ -44,11 +53,21 @@ const Settings = () => {
           onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
         />
       </View>
-      
+
+
+      <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
+        <Text style={styles.settingsTitle}>Використовувати принтер чеків</Text>
+        <SwitchWithTitle
+          title={'Увімкнути'}
+          value={currentAccount.settings.printer_enabled}
+          onValueChange={(value) => updateSettings(value, 'printer_enabled')}
+        />
+      </View>
+
       <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
         <Text style={styles.settingsTitle}>Перевірка робочих годин</Text>
         <SwitchWithTitle
-          title={'Увімкнута'}
+          title={'Увімкнути'}
           value={currentAccount.settings.shifts.enabled}
           onValueChange={(value) => updateSettings({ enabled: value }, 'shifts')}
         />

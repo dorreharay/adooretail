@@ -164,7 +164,7 @@ function PaymentType(props) {
     <>
       <View style={styles.totalDetails}>
         <View style={styles.toByPaid}>
-          <Text style={styles.toByPaidText}>{toBePaid} грн до сплати</Text>
+          <Text style={styles.toByPaidText}>{toBePaid} {activeDiscount > 0 ? ` (-${discounts[activeDiscount].percent}%) ` : ''}грн до сплати</Text>
         </View>
 
         {selectedType.index === 0 && (

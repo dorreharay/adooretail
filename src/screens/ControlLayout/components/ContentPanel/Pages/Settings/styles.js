@@ -1,11 +1,11 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM } from '@fonts'
+import { CIRCE_BOLD, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM } from '@fonts'
 
 const base = {
   container: {
     flex: 1,
     height: '100%',
-    paddingVertical: 60,
+    paddingVertical: 40,
     paddingHorizontal: 60,
   },
   switchText: {
@@ -14,8 +14,8 @@ const base = {
     fontFamily: GILROY_REGULAR,
   },
   settingsTitle: {
-    marginBottom: 40,
-    fontSize: 30,
+    marginBottom: 30,
+    fontSize: 25,
     fontFamily: GILROY_MEDIUM,
   },
   buttonsContainer: {

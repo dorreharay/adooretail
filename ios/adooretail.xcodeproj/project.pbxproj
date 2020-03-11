@@ -41,11 +41,12 @@
 		E92A60152C4B49C2B2A2BFC2 /* gilroy_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01AB61117BC248B1B40FB008 /* gilroy_medium.ttf */; };
 		EE65EF91327B4E94A2D61ADB /* gilroy_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24C5000F6F964FD89C581C1C /* gilroy_light.ttf */; };
 		F5F0B50E3D6048D5A8C37A4D /* gilroy_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 374866825A1945418707E35A /* gilroy_regular.ttf */; };
-		CB4274A8C99E429EA912F62E /* museo_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F06402A83C4F01BE1EE458 /* museo_bold.ttf */; };
-		CE67461AA545405382BE7A46 /* museo_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59FBE96E300D47FABEFD3FEF /* museo_light.ttf */; };
-		C5A0A6BAA1EC471FA5456F31 /* museo_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8122AFBBB54F4BB4870C1DF6 /* museo_medium.ttf */; };
-		CE36C65634CD4750BB99B778 /* museo_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CFC417A312D14018AB959FCC /* museo_regular.ttf */; };
-		13B851969DDE4B5F8E1CBFE6 /* libRNBluetoothEscposPrinter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD371529DF994C2EBCA2ABFA /* libRNBluetoothEscposPrinter.a */; };
+		69A29CD6DEF14DFDB917C661 /* Circe-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDF6B866186940C98F65ABF2 /* Circe-Bold.ttf */; };
+		6933BB0D405C44FF90A415CC /* Circe-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE0A7DDAE8450694BB5CDC /* Circe-ExtraBold.ttf */; };
+		B8ACD3B2E53540D5A2DD44EE /* Circe-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2933C3B2517B4C9DA3D2C2BA /* Circe-ExtraLight.ttf */; };
+		FC315CC206544636B9CCC72F /* Circe-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 167F19FF9ACF4B0693C42FFB /* Circe-Light.ttf */; };
+		C920AE4E4F414A4A842C9CD4 /* Circe-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2FD462AACA04C42B6AFE144 /* Circe-Regular.ttf */; };
+		A52299B4EFA84D4B83B5E491 /* Circe-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 062AB28A414649A9B4E52AD4 /* Circe-Thin.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,12 +106,15 @@
 		520FF95F89DE434F84602151 /* Gilroy-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Light.ttf"; path = "../assets/fonts/Gilroy-Light.ttf"; sourceTree = "<group>"; };
 		5507D759A4FF492A809CDC42 /* probapro_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = probapro_light.ttf; path = ../assets/fonts/probapro_light.ttf; sourceTree = "<group>"; };
 		5921037E2EBD4779A9614625 /* probapro_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = probapro_regular.ttf; path = ../assets/fonts/probapro_regular.ttf; sourceTree = "<group>"; };
+		59FBE96E300D47FABEFD3FEF /* museo_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = museo_light.ttf; path = ../assets/fonts/museo_light.ttf; sourceTree = "<group>"; };
 		60B57705867244D19CBD91DD /* MuseoSansCyrl-500.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MuseoSansCyrl-500.ttf"; path = "../assets/fonts/MuseoSansCyrl-500.ttf"; sourceTree = "<group>"; };
+		60F06402A83C4F01BE1EE458 /* museo_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = museo_bold.ttf; path = ../assets/fonts/museo_bold.ttf; sourceTree = "<group>"; };
 		62506A17FDF1445CD2C33508 /* Pods-adooretail-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-adooretail-tvOSTests/Pods-adooretail-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		644C413EDDC14CBEA53BB574 /* futura_new_demi.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = futura_new_demi.otf; path = ../assets/fonts/futura_new_demi.otf; sourceTree = "<group>"; };
 		6BF3AACCE02544998228975F /* ttcommons_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_medium.ttf; path = ../assets/fonts/ttcommons_medium.ttf; sourceTree = "<group>"; };
 		770ABA0A538A4B5FB8B580E9 /* Geometria.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Geometria.ttf; path = ../assets/fonts/Geometria.ttf; sourceTree = "<group>"; };
 		7FB91B2D0C6F42FA3EFEA732 /* Pods-adooretailTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretailTests.debug.xcconfig"; path = "Target Support Files/Pods-adooretailTests/Pods-adooretailTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8122AFBBB54F4BB4870C1DF6 /* museo_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = museo_medium.ttf; path = ../assets/fonts/museo_medium.ttf; sourceTree = "<group>"; };
 		8A28F95E8B77BE491FD44458 /* libPods-adooretail-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretail-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BC0E5CF3E11F18BC04C002F /* libPods-adooretail.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretail.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CB3DCF4B337484993F606D0 /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Bold.ttf"; path = "../assets/fonts/Gilroy-Bold.ttf"; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 		CBEC44AC237C1A0F00435477 /* background-adv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-adv.png"; sourceTree = "<group>"; };
 		CD7F8A786E804F9CA1F61E6F /* ttcommons_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_light.ttf; path = ../assets/fonts/ttcommons_light.ttf; sourceTree = "<group>"; };
 		CE0908695D364B9182A48400 /* MuseoSansCyrl-900.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MuseoSansCyrl-900.ttf"; path = "../assets/fonts/MuseoSansCyrl-900.ttf"; sourceTree = "<group>"; };
+		CFC417A312D14018AB959FCC /* museo_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = museo_regular.ttf; path = ../assets/fonts/museo_regular.ttf; sourceTree = "<group>"; };
 		D07DB77C50C81CC32FC958F4 /* Pods-adooretail-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adooretail-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-adooretail-tvOSTests/Pods-adooretail-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D2F126A7CFAD44E48B11B671 /* ttcommons_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_regular.ttf; path = ../assets/fonts/ttcommons_regular.ttf; sourceTree = "<group>"; };
 		D75FF2D341A64C3D9B9BB769 /* futura_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = futura_light.ttf; path = ../assets/fonts/futura_light.ttf; sourceTree = "<group>"; };
@@ -138,12 +143,12 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FF2845785FD26B1C9CB1E884 /* libPods-adooretail-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretail-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		60F06402A83C4F01BE1EE458 /* museo_bold.ttf */ = {isa = PBXFileReference; name = "museo_bold.ttf"; path = "../assets/fonts/museo_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		59FBE96E300D47FABEFD3FEF /* museo_light.ttf */ = {isa = PBXFileReference; name = "museo_light.ttf"; path = "../assets/fonts/museo_light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8122AFBBB54F4BB4870C1DF6 /* museo_medium.ttf */ = {isa = PBXFileReference; name = "museo_medium.ttf"; path = "../assets/fonts/museo_medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CFC417A312D14018AB959FCC /* museo_regular.ttf */ = {isa = PBXFileReference; name = "museo_regular.ttf"; path = "../assets/fonts/museo_regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		FE62FA5213DD43A19119F220 /* RNBluetoothEscposPrinter.xcodeproj */ = {isa = PBXFileReference; name = "RNBluetoothEscposPrinter.xcodeproj"; path = "../node_modules/react-native-bluetooth-escpos-printer/ios/RNBluetoothEscposPrinter.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		CD371529DF994C2EBCA2ABFA /* libRNBluetoothEscposPrinter.a */ = {isa = PBXFileReference; name = "libRNBluetoothEscposPrinter.a"; path = "libRNBluetoothEscposPrinter.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		BDF6B866186940C98F65ABF2 /* Circe-Bold.ttf */ = {isa = PBXFileReference; name = "Circe-Bold.ttf"; path = "../assets/fonts/Circe-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5BCE0A7DDAE8450694BB5CDC /* Circe-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Circe-ExtraBold.ttf"; path = "../assets/fonts/Circe-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2933C3B2517B4C9DA3D2C2BA /* Circe-ExtraLight.ttf */ = {isa = PBXFileReference; name = "Circe-ExtraLight.ttf"; path = "../assets/fonts/Circe-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		167F19FF9ACF4B0693C42FFB /* Circe-Light.ttf */ = {isa = PBXFileReference; name = "Circe-Light.ttf"; path = "../assets/fonts/Circe-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A2FD462AACA04C42B6AFE144 /* Circe-Regular.ttf */ = {isa = PBXFileReference; name = "Circe-Regular.ttf"; path = "../assets/fonts/Circe-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		062AB28A414649A9B4E52AD4 /* Circe-Thin.ttf */ = {isa = PBXFileReference; name = "Circe-Thin.ttf"; path = "../assets/fonts/Circe-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +335,12 @@
 				59FBE96E300D47FABEFD3FEF /* museo_light.ttf */,
 				8122AFBBB54F4BB4870C1DF6 /* museo_medium.ttf */,
 				CFC417A312D14018AB959FCC /* museo_regular.ttf */,
+				BDF6B866186940C98F65ABF2 /* Circe-Bold.ttf */,
+				5BCE0A7DDAE8450694BB5CDC /* Circe-ExtraBold.ttf */,
+				2933C3B2517B4C9DA3D2C2BA /* Circe-ExtraLight.ttf */,
+				167F19FF9ACF4B0693C42FFB /* Circe-Light.ttf */,
+				A2FD462AACA04C42B6AFE144 /* Circe-Regular.ttf */,
+				062AB28A414649A9B4E52AD4 /* Circe-Thin.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -498,10 +509,12 @@
 				188A66E9B244465B8DCACE1F /* Geometria-Light.ttf in Resources */,
 				8D410A9285D64912B02A0EAA /* Geometria-Medium.ttf in Resources */,
 				55CD84BBE8F940BBADBC8FDE /* Geometria.ttf in Resources */,
-				CB4274A8C99E429EA912F62E /* museo_bold.ttf in Resources */,
-				CE67461AA545405382BE7A46 /* museo_light.ttf in Resources */,
-				C5A0A6BAA1EC471FA5456F31 /* museo_medium.ttf in Resources */,
-				CE36C65634CD4750BB99B778 /* museo_regular.ttf in Resources */,
+				69A29CD6DEF14DFDB917C661 /* Circe-Bold.ttf in Resources */,
+				6933BB0D405C44FF90A415CC /* Circe-ExtraBold.ttf in Resources */,
+				B8ACD3B2E53540D5A2DD44EE /* Circe-ExtraLight.ttf in Resources */,
+				FC315CC206544636B9CCC72F /* Circe-Light.ttf in Resources */,
+				C920AE4E4F414A4A842C9CD4 /* Circe-Regular.ttf in Resources */,
+				A52299B4EFA84D4B83B5E491 /* Circe-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
