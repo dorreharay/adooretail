@@ -23,7 +23,7 @@ const base = {
     paddingBottom: '5%',
     color: '#343434',
     fontSize: 25,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   toByPaid: {
     borderLeftWidth: 1,
@@ -72,7 +72,7 @@ const base = {
   changeText: {
     color: '#9A9A9A',
     fontSize: 20,
-    fontFamily: MUSEO_REGULAR,
+    fontFamily: GILROY_REGULAR,
     lineHeight: 27,
   },
   cancelButton: {
@@ -86,7 +86,7 @@ const base = {
   cancelButtonText: {
     color: '#343434',
     fontSize: 15,
-    fontFamily: MUSEO_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   discountContainer: {
     width: '85%',
@@ -125,7 +125,7 @@ const base = {
   discountItemText: {
     color: '#CFCFCF',
     fontSize: 20,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   orderContainer: {
     width: '85%',

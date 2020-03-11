@@ -36,6 +36,28 @@ const base = {
     fontSize: 17,
     fontFamily: GILROY_MEDIUM,
   },
+  printer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    height: toolsBarHeight,
+    paddingHorizontal: 20,
+    marginRight: 10,
+    backgroundColor: '#FFFFFF',
+  },
+  printersAmount: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    width: 20,
+    height: 20,
+    borderRadius: 3,
+  },
+  printersAmountText: {
+    color: '#414141',
+    fontSize: 18,
+    fontFamily: PROBA_MEDIUM,
+  },
   connection: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -108,7 +130,7 @@ const base = {
 const styles = createStyles(
   base,
 
- maxWidth(500, {
+  maxWidth(500, {
 
   })
 );

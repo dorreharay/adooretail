@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
+import { GILROY_MEDIUM, GILROY_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '12%'
 
@@ -19,7 +19,7 @@ const base = {
     paddingBottom: '10%',
     color: '#FFFFFF',
     fontSize: 25,
-    fontFamily: MUSEO_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   paymentType: {
     flexDirection: 'row',
@@ -76,7 +76,7 @@ const base = {
     marginLeft: 85,
     color: '#FFFFFF',
     fontSize: 19,
-    fontFamily: MUSEO_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   editButton: {
     alignItems: 'center',
@@ -127,7 +127,7 @@ const styles = createStyles(
       marginLeft: 80,
       color: '#FFFFFF',
       fontSize: 14,
-      fontFamily: MUSEO_REGULAR,
+      fontFamily: GILROY_REGULAR,
     },
     editButton: {
       alignItems: 'center',

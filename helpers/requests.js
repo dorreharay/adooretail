@@ -76,6 +76,8 @@ export function  validateSessionRoutine(shift_start, shift_end, callback) {
 
   const currentAccountSession = localSessions[localSessions.length - 1]
 
+  if (currentAccountSession.endTime) return true
+
   let startOfShift = ''
   let endOfShift = ''
 
