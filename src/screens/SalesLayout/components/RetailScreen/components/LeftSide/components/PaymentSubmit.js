@@ -20,9 +20,9 @@ function PaymentSubmit(props) {
     }
   }, [])
 
-  const handlePress = () => {
-    if(!buttonAccessible) {
-      return () => {}
+  const handlePress = async () => {
+    if (!buttonAccessible) {
+      return () => { }
     }
 
     return selectedType.onPress(() => {

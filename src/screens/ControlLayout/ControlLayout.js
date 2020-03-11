@@ -1,11 +1,12 @@
 import React, { useState, useEffect, } from 'react'
+
 import { View, StyleSheet, Animated, } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import ControlPanel from './components/ControlPanel/ControlPanel'
 import ContentPanel from './components/ContentPanel/ContentPanel'
 
-import AllCategories from './components/ContentPanel/Pages/AllCategories/AllCategories'
+import Devices from './components/ContentPanel/Pages/Devices/Devices'
 import History from './components/ContentPanel/Pages/History/History'
 import Settings from './components/ContentPanel/Pages/Settings/Settings'
 import Transactions from './components/ContentPanel/Pages/Transactions/Transactions'
@@ -16,7 +17,7 @@ function ControlLayout(props) {
   const { route, navigation } = props
 
   useEffect(() => {
-    if(navigation.state.params) {
+    if (navigation.state.params) {
       setActiveCategory({ index: navigation.state.params.screen, animated: false, })
     }
   }, [navigation])
@@ -24,43 +25,43 @@ function ControlLayout(props) {
   const [animatedX] = useState(new Animated.Value(0))
 
   const [tabs] = useState([
-      {
-        index: 0,
-        title: 'Історія замовлень',
-        iconSource: require('@images/history.png'),
-        onPress: () => handleCategoryPress(0),
-        component: <History />,
-      },
-      {
-        index: 1,
-        title: 'Транзакції',
-        iconSource: require('@images/package.png'),
-        onPress: () => handleCategoryPress(1),
-        component: <Transactions />,
-      },
-      {
-        index: 2,
-        title: 'Девайси',
-        iconSource: require('@images/printer.png'),
-        onPress: () => handleCategoryPress(2),
-        component: <View style={{ flex: 1, }}></View>,
-      },
-      {
-        index: 3,
-        title: 'Фідбек',
-        iconSource: require('@images/telephone.png'),
-        onPress: () => handleCategoryPress(3),
-        component: <View style={{ flex: 1, }}></View>,
-      },
-      {
-        index: 4,
-        title: 'Налаштування',
-        iconSource: require('@images/gear-option.png'),
-        sizes: { width: 20, height: 20, },
-        onPress: () => handleCategoryPress(4),
-        component: <Settings />
-      },
-    ])
+    {
+      index: 0,
+      title: 'Історія замовлень',
+      iconSource: require('@images/history.png'),
+      onPress: () => handleCategoryPress(0),
+      component: <History />,
+    },
+    {
+      index: 1,
+      title: 'Транзакції',
+      iconSource: require('@images/package.png'),
+      onPress: () => handleCategoryPress(1),
+      component: <Transactions />,
+    },
+    {
+      index: 2,
+      title: 'Девайси',
+      iconSource: require('@images/printer.png'),
+      onPress: () => handleCategoryPress(2),
+      component: <Devices />,
+    },
+    {
+      index: 3,
+      title: 'Фідбек',
+      iconSource: require('@images/telephone.png'),
+      onPress: () => handleCategoryPress(3),
+      component: <View style={{ flex: 1, }}></View>,
+    },
+    {
+      index: 4,
+      title: 'Налаштування',
+      iconSource: require('@images/gear-option.png'),
+      sizes: { width: 20, height: 20, },
+      onPress: () => handleCategoryPress(4),
+      component: <Settings />
+    },
+  ])
 
   const [activeCategory, setActiveCategory] = useState({ index: 1, animated: true })
 

@@ -45,14 +45,14 @@ function AppSessions(props) {
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
   const [prevNetState, setPrevNetState] = useState(false)
 
-  useEffect(() => {
-    if (currentAccount) {
-      if (currentAccount.needToReenter) {
-        NavigationService.setTopLevelNavigator(navigatorRef.current)
-        NavigationService.navigate('Login')
-      }
-    }
-  }, [currentAccount])
+  // useEffect(() => {
+  //   if (currentAccount) {
+  //     if (currentAccount.needToReenter) {
+  //       NavigationService.setTopLevelNavigator(navigatorRef.current)
+  //       NavigationService.navigate('Login')
+  //     }
+  //   }
+  // }, [currentAccount])
 
   const synchronizeSessions = async () => {
     if (accounts.length !== 0) {
@@ -103,8 +103,8 @@ function AppSessions(props) {
         // Orientation.lockToLandscapeLeft();
 
         callback()
-      }, 110)
-    }, 100)
+      }, 310)
+    }, 300)
   }
 
   useEffect(() => {
@@ -199,49 +199,49 @@ function AppSessions(props) {
 
   return (
     <>
-      <UserInactivity
+      {/* <UserInactivity
         timeForInactivity={currentAccount && currentAccount.client_data && currentAccount.client_data.allowed_inactivity_period || (30 * 1000)}
         timeoutHandler={BackgroundTimer}
         onAction={active => {
           if (!active) {
             if (accounts.length !== 0) {
-              // dispatch(setNeedToReenter(true))
-              // NavigationService.setTopLevelNavigator(navigatorRef.current)
-              // NavigationService.navigate('Login')
+              dispatch(setNeedToReenter(true))
+              NavigationService.setTopLevelNavigator(navigatorRef.current)
+              NavigationService.navigate('Login')
             }
           }
         }}
         style={{ flex: 1, }}
+      > */}
+      <SharedBackground
+        loading={initialLoadingVisibility}
+        opacity={initialLoadingOpacity}
+        source={require('@images/background-adv7.png')}
+        mainWrapper
       >
         <SharedBackground
           loading={initialLoadingVisibility}
           opacity={initialLoadingOpacity}
           source={require('@images/background-adv7.png')}
-          mainWrapper
+          navigation={NavigationService}
         >
-          <SharedBackground
-            loading={initialLoadingVisibility}
-            opacity={initialLoadingOpacity}
-            source={require('@images/background-adv7.png')}
-            navigation={NavigationService}
-          >
-            <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
-              <View style={styles.versionContainer}>
-                <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
-              </View>
-              {withProps}
+          <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
+            <View style={styles.versionContainer}>
+              <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
             </View>
-          </SharedBackground>
-
-          {accounts.length !== 0 && (
-            <SessionModal
-              isVisible={modalStatus !== ''}
-              intervalRef={intervalRef}
-              navigatorRef={navigatorRef}
-            />
-          )}
+            {withProps}
+          </View>
         </SharedBackground>
-      </UserInactivity>
+
+        {accounts.length !== 0 && (
+          <SessionModal
+            isVisible={modalStatus !== ''}
+            intervalRef={intervalRef}
+            navigatorRef={navigatorRef}
+          />
+        )}
+      </SharedBackground>
+      {/* </UserInactivity> */}
 
     </>
   )

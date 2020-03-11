@@ -15,7 +15,7 @@ function ConfigureAccount(props) {
   const dispatch = useDispatch()
 
   const inputRef = useRef(null)
-  
+
   const [cameraVisible, setCameraVisibility] = useState(true)
   const [accountCode, setAccountCode] = useState('')
 
@@ -74,7 +74,7 @@ function ConfigureAccount(props) {
                 buttonNegative: 'Відхилити',
               }}
               onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                if(!loading) {
+                if (!loading) {
                   setCode(barcodes[0].data)
                 }
               }}

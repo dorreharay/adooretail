@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles'
 
 import { syncReceipt } from '@reducers/UserReducer'
+import { printReceipt } from '@printer'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { getFormattedDate, } from '@dateFormatter'
@@ -62,7 +63,7 @@ const PaymentModal = (props) => {
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
   const [comment, setComment] = useState('')
 
-  const saveReceipt = (paymentType) => {
+  const saveReceipt = async (paymentType) => {
     function guidGenerator() {
       let S4 = function () {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -93,6 +94,8 @@ const PaymentModal = (props) => {
     }
 
     if (!payload) return
+
+    // await printReceipt(payload)
 
     timerRef2.current = setTimeout(() => {
       dispatch(syncReceipt(payload))
@@ -130,7 +133,7 @@ const PaymentModal = (props) => {
   useMemo(() => {
     setStatus(initialStatuses.waiting)
 
-    if (!currentAccount.settings.default_payment_types.unset) {
+    if (currentAccount && !currentAccount.settings.default_payment_types.unset) {
       if (currentAccount.settings.default_payment_types.cash) {
         selectPType(pTypes[0])
       } else {
@@ -207,29 +210,29 @@ const PaymentModal = (props) => {
         style={styles.paymentWrapper}
         activeOpacity={1}
       />
-        <View style={[styles.paymentModal, { width: deviceHeight < 500 ? deviceWidth * 0.72 : deviceWidth * 0.7, height: deviceHeight < 500 ? deviceHeight * 0.9 : deviceWidth * 0.55, }]}>
-          <PaymentLeftSide
-            pTypes={pTypes}
-            selectedType={selectedType}
-            selectPType={selectPType}
-            setEmployeesListVisibility={setEmployeesListVisibility}
-            currentEmployee={currentEmployee}
-          />
-          <PaymentRightSide
-            selectedType={selectedType}
-            setPaymentModalVisibility={setPaymentModalVisibility}
-            initialStatuses={initialStatuses}
-            status={status} total={receiptSum}
-            setStatus={setStatus} resetStatus={resetStatus}
-            buttonAccessible={buttonAccessible}
-            enteredSum={enteredSum} saveReceipt={saveReceipt}
-            setEnteredSum={setEnteredSum} isVisible={isVisible}
-            setButtonAccessibility={setButtonAccessibility}
-            activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
-            discounts={discounts} setDiscounts={setDiscounts}
-            comment={comment} setComment={setComment}
-          />
-        </View>
+      <View style={[styles.paymentModal, { width: deviceHeight < 500 ? deviceWidth * 0.72 : deviceWidth * 0.7, height: deviceHeight < 500 ? deviceHeight * 0.9 : deviceWidth * 0.55, }]}>
+        <PaymentLeftSide
+          pTypes={pTypes}
+          selectedType={selectedType}
+          selectPType={selectPType}
+          setEmployeesListVisibility={setEmployeesListVisibility}
+          currentEmployee={currentEmployee}
+        />
+        <PaymentRightSide
+          selectedType={selectedType}
+          setPaymentModalVisibility={setPaymentModalVisibility}
+          initialStatuses={initialStatuses}
+          status={status} total={receiptSum}
+          setStatus={setStatus} resetStatus={resetStatus}
+          buttonAccessible={buttonAccessible}
+          enteredSum={enteredSum} saveReceipt={saveReceipt}
+          setEnteredSum={setEnteredSum} isVisible={isVisible}
+          setButtonAccessibility={setButtonAccessibility}
+          activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
+          discounts={discounts} setDiscounts={setDiscounts}
+          comment={comment} setComment={setComment}
+        />
+      </View>
 
       {employeesListVisible && (
         <TouchableOpacity

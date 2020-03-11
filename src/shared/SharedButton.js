@@ -5,7 +5,7 @@ function SharedButton(props) {
   const {
     style = {}, iconStyle, source, svgSource,
     borderRadius, scale, duration, loading,
-    onPress, rotateOnPress, children,
+    onPress, rotateOnPress, children, onLongPress,
   } = props
 
   const timerRef = useRef(null)
@@ -105,6 +105,7 @@ function SharedButton(props) {
         onPress={onPress}
         onPressIn={animateIn}
         onPressOut={animateOut}
+        onLongPress={onLongPress}
       >
         <Animated.View style={children ? {
           transform: [{

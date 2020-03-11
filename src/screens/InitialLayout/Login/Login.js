@@ -63,18 +63,18 @@ function Login(props) {
   }
 
   const validateDeviceID = async (enteredPinCode) => {
-    const { registered_device_ids, passcodes  } = currentAccount
+    const { registered_device_ids, passcodes } = currentAccount
 
     setLoadingStatus(true)
 
-    if(!currentAccount) {
+    if (!registered_device_ids) {
       navigation.navigate('NoAccount')
     }
 
     try {
       const deviceId = await DeviceInfo.getUniqueId();
 
-      if(enteredPinCode == '2050203') {
+      if (enteredPinCode == '2050203') {
         toast.current && toast.current.show(deviceId, DURATION.FOREVER)
         resetState()
         return
@@ -87,11 +87,16 @@ function Login(props) {
       if (!registered_device_ids.includes(deviceId)) {
         throw new Error('Не правильний Device Id')
       }
-      
+
       dispatch(setNeedToReenter(false))
 
-      if (!currentSession.endTime && currentSession.length !== 0) {
+      console.log('aaaa', currentSession)
+
+      if (currentSession.length !== 0 && !currentSession.endTime) {
         navigation.navigate('SalesLayout')
+        // navigation.navigate('SalesLayout')
+        // navigation.navigate('SalesLayout')
+        // toast.current && toast.current.show('success', DURATION.LENGTH_LONG)
       } else {
         navigation.navigate('InputCash')
       }
@@ -145,7 +150,7 @@ function Login(props) {
     setCurrentInput(newInput)
     setPasswordArray(newPass)
   }
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>хід за допомогою Device ID</Text>

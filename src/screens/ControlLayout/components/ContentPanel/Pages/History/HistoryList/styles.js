@@ -19,14 +19,14 @@ const base = {
     backgroundColor: '#FFFFFF'
   },
   dayHeaderDate: {
-    width: '25%',
+    width: '30%',
     marginRight: 30,
     color: '#343434',
     fontSize: 18,
     fontFamily: PROBA_REGULAR,
   },
   dayHeaderTotal: {
-    minWidth: '25%',
+    minWidth: '20%',
     marginRight: 30,
     color: '#343434',
     fontSize: 18,
@@ -219,6 +219,18 @@ const base = {
     justifyContent: 'center',
     width: 300,
     height: 300,
+  },
+  loadMoreButton: {
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 520,
+    width: 300,
+    height: 70,
+  },
+  loadMoreButtonText: {
+    color: '#BBBBBB',
+    fontSize: 20,
+    fontFamily: PROBA_REGULAR,
   }
 };
 

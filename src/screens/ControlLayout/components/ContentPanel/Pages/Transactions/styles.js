@@ -5,6 +5,7 @@ import { deviceWidth, deviceHeight } from '@dimensions';
 const base = {
   container: {
     flex: 1,
+    // width: 0,
     flexDirection: 'row'
   },
   leftContainer: {

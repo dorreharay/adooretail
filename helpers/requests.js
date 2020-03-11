@@ -14,7 +14,7 @@ export async function syncSessions(callback, newLocalSessions) {
   const { accounts, currentAccountToken, currentAccountIndex, } = currentStore.user
   const { currentRoute, } = currentStore.temp
 
-  if(accounts.length === 0) {
+  if (accounts.length === 0) {
     callback()
 
     return
@@ -54,7 +54,7 @@ export function validateByRoute(shift_start, shift_end, callback) {
 
   const { accounts, } = currentStore.user
   const { currentRoute, } = currentStore.temp
-  
+
   if (accounts.length !== 0) {
     validateSessionRoutine(shift_start, shift_end, callback)
     callback()
@@ -63,7 +63,7 @@ export function validateByRoute(shift_start, shift_end, callback) {
   }
 }
 
-export function  validateSessionRoutine(shift_start, shift_end, callback) {
+export function validateSessionRoutine(shift_start, shift_end, callback) {
   const dispatch = store.dispatch
   const currentStore = store.getState()
   const { accounts, currentAccountIndex, } = currentStore.user
@@ -76,14 +76,16 @@ export function  validateSessionRoutine(shift_start, shift_end, callback) {
 
   const currentAccountSession = localSessions[localSessions.length - 1]
 
+  if (currentAccountSession.endTime) return true
+
   let startOfShift = ''
   let endOfShift = ''
 
-  if(!shift_start || !shift_end) {
+  if (!shift_start || !shift_end) {
     shift_start = currentAccount.shift_start
     shift_end = currentAccount.shift_end
   }
- 
+
   if (settings.shifts.enabled) {
     startOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shift_start.hours, minutes: shift_start.minutes, seconds: 0, })
     endOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shift_end.hours, minutes: shift_end.minutes, seconds: 0, })
@@ -100,6 +102,8 @@ export function  validateSessionRoutine(shift_start, shift_end, callback) {
   if (isValid && modalStatus !== '') {
     dispatch(setModalStatus(''))
   }
+
+  console.log(currentAccount.localSessions)
 
   if (!isValid) {
     if (currentAccount.localSessions.length === 0) {

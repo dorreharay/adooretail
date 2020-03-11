@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect, useMemo, } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, Animated, Easing, } from 'react-native'
-import { useSelector, } from 'react-redux'
+import { useSelector, useDispatch, } from 'react-redux'
 import FastImage from 'react-native-fast-image';
 import Collapsible from 'react-native-collapsible';
+import * as Progress from 'react-native-progress';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import styles from './styles'
 
 import { getDateByCondition, } from '@dateFormatter'
+import { getSessions } from '@reducers/UserReducer'
 
 import { currentAccountSelector, } from '@selectors'
 import SharedButton from '@shared/SharedButton';
@@ -14,8 +16,10 @@ import SharedButton from '@shared/SharedButton';
 function Details(props) {
   const {
     activeSort, setActiveSort, activeFilter, setActiveFilter,
-    toggleEmptySessions, withoutEmptySessions, loading, setLoadingStatus,
+    toggleEmptySessions, withoutEmptySessions, loading, setLoadingStatus = () => { },
   } = props
+
+  const dispatch = useDispatch()
 
   const currentAccount = useSelector(currentAccountSelector)
 
@@ -29,7 +33,7 @@ function Details(props) {
   })
 
   const { todayCardSum, todayCashSum, transactionsDelivery, transactionsIncasations, transactionsIncome } = useMemo(() => {
-    const localSessions = currentAccount.localSessions
+    const localSessions = currentAccount.history || []
 
     const todaySessions = localSessions.filter(item => getDateByCondition(item.startTime, activeFilter))
 
@@ -86,7 +90,7 @@ function Details(props) {
     transactionsIncome = transactionsIncome.reduce((accumulator, currentValue) => accumulator + (+currentValue), false)
 
     return { todayCardSum, todayCashSum, transactionsDelivery, transactionsIncasations, transactionsIncome }
-  }, [currentAccount.localSessions, activeFilter])
+  }, [currentAccount.history, activeFilter])
 
   const openMenu = () => {
     menuRef.current.show()
@@ -96,10 +100,21 @@ function Details(props) {
     ref.current.hide()
 
     if (type === 'filter') {
+      setLoadingStatus(true)
+
+      dispatch(getSessions({
+        active_filter: code,
+      }, () => setLoadingStatus(false)))
+
       setActiveFilter({ code, name: relativeName })
     }
 
     if (type === 'sort') {
+      setLoadingStatus(true)
+
+      dispatch(getSessions({
+        active_sort: code,
+      }, () => setLoadingStatus(false)))
       setActiveSort({ code, name: relativeName })
     }
   }
@@ -218,10 +233,16 @@ function Details(props) {
 
           {loading ? (
             <View style={{ justifyContent: 'center', marginLeft: 30, height: 40, }}>
-              <View style={{ width: 25, height: 25, borderRadius: 100, borderWidth: 2, borderColor: '#E36062' }}>
+              {/* <View style={{ width: 25, height: 25, borderRadius: 100, borderWidth: 3, borderColor: '#E36062' }}>
 
-              </View>
+              </View> */}
+              <Progress.Circle
+                endAngle={0.7}
+                size={25} color={'#E36062'}
+                borderWidth={2} indeterminate={true}
+              />
             </View>
+
           ) : (
               <View style={{ justifyContent: 'center', marginLeft: 30, height: 40, }}>
                 <View style={{ width: 25, height: 25, borderRadius: 100, borderWidth: 1, borderColor: '#cccc' }}>
@@ -229,35 +250,36 @@ function Details(props) {
                 </View>
               </View>
             )}
+
         </View>
       </View>
       <Collapsible style={{ paddingVertical: 15, paddingHorizontal: 45, }} collapsed={!detailsExpanded}>
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Безготівковий підсумок</Text> - <Text style={styles.paymentDetailsText}>{todayCardSum || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Безготівковий підсумок</Text> - <Text style={styles.paymentDetailsText}>{todayCardSum || 0} грн</Text></Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Готівковий підсумок</Text> - <Text style={styles.paymentDetailsText}>{todayCashSum || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Готівковий підсумок</Text> - <Text style={styles.paymentDetailsText}>{todayCashSum || 0} грн</Text></Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Всього</Text> - <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Всього</Text> - <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) || 0} грн</Text></Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Поставки</Text> - <Text style={styles.paymentDetailsText}>{transactionsDelivery || 0} грн</Text></Text>
-        </View>
-        
-        <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Інкасації</Text> - <Text style={styles.paymentDetailsText}>{transactionsIncasations || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Поставки</Text> - <Text style={styles.paymentDetailsText}>{transactionsDelivery || 0} грн</Text></Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Прибуток</Text> - <Text style={styles.paymentDetailsText}>{transactionsIncome || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Інкасації</Text> - <Text style={styles.paymentDetailsText}>{transactionsIncasations || 0} грн</Text></Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{ }}>Підсумок</Text>: <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) - (transactionsDelivery || 0) - (transactionsIncasations || 0) + (transactionsIncome || 0)} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Прибуток</Text> - <Text style={styles.paymentDetailsText}>{transactionsIncome || 0} грн</Text></Text>
+        </View>
+
+        <View style={styles.paymentDetails}>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Підсумок</Text>: <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) - (transactionsDelivery || 0) - (transactionsIncasations || 0) + (transactionsIncome || 0)} грн</Text></Text>
         </View>
 
         <SharedButton

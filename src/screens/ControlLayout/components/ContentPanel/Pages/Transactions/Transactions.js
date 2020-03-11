@@ -87,6 +87,7 @@ function Transactions() {
       comment,
       time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
       session_id: currentSession.localId,
+      employees: currentSession.employees,
       localId: guidGenerator(),
     }))
 

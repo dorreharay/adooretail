@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, } from "react";
 import { View, Text, Image, Animated, } from "react-native";
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
-import Toast, {DURATION} from 'react-native-easy-toast'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles';
 
 import LoginLoader from '@shared/LoginLoader';
@@ -100,9 +100,9 @@ function NoAccount(props) {
   return (
     <View style={styles.container}>
       {successVisible && (
-        <Animated.View style={[styles.success , { opacity: successOpacity }]}>
+        <Animated.View style={[styles.success, { opacity: successOpacity }]}>
           <Image
-            style={styles.successImage} 
+            style={styles.successImage}
             source={successVisible === 'success' ? successWhite : failWhite}
           />
         </Animated.View>
@@ -121,21 +121,21 @@ function NoAccount(props) {
               navigation={navigation}
             />
           ) : (
-            <ChooseAccount
-              accounts={accounts}
-              selectedAccount={selectedAccount}
-              selectAccount={selectAccount}
-              submitAccount={invokeSuccessAnimation}
-              addAccount={addAccount}
-              currentAccount={currentAccount}
-              navigation={navigation}
-            />
-          )}
+              <ChooseAccount
+                accounts={accounts}
+                selectedAccount={selectedAccount}
+                selectAccount={selectAccount}
+                submitAccount={invokeSuccessAnimation}
+                addAccount={addAccount}
+                currentAccount={currentAccount}
+                navigation={navigation}
+              />
+            )}
         </Animated.View>
       )}
-     
+
       <LoginLoader active={loading} />
-      <Toast ref={toast}/>
+      <Toast ref={toast} />
     </View>
   )
 }

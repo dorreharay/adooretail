@@ -86,10 +86,6 @@ function PointScheme() {
     dispatch(setBounds(newBounds))
   }
 
-  useEffect(() => {
-    console.log('--------->', bounds)
-  }, [bounds])
-
   return (
     <View style={styles.container}>
       <View style={styles.dragContainer}>

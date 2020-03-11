@@ -1,6 +1,6 @@
-import React, { useState, useRef, Fragment, } from 'react'
+import React, { useState, useRef, useEffect, Fragment, } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, Animated, Easing, FlatList, } from 'react-native'
-import { useSelector, } from 'react-redux'
+import { useSelector, useDispatch, } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 import Collapsible from 'react-native-collapsible'
@@ -9,13 +9,16 @@ import SharedButton from '@shared/SharedButton'
 
 import { deviceHeight } from '@dimensions';
 import { getDiff, getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
+import { getSessions } from '@reducers/UserReducer'
 
 import ReceiptModal from './ReceiptModal'
 
 function HistoryList(props) {
-  const { data } = props
+  const { data = [], loading, setLoadingStatus, } = props
 
   const timerRef = useRef(null)
+
+  const dispatch = useDispatch()
 
   const [expandedIndex, setExpandedIndex] = useState(null)
   const [receiptModalItem, setReceiptModalItem] = useState(false)
@@ -76,8 +79,8 @@ function HistoryList(props) {
 
   const renderTimeSpent = (startTime, endTime) => {
     let timeSpent = getDiff(endTime, startTime, 'seconds')
-    
-    if(timeSpent < 60) {
+
+    if (timeSpent < 60) {
       return timeSpent + ' сек'
     } else {
       return getDiff(endTime, startTime, 'minutes') + ' хв'
@@ -96,9 +99,10 @@ function HistoryList(props) {
       scrollEventThrottle={100}
     // onScrollEndDrag={() => setScrollTopButtonVisibility(true)}
     >
-      {data.map((day, index) => {
+      {data && data.map((day, index) => {
         const employeesLength = day.employees ? day.employees.length : 0
-        const sessionTotal = day.receipts.length
+        const sessionOrdersQty = day.receipts.length
+        const sessionTotal = day.receipts.reduce((accumulator, currentValue) => accumulator + currentValue.total, false)
 
         const spin = spinValue.interpolate({
           inputRange: [0, 1],
@@ -109,16 +113,17 @@ function HistoryList(props) {
           <Fragment key={index}>
             <TouchableOpacity
               style={styles.dayHeader}
-              onPress={() => handleExpand(index, sessionTotal)}
+              onPress={() => handleExpand(index, sessionOrdersQty)}
               activeOpacity={1}
             >
               <FastImage
                 style={{ width: 20, height: 20, marginRight: 28, }}
                 source={require('@images/session_process.png')}
               />
-              <Text style={styles.dayHeaderDate}>{getUpperCaseDate('dddd DD.MM - HH:mm', day.startTime)}</Text>
-              <Text style={styles.dayHeaderTotal}>Всього транзакцій: {sessionTotal}</Text>
-              <Text style={styles.dayHeaderEmployees}>Працівників на зміні: {employeesLength}</Text>
+              <Text style={styles.dayHeaderDate}>{getUpperCaseDate('dddd DD.MM | HH:mm', day.startTime)}</Text>
+              <Text style={styles.dayHeaderTotal}>Всього: {sessionTotal || 0} грн</Text>
+              <Text style={styles.dayHeaderTotal}>К-сть транзакцій: {sessionOrdersQty}</Text>
+              {/* <Text style={styles.dayHeaderEmployees}>Працівників на зміні: {employeesLength}</Text> */}
               <View style={styles.dayHeaderIcon}>
                 <AnimatedImage
                   style={[{ width: 15, height: 15 }, expandedIndex === index && { transform: [{ rotate: spin }] }]}
@@ -126,7 +131,7 @@ function HistoryList(props) {
                 />
               </View>
             </TouchableOpacity>
-            <Collapsible collapsed={expandedIndex !== index || sessionTotal === 0}>
+            <Collapsible collapsed={expandedIndex !== index}>
               <View style={{ width: '100%', maxHeight: deviceHeight * 0.625, backgroundColor: '#FFFFFF' }}>
                 <ScrollView
                   style={styles.historyInstanceContainer}
@@ -214,6 +219,24 @@ function HistoryList(props) {
           </Fragment>
         )
       })}
+
+      {data.length > 0 && !loading && (
+        <View style={styles.loadMoreButton}>
+          <SharedButton
+            style={{ flex: 1, }}
+            onPress={() => {
+              setLoadingStatus(true)
+
+              dispatch(getSessions({
+                offset: 'onemore',
+              }, () => setLoadingStatus(false)))
+            }}
+            scale={0.8}
+          >
+            <Text style={styles.loadMoreButtonText}>Завантажити ще</Text>
+          </SharedButton>
+        </View>
+      )}
 
       {data.length > 2 && showScrollTopButton && (
         <View style={styles.scrollTopButton}>

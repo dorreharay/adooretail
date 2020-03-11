@@ -16,6 +16,7 @@
           "@keyboards": "./helpers/keyboards",
           "@dateFormatter": "./helpers/dateFormatter",
           "@requests": "./helpers/requests",
+          "@printer": "./helpers/printer",
           "@shared": "./src/shared",
           "@selectors": "./store/selectors",
           "@statuses": "./config/statuses",
