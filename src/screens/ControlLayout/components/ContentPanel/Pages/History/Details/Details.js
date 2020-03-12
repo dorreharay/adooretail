@@ -8,7 +8,7 @@ import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import styles from './styles'
 
 import { getDateByCondition, } from '@dateFormatter'
-import { getSessions } from '@reducers/UserReducer'
+import { getSessions, setHistoryAndOptions, } from '@reducers/UserReducer'
 
 import { currentAccountSelector, } from '@selectors'
 import SharedButton from '@shared/SharedButton';
@@ -19,6 +19,17 @@ function Details(props) {
     toggleEmptySessions, withoutEmptySessions, loading, setLoadingStatus = () => { },
   } = props
 
+  useEffect(() => {
+    dispatch(setHistoryAndOptions([]))
+
+    setLoadingStatus(true)
+
+    dispatch(getSessions({
+      active_sort: "time-desc",
+      active_filter: "day",
+    }, () => setLoadingStatus(false)))
+  }, [])
+  
   const dispatch = useDispatch()
 
   const currentAccount = useSelector(currentAccountSelector)

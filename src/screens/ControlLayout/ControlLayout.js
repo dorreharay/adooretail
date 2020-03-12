@@ -6,7 +6,6 @@ import ControlPanel from './components/ControlPanel/ControlPanel'
 import ContentPanel from './components/ContentPanel/ContentPanel'
 
 import Devices from './components/ContentPanel/Pages/Devices/Devices'
-import History from './components/ContentPanel/Pages/History/History'
 import Settings from './components/ContentPanel/Pages/Settings/Settings'
 import Transactions from './components/ContentPanel/Pages/Transactions/Transactions'
 
@@ -23,7 +22,6 @@ function ControlLayout(props) {
       title: 'Історія замовлень',
       iconSource: require('@images/history.png'),
       onPress: () => handleCategoryPress(0),
-      component: <History />,
     },
     {
       index: 1,

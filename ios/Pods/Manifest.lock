@@ -258,6 +258,8 @@ PODS:
     - React-cxxreact (= 0.61.1)
     - React-jsi (= 0.61.1)
     - ReactCommon/jscallinvoker (= 0.61.1)
+  - RNBluetoothEscposPrinter (0.0.5):
+    - React
   - RNCAsyncStorage (1.7.1):
     - React
   - RNCViewpager (1.1.7):
@@ -319,6 +321,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNBluetoothEscposPrinter (from `../node_modules/react-native-bluetooth-escpos-printer`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCViewpager (from `../node_modules/@react-native-community/viewpager`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -402,6 +405,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNBluetoothEscposPrinter:
+    :path: "../node_modules/react-native-bluetooth-escpos-printer"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCViewpager:
@@ -455,6 +460,7 @@ SPEC CHECKSUMS:
   React-RCTText: 81b62b4e7f11531a5154e4daa5617670d5a2d5de
   React-RCTVibration: 8be61459e3749d1fb02cf414edd05b3007622882
   ReactCommon: 4fba5be89efdf0b5720e0adb3d8d7edf6e532db0
+  RNBluetoothEscposPrinter: a16afa2948dd2649beb151b239c62683e07df1be
   RNCAsyncStorage: 44395cb9c7c1523104c2b499eb426ef7aff82bca
   RNCViewpager: d11d720f0c6fbd2024788d09108a9f7abb1fac5a
   RNDeviceInfo: 88099e84466f053bae3f34c307b506738b2b6946

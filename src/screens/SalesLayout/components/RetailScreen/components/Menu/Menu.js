@@ -36,6 +36,14 @@ function Menu(props) {
       }
     },
     {
+      name: 'Девайси', onPress: () => {
+        navigation.navigate('ControlLayout', {
+          screen: 2,
+        })
+        closeMenu()
+      }
+    },
+    {
       name: 'Налаштування',
       onPress: () => {
         navigation.navigate('ControlLayout', {
@@ -44,12 +52,6 @@ function Menu(props) {
         closeMenu()
       }
     },
-    // {
-    //   name: 'Змінити аккаунт', onPress: () => {
-    //     openChangeAccountOverview()
-    //     closeMenu()
-    //   }
-    // },
   ])
 
   const endSession = () => {

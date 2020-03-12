@@ -3,6 +3,7 @@ import { View, Text, } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image'
+import { syncSessions, } from '@requests'
 import styles from './styles'
 
 import { cashKeyboardLayout } from '@keyboards'
@@ -58,7 +59,7 @@ function InputCash(props) {
   }
 
   const handleBackPress = () => {
-    if(endOfSession) {
+    if (endOfSession) {
       navigation.navigate('SalesLayout')
     } else {
       navigation.navigate('Login')
@@ -69,10 +70,12 @@ function InputCash(props) {
     if (endOfSession) {
       try {
         setLoadingStatus(true)
-
-        dispatch(setEndOfSessionStatus(false))
         dispatch(updateCurrentSession({ status: 'end', endCash: currentInput }))
         dispatch(restoreDefaultShift())
+
+        await syncSessions(() => { }, null, 1)
+
+        dispatch(setEndOfSessionStatus(false))
 
         navigation.navigate('Login')
       } catch (e) {
@@ -128,15 +131,18 @@ function InputCash(props) {
 
       <LoginLoader active={loading} />
 
-      <SharedButton
-        style={styles.backButton}
-        onPress={handleBackPress}
-        scale={0.9}
-      >
-        <View style={{ paddingHorizontal: 30, paddingVertical: 20, }}>
-          <Text style={styles.backButtonText}>Назад</Text>
-        </View>
-      </SharedButton>
+
+      {!loading && (
+        <SharedButton
+          style={styles.backButton}
+          onPress={handleBackPress}
+          scale={0.9}
+        >
+          <View style={{ paddingHorizontal: 30, paddingVertical: 20, }}>
+            <Text style={styles.backButtonText}>Назад</Text>
+          </View>
+        </SharedButton>
+      )}
     </View>
   )
 }

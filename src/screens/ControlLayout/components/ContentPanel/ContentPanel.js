@@ -6,11 +6,12 @@ import Carousel from 'react-native-snap-carousel';
 import styles from './styles'
 
 import Header from './Header'
+import History from './Pages/History/History'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 function ContentPanel(props) {
-  const { activeCategory, handleSlideIndex, tabs, navigation, } = props
+  const { activeCategory, handleSlideIndex, tabs, navigation, setLoadingStatus, } = props
 
   const carouselRef = useRef(null)
 
@@ -33,6 +34,10 @@ function ContentPanel(props) {
           />
           <Text style={styles.headingText}>{item.title}</Text>
         </View> */}
+        {index === 0 && (
+          <History navigation={navigation} setLoadingStatus={setLoadingStatus} />
+        )}
+
         {item.component}
       </Fragment>
     )
