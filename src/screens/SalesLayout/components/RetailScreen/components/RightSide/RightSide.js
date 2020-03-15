@@ -3,6 +3,8 @@ import { Text, View, Image, TextInput, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
 import { syncSessions, } from '@requests'
+import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
+import DeviceSettings from 'react-native-device-settings';
 import _ from 'lodash'
 import styles from './styles'
 
@@ -38,6 +40,7 @@ function RightSide(props) {
   const currentAccount = useSelector(currentAccountSelector)
 
   const [searchTerm, setSearchTerm] = useState('')
+  const [devicesLength, setDevicesLength] = useState(0)
 
   const loadAgain = async () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
@@ -77,6 +80,24 @@ function RightSide(props) {
     await API.sendMessage('nuckles')
   }
 
+  const getPairedDevicesLength = async () => {
+    try {
+      const scanResult = await BluetoothManager.scanDevices()
+
+      const devices = JSON.parse(scanResult)
+
+      setDevicesLength(devices.paired.length)
+    } catch (error) {
+      setDevicesLength(0)
+    }
+  }
+
+  useEffect(() => {
+    // setInterval(() => {
+    //   getPairedDevicesLength()
+    // }, 5000)
+  }, [])
+
   return (
     <View style={styles.container}>
       <View style={styles.toolsBar}>
@@ -108,13 +129,15 @@ function RightSide(props) {
         </SharedButton>
 
         {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled && (
-          <SharedButton onPress={() => navigation.navigate('ControlLayout', { screen: 2, })} scale={0.85}>
+          <SharedButton onPress={() => {
+            DeviceSettings.bluetooth();
+          }} scale={0.85}>
             <View style={styles.printer}>
               <Image style={{ width: 17, height: 17, }} source={require('@images/tprinter.png')} />
 
-              <View style={styles.printersAmount}>
-                <Text style={styles.printersAmountText}>1</Text>
-              </View>
+              {/* <View style={styles.printersAmount}>
+                <Text style={styles.printersAmountText}>{devicesLength}</Text>
+              </View> */}
             </View>
           </SharedButton>
         )}

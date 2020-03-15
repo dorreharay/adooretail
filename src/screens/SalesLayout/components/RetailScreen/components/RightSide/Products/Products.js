@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import _ from 'lodash'
 import styles from './styles'
 
-import { addProductQuantity } from '@reducers/TempReducer' 
+import { addProductQuantity } from '@reducers/TempReducer'
 
 import { deviceWidth } from '@dimensions'
 
@@ -14,7 +14,7 @@ function Products(props) {
   const { products, searchTerm, paymentModalVisible, } = props;
 
   const scrollView = useRef(null)
-  
+
   const dispatch = useDispatch()
 
   const layout = useSelector(state => state.orders.layout)
@@ -25,7 +25,7 @@ function Products(props) {
 
 
   useMemo(() => {
-    if(!paymentModalVisible) {
+    if (!paymentModalVisible) {
       setCategoryVisibility(false)
     }
   }, [paymentModalVisible])
@@ -190,16 +190,20 @@ function Products(props) {
                         activeOpacity={0.85}
                       >
                         {rowItem.color && (
-                          <LinearGradient style={styles.variant} colors={[rowItem.color, rowItem.shadow]}>
+                          <LinearGradient
+                            style={styles.variant}
+                            colors={[rowItem.color, rowItem.shadow]}
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                          >
                             <View style={styles.variantPrice}>
                               <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
                             </View>
-                            <Text 
+                            <Text
                               numberOfLines={4}
                               textBreakStrategy='balanced'
                               ellipsizeMode='tail'
                               style={styles[`variantText${layout}`]}
-                              // selectionColor='#FFFFFF'
+                            // selectionColor='#FFFFFF'
                             >
                               {rowItem.title}
                             </Text>
