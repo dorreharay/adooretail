@@ -52,11 +52,11 @@ function Menu(props) {
         closeMenu()
       }
     },
-    {
-      name: 'Редагувати аккаунт', onPress: () => {
-        openChangeAccountOverview()
-      }
-    },
+    // {
+    //   name: 'Редагувати аккаунт', onPress: () => {
+    //     openChangeAccountOverview()
+    //   }
+    // },
   ])
 
   const endSession = () => {

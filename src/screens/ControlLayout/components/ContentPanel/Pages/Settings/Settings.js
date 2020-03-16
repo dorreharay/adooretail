@@ -39,51 +39,41 @@ const Settings = () => {
     <ScrollView style={styles.container}>
       <View style={{ alignSelf: 'flex-start', }}>
         <Text style={styles.settingsTitle}>Активні цехи</Text>
+        <SwitchWithTitle
+          title={'Каса'}
+          disabled
+          value={currentAccount.settings.available_teams.paydesk}
+          onValueChange={(value) => updateSettings({ paydesk: value }, 'available_teams')}
+        />
 
-        {currentAccount && currentAccount.settings && currentAccount.settings.available_teams && currentAccount.settings.available_teams.paydesk && (
-          <SwitchWithTitle
-            title={'Каса'}
-            disabled
-            value={currentAccount.settings.available_teams.paydesk}
-            onValueChange={(value) => updateSettings({ paydesk: value }, 'available_teams')}
-          />
-        )}
-
-
-        {currentAccount && currentAccount.settings && currentAccount.settings.available_teams && currentAccount.settings.available_teams.kitchen && (
-          <SwitchWithTitle
-            title={'Кухня'}
-            disabled
-            value={currentAccount.settings.available_teams.kitchen}
-            onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
-          />
-        )}
+        <SwitchWithTitle
+          title={'Кухня'}
+          disabled
+          value={currentAccount.settings.available_teams.kitchen}
+          onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
+        />
       </View>
 
 
       <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
         <Text style={styles.settingsTitle}>Використовувати принтер чеків</Text>
 
-        {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled && (
-          <SwitchWithTitle
-            title={'Увімкнути'}
-            // disabled
-            value={currentAccount.settings.printer_enabled}
-            onValueChange={(value) => updateSettings(value, 'printer_enabled')}
-          />
-        )}
+        <SwitchWithTitle
+          title={'Увімкнути'}
+          // disabled
+          value={currentAccount.settings.printer_enabled}
+          onValueChange={(value) => updateSettings(value, 'printer_enabled')}
+        />
       </View>
 
       <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
         <Text style={styles.settingsTitle}>Перевірка робочих годин</Text>
 
-        {currentAccount && currentAccount.settings && currentAccount.settings.shifts && currentAccount.settings.shifts.enabled && (
-          <SwitchWithTitle
-            title={'Увімкнути'}
-            value={currentAccount.settings.shifts.enabled}
-            onValueChange={(value) => updateSettings({ enabled: value }, 'shifts')}
-          />
-        )}
+        <SwitchWithTitle
+          title={'Увімкнути'}
+          value={currentAccount.settings.shifts.enabled}
+          onValueChange={(value) => updateSettings({ enabled: value }, 'shifts')}
+        />
       </View>
 
       <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
