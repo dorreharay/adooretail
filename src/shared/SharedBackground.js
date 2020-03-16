@@ -1,51 +1,56 @@
 import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text, Animated, Platform, } from 'react-native'
+import { View, Image, StyleSheet, Text, Animated, TouchableOpacity, Alert, } from 'react-native'
+import { useSelector, useDispatch, } from 'react-redux';
 import FastImage from 'react-native-fast-image'
 import Logo from '@images/logo-big.svg'
 
-import LoginLoader from '@shared/LoginLoader';
+import SharedButton from '@shared/SharedButton';
 
-function SharedBackground({ source, children, loading, opacity, mainWrapper, navigation, }) {
+function SharedBackground({ image, children, }) {
   const [loadEnd, setLoadEnd] = useState(false)
-  const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
+
+  const currentRoute = useSelector(state => state.temp.currentRoute)
+
+  const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(image || 0)
+  const [backgrounds] = useState([
+    require('@images/background-adv7.png'),
+    require('@images/background-adv8.png'),
+    require('@images/background-adv9.png'),
+    require('@images/background-adv10.png'),
+    require('@images/background-adv11.png'),
+    // require('@images/background-adv12.png'),
+  ])
+
+  const changeBackgroudIndex = () => {
+    let index = null
+
+    if (activeBackgroundIndex < (backgrounds.length - 1)) {
+      index = activeBackgroundIndex + 1
+    } else {
+      index = 0
+    }
+
+    setActiveBackgroundIndex(index)
+  }
 
   return (
     <View style={styles.container}>
-      {loading && !mainWrapper && (
-        <>
-          {!loadEnd && <Animated.View style={[styles.wrapper, { opacity, backgroundColor: '#35302C', zIndex: 10000 }]} />}
-          <AnimatedFastImage
-            style={[styles.wrapper, { opacity }]}
-            source={source}
-            onLoadEnd={() => setLoadEnd(true)}
-          />
-          <LoginLoader active={true} opacity={opacity} />
-        </>
-      )}
-
       <View style={styles.container}>
+        {currentRoute !== 4 && currentRoute !== 5 && (
+          <SharedButton
+            style={styles.logoContainer}
+            onPress={changeBackgroudIndex}
+            scale={0.85}
+          >
+            <Logo width={65} height={65} />
+          </SharedButton>
+        )}
+
+
         {children}
       </View>
 
-      <Image style={{ width: '100%', height: '101%', top: -1, zIndex: 10 }} source={source}></Image>
-      <Animated.View style={styles.logoContainer}>
-        {/* <FastImage
-          style={styles.logo}
-          source={require('@images/logo-big.svg')}
-        /> */}
-        <Logo width={65} height={65} />
-      </Animated.View>
-
-      {/* {true && (
-        <View style={styles.navButtons}>
-          <TouchableOpacity style={styles.forwardButton} onPress={() => navigation.navigate('InputEmployee')} activeOpacity={1}>
-            <Image style={{ width: 18, height: 18, }} source={require('@images/erase.png')} fadeDuration={0}></Image>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('InputEmployee')} activeOpacity={1}>
-            <Image style={{ width: 18, height: 18, }} source={require('@images/erase.png')} fadeDuration={0}></Image>
-          </TouchableOpacity>
-        </View>
-      )} */}
+      <FastImage style={{ width: '100%', height: '101%', top: -1, zIndex: 10 }} source={backgrounds[activeBackgroundIndex]} />
     </View>
   )
 }

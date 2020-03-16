@@ -1,15 +1,18 @@
-import React, { useRef, useState, useEffect, } from 'react'
-import { Text, View, Image, TextInput, } from 'react-native'
+import React, { useRef, useState, useEffect, useMemo, } from 'react'
+import { Text, View, Image, TextInput, Platform, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
 import { syncSessions, } from '@requests'
+import * as Progress from 'react-native-progress';
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
 import DeviceSettings from 'react-native-device-settings';
+import { validateSessionRoutine, } from '@requests'
 import _ from 'lodash'
 import styles from './styles'
 
 import { setLayout } from '@reducers/OrdersReducer'
 import { currentAccountSelector, } from '@selectors'
+import { performPrinterScanAndConnect } from '@printer'
 
 import SharedButton from '@shared/SharedButton';
 import Products from './Products/Products'
@@ -38,9 +41,11 @@ function RightSide(props) {
   const layout = useSelector(state => state.orders.layout)
   const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const currentAccount = useSelector(currentAccountSelector)
+  const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
 
   const [searchTerm, setSearchTerm] = useState('')
   const [devicesLength, setDevicesLength] = useState(0)
+  const [printerLoading, setPrinterLoading] = useState(false)
 
   const loadAgain = async () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
@@ -54,6 +59,11 @@ function RightSide(props) {
   }
 
   useEffect(() => {
+    // throttleParams.current(() => {
+    //   console.log('aaaaa')
+    // })
+
+    // validateSessionRoutine()
     loadProducts(currentAccountToken)
   }, [currentAccountToken])
 
@@ -80,23 +90,25 @@ function RightSide(props) {
     await API.sendMessage('nuckles')
   }
 
-  const getPairedDevicesLength = async () => {
+  const updatePairedDevices = async () => {
+    if(paired.length === 0) {
+      navigation.navigate('ControlLayout', {
+        screen: 2,
+      })
+
+      return
+    }
+
+    setPrinterLoading(true)
+
     try {
-      const scanResult = await BluetoothManager.scanDevices()
-
-      const devices = JSON.parse(scanResult)
-
-      setDevicesLength(devices.paired.length)
+      await performPrinterScanAndConnect()
     } catch (error) {
-      setDevicesLength(0)
+      console.log('Printer scan error', error)
+    } finally {
+      setPrinterLoading(false)
     }
   }
-
-  useEffect(() => {
-    // setInterval(() => {
-    //   getPairedDevicesLength()
-    // }, 5000)
-  }, [])
 
   return (
     <View style={styles.container}>
@@ -129,15 +141,23 @@ function RightSide(props) {
         </SharedButton>
 
         {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled && (
-          <SharedButton onPress={() => {
-            DeviceSettings.bluetooth();
-          }} scale={0.85}>
+          <SharedButton onPress={updatePairedDevices} scale={0.85}>
             <View style={styles.printer}>
               <Image style={{ width: 17, height: 17, }} source={require('@images/tprinter.png')} />
 
-              {/* <View style={styles.printersAmount}>
-                <Text style={styles.printersAmountText}>{devicesLength}</Text>
-              </View> */}
+              {printerLoading ? (
+                <View style={styles.printersAmount}>
+                  <Progress.Circle
+                    endAngle={0.7}
+                    size={10} color={'#343434'}
+                    borderWidth={1.2} indeterminate={true}
+                  />
+                </View>
+              ) : (
+                  <View style={styles.printersAmount}>
+                    <Text style={styles.printersAmountText}>{paired.length}</Text>
+                  </View>
+                )}
             </View>
           </SharedButton>
         )}

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef, Suspense, } from 'react'
+import React, { Fragment, useState, useEffect, useRef, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
 import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
@@ -6,11 +6,13 @@ import Carousel from 'react-native-snap-carousel';
 import styles from './styles'
 
 import Header from './Header'
+import History from './Pages/History/History'
+import Devices from './Pages/Devices/Devices'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 function ContentPanel(props) {
-  const { activeCategory, handleSlideIndex, tabs, navigation, } = props
+  const { activeCategory, handleSlideIndex, tabs, navigation, setLoadingStatus, setActiveCategory, } = props
 
   const carouselRef = useRef(null)
 
@@ -23,6 +25,16 @@ function ContentPanel(props) {
     }
   }, [activeCategory])
 
+  useEffect(() => {
+    if (carouselRef.current) {
+      console.log('carouselRef.current', carouselRef.current, navigation.state.params)
+      if (navigation.state.params) {
+        setActiveCategory({ index: navigation.state.params.screen, animated: false, })
+        // carouselRef.current.snapToItem(navigation.state.params.screen, false)
+      }
+    }
+  }, [navigation, carouselRef.current])
+
   const _renderItem = ({ item, index }) => {
     return (
       <Fragment>
@@ -33,6 +45,13 @@ function ContentPanel(props) {
           />
           <Text style={styles.headingText}>{item.title}</Text>
         </View> */}
+        {index === 0 && (
+          <History navigation={navigation} setLoadingStatus={setLoadingStatus} />
+        )}
+        {index === 2 && (
+          <Devices navigation={navigation} activeCategory={activeCategory} />
+        )}
+
         {item.component}
       </Fragment>
     )

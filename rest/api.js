@@ -20,6 +20,9 @@ const API = {
   async requestAccount(payload) {
     return await asyncAxiosCall('/user/requestAccount', payload)
   },
+  async getSessions(payload) {
+    return await asyncAxiosCall(`/user/getSessions/${payload.token}`, payload)
+  },
 }
 
 export default API

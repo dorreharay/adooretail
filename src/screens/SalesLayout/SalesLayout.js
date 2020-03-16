@@ -1,8 +1,10 @@
 import React, { useRef, useState, useMemo, Fragment, } from 'react';
-import { Text, View, Animated, Easing, TouchableOpacity, } from 'react-native';
+import { Text, View, Animated, Easing, TouchableOpacity, Alert, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Toast, { DURATION } from 'react-native-easy-toast'
+import FastImage from 'react-native-fast-image';
 import Swiper from 'react-native-swiper'
+import _ from 'lodash'
 import styles from './styles'
 
 import { currentAccountSelector } from '@selectors'
@@ -67,6 +69,10 @@ function SalesLayout({ navigation, }) {
     dispatch(setProducts(newProducts))
   }
 
+  const addAccount = () => {
+    navigation.navigate('NoAccount')
+  }
+
   useMemo(() => {
     if (products) {
       updateLayout(products.flat(), layout)
@@ -96,35 +102,50 @@ function SalesLayout({ navigation, }) {
         }}
       >
         {accounts.map((account, index) => (
-          <Fragment key={index}>
-            <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
-              {accountWrapperVisibile && (
-                <Fragment>
-                  <View style={{ position: 'absolute', top: -60 }}>
-                    <Text style={styles.accountHeading}>{account.business_name}</Text>
-                  </View>
-                </Fragment>
-              )}
-
-              <RetailScreen
-                toastRef={toastRef}
-                updateLayout={updateLayout}
-                layout={layout}
-                navigation={navigation}
-                openChangeAccountOverview={openChangeAccountOverview}
-                account={account} updateLayout={updateLayout}
-                setModalStatus={() => { }}
-              />
-
-              {accountWrapperVisibile && (
-                <TouchableOpacity
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                  onPress={() => closeChangeAccountOverview(account, index, account.token)}
-                  activeOpacity={1}
+          _.isEmpty(account) ? (
+            <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }], borderRadius: 2, backgroundColor: '#FFFFFF11' }]}>
+              <TouchableOpacity
+                style={styles.addAccountSlide}
+                onPress={addAccount}
+                activeOpacity={1}
+              >
+                <FastImage
+                  style={{ width: deviceHeight * 0.1, height: deviceHeight * 0.1, }}
+                  source={require('@images/plus_icon.png')}
                 />
-              )}
+              </TouchableOpacity>
             </Animated.View>
-          </Fragment>
+          ) : (
+              <Fragment key={index}>
+                <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
+                  {accountWrapperVisibile && (
+                    <Fragment>
+                      <View style={{ position: 'absolute', top: -60 }}>
+                        <Text style={styles.accountHeading}>{account.business_name}</Text>
+                      </View>
+                    </Fragment>
+                  )}
+
+                  <RetailScreen
+                    toastRef={toastRef}
+                    updateLayout={updateLayout}
+                    layout={layout}
+                    navigation={navigation}
+                    openChangeAccountOverview={openChangeAccountOverview}
+                    account={account} updateLayout={updateLayout}
+                    setModalStatus={() => { }}
+                  />
+
+                  {accountWrapperVisibile && (
+                    <TouchableOpacity
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                      onPress={() => closeChangeAccountOverview(account, index, account.token)}
+                      activeOpacity={1}
+                    />
+                  )}
+                </Animated.View>
+              </Fragment>
+            )
         ))}
       </Swiper>
 

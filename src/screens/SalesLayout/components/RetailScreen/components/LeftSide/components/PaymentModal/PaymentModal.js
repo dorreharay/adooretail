@@ -95,13 +95,13 @@ const PaymentModal = (props) => {
 
     if (!payload) return
 
-    timerRef2.current = setTimeout(() => {
-      dispatch(syncReceipt(payload))
-    }, 300)
-
     if (currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
       await printReceipt(payload)
     }
+
+    timerRef2.current = setTimeout(() => {
+      dispatch(syncReceipt(payload))
+    }, 300)
   }
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)
@@ -135,7 +135,7 @@ const PaymentModal = (props) => {
   useMemo(() => {
     setStatus(initialStatuses.waiting)
 
-    if (currentAccount && !currentAccount.settings.default_payment_types.unset) {
+    if (currentAccount && currentAccount.settings && !currentAccount.settings.default_payment_types.unset) {
       if (currentAccount.settings.default_payment_types.cash) {
         selectPType(pTypes[0])
       } else {

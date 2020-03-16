@@ -5,7 +5,7 @@ import { setModalStatus } from '@reducers/TempReducer'
 import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } from '@dateFormatter'
 import { START, END, NO_TIME } from '@statuses'
 
-export async function syncSessions(callback, newLocalSessions) {
+export async function syncSessions(callback, newLocalSessions, customOffset) {
   if (!store) return
 
   const currentStore = store.getState()
@@ -24,9 +24,11 @@ export async function syncSessions(callback, newLocalSessions) {
 
   const { localSessions, settings, passcode } = currentAccount
 
+  console.log('currentAccount', currentAccount)
+
   try {
     const data = await API.synchronizeSessions({
-      localSessions: getLastItems(newLocalSessions ? newLocalSessions : localSessions, 5),
+      localSessions: getLastItems(newLocalSessions ? newLocalSessions : localSessions, customOffset ? customOffset : 5),
       newSettings: settings,
     }, currentAccountToken)
 

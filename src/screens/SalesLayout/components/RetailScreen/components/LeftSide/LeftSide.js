@@ -159,7 +159,7 @@ function LeftSide(props) {
         <Receipt />
       </ScrollView>
 
-      {currentAccount.settings.available_teams && currentAccount.settings.available_teams.kitchen ? (
+      {currentAccount && currentAccount.settings && currentAccount.settings.available_teams && currentAccount.settings.available_teams.kitchen ? (
         <View style={{ width: '100%', paddingHorizontal: '7%', flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity
             onPress={() => changePaymentModalState(true)}

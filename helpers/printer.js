@@ -1,5 +1,6 @@
 import { Alert, } from 'react-native'
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
+import { setBluetoothDevices } from '@reducers/TempReducer'
 import store from '@store'
 
 const printOptions = {
@@ -99,7 +100,7 @@ export async function printReceipt(receipt, address) {
     await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
     await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
   } catch (error) {
-    Alert.alert(error.message)
+    Alert.alert('Принтер не налаштовано')
     console.log(error.message)
   }
 }
@@ -171,4 +172,47 @@ const performColumnPrint = async (values) => {
     values,
     printOptions
   );
+}
+
+export async function scanDevices() {
+  const dispatch = store.dispatch
+
+  try {
+    const scanResult = await BluetoothManager.scanDevices()
+
+    const devices = JSON.parse(scanResult)
+  
+    const found = devices.found
+    const paired = devices.paired
+  
+    dispatch(setBluetoothDevices(devices))
+  
+    return { found, paired } 
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function performPrinterScanAndConnect() {
+  const { found, paired } = await scanDevices()
+
+
+  if(paired.length > 0) {
+    await BluetoothManager.connect(paired[0].address)
+  } else {
+    // if(found.length > 0) {
+    //   await BluetoothManager.connect(found[0].address)
+    // }
+  }
+}
+
+export async function connectToDevice(address) {
+  try {
+    await BluetoothManager.connect(address)
+
+    await scanDevices()
+  } catch (error) {
+    Alert.alert(error.message)
+    console.log(error.message)
+  }
 }

@@ -6,7 +6,6 @@ import ControlPanel from './components/ControlPanel/ControlPanel'
 import ContentPanel from './components/ContentPanel/ContentPanel'
 
 import Devices from './components/ContentPanel/Pages/Devices/Devices'
-import History from './components/ContentPanel/Pages/History/History'
 import Settings from './components/ContentPanel/Pages/Settings/Settings'
 import Transactions from './components/ContentPanel/Pages/Transactions/Transactions'
 
@@ -23,7 +22,6 @@ function ControlLayout(props) {
       title: 'Історія замовлень',
       iconSource: require('@images/history.png'),
       onPress: () => handleCategoryPress(0),
-      component: <History />,
     },
     {
       index: 1,
@@ -37,7 +35,6 @@ function ControlLayout(props) {
       title: 'Девайси',
       iconSource: require('@images/printer.png'),
       onPress: () => handleCategoryPress(2),
-      component: <Devices />,
     },
     {
       index: 3,
@@ -57,12 +54,6 @@ function ControlLayout(props) {
   ])
 
   const [activeCategory, setActiveCategory] = useState({ index: 1, animated: true })
-
-  useMemo(() => {
-    if (navigation.state.params) {
-      setActiveCategory({ index: navigation.state.params.screen, animated: false, })
-    }
-  }, [navigation])
 
   // -deviceWidth * 0.2
   const openPanel = () => {
@@ -112,6 +103,7 @@ function ControlLayout(props) {
         navigation={navigation}
         activeCategory={activeCategory}
         handleCategoryPress={handleCategoryPress}
+        setActiveCategory={setActiveCategory}
       />
     </Animated.View>
   )

@@ -57,8 +57,10 @@ const Settings = () => {
 
       <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
         <Text style={styles.settingsTitle}>Використовувати принтер чеків</Text>
+
         <SwitchWithTitle
           title={'Увімкнути'}
+          // disabled
           value={currentAccount.settings.printer_enabled}
           onValueChange={(value) => updateSettings(value, 'printer_enabled')}
         />
@@ -66,6 +68,7 @@ const Settings = () => {
 
       <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
         <Text style={styles.settingsTitle}>Перевірка робочих годин</Text>
+
         <SwitchWithTitle
           title={'Увімкнути'}
           value={currentAccount.settings.shifts.enabled}

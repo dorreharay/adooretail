@@ -2,12 +2,12 @@ import React, { useRef, useState, useEffect, } from 'react'
 import { View, Text, Dimensions, StyleSheet, Alert } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
 import _ from 'lodash'
-import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
 import UserInactivity from 'react-native-user-inactivity';
 import BackgroundTimer from 'react-native-user-inactivity/lib/BackgroundTimer';
+import AnimatedSplash from "react-native-animated-splash-screen";
 
 import { syncSessions, validateSessionRoutine, } from '@requests'
 
@@ -22,8 +22,6 @@ import SessionModal from '../screens/SalesLayout/components/SessionModal/Session
 function AppSessions(props) {
   const {
     children, navigatorRef, NavigationService,
-    changeInitialLoadingWrapperOpacity,
-    initialLoadingOpacity, initialLoadingVisibility,
   } = props
 
   const timerRef1 = useRef(null)
@@ -44,21 +42,12 @@ function AppSessions(props) {
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
   const [prevNetState, setPrevNetState] = useState(false)
-
-  // useEffect(() => {
-  //   if (currentAccount) {
-  //     if (currentAccount.needToReenter) {
-  //       NavigationService.setTopLevelNavigator(navigatorRef.current)
-  //       NavigationService.navigate('Login')
-  //     }
-  //   }
-  // }, [currentAccount])
+  const [initialLoadingVisibility, setInitialLoadingVisibility] = useState(false)
 
   const synchronizeSessions = async () => {
     if (accounts.length !== 0) {
       await syncSessions(() => {
-        changeInitialLoadingWrapperOpacity(false)
-        SplashScreen.hide();
+        setInitialLoadingVisibility(true)
       })
     }
   }
@@ -89,22 +78,18 @@ function AppSessions(props) {
         NavigationService.navigate(screen)
 
         if (accounts.length === 0) {
-          changeInitialLoadingWrapperOpacity(false)
-          SplashScreen.hide();
+          setInitialLoadingVisibility(true)
         }
 
         try {
           await synchronizeSessions()
         } catch (error) {
-          changeInitialLoadingWrapperOpacity(false)
-          SplashScreen.hide();
+          setInitialLoadingVisibility(true)
         }
 
-        // Orientation.lockToLandscapeLeft();
-
         callback()
-      }, 310)
-    }, 300)
+      }, 600)
+    }, 500)
   }
 
   useEffect(() => {
@@ -115,29 +100,24 @@ function AppSessions(props) {
   }, [])
 
   useEffect(() => {
-    if (initialLoadingVisibility) {
-      if (accounts.length === 0) {
-        gotoScreen('NoAccount', () => dispatch(setCurrentRoute(0)))
+    if (accounts.length === 0) {
+      gotoScreen('NoAccount', () => dispatch(setCurrentRoute(0)))
+
+      return
+    }
+
+    if (!currentSession.endTime && currentSession.length !== 0) {
+      if (currentAccount.needToReenter) {
+        setInitialLoadingVisibility(true)
 
         return
       }
 
-      if (!currentSession.endTime && currentSession.length !== 0) {
-        if (currentAccount.needToReenter) {
-          // Orientation.lockToLandscapeLeft();
-
-          changeInitialLoadingWrapperOpacity(false)
-          SplashScreen.hide();
-
-          return
-        }
-
-        gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
-      } else {
-        synchronizeSessions()
-      }
+      gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
+    } else {
+      synchronizeSessions()
     }
-  }, [accounts])
+  }, [])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width
@@ -189,8 +169,6 @@ function AppSessions(props) {
 
   const screenProps = {
     initialLoadingVisibility,
-    initialLoadingOpacity,
-    changeInitialLoadingWrapperOpacity,
   }
 
   const withProps = React.Children.map(children, child =>
@@ -213,16 +191,16 @@ function AppSessions(props) {
         }}
         style={{ flex: 1, }}
       > */}
-      <SharedBackground
-        loading={initialLoadingVisibility}
-        opacity={initialLoadingOpacity}
-        source={require('@images/background-adv7.png')}
-        mainWrapper
+
+      <AnimatedSplash
+        isLoaded={initialLoadingVisibility}
+        logoImage={require("@images/splash_logo.png")}
+        backgroundColor={"#FFFFFF"}
+        logoHeight={250}
+        logoWidth={250}
       >
         <SharedBackground
-          loading={initialLoadingVisibility}
-          opacity={initialLoadingOpacity}
-          source={require('@images/background-adv7.png')}
+          image={0}
           navigation={NavigationService}
         >
           <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
@@ -240,9 +218,7 @@ function AppSessions(props) {
             navigatorRef={navigatorRef}
           />
         )}
-      </SharedBackground>
-      {/* </UserInactivity> */}
-
+      </AnimatedSplash>
     </>
   )
 }

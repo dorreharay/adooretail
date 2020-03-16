@@ -29,7 +29,7 @@ function MainApp(props) {
           navigation={navigation}
           screenProps={screenProps}
           onNavigationStateChange={(prev, state) => {
-            // dispatch(setCurrentRoute(state.index))
+            dispatch(setCurrentRoute(state.index))
           }}
         />
       </AppSessions>

@@ -21,13 +21,21 @@ function NoAccount(props) {
   const accounts = useSelector(state => state.user.accounts)
   const currentAccount = useSelector(state => state.user.currentAccount)
 
-  const [contentOpacity] = useState(new Animated.Value(1))
-  const [successOpacity] = useState(new Animated.Value(0))
+  const [contentOpacity, setContentOpacity] = useState(new Animated.Value(1))
+  const [successOpacity, setSuccessOpacity] = useState(new Animated.Value(0))
   const [selectedAccount, selectAccount] = useState({ id: false, })
   const [showConfigureAccount, setConfigureAccountState] = useState(true)
   const [loading, setLoadingStatus] = useState(false)
   const [contentVisible, setContentVisibility] = useState(true)
   const [successVisible, setSuccessVisibility] = useState(false)
+
+  const reset = () => {
+    setContentVisibility(true)
+    setSuccessVisibility(false)
+    setLoadingStatus(false)
+    setContentOpacity(new Animated.Value(1))
+    setSuccessOpacity(new Animated.Value(0))
+  }
 
   const invokeSuccessAnimation = (callback) => {
     Animated.timing(
@@ -51,6 +59,10 @@ function NoAccount(props) {
       setTimeout(() => {
         navigation.navigate('Login')
         callback()
+
+        setTimeout(() => {
+          reset()
+        }, 300)
       }, 1000)
     }, 1000)
   }
@@ -91,7 +103,12 @@ function NoAccount(props) {
               duration: 600,
             },
           ).start()
-          setTimeout(() => setContentVisibility(true), 600)
+          setTimeout(() => {
+            setContentVisibility(true)
+            setTimeout(() => {
+              reset()
+            }, 300)
+          }, 600)
         }, 600)
       }, 1000)
     }, 600)

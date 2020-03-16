@@ -12,6 +12,7 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     width: listWidth,
+    marginTop: 30,
   },
   listHeading: {
     width: listWidth,
@@ -19,7 +20,7 @@ const base = {
   },
   listHeadingText: {
     color: '#343434',
-    fontSize: 15,
+    fontSize: 20,
     fontFamily: GILROY_MEDIUM,
   },
   pairedList: {
@@ -37,7 +38,7 @@ const base = {
   },
   pairedText: {
     color: '#343434',
-    fontSize: 17,
+    fontSize: 20,
     fontFamily: GILROY_REGULAR,
   },
   pairedButton: {
@@ -68,7 +69,7 @@ const base = {
   },
   foundText: {
     color: '#343434',
-    fontSize: 17,
+    fontSize: 20,
     fontFamily: GILROY_REGULAR,
   },
   foundButton: {
@@ -98,7 +99,7 @@ const base = {
     fontFamily: GILROY_REGULAR,
   },
   emptyText: {
-    marginVertical: 5,
+    marginVertical: 15,
     color: '#343434',
     fontSize: 13,
     fontFamily: GILROY_REGULAR,

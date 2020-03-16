@@ -1,5 +1,7 @@
 import { getFormattedDate, } from '@dateFormatter'
 import { syncSessions, } from '@requests'
+import _ from 'lodash'
+import API from '../rest/api'
 
 const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
@@ -18,6 +20,7 @@ const SET_SETTINGS = 'SET_SETTINGS';
 const ADD_ACCOUNT = 'ADD_ACCOUNT';
 const SAVE_TRANSACTION = 'SAVE_TRANSACTION';
 const SET_NEED_TO_REENTER = 'SET_NEED_TO_REENTER';
+const SET_HISTORY = 'SET_HISTORY'
 
 const initialState = {
   token: '',
@@ -62,6 +65,44 @@ function saveLocalReceipt(payload) {
     type: SAVE_LOCAL_RECEIPT,
     payload
   }
+}
+
+export function setHistoryAndOptions(payload, options) {
+  return {
+    type: SET_HISTORY,
+    payload,
+    options,
+  }
+}
+
+export function getSessions(changedOptions, callback) {
+  return async function(dispatch, getState) {
+    try {
+      const store = getState()
+
+      const { accounts, currentAccountIndex, currentAccountToken, } = store.user
+
+      const currentAccount = accounts[currentAccountIndex]
+
+      const payload = {
+        offset: changedOptions.offset ? changedOptions.offset === 'onemore' ? currentAccount.historyOptions.offset + 1 : changedOptions.active_filter ? 1 : changedOptions.offset : currentAccount.historyOptions.offset,
+        items_per_page: changedOptions.items_per_page || currentAccount.historyOptions.items_per_page,
+        active_sort: changedOptions.active_sort || currentAccount.historyOptions.active_sort,
+        active_filter: changedOptions.active_filter || currentAccount.historyOptions.active_filter,
+      }
+
+      const data = await API.getSessions({
+        token: currentAccountToken,
+        ...payload,
+      })
+
+      dispatch(setHistoryAndOptions(data, payload))
+
+      callback()
+    } catch (error) {
+      console.log(error)
+    }
+  };
 }
 
 export function syncReceipt(receipt) {
@@ -216,10 +257,28 @@ const ACTION_HANDLERS = {
       products: [],
       passcodes: client_data.passcodes,
       needToReenter: false,
+      history: [],
+      historyOptions: {
+        offset: 1,
+        items_per_page: 30,
+        active_filter: 'day',
+        active_sort: 'time-desc',
+      }
     }
+
+    // let final = []
+
+    // if(accounts.length === 0) {
+    //   final = [...accounts, ...[payload, {}]]
+    // } else {
+    //   const temp = [...accounts, payload].filter(item => !_.isEmpty(item))
+
+    //   final = [...temp, {}]
+    // }
 
     return {
       ...state,
+      // accounts: final,
       accounts: [...accounts, payload],
       currentAccountIndex: [...accounts, {}].length - 1,
       currentAccountToken: data._id,
@@ -258,6 +317,15 @@ const ACTION_HANDLERS = {
         return item
       }
     })
+
+    return { ...state, accounts: newAccounts, }
+  },
+  [SET_HISTORY]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+    const data = action.payload
+    const options = action.options
+
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, history: data, historyOptions: options ? options : ({ ...item.historyOptions, offset: 1, }) }) : item)
 
     return { ...state, accounts: newAccounts, }
   },

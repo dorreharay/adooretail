@@ -63,13 +63,16 @@ function Login(props) {
   }
 
   const validateDeviceID = async (enteredPinCode) => {
+    if (!currentAccount || !currentAccount.registered_device_ids) {
+      navigation.navigate('NoAccount')
+      resetState()
+
+      return
+    }
+
     const { registered_device_ids, passcodes } = currentAccount
 
     setLoadingStatus(true)
-
-    if (!registered_device_ids) {
-      navigation.navigate('NoAccount')
-    }
 
     try {
       const deviceId = await DeviceInfo.getUniqueId();

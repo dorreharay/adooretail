@@ -1,40 +1,14 @@
-import React, { useState, useEffect, useRef, } from 'react'
-import { Animated, } from 'react-native'
+import React, { useState, } from 'react'
 import _ from 'lodash'
-import Orientation from 'react-native-orientation';
+import AnimatedSplash from "react-native-animated-splash-screen";
 
-function AppLoading({ children, }){
-  const [initialLoadingOpacity] = useState(new Animated.Value(1))
-  const [initialLoadingVisibility, setInitialLoadingVisibility] = useState(true)
-
-  const timerRef = useRef(null)
-
-  useEffect(() => {
-    // Orientation.lockToLandscape();
-
-    return () => {
-      clearTimeout(timerRef.current)
-    }
-  }, [])
-
-  const changeInitialLoadingWrapperOpacity = (visible) => {
-    Animated.timing(
-      initialLoadingOpacity,
-      {
-        toValue: visible ? 1 : 0,
-        duration: 800,
-        useNativeDriver: true,
-      },
-    ).start()
-    timerRef.current = setTimeout(() => setInitialLoadingVisibility(false), 800)
-  }
+function AppLoading({ children, }) {
+  const [initialLoadingVisibility, setInitialLoadingVisibility] = useState(false)
 
   const withProps = React.Children.map(children, child =>
-    React.cloneElement(child, { 
-      changeInitialLoadingWrapperOpacity,
-      initialLoadingOpacity,
+    React.cloneElement(child, {
       initialLoadingVisibility,
-      changeInitialLoadingWrapperOpacity,
+      setInitialLoadingVisibility,
     })
   );
 
