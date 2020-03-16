@@ -101,7 +101,7 @@ function Details(props) {
     transactionsIncome = transactionsIncome.reduce((accumulator, currentValue) => accumulator + (+currentValue), false)
 
     return { todayCardSum, todayCashSum, transactionsDelivery, transactionsIncasations, transactionsIncome }
-  }, [currentAccount.history, activeFilter])
+  }, [currentAccount, activeFilter])
 
   const openMenu = () => {
     menuRef.current.show()

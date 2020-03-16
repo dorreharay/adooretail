@@ -24,6 +24,8 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
 
   const { localSessions, settings, passcode } = currentAccount
 
+  console.log('currentAccount', currentAccount)
+
   try {
     const data = await API.synchronizeSessions({
       localSessions: getLastItems(newLocalSessions ? newLocalSessions : localSessions, customOffset ? customOffset : 5),

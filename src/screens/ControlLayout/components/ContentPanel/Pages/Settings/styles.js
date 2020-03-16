@@ -23,7 +23,7 @@ const base = {
   },
   button: {
     paddingHorizontal: 30,
-    paddingVertical: 15,
+    paddingVertical: 18,
     borderWidth: 1,
     borderColor: '#BFBFBF',
   },

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef, Suspense, } from 'react'
+import React, { Fragment, useState, useEffect, useRef, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
 import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
@@ -12,7 +12,7 @@ import Devices from './Pages/Devices/Devices'
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 function ContentPanel(props) {
-  const { activeCategory, handleSlideIndex, tabs, navigation, setLoadingStatus, } = props
+  const { activeCategory, handleSlideIndex, tabs, navigation, setLoadingStatus, setActiveCategory, } = props
 
   const carouselRef = useRef(null)
 
@@ -24,6 +24,16 @@ function ContentPanel(props) {
       carouselRef.current.snapToItem(activeCategory.index, activeCategory.animated)
     }
   }, [activeCategory])
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      console.log('carouselRef.current', carouselRef.current, navigation.state.params)
+      if (navigation.state.params) {
+        setActiveCategory({ index: navigation.state.params.screen, animated: false, })
+        // carouselRef.current.snapToItem(navigation.state.params.screen, false)
+      }
+    }
+  }, [navigation, carouselRef.current])
 
   const _renderItem = ({ item, index }) => {
     return (

@@ -26,6 +26,12 @@ const base = {
     color: '#FFFFFF',
     fontSize: 17,
     fontFamily: PROBA_REGULAR,
+  },
+  addAccountSlide: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
   }
 };
 

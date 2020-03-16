@@ -19,7 +19,7 @@ function MainApp(props) {
   const dispatch = useDispatch()
 
   return (
-    // <AppLoading>
+    <AppLoading>
       <AppSessions
         navigatorRef={navigatorRef}
         NavigationService={NavigationService}
@@ -29,11 +29,11 @@ function MainApp(props) {
           navigation={navigation}
           screenProps={screenProps}
           onNavigationStateChange={(prev, state) => {
-            // dispatch(setCurrentRoute(state.index))
+            dispatch(setCurrentRoute(state.index))
           }}
         />
       </AppSessions>
-    // </AppLoading>
+    </AppLoading>
   )
 }
 

@@ -26,7 +26,7 @@ function History(props) {
     }
 
     return newSessions
-  }, [currentAccount.history, withoutEmptySessions,])
+  }, [currentAccount, withoutEmptySessions,])
 
   const toggleEmptySessions = () => {
     setWithoutStatus(!withoutEmptySessions)

@@ -136,6 +136,14 @@ const base = {
     borderColor: '#CECECE',
     borderWidth: 0.5,
   },
+  qtyButton: {
+    width: 28,
+    height: 28,
+  },
+  qtyButtonIcon: {
+    width: 15,
+    height: 15,
+  },
   receiptQtyText: {
     color: '#343434',
     fontSize: 18,
@@ -324,14 +332,6 @@ const styles = createStyles(
     },
     receiptOnePrice: {
       fontSize: 12,
-    },
-    qtyButton: {
-      width: 28,
-      height: 28,
-    },
-    qtyButtonIcon: {
-      width: 15,
-      height: 15,
     },
     receiptQtyText: {
       color: '#343434',

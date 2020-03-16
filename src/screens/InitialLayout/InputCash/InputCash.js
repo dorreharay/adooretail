@@ -73,11 +73,11 @@ function InputCash(props) {
         dispatch(updateCurrentSession({ status: 'end', endCash: currentInput }))
         dispatch(restoreDefaultShift())
 
-        await syncSessions(() => { }, null, 1)
-
         dispatch(setEndOfSessionStatus(false))
 
         navigation.navigate('Login')
+
+        await syncSessions(() => { }, null, 1)
       } catch (e) {
         console.log(e.message)
       } finally {
@@ -129,10 +129,10 @@ function InputCash(props) {
         </Ripple>
       </View>
 
-      <LoginLoader active={loading} />
+      {/* <LoginLoader active={loading} /> */}
 
 
-      {!loading && (
+      {/* {!loading && ( */}
         <SharedButton
           style={styles.backButton}
           onPress={handleBackPress}
@@ -142,7 +142,7 @@ function InputCash(props) {
             <Text style={styles.backButtonText}>Назад</Text>
           </View>
         </SharedButton>
-      )}
+      {/* )} */}
     </View>
   )
 }

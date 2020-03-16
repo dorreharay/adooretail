@@ -55,12 +55,6 @@ function ControlLayout(props) {
 
   const [activeCategory, setActiveCategory] = useState({ index: 1, animated: true })
 
-  useMemo(() => {
-    if (navigation.state.params) {
-      setActiveCategory({ index: navigation.state.params.screen, animated: false, })
-    }
-  }, [navigation])
-
   // -deviceWidth * 0.2
   const openPanel = () => {
     Animated.timing(
@@ -109,6 +103,7 @@ function ControlLayout(props) {
         navigation={navigation}
         activeCategory={activeCategory}
         handleCategoryPress={handleCategoryPress}
+        setActiveCategory={setActiveCategory}
       />
     </Animated.View>
   )

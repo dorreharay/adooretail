@@ -1,5 +1,6 @@
 import { getFormattedDate, } from '@dateFormatter'
 import { syncSessions, } from '@requests'
+import _ from 'lodash'
 import API from '../rest/api'
 
 const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
@@ -265,8 +266,19 @@ const ACTION_HANDLERS = {
       }
     }
 
+    // let final = []
+
+    // if(accounts.length === 0) {
+    //   final = [...accounts, ...[payload, {}]]
+    // } else {
+    //   const temp = [...accounts, payload].filter(item => !_.isEmpty(item))
+
+    //   final = [...temp, {}]
+    // }
+
     return {
       ...state,
+      // accounts: final,
       accounts: [...accounts, payload],
       currentAccountIndex: [...accounts, {}].length - 1,
       currentAccountToken: data._id,

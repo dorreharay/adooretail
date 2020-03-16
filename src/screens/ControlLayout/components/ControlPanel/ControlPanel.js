@@ -24,7 +24,7 @@ function ControlPanel(props) {
           numberOfLines={1}
           ellipsizeMode='tail'
         >
-          {currentAccount.business_name}
+          {currentAccount && currentAccount.business_name}
         </Text>
       </View>
       <View style={{ justifyContent: 'space-between', flex: 1, paddingVertical: 30, }}>

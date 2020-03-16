@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, } from 'react'
+import React, { useRef, useState, useEffect, useMemo, } from 'react'
 import { Text, View, Image, TextInput, Platform, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
@@ -6,6 +6,7 @@ import { syncSessions, } from '@requests'
 import * as Progress from 'react-native-progress';
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
 import DeviceSettings from 'react-native-device-settings';
+import { validateSessionRoutine, } from '@requests'
 import _ from 'lodash'
 import styles from './styles'
 
@@ -58,6 +59,11 @@ function RightSide(props) {
   }
 
   useEffect(() => {
+    // throttleParams.current(() => {
+    //   console.log('aaaaa')
+    // })
+
+    // validateSessionRoutine()
     loadProducts(currentAccountToken)
   }, [currentAccountToken])
 

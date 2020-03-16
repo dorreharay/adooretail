@@ -96,7 +96,7 @@ export async function printReceipt(receipt, address) {
     await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
     await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
   } catch (error) {
-    Alert.alert(error.message)
+    Alert.alert('Принтер не налаштовано')
     console.log(error.message)
   }
 }
