@@ -10,7 +10,7 @@ import API from '@api'
 import { addAccount } from '@reducers/UserReducer'
 
 function ConfigureAccount(props) {
-  const { setLoadingStatus, navigation, } = props
+  const { loading, setLoadingStatus, navigation, } = props
 
   const dispatch = useDispatch()
 
@@ -75,6 +75,7 @@ function ConfigureAccount(props) {
               }}
               onGoogleVisionBarcodesDetected={({ barcodes }) => {
                 if (!loading) {
+                  // console.log(barcodes[0].data)
                   setCode(barcodes[0].data)
                 }
               }}

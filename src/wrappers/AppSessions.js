@@ -88,8 +88,8 @@ function AppSessions(props) {
         }
 
         callback()
-      }, 310)
-    }, 300)
+      }, 600)
+    }, 500)
   }
 
   useEffect(() => {

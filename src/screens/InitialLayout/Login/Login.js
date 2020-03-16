@@ -65,6 +65,9 @@ function Login(props) {
   const validateDeviceID = async (enteredPinCode) => {
     if (!currentAccount || !currentAccount.registered_device_ids) {
       navigation.navigate('NoAccount')
+      resetState()
+
+      return
     }
 
     const { registered_device_ids, passcodes } = currentAccount
