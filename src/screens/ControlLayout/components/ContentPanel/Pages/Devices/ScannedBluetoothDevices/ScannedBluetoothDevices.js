@@ -1,38 +1,28 @@
 import React, { useState, useEffect, useMemo, Fragment, } from 'react'
 import { View, Text, TouchableOpacity, Alert, ScrollView, } from 'react-native'
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
+import { useSelector } from 'react-redux'
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton'
-import { printReceipt } from '@printer'
+import { printReceipt, connectToDevice, } from '@printer'
 
 function ScannedBluetoothDevices(props) {
-  const { status, devices } = props
+  const { status, setScanLoading, } = props
 
-  const [paired, setPaired] = useState([])
-  const [found, setFound] = useState([])
+  const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
 
-  useMemo(() => {
-    const paired = devices.paired || []
-    const found = devices.found || []
+  const connect = async (address) => {
+    setScanLoading(true)
 
-    setPaired(paired)
-    setFound(found)
-  }, [devices])
-
-  const connectToDevice = async (address) => {
     try {
-      // console.log('111', address)
-
-      await BluetoothManager.connect(address)
-
-      // console.log('sucess')
+      await connectToDevice(address) 
     } catch (error) {
-      Alert.alert(error.message)
-      console.log(error.message)
+      console.log(error)
+    } finally {
+      setScanLoading(false)
     }
   }
-
 
   return (
     status !== 2 ? (
@@ -68,7 +58,7 @@ function ScannedBluetoothDevices(props) {
 
                 <TouchableOpacity
                   style={styles.foundButton}
-                  onPress={() => connectToDevice(f.address)}
+                  onPress={() => connect(f.address)}
                   activeOpacity={0.8}
                 >
                   <Text style={styles.foundButtonText}>Під'єднати</Text>

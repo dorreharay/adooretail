@@ -7,6 +7,7 @@ import styles from './styles'
 
 import Header from './Header'
 import History from './Pages/History/History'
+import Devices from './Pages/Devices/Devices'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
@@ -36,6 +37,9 @@ function ContentPanel(props) {
         </View> */}
         {index === 0 && (
           <History navigation={navigation} setLoadingStatus={setLoadingStatus} />
+        )}
+        {index === 2 && (
+          <Devices navigation={navigation} activeCategory={activeCategory} />
         )}
 
         {item.component}

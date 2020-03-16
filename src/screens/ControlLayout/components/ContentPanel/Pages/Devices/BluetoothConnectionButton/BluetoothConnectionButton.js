@@ -1,46 +1,24 @@
 import React, { useState, useEffect, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, Alert, } from 'react-native'
 import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
+import * as Progress from 'react-native-progress';
+import { scanDevices } from '@printer'
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton'
 
 function BluetoothConnectionButton(props) {
-  const { status, setStatus, setDevices, } = props
-
-  useEffect(() => {
-    checkBluetoothConnection()
-  }, [])
-
-  useMemo(() => {
-
-  }, [])
-
-  const checkBluetoothConnection = async () => {
-    try {
-      const enabled = await BluetoothManager.isBluetoothEnabled()
-
-      setStatus(enabled)
-
-      return enabled
-    } catch (error) {
-      setStatus(false)
-
-      // Alert.alert('Ну ок, але будеш без підключення')
-
-      return false
-    }
-  }
+  const { status, setStatus, scanLoading, setScanLoading, checkBluetoothConnection, } = props
 
   const tryToEnableBluetooth = async () => {
     const connected = await checkBluetoothConnection()
 
     if (!connected) {
       try {
-        const r = await BluetoothManager.enableBluetooth()
+        await BluetoothManager.enableBluetooth()
 
         setStatus(true)
-        scanDevices()
+        scan()
       } catch (error) {
         if (error.message === 'EVENT_BLUETOOTH_NOT_SUPPORT') {
           Alert.alert('Пристрій не підтримує Bluetooth')
@@ -53,45 +31,23 @@ function BluetoothConnectionButton(props) {
 
   const tryToDisableBluetooth = async () => {
     try {
-      const connected = await checkBluetoothConnection()
-
-      if (connected) {
-        await BluetoothManager.disableBluetooth()
-
-        setStatus(false)
-      } else {
-        setStatus(true)
-      }
+      await BluetoothManager.disableBluetooth()
+      setStatus(false)
     } catch (error) {
       Alert.alert(error.message)
     }
   }
 
-  const scanDevices = async () => {
+  const scan = async () => {
     try {
-      const scanResult = await BluetoothManager.scanDevices()
-
-      const devices = JSON.parse(scanResult)
-
-      Alert.alert('scan')
-
-      setDevices(devices)
+      setScanLoading(true)
+      await scanDevices()
     } catch (error) {
-      // Alert.alert(error.message)
+      console.log(error)
+    } finally {
+      setScanLoading(false)
     }
   }
-
-  useEffect(() => {
-    scanDevices()
-
-    const routine = setTimeout(() => {
-      scanDevices()
-    }, 2000)
-
-    return () => {
-      clearInterval(routine)
-    }
-  }, [])
 
   if (status === null) {
     return (
@@ -111,34 +67,57 @@ function BluetoothConnectionButton(props) {
 
   if (!status) {
     return (
-      <SharedButton
-        style={styles.container}
-        onPress={tryToEnableBluetooth}
-        scale={0.9}
-      >
-        <View style={styles.innerContainer}>
-          <Text style={styles.text}>
-            Увімкнути Bluetooth
+      <View style={{ flexDirection: 'row', }}>
+        <SharedButton
+          style={styles.actionButton}
+          onPress={tryToEnableBluetooth}
+          scale={0.9}
+        >
+          <View style={styles.innerContainer}>
+            <Text style={styles.text}>
+              Увімкнути Bluetooth
           </Text>
-        </View>
-      </SharedButton>
+          </View>
+        </SharedButton>
+      </View>
     )
   }
 
   if (status) {
     return (
-      <SharedButton
-        style={styles.container}
-        onPress={tryToDisableBluetooth}
-        onLongPress={scanDevices}
-        scale={0.9}
-      >
-        <View style={styles.innerContainer}>
-          <Text style={styles.text}>
-            Вимкнути Bluetooth
+      <View style={{ flexDirection: 'row', }}>
+        <SharedButton
+          style={styles.actionButton}
+          onPress={tryToDisableBluetooth}
+          scale={0.9}
+        >
+          <View style={styles.innerContainer}>
+            <Text style={styles.text}>
+              Вимкнути Bluetooth
           </Text>
-        </View>
-      </SharedButton>
+          </View>
+        </SharedButton>
+        <View style={{ width: 10, }}></View>
+        <SharedButton
+          style={styles.actionButton}
+          onPress={scan}
+          scale={0.9}
+        >
+          <View style={styles.innerContainer}>
+            {scanLoading ? (
+              <Progress.Circle
+                endAngle={0.7}
+                size={15} color={'#E46162'}
+                borderWidth={1.5} indeterminate={true}
+              />
+            ) : (
+                <Text style={styles.text}>
+                  Сканувати
+              </Text>
+              )}
+          </View>
+        </SharedButton>
+      </View>
     )
   }
 }

@@ -4,14 +4,20 @@ import { COMFORTAA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_ME
 const base = {
   container: {
     alignSelf: 'flex-start',
+    flexDirection: 'row',
+    height: 50,
+    marginBottom: 50,
+  },
+  actionButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    left: 220,
-    top: 28,
     height: 50,
   },
   innerContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    minWidth: 100,
     paddingHorizontal: 15,
     paddingVertical: 12,
     borderWidth: 1.2,

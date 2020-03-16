@@ -8,7 +8,7 @@ const base = {
     paddingHorizontal: '5%',
   },
   screenHeading: {
-    marginBottom: 50,
+    marginBottom: 30,
     color: '#343434',
     fontSize: 32,
     fontFamily: GILROY_REGULAR,

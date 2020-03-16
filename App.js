@@ -19,7 +19,7 @@ function MainApp(props) {
   const dispatch = useDispatch()
 
   return (
-    <AppLoading>
+    // <AppLoading>
       <AppSessions
         navigatorRef={navigatorRef}
         NavigationService={NavigationService}
@@ -33,7 +33,7 @@ function MainApp(props) {
           }}
         />
       </AppSessions>
-    </AppLoading>
+    // </AppLoading>
   )
 }
 

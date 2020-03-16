@@ -22,7 +22,7 @@ import SessionModal from '../screens/SalesLayout/components/SessionModal/Session
 function AppSessions(props) {
   const {
     children, navigatorRef, NavigationService,
-    changeInitialLoadingWrapperOpacity,
+    changeInitialLoadingWrapperOpacity = () => {},
     initialLoadingOpacity, initialLoadingVisibility,
   } = props
 

@@ -35,7 +35,6 @@ function ControlLayout(props) {
       title: 'Девайси',
       iconSource: require('@images/printer.png'),
       onPress: () => handleCategoryPress(2),
-      component: <Devices />,
     },
     {
       index: 3,
