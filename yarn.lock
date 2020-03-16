@@ -5887,6 +5887,10 @@ react-native-device-info@^3.1.4:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-3.1.4.tgz#58a1d465ce9e2c28809132b1c68dd7ec7ce5f00f"
   integrity sha512-r+7APHkPO9EA/9w3e9K7yrFigaU+0/g8i3psrNUwCGFxoDewkCHOPj/1YZnAPUwPxgyG3svjZXeCtymI3xcSlA==
 
+"react-native-device-settings@https://github.com/dorreharay/react-native-device-settings.git":
+  version "1.2.0"
+  resolved "https://github.com/dorreharay/react-native-device-settings.git#0706b036ef5cfc8dd038843fefcd526d60ee6ec3"
+
 react-native-draggable@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-native-draggable/-/react-native-draggable-3.0.0.tgz#bc57a8b662fb1140796e69b46d11e581a8c74a42"

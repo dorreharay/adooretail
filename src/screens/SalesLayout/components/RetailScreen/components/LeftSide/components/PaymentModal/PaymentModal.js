@@ -99,7 +99,9 @@ const PaymentModal = (props) => {
       dispatch(syncReceipt(payload))
     }, 300)
 
-    // await printReceipt(payload)
+    if (currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
+      await printReceipt(payload)
+    }
   }
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)

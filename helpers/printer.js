@@ -1,5 +1,6 @@
 import { Alert, } from 'react-native'
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
+import store from '@store'
 
 const printOptions = {
   encoding: 'CP866',
@@ -17,7 +18,7 @@ const printOptionsHeading = {
 }
 
 function parceCyrrilicText(text) {
-  return text.replace('і', 'i')
+  return text.replace(/і/g, 'i')
 }
 
 export async function printReceipt(receipt, address) {
@@ -25,6 +26,17 @@ export async function printReceipt(receipt, address) {
     if (address) {
       await BluetoothManager.connect(address)
     }
+
+    const currentStore = store.getState()
+
+    const { accounts, currentAccountToken, currentAccountIndex, } = currentStore.user
+    const { currentRoute, } = currentStore.temp
+
+    const currentAccount = accounts[currentAccountIndex]
+
+    const { receipt_name, receipt_description } = currentAccount
+
+    console.log(currentAccount)
 
     await BluetoothEscposPrinter.printerLineSpace(80)
     await BluetoothEscposPrinter.setWidth(400)
@@ -57,7 +69,7 @@ export async function printReceipt(receipt, address) {
 
     if (receipt) {
       await asyncForEach(receipt.receipt, async (item) => {
-        await printColumn([parceCyrrilicText(item.title), `${item.price}`, `${item.quantity}`, `${item.price}`, `${item.quantity}`], { paddingLeft: 2 })
+        await printColumn([parceCyrrilicText(item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
       })
     }
 
@@ -80,8 +92,8 @@ export async function printReceipt(receipt, address) {
 
     await printRegularLine('', { spaces: 6, })
 
-    await printHeading('POILKA', { spaces: 1, })
-    await printRegularLine('Ваша найкраща кавуся', { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
+    await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
+    await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
   } catch (error) {
     Alert.alert(error.message)
     console.log(error.message)

@@ -73,7 +73,7 @@ function BluetoothConnectionButton(props) {
 
       const devices = JSON.parse(scanResult)
 
-      // Alert.alert('scan')
+      Alert.alert('scan')
 
       setDevices(devices)
     } catch (error) {
@@ -82,13 +82,15 @@ function BluetoothConnectionButton(props) {
   }
 
   useEffect(() => {
-    // const routine = setInterval(() => {
     scanDevices()
-    // }, 5000)
 
-    // return () => {
-    //   clearInterval(routine)
-    // }
+    const routine = setTimeout(() => {
+      scanDevices()
+    }, 2000)
+
+    return () => {
+      clearInterval(routine)
+    }
   }, [])
 
   if (status === null) {
