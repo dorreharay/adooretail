@@ -19,7 +19,11 @@ const printOptionsHeading = {
 }
 
 function parceCyrrilicText(text) {
-  return text.replace(/і/g, 'i')
+  return (
+    text
+      .replace(/і/g, 'i')
+      .replace(/І/g, 'I')
+  )
 }
 
 export async function printReceipt(receipt, address) {
