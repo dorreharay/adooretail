@@ -99,7 +99,7 @@ function SessionModal(props) {
 
                 if (modalStatus.type === 'end') endSession()
 
-                if (modalStatus.type === 'no_time') dispatch(setModalStatus(''))
+                if (modalStatus.type === 'not_on_shift') endSession()
               }}
               style={styles.linearButton}
               activeOpacity={1}

@@ -77,7 +77,7 @@ function InputCash(props) {
 
         navigation.navigate('Login')
 
-        await syncSessions(() => { }, null, 1)
+        await syncSessions(() => {}, null, 1)
       } catch (e) {
         console.log(e.message)
       } finally {

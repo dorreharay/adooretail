@@ -21,6 +21,7 @@ const ADD_ACCOUNT = 'ADD_ACCOUNT';
 const SAVE_TRANSACTION = 'SAVE_TRANSACTION';
 const SET_NEED_TO_REENTER = 'SET_NEED_TO_REENTER';
 const SET_HISTORY = 'SET_HISTORY'
+const SET_ACTIVE_BACKGROUND_INDEX = 'SET_ACTIVE_BACKGROUND_INDEX'
 
 const initialState = {
   token: '',
@@ -30,6 +31,7 @@ const initialState = {
   currentAccountToken: '',
   bounds: [],
   accounts: [],
+  activeBackgroundIndex: 0,
 };
 
 export function addAccount(payload) {
@@ -42,6 +44,13 @@ export function addAccount(payload) {
 export function setSettings(payload) {
   return {
     type: SET_SETTINGS,
+    payload
+  }
+}
+
+export function setActiveBackgroundIndex(payload) {
+  return {
+    type: SET_ACTIVE_BACKGROUND_INDEX,
     payload
   }
 }
@@ -434,6 +443,9 @@ const ACTION_HANDLERS = {
   },
   [SET_EMPLOYEES]: (state, action) => {
     return { ...state, employees: action.payload }
+  },
+  [SET_ACTIVE_BACKGROUND_INDEX]: (state, action) => {
+    return { ...state, activeBackgroundIndex: action.payload }
   },
 };
 

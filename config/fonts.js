@@ -22,7 +22,7 @@ const GEOMETRIA_REGULAR = Platform.OS === 'android' ? 'geometria_regular' : 'Geo
 const GEOMETRIA_MEDIUM = Platform.OS === 'android' ? 'geometria_medium' : 'Geometria-Medium'
 const GEOMETRIA_BOLD = Platform.OS === 'android' ? 'geometria_bold' : 'Geometria-Bold'
 
-const CIRCE_LIGHT = Platform.OS === 'android' ? 'museo_light' : 'Circe-Bold'
+const CIRCE_LIGHT = Platform.OS === 'android' ? 'museo_light' : 'Circe-Light'
 const CIRCE_REGULAR = Platform.OS === 'android' ? 'museo_regular' : 'Circe-Regular'
 // const CIRCE_MEDIUM = Platform.OS === 'android' ? 'museo_medium' : 'Circe-Medium'
 const CIRCE_BOLD = Platform.OS === 'android' ? 'museo_bold' : 'Circe-Bold'

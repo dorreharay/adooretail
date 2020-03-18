@@ -8,6 +8,7 @@ import styles from './styles'
 
 import LoginLoader from '@shared/LoginLoader';
 import SharedButton from '@shared/SharedButton';
+import { syncSessions, } from '@requests'
 
 import EmployeesList from "./components/EmployeesList";
 
@@ -75,6 +76,8 @@ function InputEmployees({ navigation }) {
       dispatch(setStartCash(0))
 
       navigation.navigate('SalesLayout')
+
+      syncSessions(() => {}, null, 1)
 
       setTimeout(() => {
         setLoadingStatus(false)

@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, GILROY_LIGHT, } from '@fonts'
+import { COMFORTAA_LIGHT, GILROY_REGULAR, } from '@fonts'
 
 const base = {
   container: {
@@ -43,7 +43,7 @@ const base = {
   backButtonText: {
     color: '#F6F6F6',
     fontSize: 18,
-    fontFamily: GILROY_LIGHT,
+    fontFamily: GILROY_REGULAR,
   }
 };
 

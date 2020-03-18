@@ -8,13 +8,13 @@ export const START = {
 export const END = {
   first: 'Робоча зміна закінчена.',
   second: 'Введіть підсумкову касу та розпочніть наступну зміну',
-  button: 'ЗАКІНЧИТИ ЗМІНУ',
+  button: 'ВВЕСТИ КАСУ',
   type: 'end',
 }
 
-export const NO_TIME = {
-  first: 'Зміна не може бути завершена',
-  second: 'Неможливо закінчити робочий день в робочі години',
-  button: 'ЗАКРИТИ',
-  type: 'no_time',
+export const NOT_ON_SHIFT = {
+  first: 'Робочі години закінчені.',
+  second: 'Введіть підсумкову касу та розпочніть зміну в межах робочих годин',
+  button: 'ВВЕСТИ КАСУ',
+  type: 'not_on_shift',
 }

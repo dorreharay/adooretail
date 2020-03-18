@@ -219,6 +219,7 @@ function AppSessions(props) {
           />
         )}
       </AnimatedSplash>
+      {/* </UserInactivity> */}
     </>
   )
 }

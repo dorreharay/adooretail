@@ -37,8 +37,6 @@ export async function printReceipt(receipt, address) {
 
     const { receipt_name, receipt_description } = currentAccount
 
-    console.log(currentAccount)
-
     await BluetoothEscposPrinter.printerLineSpace(80)
     await BluetoothEscposPrinter.setWidth(400)
 

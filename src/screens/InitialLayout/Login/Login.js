@@ -93,13 +93,8 @@ function Login(props) {
 
       dispatch(setNeedToReenter(false))
 
-      console.log('aaaa', currentSession)
-
       if (currentSession.length !== 0 && !currentSession.endTime) {
         navigation.navigate('SalesLayout')
-        // navigation.navigate('SalesLayout')
-        // navigation.navigate('SalesLayout')
-        // toast.current && toast.current.show('success', DURATION.LENGTH_LONG)
       } else {
         navigation.navigate('InputCash')
       }
@@ -156,7 +151,7 @@ function Login(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>хід за допомогою Device ID</Text>
+      <Text style={styles.loginHeading}>Вхід за допомогою Device ID</Text>
       <Animated.View style={[styles.idDots, { left: animatedValue }]}>
         {passwordArray.map((item, index) => (
           <Svg width={styles.dot.width} height={styles.dot.height} key={index}>

@@ -1,11 +1,17 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet, } from 'react-native'
+import { useSelector, useDispatch, } from 'react-redux'
 import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+import FastImage from 'react-native-fast-image';
 import styles from './styles'
+
+import { currentAccountSelector, } from '@selectors'
 
 function EmployeesList(props) {
   const { employees, checked, handleCheck, } = props
+
+  const currentAccount = useSelector(currentAccountSelector)
 
   return (
     <View style={styles.сontainer}>
@@ -22,8 +28,9 @@ function EmployeesList(props) {
               activeOpacity={1} key={index}
             >
               <LinearGradient
-                start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                colors={['#E75E66', '#EF9058']}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 0 }}
+                colors={['#E76F5F', '#E46162']}
                 style={[
                   styles.employee,
                   { borderBottomColor: '#E96B62' },
@@ -32,12 +39,8 @@ function EmployeesList(props) {
                 ]}
                 key={index} activeOpacity={1}
               >
-                {employee.icon !== '' ? (
-                  <Image style={{ width: 41, height: 41, marginRight: 20, }} source={{ uri: employee.icon }} fadeDuration={0}></Image>
-                ) : (
-                    <View style={[styles.iconPlaceholder, { backgroundColor: '#9F9F9FD9', }]} />
-                  )}
-                <Text style={styles.employeeName}>{employee.name}</Text>
+                <FastImage style={[styles.employeeIcon, styles.checkedIcon]} source={{ uri: employee.icon !== '' ? employee.icon : currentAccount.img_url }} fadeDuration={0}></FastImage>
+                <Text style={[styles.employeeName, styles.checkedName]}>{employee.name}</Text>
               </LinearGradient>
             </TouchableOpacity>
           ) : (
@@ -49,11 +52,7 @@ function EmployeesList(props) {
                 ]} onPress={() => handleCheck(employee.name, index)}
                 key={index} activeOpacity={1}
               >
-                {employee.icon !== '' ? (
-                  <Image style={{ width: 41, height: 41, marginRight: 20, }} source={{ uri: employee.icon }} fadeDuration={0}></Image>
-                ) : (
-                    <View style={styles.iconPlaceholder} />
-                  )}
+                <FastImage style={styles.employeeIcon} source={{ uri: employee.icon !== '' ? employee.icon : currentAccount.img_url }} fadeDuration={0}></FastImage>
                 <Text style={styles.employeeName}>{employee.name}</Text>
               </TouchableOpacity>
             )

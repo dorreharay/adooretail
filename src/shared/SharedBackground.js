@@ -5,13 +5,16 @@ import FastImage from 'react-native-fast-image'
 import Logo from '@images/logo-big.svg'
 
 import SharedButton from '@shared/SharedButton';
+import { setActiveBackgroundIndex } from '@reducers/UserReducer'
 
 function SharedBackground({ image, children, }) {
   const [loadEnd, setLoadEnd] = useState(false)
 
-  const currentRoute = useSelector(state => state.temp.currentRoute)
+  const dispatch = useDispatch()
 
-  const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(image || 0)
+  const currentRoute = useSelector(state => state.temp.currentRoute)
+  const activeBackgroundIndex = useSelector(state => state.user.activeBackgroundIndex)
+
   const [backgrounds] = useState([
     require('@images/background-adv7.png'),
     require('@images/background-adv8.png'),
@@ -30,7 +33,7 @@ function SharedBackground({ image, children, }) {
       index = 0
     }
 
-    setActiveBackgroundIndex(index)
+    dispatch(setActiveBackgroundIndex(index))
   }
 
   return (

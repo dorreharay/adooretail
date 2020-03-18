@@ -220,7 +220,7 @@ function HistoryList(props) {
         )
       })}
 
-      {data.length > 0 && !loading && (
+      {data && data.length > 0 && !loading && (
         <View style={styles.loadMoreButton}>
           <SharedButton
             style={{ flex: 1, }}
@@ -238,7 +238,7 @@ function HistoryList(props) {
         </View>
       )}
 
-      {data.length > 2 && showScrollTopButton && (
+      {data && data.length > 2 && showScrollTopButton && (
         <View style={styles.scrollTopButton}>
           <SharedButton
             style={{ flex: 1, }}

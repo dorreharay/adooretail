@@ -3,7 +3,7 @@ import API from '@api'
 import { syncDataWithStore, setNeedToReenter, } from '@reducers/UserReducer'
 import { setModalStatus } from '@reducers/TempReducer'
 import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } from '@dateFormatter'
-import { START, END, NO_TIME } from '@statuses'
+import { START, END, NOT_ON_SHIFT } from '@statuses'
 
 export async function syncSessions(callback, newLocalSessions, customOffset) {
   if (!store) return
@@ -23,8 +23,6 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
   const currentAccount = accounts[currentAccountIndex]
 
   const { localSessions, settings, passcode } = currentAccount
-
-  console.log('currentAccount', currentAccount)
 
   try {
     const data = await API.synchronizeSessions({
@@ -111,7 +109,11 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
     if (currentAccount.localSessions.length === 0) {
       dispatch(setModalStatus(START))
     } else {
-      dispatch(setModalStatus(END))
+      if(currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled) {
+        dispatch(setModalStatus(NOT_ON_SHIFT))
+      } else {
+        dispatch(setModalStatus(END))
+      }
     }
   }
 

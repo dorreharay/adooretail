@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, } from '@fonts'
+import { GILROY_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
 
 const base = {
   сontainer: {
@@ -24,6 +24,19 @@ const base = {
     borderBottomColor: '#4D4D4D44',
     backgroundColor: '#D2D2D21A',
   },
+  employeeIcon: {
+    width: 41,
+    height: 41,
+    marginRight: 20, 
+    borderWidth: 1.5,
+    borderColor: '#FFFFFF66',
+    borderRadius: 120,
+    opacity: 0.6,
+  },
+  checkedIcon: {
+    borderWidth: 1.5,
+    borderColor: '#FFFFFF',
+  },
   iconPlaceholder: {
     width: 41,
     height: 41,
@@ -34,8 +47,11 @@ const base = {
   employeeName: {
     color: '#ffffff',
     fontSize: 17,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: GILROY_REGULAR,
   },
+  checkedName: {
+    // fontFamily: GILROY_MEDIUM,
+  }
 };
 
 const styles = createStyles(
