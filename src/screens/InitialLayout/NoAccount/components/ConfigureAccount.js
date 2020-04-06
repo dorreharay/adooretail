@@ -32,7 +32,7 @@ function ConfigureAccount(props) {
         const deviceId = await DeviceInfo.getUniqueId();
 
         const data = await API.requestAccount({
-          tablet_identifier: text,
+          tablet_identifier: `EGABJDFDKJ-${text}-DDJIJIHLDF`,
           new_device_id: deviceId,
         })
 
