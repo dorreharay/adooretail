@@ -3,6 +3,7 @@ import { View, Text, Keyboard, TouchableOpacity, KeyboardAvoidingView, TextInput
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
+import DeviceInfo from 'react-native-device-info';
 import styles from '../styles';
 
 import API from '@api'
@@ -28,8 +29,11 @@ function ConfigureAccount(props) {
       Keyboard.dismiss()
 
       try {
+        const deviceId = await DeviceInfo.getUniqueId();
+
         const data = await API.requestAccount({
           tablet_identifier: text,
+          new_device_id: deviceId,
         })
 
         if (!data) throw new Error('Не вірні дані')
@@ -102,6 +106,7 @@ function ConfigureAccount(props) {
                   style={styles.input}
                   value={accountCode}
                   onChangeText={(text) => setCode(text)}
+                  keyboardType='decimal-pad'
                   autoCapitalize='characters'
                   autoFocus
                 />

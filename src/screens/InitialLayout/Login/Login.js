@@ -77,8 +77,9 @@ function Login(props) {
     try {
       const deviceId = await DeviceInfo.getUniqueId();
 
-      if (enteredPinCode == '2050203') {
+      if (enteredPinCode == '2050205') {
         toast.current && toast.current.show(deviceId, DURATION.FOREVER)
+        console.log(deviceId)
         resetState()
         return
       }

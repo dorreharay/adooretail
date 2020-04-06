@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { syncSessions, } from '@requests'
 import * as Progress from 'react-native-progress';
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
-import DeviceSettings from 'react-native-device-settings';
+import FastImage from 'react-native-fast-image'
 import { validateSessionRoutine, } from '@requests'
 import _ from 'lodash'
 import styles from './styles'
@@ -143,7 +143,7 @@ function RightSide(props) {
         {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled && (
           <SharedButton onPress={updatePairedDevices} scale={0.85}>
             <View style={styles.printer}>
-              <Image style={{ width: 17, height: 17, }} source={require('@images/tprinter.png')} />
+              <FastImage style={{ width: 17, height: 17, }} source={require('@images/tprinter.png')} />
 
               {printerLoading ? (
                 <View style={styles.printersAmount}>
