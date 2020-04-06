@@ -214,3 +214,14 @@ export async function connectToDevice(address) {
     console.log(error.message)
   }
 }
+
+export async function unpairDevice(address) {
+  try {
+    await BluetoothManager.unpaire(address)
+
+    await scanDevices()
+  } catch (error) {
+    Alert.alert(error.message)
+    console.log(error.message)
+  }
+}

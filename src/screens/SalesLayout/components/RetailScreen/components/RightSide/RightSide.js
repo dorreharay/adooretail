@@ -91,23 +91,9 @@ function RightSide(props) {
   }
 
   const updatePairedDevices = async () => {
-    if(paired.length === 0) {
-      navigation.navigate('ControlLayout', {
-        screen: 2,
-      })
-
-      return
-    }
-
-    setPrinterLoading(true)
-
-    try {
-      await performPrinterScanAndConnect()
-    } catch (error) {
-      console.log('Printer scan error', error)
-    } finally {
-      setPrinterLoading(false)
-    }
+    navigation.navigate('ControlLayout', {
+      screen: 2,
+    })
   }
 
   return (
@@ -144,20 +130,6 @@ function RightSide(props) {
           <SharedButton onPress={updatePairedDevices} scale={0.85}>
             <View style={styles.printer}>
               <FastImage style={{ width: 17, height: 17, }} source={require('@images/tprinter.png')} />
-
-              {printerLoading ? (
-                <View style={styles.printersAmount}>
-                  <Progress.Circle
-                    endAngle={0.7}
-                    size={10} color={'#343434'}
-                    borderWidth={1.2} indeterminate={true}
-                  />
-                </View>
-              ) : (
-                  <View style={styles.printersAmount}>
-                    <Text style={styles.printersAmountText}>{paired.length}</Text>
-                  </View>
-                )}
             </View>
           </SharedButton>
         )}

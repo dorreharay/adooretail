@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
 import BluetoothConnectionButton from './BluetoothConnectionButton/BluetoothConnectionButton'
 import ScannedBluetoothDevices from './ScannedBluetoothDevices/ScannedBluetoothDevices'
-import { performPrinterScanAndConnect } from '@printer'
+import { performPrinterScanAndConnect, scanDevices, } from '@printer'
 import styles from './styles'
 
 function Devices({ activeCategory, }) {
@@ -31,10 +31,21 @@ function Devices({ activeCategory, }) {
     }
   }
 
+  const scan = async () => {
+    try {
+      setScanLoading(true)
+      await scanDevices()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setScanLoading(false)
+    }
+  }
+
   useEffect(() => {
     if (activeCategory.index) {
       checkBluetoothConnection()
-      // performPrinterScanAndConnect()
+      scan()
     }
   }, [activeCategory])
 
@@ -50,6 +61,7 @@ function Devices({ activeCategory, }) {
         scanLoading={scanLoading}
         setScanLoading={setScanLoading}
         checkBluetoothConnection={checkBluetoothConnection}
+        scan={scan}
       />
 
       <View stle={{ height: '30%' }}>

@@ -45,6 +45,7 @@ function ConfigureAccount(props) {
       } catch (error) {
         setLoadingStatus(false)
         invokeAnimation(false)
+        console.log(error)
       }
     }
   }

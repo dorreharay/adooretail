@@ -2,13 +2,12 @@ import React, { useState, useEffect, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, Alert, } from 'react-native'
 import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
 import * as Progress from 'react-native-progress';
-import { scanDevices } from '@printer'
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton'
 
 function BluetoothConnectionButton(props) {
-  const { status, setStatus, scanLoading, setScanLoading, checkBluetoothConnection, } = props
+  const { status, setStatus, scanLoading, setScanLoading, scan, checkBluetoothConnection, } = props
 
   const tryToEnableBluetooth = async () => {
     const connected = await checkBluetoothConnection()
@@ -35,17 +34,6 @@ function BluetoothConnectionButton(props) {
       setStatus(false)
     } catch (error) {
       Alert.alert(error.message)
-    }
-  }
-
-  const scan = async () => {
-    try {
-      setScanLoading(true)
-      await scanDevices()
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setScanLoading(false)
     }
   }
 

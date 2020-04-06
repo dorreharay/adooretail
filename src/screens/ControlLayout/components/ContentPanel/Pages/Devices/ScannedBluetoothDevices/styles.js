@@ -42,6 +42,8 @@ const base = {
     fontFamily: GILROY_REGULAR,
   },
   pairedButton: {
+    minWidth: 90,
+    alignItems: 'center',
     paddingHorizontal: 14,
     paddingVertical: 7,
     borderWidth: 1,
@@ -73,6 +75,8 @@ const base = {
     fontFamily: GILROY_REGULAR,
   },
   foundButton: {
+    minWidth: 90,
+    alignItems: 'center',
     paddingHorizontal: 14,
     paddingVertical: 7,
     backgroundColor: '#E46162',

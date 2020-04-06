@@ -41,14 +41,12 @@ const Settings = () => {
         <Text style={styles.settingsTitle}>Активні цехи</Text>
         <SwitchWithTitle
           title={'Каса'}
-          disabled
           value={currentAccount.settings.available_teams.paydesk}
           onValueChange={(value) => updateSettings({ paydesk: value }, 'available_teams')}
         />
 
         <SwitchWithTitle
           title={'Кухня'}
-          disabled
           value={currentAccount.settings.available_teams.kitchen}
           onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
         />
@@ -60,7 +58,6 @@ const Settings = () => {
 
         <SwitchWithTitle
           title={'Увімкнути'}
-          // disabled
           value={currentAccount.settings.printer_enabled}
           onValueChange={(value) => updateSettings(value, 'printer_enabled')}
         />
