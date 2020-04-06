@@ -22,13 +22,15 @@ function ConfigureAccount(props) {
 
   const setCode = async (text) => {
     setAccountCode(text)
-
+    
     if (text.length === 10) {
-      setLoadingStatus(true)
-      inputRef.current.blur()
-      Keyboard.dismiss()
-
       try {
+        setLoadingStatus(true)
+        inputRef.current && inputRef.current.blur()
+        Keyboard.dismiss()  
+
+        console.log('text', text.length)
+
         const deviceId = await DeviceInfo.getUniqueId();
 
         const data = await API.requestAccount({
@@ -58,6 +60,31 @@ function ConfigureAccount(props) {
     }
   }
 
+  const handleQRCode = async ({ barcodes }) => {
+    if (!loading) {
+      const qr = barcodes[0].data
+
+      if (qr.slice(0, 11) === 'EGABJDFDKJ-' && qr.slice(21) === '-DDJIJIHLDF') {
+        const deviceId = qr.slice(11, 21)
+
+        setLoadingStatus(true)
+
+        try {
+          await setCode(deviceId)
+
+          setTimeout(() => {
+            setLoadingStatus(false)
+          }, 2000)
+        } catch (error) {
+          setLoadingStatus(false)
+        }
+      } else {
+        console.log('invalid')
+        setLoadingStatus(false)
+      }
+    }
+  }
+
   const gotoLogin = () => {
     navigation.navigate('Login')
   }
@@ -78,12 +105,7 @@ function ConfigureAccount(props) {
                 buttonPositive: 'Дозволити',
                 buttonNegative: 'Відхилити',
               }}
-              onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                if (!loading) {
-                  // console.log(barcodes[0].data)
-                  setCode(barcodes[0].data)
-                }
-              }}
+              onGoogleVisionBarcodesDetected={handleQRCode}
             />
           </View>
 
