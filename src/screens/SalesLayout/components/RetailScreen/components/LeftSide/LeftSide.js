@@ -2,12 +2,14 @@ import React, { useRef, useState, useEffect, useMemo, } from 'react'
 import { Text, View, ScrollView, TouchableOpacity, } from 'react-native'
 import { useDispatch, useSelector, } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
+import BackgroundTimer from 'react-native-background-timer';
 import FastImage from 'react-native-fast-image'
+import _ from 'lodash'
 import styles from './styles'
 
 import { deviceHeight } from '@dimensions'
 
-import { getUpperCaseDate } from '@dateFormatter'
+import { getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
 import { currentAccountSelector, } from '@selectors'
 import { clearCurrentReceipt, setSelectedReceipt, } from '@reducers/TempReducer'
 
@@ -24,6 +26,7 @@ const headerIcon = { width: deviceHeight < 500 ? headerHeight - 55 : headerHeigh
 function LeftSide(props) {
   const {
     setPaymentModalState,
+    buffer, setBuffer,
   } = props;
 
   const dispatch = useDispatch()
@@ -34,30 +37,13 @@ function LeftSide(props) {
 
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
   const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))
+  const [oldReceiptState, setOldReceipt] = useState([null, null, null, null])
 
   const validateTime = () => {
     const fullDate = getUpperCaseDate('dddd  |  HH:mm')
 
     setCurrentTime(fullDate)
   }
-
-  // function useInterval(callback, delay) {
-  //   const savedCallback = useRef();
-
-  //   useEffect(() => {
-  //     savedCallback.current = callback;
-  //   }, [callback]);
-
-  //   useEffect(() => {
-  //     function tick() {
-  //       savedCallback.current();
-  //     }
-  //     if (delay !== null) {
-  //       let id = setInterval(tick, delay);
-  //       return () => clearInterval(id);
-  //     }
-  //   }, [delay]);
-  // }
 
   const startTimer = (e) => {
     validateTime()
@@ -69,25 +55,145 @@ function LeftSide(props) {
     setPaymentModalState(status)
   }
 
+  const updateBuffer = (data) => {
+    const newBuffer = buffer.map((item, index) => index === selectedReceiptIndex ? data : item)
+
+    // console.log('old buffer ->>>>>>>', buffer[selectedReceiptIndex] ? buffer[selectedReceiptIndex].receipt : null)
+
+    // console.log('new buffer ->>>>>>>', newBuffer[selectedReceiptIndex].receipt)
+
+    setBuffer(newBuffer)
+  }
+
   const saveBuffer = () => {
-    if (receiptSum <= 0) return 
+    if (receiptSum <= 0) return
 
     const currentReceipt = receipts[selectedReceiptIndex]
+    const bufferedReceipt = buffer[selectedReceiptIndex]
+    const oldReceipt = oldReceiptState[selectedReceiptIndex]
+
+    function guidGenerator() {
+      let S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      };
+      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    }
 
     const payload = {
-      payment_type: paymentType,
       receipt: currentReceipt,
       hash_id: guidGenerator(),
       transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
-      employee: currentEmployee,
     }
 
-    console.log('payload', payload)
+    if (bufferedReceipt === null) {
+      updateBuffer(payload)
+
+      const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? payload.receipt : item)
+
+      setOldReceipt(newOldReceipt)
+    } else {
+      compareReceipts(bufferedReceipt.receipt, currentReceipt, oldReceipt)
+    }
   }
 
-  // useInterval(() => {
-  //   validateTime()
-  // }, 5 * 1000)
+  const compareReceipts = (oldBuffer, newReceipt, oldReceipt) => {
+    let newDiff = []
+
+    console.log('oldReceipt', oldReceipt && oldReceipt.length)
+    console.log('newReceipt', oldReceipt && newReceipt.length)
+
+    if (oldReceipt && newReceipt.length > oldReceipt.length) {
+      console.log('------->', 1)
+
+      newDiff = oldReceipt.map(oldItem => {
+        const newItems = newReceipt.filter(item => oldReceipt.find(elem => elem.time === item.time))
+
+        const newItem = newItems.find(elem => elem.time === oldItem.time)
+
+        if (newItem.quantity !== oldItem.quantity) {
+          if (newItem.quantity > oldItem.quantity) {
+            return ({
+              ...newItem,
+              diff: `+${newItem.quantity - oldItem.quantity}`
+            })
+          } else {
+            return ({
+              ...newItem,
+              diff: `-${oldItem.quantity - newItem.quantity}`
+            })
+          }
+        } else {
+          return oldItem
+        }
+      })
+
+      if (!newDiff.every(item => item === undefined)) {
+        const diffWithNewItems = _.difference(newReceipt, oldReceipt)
+
+        newDiff = diffWithNewItems.map(item => {
+          const oldItem = newDiff.find(elem => elem.time === item.time)
+
+          return oldItem ? oldItem : item
+        })
+
+        // newDiff = diffWithNewItemsrer
+      }
+
+      // const diffWithNewItems = _.difference(newReceipt, oldReceipt)
+
+      // newDiff = diffWithNewItems
+    } else {
+      if (oldReceipt && newReceipt.length < oldReceipt.length) {
+        console.log('------->', 3)
+
+        const diff = _.difference(oldReceipt, newReceipt)
+
+        newDiff = diff.map(item => ({ ...item, diff: `-${item.quantity}` }))
+
+
+      } else {
+        console.log('------->', 2)
+
+        const diff = _.difference(newReceipt, oldReceipt, 'quantity')
+
+        newDiff = diff.map(newItem => {
+          const oldItem = oldReceipt.find(elem => elem.time === newItem.time)
+
+          if (newItem.quantity !== oldItem.quantity) {
+            if (newItem.quantity > oldItem.quantity) {
+              return ({
+                ...newItem,
+                diff: `+${newItem.quantity - oldItem.quantity}`
+              })
+            } else {
+              return ({
+                ...newItem,
+                diff: `-${oldItem.quantity - newItem.quantity}`
+              })
+            }
+          }
+        })
+      }
+    }
+
+    const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? newReceipt : item)
+
+    setOldReceipt(newOldReceipt)
+
+    if (newDiff.every(item => item === undefined)) return
+
+    updateBuffer({ ...buffer[selectedReceiptIndex], receipt: newDiff })
+  }
+
+  useEffect(() => {
+    const ref = BackgroundTimer.setInterval(() => {
+      validateTime()
+    }, 20);
+
+    return () => {
+      BackgroundTimer.clearInterval(ref);
+    }
+  }, [])
 
   const receiptSum = useMemo(() => {
     return receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)
@@ -192,7 +298,7 @@ function LeftSide(props) {
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={saveBuffer}
+            onPress={() => saveBuffer()}
             style={[styles.proceedContainer, styles.zProceedEx, receiptSum <= 0 && { borderColor: '#E4616280' },]}
             activeOpacity={1}
           >

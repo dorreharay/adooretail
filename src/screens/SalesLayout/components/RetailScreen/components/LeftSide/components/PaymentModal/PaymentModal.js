@@ -19,7 +19,7 @@ import PaymentRightSide from '../PaymentRightSide/PaymentRightSide';
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 const PaymentModal = (props) => {
-  const { isVisible, setPaymentModalVisibility, } = props;
+  const { isVisible, setPaymentModalVisibility, buffer, setBuffer, } = props;
 
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -79,6 +79,12 @@ const PaymentModal = (props) => {
     const timeStart = firstReceipt.time
     const timeEnd = lastReceipt.time
 
+    let receiptId = guidGenerator()
+
+    if(buffer[selectedReceiptIndex]) {
+      receiptId = buffer[selectedReceiptIndex].hash_id 
+    }
+
     const payload = {
       payment_type: paymentType,
       receipt: currentReceipt,
@@ -87,7 +93,7 @@ const PaymentModal = (props) => {
       input: parseFloat(enteredSum),
       change: +((+enteredSum) - receiptSum).toFixed(2).replace(".00", ""),
       discount: `${discounts[activeDiscount].percent}%`,
-      hash_id: guidGenerator(),
+      hash_id: receiptId,
       first_product_time: timeStart,
       last_product_time: timeEnd,
       transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
@@ -96,6 +102,10 @@ const PaymentModal = (props) => {
     }
 
     if (!payload) return
+
+    const newBuffer = buffer.map((item, index) => index === selectedReceiptIndex ? null : item)
+
+    setBuffer(newBuffer)
 
     if (currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
       await printReceipt(payload)

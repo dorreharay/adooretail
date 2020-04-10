@@ -21,6 +21,8 @@ function RetailScreen(props) {
 
   const [menuVisible, setMenuVisibility] = useState(false)
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
+  const [buffer, setBuffer] = useState([null, null, null, null])
+
   const setPaymentModalState = (state) => setPaymentModalVisibility(state)
   const loadProducts = async (token) => {
     try {
@@ -38,6 +40,7 @@ function RetailScreen(props) {
 
   const openMenu = () => setMenuVisibility(true)
   const closeMenu = () => setMenuVisibility(false)
+
   useEffect(() => {
     return () => {
       clearTimeout(timerRef1.current)
@@ -46,10 +49,13 @@ function RetailScreen(props) {
       clearTimeout(timerRef4.current)
     }
   }, [])
+
   return (
     <View style={styles.container}>
       <LeftSide
         setPaymentModalState={setPaymentModalState}
+        buffer={buffer}
+        setBuffer={setBuffer}
       />
       <RightSide
         products={products} loadProducts={loadProducts}
@@ -65,6 +71,8 @@ function RetailScreen(props) {
       <PaymentModal
         isVisible={paymentModalVisible}
         setPaymentModalVisibility={setPaymentModalVisibility}
+        buffer={buffer}
+        setBuffer={setBuffer}
       />
     </View>
   )
