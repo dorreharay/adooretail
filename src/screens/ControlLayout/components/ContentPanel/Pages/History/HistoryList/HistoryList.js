@@ -122,7 +122,7 @@ function HistoryList(props) {
               />
               <Text style={styles.dayHeaderDate}>{getUpperCaseDate('dddd DD.MM | HH:mm', day.startTime)}</Text>
               <Text style={styles.dayHeaderTotal}>Всього: {sessionTotal || 0} грн</Text>
-              <Text style={styles.dayHeaderTotal}>К-сть транзакцій: {sessionOrdersQty}</Text>
+              <Text style={styles.dayHeaderTotal}>К-сть операцій: {sessionOrdersQty}</Text>
               {/* <Text style={styles.dayHeaderEmployees}>Працівників на зміні: {employeesLength}</Text> */}
               <View style={styles.dayHeaderIcon}>
                 <AnimatedImage

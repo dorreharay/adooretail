@@ -95,6 +95,8 @@ function Login(props) {
       dispatch(setNeedToReenter(false))
 
       if (currentSession.length !== 0 && !currentSession.endTime) {
+        console.log('currentSession')
+
         navigation.navigate('SalesLayout')
       } else {
         navigation.navigate('InputCash')

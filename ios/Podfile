@@ -48,7 +48,7 @@ target 'adooretail' do
     inherit! :search_paths
     # Pods for testing
   end
-
+  
   use_native_modules!
 end
 

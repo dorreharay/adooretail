@@ -62,6 +62,7 @@ const PaymentModal = (props) => {
   const [activeDiscount, setActiveDiscount] = useState(0)
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
   const [comment, setComment] = useState('')
+  const [toBePaid, setToByPaid] = useState(receiptSum)
 
   const saveReceipt = async (paymentType) => {
     function guidGenerator() {
@@ -81,7 +82,8 @@ const PaymentModal = (props) => {
     const payload = {
       payment_type: paymentType,
       receipt: currentReceipt,
-      total: receiptSum,
+      total: toBePaid,
+      initial: receiptSum,
       input: parseFloat(enteredSum),
       change: +((+enteredSum) - receiptSum).toFixed(2).replace(".00", ""),
       discount: `${discounts[activeDiscount].percent}%`,
@@ -142,7 +144,7 @@ const PaymentModal = (props) => {
         selectPType(pTypes[1])
       }
     }
-  }, [isVisible, currentAccount])
+  }, [isVisible])
 
   const handleCardPayment = () => {
     setStatus(initialStatuses.success)
@@ -198,13 +200,25 @@ const PaymentModal = (props) => {
   //   resetStatus()
   // }, [isVisible])
 
+  useEffect(() => { 
+    const percent = discounts[activeDiscount].percent
+    
+    if(activeDiscount === 0) {
+      return
+    }
+  
+    const updatedValue = (receiptSum - ((receiptSum / 100) * percent)).toFixed(2).replace('.00', '')
+
+    setToByPaid(updatedValue)
+  }, [activeDiscount, receiptSum])
+
   const receiptSum = useMemo(() => {
     const newSum = receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)
 
     setEnteredSum(newSum)
 
     return newSum
-  }, [receipts])
+  }, [receipts, selectedReceiptIndex])
 
   return (
     <View style={[styles.paymentWrapperContainer, { top: 4000, }, isVisible && { top: 0 },]}>
@@ -233,6 +247,7 @@ const PaymentModal = (props) => {
           activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
           discounts={discounts} setDiscounts={setDiscounts}
           comment={comment} setComment={setComment}
+          toBePaid={toBePaid} setToByPaid={setToByPaid}
         />
       </View>
 
@@ -261,7 +276,7 @@ const PaymentModal = (props) => {
                   <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                     <FastImage
                       style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
-                      source={{ uri: currentAccount.img_url }}
+                      source={{ uri: currentAccount && currentAccount.img_url || '' }}
                     />
                     <Text style={styles.employeesListItemName}>{item}</Text>
                   </View>

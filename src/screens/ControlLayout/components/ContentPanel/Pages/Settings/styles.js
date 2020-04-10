@@ -4,7 +4,7 @@ import { CIRCE_BOLD, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, 
 const base = {
   container: {
     flex: 1,
-    height: '100%',
+    height: '90%',
     paddingVertical: 40,
     paddingHorizontal: 60,
   },

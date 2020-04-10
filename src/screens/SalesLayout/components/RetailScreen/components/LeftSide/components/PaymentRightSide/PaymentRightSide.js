@@ -15,10 +15,10 @@ function PaymentRightSide(props) {
     saveReceipt, setButtonAccessibility,
     isVisible, activeDiscount, setActiveDiscount, 
     discounts, setDiscounts, comment, setComment,
+    toBePaid, setToByPaid,
   } = props
 
   const [invalidColor, setInvalidColor] = useState(false)
-  const [toBePaid, setToByPaid] = useState(total)
 
   useEffect(() => {
     if (selectedType.index === 1) return setButtonAccessibility(true)
@@ -42,18 +42,6 @@ function PaymentRightSide(props) {
       return
     }
   }, [total, activeDiscount])
-
-  useEffect(() => { 
-    const percent = discounts[activeDiscount].percent
-    
-    if(activeDiscount === 0) {
-      return
-    }
-  
-    const updatedValue = (total - ((total / 100) * percent)).toFixed(2).replace('.00', '')
-
-    setToByPaid(updatedValue)
-  }, [activeDiscount])
 
   const handleChangeSum = (value) => {
     value = value.replace(/[^0-9.]/g, '')

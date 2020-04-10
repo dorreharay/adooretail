@@ -5,9 +5,8 @@ import _ from 'lodash'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
-import UserInactivity from 'react-native-user-inactivity';
-import BackgroundTimer from 'react-native-user-inactivity/lib/BackgroundTimer';
 import AnimatedSplash from "react-native-animated-splash-screen";
+import BackgroundTimer from 'react-native-background-timer';
 
 import { syncSessions, validateSessionRoutine, } from '@requests'
 
@@ -54,20 +53,20 @@ function AppSessions(props) {
 
   useEffect(() => {
     if (accounts.length !== 0) {
-      validationRef.current = setInterval(() => {
+      validationRef.current = BackgroundTimer.setInterval(() => {
         validateSessionRoutine()
-      }, (currentAccount && currentAccount.client_data && currentAccount.client_data.shift_validation_period || (30 * 1000)))
+      }, currentAccount && currentAccount.client_data && currentAccount.client_data.shift_validation_period || (30 * 1000));
 
-      clearInterval(syncRef.current)
+      BackgroundTimer.clearInterval(syncRef.current);
 
-      syncRef.current = setInterval(() => {
+      syncRef.current = BackgroundTimer.setInterval(() => {
         synchronizeSessions()
-      }, (currentAccount && currentAccount.client_data && currentAccount.client_data.update_period || (10 * 1000)))
+      }, currentAccount && currentAccount.client_data && currentAccount.client_data.update_period || (30 * 1000));
     }
 
     return () => {
-      clearInterval(syncRef.current)
-      clearInterval(validationRef.current)
+      BackgroundTimer.clearInterval(syncRef.current);
+      BackgroundTimer.clearInterval(validationRef.current);
     };
   }, [accounts, currentAccount, modalStatus, currentSession, currentRoute, netInfo])
 

@@ -44,7 +44,7 @@ function Details(props) {
   })
 
   const { todayCardSum, todayCashSum, transactionsDelivery, transactionsIncasations, transactionsIncome } = useMemo(() => {
-    const localSessions = currentAccount.history || []
+    const localSessions = currentAccount && currentAccount.history || []
 
     const todaySessions = localSessions.filter(item => getDateByCondition(item.startTime, activeFilter))
 

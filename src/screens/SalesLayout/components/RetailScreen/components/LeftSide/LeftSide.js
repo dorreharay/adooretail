@@ -41,23 +41,23 @@ function LeftSide(props) {
     setCurrentTime(fullDate)
   }
 
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
+  // function useInterval(callback, delay) {
+  //   const savedCallback = useRef();
 
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
+  //   useEffect(() => {
+  //     savedCallback.current = callback;
+  //   }, [callback]);
 
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
+  //   useEffect(() => {
+  //     function tick() {
+  //       savedCallback.current();
+  //     }
+  //     if (delay !== null) {
+  //       let id = setInterval(tick, delay);
+  //       return () => clearInterval(id);
+  //     }
+  //   }, [delay]);
+  // }
 
   const startTimer = (e) => {
     validateTime()
@@ -69,13 +69,29 @@ function LeftSide(props) {
     setPaymentModalState(status)
   }
 
-  useInterval(() => {
-    validateTime()
-  }, 5 * 1000)
+  const saveBuffer = () => {
+    if (receiptSum <= 0) return 
+
+    const currentReceipt = receipts[selectedReceiptIndex]
+
+    const payload = {
+      payment_type: paymentType,
+      receipt: currentReceipt,
+      hash_id: guidGenerator(),
+      transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
+      employee: currentEmployee,
+    }
+
+    console.log('payload', payload)
+  }
+
+  // useInterval(() => {
+  //   validateTime()
+  // }, 5 * 1000)
 
   const receiptSum = useMemo(() => {
     return receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)
-  }, [receipts])
+  }, [receipts, selectedReceiptIndex])
 
   return (
     <View style={styles.container}>
@@ -160,7 +176,7 @@ function LeftSide(props) {
       </ScrollView>
 
       {currentAccount && currentAccount.settings && currentAccount.settings.available_teams && currentAccount.settings.available_teams.kitchen && currentAccount.settings.printer_enabled ? (
-        <View style={{ width: '100%', paddingHorizontal: '7%', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{ width: '100%', paddingHorizontal: '7%', paddingTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity
             onPress={() => changePaymentModalState(true)}
             style={[styles.proceedContainer, styles.zProceed]}
@@ -176,7 +192,7 @@ function LeftSide(props) {
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { }}
+            onPress={saveBuffer}
             style={[styles.proceedContainer, styles.zProceedEx, receiptSum <= 0 && { borderColor: '#E4616280' },]}
             activeOpacity={1}
           >

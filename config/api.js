@@ -1,1 +1,0 @@
-export const API_URL = 'https://nameless-ocean-36255.herokuapp.com'

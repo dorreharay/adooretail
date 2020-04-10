@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { useDispatch } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
 import DeviceInfo from 'react-native-device-info';
+import * as Progress from 'react-native-progress';
 import styles from '../styles';
 
 import API from '@api'
@@ -22,12 +23,12 @@ function ConfigureAccount(props) {
 
   const setCode = async (text) => {
     setAccountCode(text)
-    
+
     if (text.length === 10) {
       try {
         setLoadingStatus(true)
         inputRef.current && inputRef.current.blur()
-        Keyboard.dismiss()  
+        Keyboard.dismiss()
 
         console.log('text', text.length)
 
@@ -38,7 +39,7 @@ function ConfigureAccount(props) {
           new_device_id: deviceId,
         })
 
-        if (!data) throw new Error('Не вірні дані')
+        if (!data) throw new Error('Invalid response')
 
         dispatch(addAccount(data))
 
@@ -96,6 +97,11 @@ function ConfigureAccount(props) {
           <Text style={styles.loginHeading}>Проскануйте QR-код аккаунту</Text>
 
           <View style={styles.cameraContainer}>
+            {loading && (
+              <View style={styles.loadingWrapper}>
+                <Text style={styles.loadingWrapperText}>Обробка...</Text>
+              </View>
+            )}
             <RNCamera
               style={{ height: '100%', }}
               type={RNCamera.Constants.Type.back}

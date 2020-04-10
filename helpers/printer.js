@@ -26,6 +26,10 @@ function parceCyrrilicText(text) {
   )
 }
 
+const cutLine = async () => {
+  await BluetoothEscposPrinter.cutOnePoint()
+}
+
 export async function printReceipt(receipt, address) {
   try {
     if (address) {
@@ -49,15 +53,15 @@ export async function printReceipt(receipt, address) {
       await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Касир: ${parceCyrrilicText(receipt.employee)}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${receipt.transaction_time_end}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Тип оплати: ${parceCyrrilicText(receipt.payment_type === 'card' ? 'Картка' : 'Готівка')}`, { spaces: 1, paddingLeft: 2 })
     } else {
       await printRegularLine('Тестова адреса', { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Номер чека: #1234567`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Номер чека: #тест`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Касир: Тест`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Друк: 1234567`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Друк: Тест`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Тип оплати: Тест`, { spaces: 1, paddingLeft: 2 })
     }
-
-
-
+    
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
     await printColumn(['Продукт', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
@@ -76,9 +80,17 @@ export async function printReceipt(receipt, address) {
       })
     }
 
+    if(receipt && receipt.discount !== '0%') {
+      await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+
+      await printColumn(['', '', 'Всього:', `${receipt ? receipt.initial : '0'} грн`], { spaces: 1, paddingLeft: 2 }, 'total')
+
+      await printColumn(['', '', 'Знижка:', `-${parceCyrrilicText(receipt.discount)}`], { spaces: 1, paddingLeft: 2 }, 'total')
+    }
+
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
-    await printColumn(['', '', 'До сплати', `${receipt ? receipt.total : '0'} грн`], { paddingLeft: 2 })
+    await printColumn(['', '', 'До сплати:', `${receipt ? receipt.total : '0'} грн`], { paddingLeft: 2 }, 'total')
 
     await printRegularLine('---------------------------------------------', { spaces: 2, paddingLeft: 2 })
 
@@ -94,6 +106,8 @@ export async function printReceipt(receipt, address) {
     await printRegularLine('за ваше замовлення!', { spaces: 1, }, BluetoothEscposPrinter.ALIGN.CENTER)
 
     await printRegularLine('', { spaces: 6, })
+
+    await cutLine()
 
     await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
     await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
@@ -140,7 +154,7 @@ const printQRCode = async (text) => {
   await BluetoothEscposPrinter.printQRCode(text, 200, 2)
 }
 
-const printColumn = async (values, options) => {
+const printColumn = async (values, options, extraType) => {
   const { paddingLeft = 0 } = options
 
   const firstColumn = values[0]
@@ -148,25 +162,40 @@ const printColumn = async (values, options) => {
   const thirdColumn = values[2]
   const lastColumn = values[3]
 
+  let print = performColumnPrint
+
+  if(extraType && extraType === 'total') {
+    print = performTotalColumnPrint
+  }
+
   if (firstColumn.length > 11) {
-    await performColumnPrint([calculatePaddingLeft(paddingLeft) + firstColumn.slice(0, 11), secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
+    await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(0, 11), secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
 
 
     if (firstColumn.length <= 22) {
-      await performColumnPrint([calculatePaddingLeft(paddingLeft) + firstColumn.slice(11), '', '', ''], { paddingLeft: 2 })
+      await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(11).trim(), '', '', ''], { paddingLeft: 2 })
     } else {
-      await performColumnPrint([calculatePaddingLeft(paddingLeft) + firstColumn.slice(11, 22), '', '', ''], { paddingLeft: 2 })
-      await performColumnPrint([calculatePaddingLeft(paddingLeft) + firstColumn.slice(22), '', '', ''], { paddingLeft: 2 })
+      await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(11, 22).trim(), '', '', ''], { paddingLeft: 2 })
+      await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(22).trim(), '', '', ''], { paddingLeft: 2 })
     }
   } else {
-    await performColumnPrint([calculatePaddingLeft(paddingLeft) + firstColumn, secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
+    await print([calculatePaddingLeft(paddingLeft) + firstColumn, secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
   }
 }
 
 const performColumnPrint = async (values) => {
-  let columnWidths = [16, 10, 10, 8];
+  let columnWidths = [16, 10, 11, 8];
   await BluetoothEscposPrinter.printColumn(
     columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
+    values,
+    printOptions
+  );
+}
+
+const performTotalColumnPrint = async (values) => {
+  let columnWidths = [10, 12, 12, 10];
+  await BluetoothEscposPrinter.printColumn(
+    columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
     values,
     printOptions
   );
@@ -192,7 +221,11 @@ export async function scanDevices() {
 }
 
 export async function performPrinterScanAndConnect() {
-  const { found, paired } = await scanDevices()
+  const scanResult = await BluetoothManager.scanDevices()
+
+  const devices = JSON.parse(scanResult)
+
+  const { found, paired } = devices
 
 
   if(paired.length > 0) {

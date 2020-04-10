@@ -71,11 +71,11 @@ function InputEmployees({ navigation }) {
         transactions: [],
       }
 
+      navigation.navigate('SalesLayout')
+
       dispatch(updateCurrentSession({ status: 'new', newSessionProp: newSession }))
       dispatch(setEmployees([]))
       dispatch(setStartCash(0))
-
-      navigation.navigate('SalesLayout')
 
       syncSessions(() => {}, null, 1)
 
@@ -83,7 +83,6 @@ function InputEmployees({ navigation }) {
         setLoadingStatus(false)
         setCheckedEmployees([])
       }, 400)
-
     } catch (e) {
       toast.current && toast.current.show(e.message, DURATION.LENGTH_LONG)
       console.log(e.message)

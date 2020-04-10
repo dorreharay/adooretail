@@ -19,7 +19,7 @@ function History(props) {
   const [loading, setLoadingStatus] = useState(false)
 
   const historyList = useMemo(() => {
-    let newSessions = currentAccount.history
+    let newSessions = currentAccount && currentAccount.history
     
     if (withoutEmptySessions) {
       newSessions = newSessions.filter(item => item.receipts.length !== 0)

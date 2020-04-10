@@ -1,4 +1,5 @@
 import React from 'react'
+import { View, Platform } from 'react-native'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation'
 
@@ -26,10 +27,12 @@ const materialNavigation = createMaterialTopTabNavigator(
       backBehavior: 'none',
       optimizationsEnabled: true,
       lazy: true,
+      removeClippedSubviews: Platform.OS === 'android',
+      // lazyPlaceholder: () => <View style={{ width: 100, height :100, backgroundColor: 'red' }}></View>
     },
     transitionConfig: () => ({
       transitionSpec: {
-        duration: 0,
+        duration: 200,
       },
     }),
     initialRouteName: 'Login',

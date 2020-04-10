@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, FUTURA_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, GILROY_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 import { deviceWidth } from '@dimensions';
 
 const base = {
@@ -12,20 +12,20 @@ const base = {
   loginHeading: {
     color: '#FFFFFF',
     fontSize: 20,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: GILROY_REGULAR,
     letterSpacing: 1,
   },
   loginHeadingSuper: {
     color: '#FFFFFF',
     fontSize: 20,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: GILROY_REGULAR,
     letterSpacing: 2,
   },
   loginHeadingCaption: {
     marginTop: 14,
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: GILROY_REGULAR,
     letterSpacing: 1,
   },
   loginCaption: {
@@ -34,10 +34,10 @@ const base = {
     minHeight: 50,
   },
   loginCaptionText: {
-    width: 180,
+    width: 220,
     color: '#DADADA',
-    fontSize: 22,
-    fontFamily: FUTURA_LIGHT,
+    fontSize: 16,
+    fontFamily: GILROY_LIGHT,
     lineHeight: 27,
     textAlign: 'center',
     textDecorationLine: 'underline'
@@ -134,6 +134,22 @@ const base = {
   successImage: {
     width: 130,
     height: 130,
+  },
+  loadingWrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#FFFFFF44',
+  },
+  loadingWrapperText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontFamily: GILROY_REGULAR
   }
 };
 

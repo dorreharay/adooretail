@@ -57,7 +57,7 @@ const base = {
   },
   foundList: {
     width: listWidth,
-    minHeight: 300,
+    height: 250,
   },
   foundItem: {
     flexDirection: 'row',

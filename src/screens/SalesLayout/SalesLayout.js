@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, Fragment, } from 'react';
+import React, { useRef, useState, useMemo, useEffect, Fragment, } from 'react';
 import { Text, View, Animated, Easing, TouchableOpacity, Alert, } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Toast, { DURATION } from 'react-native-easy-toast'
@@ -14,6 +14,7 @@ import RetailScreen from './components/RetailScreen/RetailScreen';
 import Pagination from './components/Pagination/Pagination'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
+import { performPrinterScanAndConnect, } from '@printer'
 
 function SalesLayout({ navigation, }) {
   const toastRef = useRef(null)
@@ -28,6 +29,12 @@ function SalesLayout({ navigation, }) {
 
   const [animatedScale] = useState(new Animated.Value(1))
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
+
+  useEffect(() => {
+    if(currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
+      performPrinterScanAndConnect()
+    }
+  }, [currentAccount])
 
   const animate = () => {
     Animated.parallel([

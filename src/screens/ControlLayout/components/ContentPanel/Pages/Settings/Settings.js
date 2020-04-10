@@ -36,52 +36,55 @@ const Settings = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={{ alignSelf: 'flex-start', }}>
-        <Text style={styles.settingsTitle}>Активні цехи</Text>
-        <SwitchWithTitle
-          title={'Каса'}
-          value={currentAccount.settings.available_teams.paydesk}
-          onValueChange={(value) => updateSettings({ paydesk: value }, 'available_teams')}
-        />
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 200, }}>
+      {currentAccount && (
+        <>
+          <View style={{ alignSelf: 'flex-start', }}>
+            <Text style={styles.settingsTitle}>Активні цехи</Text>
+            <SwitchWithTitle
+              title={'Каса'}
+              value={currentAccount.settings.available_teams.paydesk}
+              onValueChange={(value) => updateSettings({ paydesk: value }, 'available_teams')}
+            />
 
-        <SwitchWithTitle
-          title={'Кухня'}
-          value={currentAccount.settings.available_teams.kitchen}
-          onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
-        />
-      </View>
+            <SwitchWithTitle
+              title={'Кухня'}
+              value={currentAccount.settings.available_teams.kitchen}
+              onValueChange={(value) => updateSettings({ kitchen: value }, 'available_teams')}
+            />
+          </View>
 
 
-      <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
-        <Text style={styles.settingsTitle}>Використовувати принтер чеків</Text>
+          <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
+            <Text style={styles.settingsTitle}>Використовувати принтер чеків</Text>
 
-        <SwitchWithTitle
-          title={'Увімкнути'}
-          value={currentAccount.settings.printer_enabled}
-          onValueChange={(value) => updateSettings(value, 'printer_enabled')}
-        />
-      </View>
+            <SwitchWithTitle
+              title={'Увімкнути'}
+              value={currentAccount.settings.printer_enabled}
+              onValueChange={(value) => updateSettings(value, 'printer_enabled')}
+            />
+          </View>
 
-      <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
-        <Text style={styles.settingsTitle}>Перевірка робочих годин</Text>
+          <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
+            <Text style={styles.settingsTitle}>Перевірка робочих годин</Text>
 
-        <SwitchWithTitle
-          title={'Увімкнути'}
-          value={currentAccount.settings.shifts.enabled}
-          onValueChange={(value) => updateSettings({ enabled: value }, 'shifts')}
-        />
-      </View>
+            <SwitchWithTitle
+              title={'Увімкнути'}
+              value={currentAccount.settings.shifts.enabled}
+              onValueChange={(value) => updateSettings({ enabled: value }, 'shifts')}
+            />
+          </View>
 
-      <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
-        <Text style={styles.settingsTitle}>Стандартний спосіб оплати</Text>
+          <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
+            <Text style={styles.settingsTitle}>Стандартний спосіб оплати</Text>
 
-        <SwitchButtons
-          buttons={['Готівка', 'Картка', 'Немає']}
-          updateSettings={updateSettings}
-        />
-      </View>
-
+            <SwitchButtons
+              buttons={['Готівка', 'Картка', 'Немає']}
+              updateSettings={updateSettings}
+            />
+          </View>
+        </>
+      )}
     </ScrollView>
   )
 }

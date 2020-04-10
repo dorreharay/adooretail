@@ -43,10 +43,8 @@ function Devices({ activeCategory, }) {
   }
 
   useEffect(() => {
-    if (activeCategory.index) {
-      checkBluetoothConnection()
-      scan()
-    }
+    checkBluetoothConnection()
+    scan()
   }, [activeCategory])
 
   return (

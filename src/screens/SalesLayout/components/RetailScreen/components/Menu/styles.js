@@ -1,5 +1,6 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
 import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { Platform } from 'react-native';
 
 const toolsBarHeight = 45
 
@@ -28,7 +29,7 @@ const base = {
   modalComponent: {
     width: 320,
     position: 'absolute',
-    top: 242,
+    top: Platform.OS === 'android' ? 202 : 220,
     right: 12,
     borderRadius: 2,
     margin: 20,
