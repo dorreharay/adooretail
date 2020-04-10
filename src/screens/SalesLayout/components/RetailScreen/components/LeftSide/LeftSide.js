@@ -11,6 +11,7 @@ import { deviceHeight } from '@dimensions'
 
 import { getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
 import { currentAccountSelector, } from '@selectors'
+import { printNewBuffer } from '@printer'
 import { clearCurrentReceipt, setSelectedReceipt, } from '@reducers/TempReducer'
 
 import ClockIcon from '@images/wall-clock.svg'
@@ -27,6 +28,7 @@ function LeftSide(props) {
   const {
     setPaymentModalState,
     buffer, setBuffer,
+    oldReceiptState, setOldReceipt,
   } = props;
 
   const dispatch = useDispatch()
@@ -37,7 +39,7 @@ function LeftSide(props) {
 
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
   const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))
-  const [oldReceiptState, setOldReceipt] = useState([null, null, null, null])
+  const [bufferPressed, setOnPressBuffer] = useState(false)
 
   const validateTime = () => {
     const fullDate = getUpperCaseDate('dddd  |  HH:mm')
@@ -65,7 +67,7 @@ function LeftSide(props) {
     setBuffer(newBuffer)
   }
 
-  const saveBuffer = () => {
+  const saveBuffer = async () => {
     if (receiptSum <= 0) return
 
     const currentReceipt = receipts[selectedReceiptIndex]
@@ -79,16 +81,24 @@ function LeftSide(props) {
       return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     }
 
-    const payload = {
+    let payload = {
       receipt: currentReceipt,
       hash_id: guidGenerator(),
-      transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
     }
 
-    if (bufferedReceipt === null) {
+    if (bufferedReceipt === null || !currentReceipt.some(item => oldReceipt.find(elem => elem.title === item.title))) {
+      if(oldReceipt && !currentReceipt.some(item => oldReceipt.find(elem => elem.title === item.title))) {
+        payload = {
+          ...payload,
+          receipt: [...payload.receipt, ...oldReceipt.map(item => ({ ...item, diff: `-${item.quantity}` }))]
+        }
+      }
+
+      await printNewBuffer(payload)
+
       updateBuffer(payload)
 
-      const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? payload.receipt : item)
+      const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? currentReceipt : item)
 
       setOldReceipt(newOldReceipt)
     } else {
@@ -96,7 +106,7 @@ function LeftSide(props) {
     }
   }
 
-  const compareReceipts = (oldBuffer, newReceipt, oldReceipt) => {
+  const compareReceipts = async (oldBuffer, newReceipt, oldReceipt) => {
     let newDiff = []
 
     console.log('oldReceipt', oldReceipt && oldReceipt.length)
@@ -135,13 +145,7 @@ function LeftSide(props) {
 
           return oldItem ? oldItem : item
         })
-
-        // newDiff = diffWithNewItemsrer
       }
-
-      // const diffWithNewItems = _.difference(newReceipt, oldReceipt)
-
-      // newDiff = diffWithNewItems
     } else {
       if (oldReceipt && newReceipt.length < oldReceipt.length) {
         console.log('------->', 3)
@@ -182,7 +186,13 @@ function LeftSide(props) {
 
     if (newDiff.every(item => item === undefined)) return
 
-    updateBuffer({ ...buffer[selectedReceiptIndex], receipt: newDiff })
+    const bufferInstance = { ...buffer[selectedReceiptIndex], receipt: newDiff }
+
+    updateBuffer(bufferInstance)
+
+    console.log('success ===>', bufferInstance.receipt)
+
+    await printNewBuffer(bufferInstance)
   }
 
   useEffect(() => {
@@ -299,7 +309,9 @@ function LeftSide(props) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => saveBuffer()}
-            style={[styles.proceedContainer, styles.zProceedEx, receiptSum <= 0 && { borderColor: '#E4616280' },]}
+            onPressIn={() => setOnPressBuffer(true)}
+            onPressOut={() => setOnPressBuffer(false)}
+            style={[styles.proceedContainer, styles.zProceedEx, receiptSum > 0 && bufferPressed && { backgroundColor: '#E4616260', }, receiptSum <= 0 && { borderColor: '#E4616280' },]}
             activeOpacity={1}
           >
             <View style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}>

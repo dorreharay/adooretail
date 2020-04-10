@@ -48,7 +48,7 @@ const base = {
     padding: 0,
     marginBottom: 40,
     borderRadius: 3,
-    borderWidth: 2,
+    borderWidth: 1.8,
     borderColor: '#E46162',
   },
   proceedContainer: {

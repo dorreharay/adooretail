@@ -19,7 +19,7 @@ import PaymentRightSide from '../PaymentRightSide/PaymentRightSide';
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 const PaymentModal = (props) => {
-  const { isVisible, setPaymentModalVisibility, buffer, setBuffer, } = props;
+  const { isVisible, setPaymentModalVisibility, buffer, setBuffer, oldReceiptState, setOldReceipt, } = props;
 
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -81,8 +81,8 @@ const PaymentModal = (props) => {
 
     let receiptId = guidGenerator()
 
-    if(buffer[selectedReceiptIndex]) {
-      receiptId = buffer[selectedReceiptIndex].hash_id 
+    if (buffer[selectedReceiptIndex]) {
+      receiptId = buffer[selectedReceiptIndex].hash_id
     }
 
     const payload = {
@@ -106,6 +106,10 @@ const PaymentModal = (props) => {
     const newBuffer = buffer.map((item, index) => index === selectedReceiptIndex ? null : item)
 
     setBuffer(newBuffer)
+
+    const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? null : item)
+
+    setOldReceipt(newOldReceipt)
 
     if (currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
       await printReceipt(payload)
@@ -210,13 +214,13 @@ const PaymentModal = (props) => {
   //   resetStatus()
   // }, [isVisible])
 
-  useEffect(() => { 
+  useEffect(() => {
     const percent = discounts[activeDiscount].percent
-    
-    if(activeDiscount === 0) {
+
+    if (activeDiscount === 0) {
       return
     }
-  
+
     const updatedValue = (receiptSum - ((receiptSum / 100) * percent)).toFixed(2).replace('.00', '')
 
     setToByPaid(updatedValue)

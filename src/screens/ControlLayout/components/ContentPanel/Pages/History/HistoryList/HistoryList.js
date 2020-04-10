@@ -4,6 +4,7 @@ import { useSelector, useDispatch, } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 import Collapsible from 'react-native-collapsible'
+import { printReceipt, } from '@printer'
 
 import SharedButton from '@shared/SharedButton'
 
@@ -87,6 +88,10 @@ function HistoryList(props) {
     }
   }
 
+  const reprintReceipt = async (receipt) => {
+    await printReceipt(receipt)
+  }
+
   return (
     <ScrollView
       ref={scrollRef}
@@ -155,16 +160,16 @@ function HistoryList(props) {
                               source={require('@images/qr-code.png')}
                             />
                           </SharedButton>
-                          {/* <SharedButton
-                            style={{ marginTop: -15, width: 58, height: 58, }}
-                            onPress={() => showReceiptModal('email', item)}
+                          <SharedButton
+                            style={{ marginTop: -15, width: 69, height: 69, }}
+                            onPress={() => reprintReceipt(item)}
                             scale={0.8}
                           >
                             <FastImage
-                              style={{ width: '30%', height: '30%', }}
-                              source={require('@images/email.png')}
+                              style={{ width: '26%', height: '26%', }}
+                              source={require('@images/tprinter.png')}
                             />
-                          </SharedButton> */}
+                          </SharedButton>
                         </View>
 
 

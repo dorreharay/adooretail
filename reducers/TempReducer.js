@@ -101,6 +101,7 @@ export function addProductQuantity(payload) {
         price: product.price,
         quantity: 1,
         time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
+        department: product.department,
       }
   
       newReceiptsInstance = [...receipt, firstReceiptItem]

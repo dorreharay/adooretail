@@ -3,6 +3,8 @@ import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetoot
 import { setBluetoothDevices } from '@reducers/TempReducer'
 import store from '@store'
 
+import { getFormattedDate, } from '@dateFormatter'
+
 const printOptions = {
   encoding: 'CP866',
   codepage: 17,
@@ -30,6 +32,73 @@ const cutLine = async () => {
   await BluetoothEscposPrinter.cutOnePoint()
 }
 
+export async function printNewBuffer(receipt) {
+  try {
+    const kitchenReceipts = receipt.receipt.filter(item => item.department === 'kitchen')
+    const paydeskReceipts = receipt.receipt.filter(item => item.department === 'paydesk')
+
+    await BluetoothEscposPrinter.printerLineSpace(80)
+    await BluetoothEscposPrinter.setWidth(400)
+
+    if(kitchenReceipts.length !== 0) {
+      await printHeading(parceCyrrilicText('Кухня'), { spaces: 2, })
+
+      await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
+  
+      await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+  
+      async function asyncForEach(array, callback) {
+        for (let index = 0; index < array.length; index++) {
+          await callback(array[index], index, array);
+        }
+      }
+  
+      if (kitchenReceipts) {
+        await asyncForEach(kitchenReceipts, async (item) => {
+          await printColumn([parceCyrrilicText(item.title), ``, ``, `${item.diff ? item.diff : item.quantity} шт`], { paddingLeft: 2 }, 'buffer')
+        })
+      }
+  
+      await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+  
+      await printRegularLine('', { spaces: 6, })
+  
+      await cutLine()
+    }
+
+    if(paydeskReceipts.length !== 0) {
+      await printHeading(parceCyrrilicText('Бар'), { spaces: 2, })
+
+      await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
+  
+      await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+  
+      async function asyncForEach(array, callback) {
+        for (let index = 0; index < array.length; index++) {
+          await callback(array[index], index, array);
+        }
+      }
+  
+      if (paydeskReceipts) {
+        await asyncForEach(paydeskReceipts, async (item) => {
+          await printColumn([parceCyrrilicText(item.title), ``, ``, `${item.diff ? item.diff : item.quantity} шт`], { paddingLeft: 2 }, 'buffer')
+        })
+      }
+  
+      await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+  
+      await printRegularLine('', { spaces: 6, })
+  
+      await cutLine()
+    }
+  } catch (error) {
+    Alert.alert('Принтер не налаштовано')
+    console.log(error.message)
+  }
+}
+
 export async function printReceipt(receipt, address) {
   try {
     if (address) {
@@ -48,6 +117,9 @@ export async function printReceipt(receipt, address) {
     await BluetoothEscposPrinter.printerLineSpace(80)
     await BluetoothEscposPrinter.setWidth(400)
 
+    await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
+    await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
+
     if (receipt) {
       await printRegularLine('м. Вiнниця вул. Грушевського 15', { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
@@ -61,7 +133,7 @@ export async function printReceipt(receipt, address) {
       await printRegularLine(`Друк: Тест`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Тип оплати: Тест`, { spaces: 1, paddingLeft: 2 })
     }
-    
+
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
     await printColumn(['Продукт', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
@@ -80,7 +152,7 @@ export async function printReceipt(receipt, address) {
       })
     }
 
-    if(receipt && receipt.discount !== '0%') {
+    if (receipt && receipt.discount !== '0%') {
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
       await printColumn(['', '', 'Всього:', `${receipt ? receipt.initial : '0'} грн`], { spaces: 1, paddingLeft: 2 }, 'total')
@@ -108,9 +180,6 @@ export async function printReceipt(receipt, address) {
     await printRegularLine('', { spaces: 6, })
 
     await cutLine()
-
-    await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
-    await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
   } catch (error) {
     Alert.alert('Принтер не налаштовано')
     console.log(error.message)
@@ -164,22 +233,40 @@ const printColumn = async (values, options, extraType) => {
 
   let print = performColumnPrint
 
-  if(extraType && extraType === 'total') {
+  if (extraType && extraType === 'total') {
     print = performTotalColumnPrint
   }
 
-  if (firstColumn.length > 11) {
-    await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(0, 11), secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
+  if (extraType && extraType === 'buffer') {
+    print = performBufferColumnPrint
+  }
 
+  if (extraType && extraType === 'buffer') {
+    if (firstColumn.length > 29) {
+      await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(0, 29), secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
 
-    if (firstColumn.length <= 22) {
-      await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(11).trim(), '', '', ''], { paddingLeft: 2 })
+      if (firstColumn.length <= 70) {
+        await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(29).trim(), '', '', ''], { paddingLeft: 2 })
+      } else {
+        await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(29, 40).trim(), '', '', ''], { paddingLeft: 2 })
+        await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(40).trim(), '', '', ''], { paddingLeft: 2 })
+      }
     } else {
-      await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(11, 22).trim(), '', '', ''], { paddingLeft: 2 })
-      await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(22).trim(), '', '', ''], { paddingLeft: 2 })
+      await print([calculatePaddingLeft(paddingLeft) + firstColumn, secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
     }
   } else {
-    await print([calculatePaddingLeft(paddingLeft) + firstColumn, secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
+    if (firstColumn.length > 11) {
+      await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(0, 11), secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
+
+      if (firstColumn.length <= 22) {
+        await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(11).trim(), '', '', ''], { paddingLeft: 2 })
+      } else {
+        await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(11, 22).trim(), '', '', ''], { paddingLeft: 2 })
+        await print([calculatePaddingLeft(paddingLeft) + firstColumn.slice(22).trim(), '', '', ''], { paddingLeft: 2 })
+      }
+    } else {
+      await print([calculatePaddingLeft(paddingLeft) + firstColumn, secondColumn, thirdColumn, lastColumn], { paddingLeft: 2 })
+    }
   }
 }
 
@@ -201,6 +288,15 @@ const performTotalColumnPrint = async (values) => {
   );
 }
 
+const performBufferColumnPrint = async (values) => {
+  let columnWidths = [32, 2, 2, 10];
+  await BluetoothEscposPrinter.printColumn(
+    columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
+    values,
+    printOptions
+  );
+}
+
 export async function scanDevices() {
   const dispatch = store.dispatch
 
@@ -208,13 +304,13 @@ export async function scanDevices() {
     const scanResult = await BluetoothManager.scanDevices()
 
     const devices = JSON.parse(scanResult)
-  
+
     const found = devices.found
     const paired = devices.paired
-  
+
     dispatch(setBluetoothDevices(devices))
-  
-    return { found, paired } 
+
+    return { found, paired }
   } catch (error) {
     console.log(error)
   }
@@ -228,7 +324,7 @@ export async function performPrinterScanAndConnect() {
   const { found, paired } = devices
 
 
-  if(paired.length > 0) {
+  if (paired.length > 0) {
     await BluetoothManager.connect(paired[0].address)
   } else {
     // if(found.length > 0) {

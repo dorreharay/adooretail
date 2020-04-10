@@ -74,7 +74,15 @@ function AppSessions(props) {
     timerRef1.current = setTimeout(() => {
       NavigationService.setTopLevelNavigator(navigatorRef.current)
       timerRef2.current = setTimeout(async () => {
-        NavigationService.navigate(screen)
+        if (screen === 'SalesLayout') {
+          NavigationService.navigate('ControlLayout')
+
+          setTimeout(() => {
+            NavigationService.navigate(screen)
+          }, 400)
+        } else {
+          NavigationService.navigate(screen)
+        }
 
         if (accounts.length === 0) {
           setInitialLoadingVisibility(true)
