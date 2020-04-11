@@ -111,13 +111,17 @@ const PaymentModal = (props) => {
 
     setOldReceipt(newOldReceipt)
 
-    if (currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
-      await printReceipt(payload)
-    }
+    try {
+      if (currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
+        await printReceipt(payload)
+      }
 
-    timerRef2.current = setTimeout(() => {
-      dispatch(syncReceipt(payload))
-    }, 300)
+      timerRef2.current = setTimeout(() => {
+        dispatch(syncReceipt(payload))
+      }, 300)
+    } catch (error) {
+
+    }
   }
 
   const [buttonAccessible, setButtonAccessibility] = useState(true)

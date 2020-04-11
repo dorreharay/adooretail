@@ -141,10 +141,19 @@ function Products(props) {
                   activeOpacity={1}
                   scale={0.95} key={key}
                 >
-                  <FastImage
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
-                    source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
-                  />
+                  {rowItem.img_url !== '' ? (
+                    <FastImage
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
+                      source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
+                    />
+                  ) : (
+                      <LinearGradient
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: 3, }}
+                        colors={[rowItem ? rowItem.placeholder_color : '#CCC', rowItem ? rowItem.placeholder_shadow : '#CCC']}
+                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                      />
+                    )}
+
                   <View
                     style={[styles[`categoryTitle${layout}`], { bottom: -1, }]}
                     onPress={() => changeActiveCategory(index, key)}
@@ -192,9 +201,16 @@ function Products(props) {
                         {rowItem.color && (
                           <LinearGradient
                             style={styles.variant}
-                            colors={[rowItem.color, rowItem.shadow]}
+                            colors={(rowItem.img_url && rowItem.img_url !== '') ? ['#484848', '#000000'] : [rowItem.color, rowItem.shadow]}
                             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                           >
+                            {rowItem.img_url && rowItem.img_url !== '' && (
+                              <FastImage
+                                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.3, borderRadius: 3, }}
+                                source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
+                              />
+                            )}
+
                             <View style={styles.variantPrice}>
                               <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
                             </View>
@@ -203,7 +219,6 @@ function Products(props) {
                               textBreakStrategy='balanced'
                               ellipsizeMode='tail'
                               style={styles[`variantText${layout}`]}
-                            // selectionColor='#FFFFFF'
                             >
                               {rowItem.title}
                             </Text>

@@ -131,8 +131,8 @@ android {
         applicationId "com.adooretail"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "1.1.3"
+        versionCode 15
+        versionName "1.1.5"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     splits {
