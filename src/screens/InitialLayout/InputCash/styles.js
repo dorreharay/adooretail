@@ -85,6 +85,59 @@ const base = {
 const styles = createStyles(
   base,
 
+  maxHeight(1200, {
+    loginHeading: {
+      fontSize: 12,
+    },
+    dot: {
+      width: '35',
+      height: '35',
+      cx: '20',
+      cy: '20',
+      r: '14',
+    },
+    idDots: {
+      width: 320,
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+      marginTop: 35,
+    },
+    loginCaption: {
+      color: '#F7F7F7',
+      fontSize: 45,
+      fontFamily: GILROY_LIGHT,
+      marginTop: 35,
+    },
+    lsNumpad: {
+      width: 400,
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: 20,
+    },
+    lsNum: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 90,
+      height: 90,
+      marginLeft: '5%',
+      marginRight: '5%',
+      borderRadius: 100,
+    },
+    lsNumText: {
+      color: '#F6F6F6',
+      fontSize: 36,
+      fontFamily: GILROY_LIGHT,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+    },
+    erase: {
+      width: 32,
+      height: 27,
+      marginRight: 5,
+    }
+  }),
+
   maxHeight(500, {
     container: {
       paddingTop: 0,

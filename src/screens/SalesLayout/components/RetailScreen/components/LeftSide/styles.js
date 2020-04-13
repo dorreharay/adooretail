@@ -34,7 +34,7 @@ const base = {
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingRight: 5,
-    width: '76%',
+    width: '66%',
     height: 70,
     paddingLeft: 0,
     marginLeft: '0%',
@@ -43,7 +43,7 @@ const base = {
   zProceedEx: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '23%',
+    width: '33%',
     height: 70,
     padding: 0,
     marginBottom: 40,

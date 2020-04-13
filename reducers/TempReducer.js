@@ -83,13 +83,13 @@ export function addProductQuantity(payload) {
 
     let receipt = receipts[selectedReceiptIndex]
 
-    const productExists = !!receipt.find(item => item.title === product.title)
+    const productExists = !!receipt.find(item => item.hash_id === product.hash_id)
   
     let newReceiptsInstance = []
   
     if (productExists) {
       newReceiptsInstance = receipt.map((item, index) => {
-        if (item.title === product.title) {
+        if (item.hash_id === product.hash_id) {
           return ({ ...item, quantity: item.quantity + 1 })
         }
   
@@ -99,7 +99,9 @@ export function addProductQuantity(payload) {
       let firstReceiptItem = {
         title: product.title,
         price: product.price,
+        hash_id: product.hash_id,
         quantity: 1,
+        size: product.size || null,
         time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
         department: product.department,
       }

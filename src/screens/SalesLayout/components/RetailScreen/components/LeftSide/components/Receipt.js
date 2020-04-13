@@ -45,7 +45,7 @@ function Receipt(props) {
       {receipts[selectedReceiptIndex].map((item, index) => (
         <View style={styles.receiptItem} key={index}>
           <View style={styles.receiptTitle}>
-            <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}</Text>
+      <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}{item.size ? `, ${item.size === 'S' ? 'малий' : item.size === 'M' ? 'середній' : 'великий'}` : ''}</Text>
           </View>
           <View style={styles.receiptDetails}>
             <View style={styles.receiptOnePriceContainer}>

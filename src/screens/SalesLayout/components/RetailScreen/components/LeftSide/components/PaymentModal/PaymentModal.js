@@ -57,7 +57,7 @@ const PaymentModal = (props) => {
   const [enteredSum, setEnteredSum] = useState('0')
   const [employeesListVisible, setEmployeesListVisibility] = useState(false)
   const [currentEmployee, setCurrentEmployee] = useState((currentSession && currentSession.employees) ? currentSession.employees[0] : '-')
-  const [modalOffset, setModalOffset] = useState(new Animated.Value(0))
+  const [modalOffset, setModalOffset] = useState(0)
 
   const [activeDiscount, setActiveDiscount] = useState(0)
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
@@ -187,25 +187,19 @@ const PaymentModal = (props) => {
 
   useEffect(() => {
     willShowRef.current = Keyboard.addListener('keyboardWillShow', () => {
-      Animated.timing(
-        modalOffset,
-        {
-          toValue: -200,
-          duration: 200,
-        },
-      ).start()
+      setModalOffset(-200)
     });
-    willHideRef.current = Keyboard.addListener('keyboardWillHide', () => Animated.timing(
-      modalOffset,
-      {
-        toValue: 0,
-        duration: 200,
-      },
-    ).start());
+    willHideRef.current = Keyboard.addListener('keyboardWillHide', () => {
+      setModalOffset(0)
+    });
 
     return () => {
-      willShowRef.current.remove();
-      willHideRef.current.remove();
+      Keyboard.removeListener("keyboardWillShow", () => {
+        setModalOffset(-200)
+      });
+      Keyboard.removeListener("keyboardWillHide", () => {
+        setModalOffset(0)
+      });
     }
   }, [])
 
@@ -239,7 +233,7 @@ const PaymentModal = (props) => {
   }, [receipts, selectedReceiptIndex])
 
   return (
-    <View style={[styles.paymentWrapperContainer, { top: 4000, }, isVisible && { top: 0 },]}>
+    <View style={[styles.paymentWrapperContainer, { top: 4000, }, isVisible && { top: modalOffset },]}>
       <TouchableOpacity
         style={styles.paymentWrapper}
         activeOpacity={1}

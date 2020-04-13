@@ -206,7 +206,7 @@ function PaymentType(props) {
             onPress={() => handleExpand(discountCollapsed, 'discount')}
             activeOpacity={0.8}
           >
-            <Text style={[styles.headingText, { paddingBottom: 0, }]}>Знижка</Text>
+            <Text style={[styles.headingText, { fontSize: 18, paddingBottom: 0, }]}>Знижка</Text>
             <AnimatedImage
               style={{ width: 13, height: 13, marginLeft: '2%', marginTop: '7.5%', transform: [{ rotate: spinD }] }}
               source={require('@images/down-arrow.png')}
@@ -214,7 +214,7 @@ function PaymentType(props) {
           </TouchableOpacity>
 
 
-          <Collapsible style={{ paddingTop: '5%' }} collapsed={discountCollapsed}>
+          <Collapsible style={{ paddingTop: '3%' }} collapsed={discountCollapsed}>
             <ScrollView
               style={styles.discountContainer}
               contentContainerStyle={{ paddingBottom: 2, }}
@@ -240,21 +240,21 @@ function PaymentType(props) {
 
 
       {deviceHeight > 500 && (
-        <View>
+        <View style={{ }}>
           <TouchableOpacity
-            style={{ alignItems: 'center', flexDirection: 'row' }}
+            style={{ alignItems: 'center', flexDirection: 'row', }}
             onPress={() => handleExpand(commentCollapsed, 'comment')}
             activeOpacity={0.8}
           >
-            <Text style={[styles.headingText, { paddingBottom: 0, }]}>Коментар</Text>
+            <Text style={[styles.headingText, { fontSize: 18, paddingTop: '3%', paddingBottom: 0, }]}>Коментар</Text>
             <AnimatedImage
-              style={{ width: 13, height: 13, marginLeft: '2%', marginTop: '7.5%', transform: [{ rotate: spinC }] }}
+              style={{ width: 13, height: 13, marginLeft: '2%', marginTop: '3.4%', transform: [{ rotate: spinC }] }}
               source={require('@images/down-arrow.png')}
             />
           </TouchableOpacity>
 
 
-          <Collapsible style={{ paddingTop: '5%' }} collapsed={commentCollapsed}>
+          <Collapsible style={{ paddingTop: '4%' }} collapsed={commentCollapsed}>
             <TextInput
               value={comment}
               onChangeText={handleChangeText}

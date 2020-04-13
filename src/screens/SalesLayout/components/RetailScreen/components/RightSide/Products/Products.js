@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo, } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, processColor } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
@@ -22,7 +22,7 @@ function Products(props) {
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
   const [searchResult, setSearchResult] = useState([])
-
+  const [savedActiveCategoryPath, setSavedActiveCategoryPath] = useState({ index: 0, key: 0 })
 
   useMemo(() => {
     if (!paymentModalVisible) {
@@ -58,8 +58,20 @@ function Products(props) {
 
     const withback = [{ title: 'back', }, ...newItem.variants]
 
+    setSavedActiveCategoryPath({ index, key })
+
     updateLayout(withback, layout)
   }
+
+  useEffect(() => {
+    if (activeCategory) {
+      console.log('savedActiveCategoryPath', savedActiveCategoryPath)
+
+      const { index, key } = savedActiveCategoryPath
+
+      changeActiveCategory(index, key)
+    }
+  }, [products])
 
   const resetCategory = () => {
     scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
@@ -86,6 +98,7 @@ function Products(props) {
       updateLayout(flattened, layout)
     }
   }, [layout])
+
 
   useEffect(() => {
     if (searchTerm.length > 0) {
@@ -159,7 +172,7 @@ function Products(props) {
                     onPress={() => changeActiveCategory(index, key)}
                     activeOpacity={1} key={index}
                   >
-                    <Text numberOfLines={2} ellipsizeMode='tail' style={styles[`categoryTitleText${layout}`]}>{rowItem.title.toUpperCase()}</Text>
+                    <Text numberOfLines={2} ellipsizeMode='tail' style={styles[`categoryTitleText${layout}`]}>{rowItem.title}</Text>
                   </View>
 
                   {rowItem.matches && (
@@ -204,24 +217,51 @@ function Products(props) {
                             colors={(rowItem.img_url && rowItem.img_url !== '') ? ['#484848', '#000000'] : [rowItem.color, rowItem.shadow]}
                             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                           >
-                            {rowItem.img_url && rowItem.img_url !== '' && (
-                              <FastImage
-                                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.3, borderRadius: 3, }}
-                                source={{ uri: rowItem.img_url, priority: FastImage.priority.high, }}
-                              />
-                            )}
+                            <FastImage
+                              style={{ width: '100%', height: '80%', opacity: 1, borderRadius: 3, }}
+                              source={{ uri: rowItem.img_url || '', priority: FastImage.priority.high, }}
+                            />
 
-                            <View style={styles.variantPrice}>
-                              <Text style={styles.variantPriceText}>{rowItem.price}₴</Text>
-                            </View>
-                            <Text
-                              numberOfLines={4}
-                              textBreakStrategy='balanced'
-                              ellipsizeMode='tail'
-                              style={styles[`variantText${layout}`]}
-                            >
-                              {rowItem.title}
-                            </Text>
+                            {(rowItem.img_url === '') ? (
+                              <View style={styles[`variantPrice${layout}`]}>
+                                <Text style={styles[`variantPriceText${layout}`]}>{rowItem.price}₴</Text>
+                              </View>
+                            ) : null}
+
+                            {(rowItem.img_url !== '' && rowItem.size) ? (
+                              <View style={[styles[`variantSize${layout}`], { backgroundColor: rowItem.color }]}>
+                                <Text style={[styles[`categoryTitleText${layout}`], { color: '#FFFFFF' }]}>{rowItem.size}</Text>
+                              </View>
+                            ) : null}
+
+                            {(rowItem.img_url && rowItem.img_url !== '') ? (
+                              <View
+                                style={[styles[`categoryTitle${layout}`], { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', bottom: -1, }]}
+                                onPress={() => changeActiveCategory(index, key)}
+                                activeOpacity={1} key={index}
+                              >
+                                <Text
+                                  style={[styles[`categoryTitleText${layout}`], { maxWidth: '70%', }]}
+                                  numberOfLines={2}
+                                  ellipsizeMode='tail'
+                                >
+                                  {rowItem.title}
+                                </Text>
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', width: 35, }}>
+                                  <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.price}₴</Text>
+                                </View>
+                              </View>
+                            ) : (
+                                <Text
+                                  numberOfLines={4}
+                                  textBreakStrategy='balanced'
+                                  ellipsizeMode='tail'
+                                  style={styles[`variantText${layout}`]}
+                                >
+                                  {rowItem.title}
+                                </Text>
+                              )}
                           </LinearGradient>
                         )}
                       </TouchableOpacity>

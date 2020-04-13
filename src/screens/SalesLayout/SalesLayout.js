@@ -61,6 +61,8 @@ function SalesLayout({ navigation, }) {
   }
 
   const updateLayout = (products, cardsPerRow) => {
+    products = products.sort((a, b) => b.sortIndex - a.sortIndex)
+
     function chunkArray(myArray, chunk_size) {
       var results = [];
 

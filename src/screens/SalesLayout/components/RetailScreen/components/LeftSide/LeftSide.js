@@ -51,10 +51,101 @@ function LeftSide(props) {
     validateTime()
   }
 
+  function guidGenerator() {
+    let S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+  }
+
   const changePaymentModalState = (status) => {
     if (status && receipts[selectedReceiptIndex].length === 0) return
 
     setPaymentModalState(status)
+  }
+
+  const checkQuantityChange = (newReceipt, oldReceipt, newDiff) => {
+    console.log('-------> 1 перевірка зміни quantity')
+
+    let diff = _.difference(newReceipt, oldReceipt, 'quantity')
+
+        diff = diff.filter(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))
+
+    const temp = diff.map(newItem => {
+      const oldItem = oldReceipt.find(elem => elem.time === newItem.time)
+
+      if (newItem.quantity !== oldItem.quantity) {
+        if (newItem.quantity > oldItem.quantity) {
+          return ({
+            ...newItem,
+            diff: `+${newItem.quantity - oldItem.quantity}`
+          })
+        } else {
+          return ({
+            ...newItem,
+            diff: `-${oldItem.quantity - newItem.quantity}`
+          })
+        }
+      }
+    })
+
+    return [...newDiff, ...temp]
+  }
+
+  const checkNewItems = (newReceipt, oldReceipt, newDiff) => {
+    console.log('-------> 2 перевірка нових елементів')
+
+    const diffWithNewItems = _.difference(newReceipt, oldReceipt)
+
+    oldReceipt = oldReceipt.sort((a, b) => parseInt(a.time.slice(-5).replace(':', '')) - parseInt(b.time.slice(-5).replace(':', '')))
+    newReceipt = newReceipt.sort((a, b) => parseInt(a.time.slice(-5).replace(':', '')) - parseInt(b.time.slice(-5).replace(':', '')))
+
+    if(diffWithNewItems.length === 0) {
+      console.log('-------> 2-1 нічого не змінилось, скіпаю')
+
+      return newDiff
+    }
+
+    if(diffWithNewItems.every(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))) {
+      console.log('-------> 2-2 нічого не змінилось, скіпаю')
+
+      return newDiff
+    }
+
+    const temp = diffWithNewItems.map(item => {
+      const oldItem = newDiff.find(elem => elem.time === item.time)
+
+      return oldItem ? oldItem : item
+    })
+
+    return [...new Map([...newDiff, ...temp].map(item => [item['hash_id'], item])).values()]
+  }
+
+  const checkDeletedItems = (newReceipt, oldReceipt, newDiff) => {
+    console.log('-------> 3 перевірка виделених елементів')
+
+    const diff = _.difference(oldReceipt, newReceipt)
+
+    let temp = diff.map(item => ({ ...item, diff: `-${item.quantity}` }))
+
+    oldReceipt = oldReceipt.sort((a, b) => parseInt(a.time.slice(-5).replace(':', '')) - parseInt(b.time.slice(-5).replace(':', '')))
+    newReceipt = newReceipt.sort((a, b) => parseInt(a.time.slice(-5).replace(':', '')) - parseInt(b.time.slice(-5).replace(':', '')))
+
+    if(newReceipt.length === oldReceipt.length && newReceipt.every(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))) {
+      console.log('-------> 3-1 нічого не змінилось, скіпаю')
+
+      return newDiff
+    }
+
+    if (oldReceipt && !newReceipt.some(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))) {
+      console.log('-------> 3-2 всі попередні елементи видалені, але добавлені нові, що є унікальними')
+
+      newDiff = [...newReceipt, ...newDiff]
+    }
+
+    temp = temp.filter(item => !newDiff.find(elem => elem.hash_id === item.hash_id))
+
+    return [...new Map([...newDiff, ...temp].map(item => [item['hash_id'], item])).values()]
   }
 
   const updateBuffer = (data) => {
@@ -74,111 +165,32 @@ function LeftSide(props) {
     const bufferedReceipt = buffer[selectedReceiptIndex]
     const oldReceipt = oldReceiptState[selectedReceiptIndex]
 
-    function guidGenerator() {
-      let S4 = function () {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-      };
-      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-    }
-
-    let payload = {
-      receipt: currentReceipt,
-      hash_id: guidGenerator(),
-    }
-
-    if (bufferedReceipt === null || !currentReceipt.some(item => oldReceipt.find(elem => elem.title === item.title))) {
-      if(oldReceipt && !currentReceipt.some(item => oldReceipt.find(elem => elem.title === item.title))) {
-        payload = {
-          ...payload,
-          receipt: [...payload.receipt, ...oldReceipt.map(item => ({ ...item, diff: `-${item.quantity}` }))]
-        }
-      }
-
-      await printNewBuffer(payload)
-
-      updateBuffer(payload)
-
-      const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? currentReceipt : item)
-
-      setOldReceipt(newOldReceipt)
-    } else {
-      compareReceipts(bufferedReceipt.receipt, currentReceipt, oldReceipt)
-    }
+    compareReceipts(bufferedReceipt, currentReceipt, oldReceipt)
   }
 
   const compareReceipts = async (oldBuffer, newReceipt, oldReceipt) => {
     let newDiff = []
+    let temp = []
 
-    console.log('oldReceipt', oldReceipt && oldReceipt.length)
-    console.log('newReceipt', oldReceipt && newReceipt.length)
+    if (oldBuffer === null) {
+      console.log('-------> 0 буфер пустий')
 
-    if (oldReceipt && newReceipt.length > oldReceipt.length) {
-      console.log('------->', 1)
-
-      newDiff = oldReceipt.map(oldItem => {
-        const newItems = newReceipt.filter(item => oldReceipt.find(elem => elem.time === item.time))
-
-        const newItem = newItems.find(elem => elem.time === oldItem.time)
-
-        if (newItem.quantity !== oldItem.quantity) {
-          if (newItem.quantity > oldItem.quantity) {
-            return ({
-              ...newItem,
-              diff: `+${newItem.quantity - oldItem.quantity}`
-            })
-          } else {
-            return ({
-              ...newItem,
-              diff: `-${oldItem.quantity - newItem.quantity}`
-            })
-          }
-        } else {
-          return oldItem
-        }
-      })
-
-      if (!newDiff.every(item => item === undefined)) {
-        const diffWithNewItems = _.difference(newReceipt, oldReceipt)
-
-        newDiff = diffWithNewItems.map(item => {
-          const oldItem = newDiff.find(elem => elem.time === item.time)
-
-          return oldItem ? oldItem : item
-        })
-      }
+      newDiff = newReceipt
     } else {
-      if (oldReceipt && newReceipt.length < oldReceipt.length) {
-        console.log('------->', 3)
+      newDiff = checkQuantityChange(newReceipt, oldReceipt, newDiff)
 
-        const diff = _.difference(oldReceipt, newReceipt)
+      console.log('1', newDiff)
 
-        newDiff = diff.map(item => ({ ...item, diff: `-${item.quantity}` }))
+      newDiff = checkNewItems(newReceipt, oldReceipt, newDiff)
 
+      console.log('2', newDiff)
 
-      } else {
-        console.log('------->', 2)
+      newDiff = checkDeletedItems(newReceipt, oldReceipt, newDiff)
 
-        const diff = _.difference(newReceipt, oldReceipt, 'quantity')
-
-        newDiff = diff.map(newItem => {
-          const oldItem = oldReceipt.find(elem => elem.time === newItem.time)
-
-          if (newItem.quantity !== oldItem.quantity) {
-            if (newItem.quantity > oldItem.quantity) {
-              return ({
-                ...newItem,
-                diff: `+${newItem.quantity - oldItem.quantity}`
-              })
-            } else {
-              return ({
-                ...newItem,
-                diff: `-${oldItem.quantity - newItem.quantity}`
-              })
-            }
-          }
-        })
-      }
+      console.log('3', newDiff)
     }
+
+    console.log('newDiff ===>', newDiff)
 
     const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? newReceipt : item)
 
@@ -186,11 +198,9 @@ function LeftSide(props) {
 
     if (newDiff.every(item => item === undefined)) return
 
-    const bufferInstance = { ...buffer[selectedReceiptIndex], receipt: newDiff }
+    const bufferInstance = { ...buffer[selectedReceiptIndex], hash_id: oldBuffer === null ? guidGenerator() : buffer[selectedReceiptIndex].hash_id, receipt: newDiff }
 
     updateBuffer(bufferInstance)
-
-    console.log('success ===>', bufferInstance.receipt)
 
     await printNewBuffer(bufferInstance)
   }
@@ -208,6 +218,11 @@ function LeftSide(props) {
   const receiptSum = useMemo(() => {
     return receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)
   }, [receipts, selectedReceiptIndex])
+
+  const bufferHasChanges = useMemo(() => {
+    return false
+    // return _.difference(receipts[selectedReceiptIndex], oldReceiptState[selectedReceiptIndex]).length === 0
+  }, [receipts, oldReceiptState])
 
   return (
     <View style={styles.container}>
@@ -291,7 +306,7 @@ function LeftSide(props) {
         <Receipt />
       </ScrollView>
 
-      {currentAccount && currentAccount.settings && currentAccount.settings.available_teams && currentAccount.settings.available_teams.kitchen && currentAccount.settings.printer_enabled ? (
+      {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled ? (
         <View style={{ width: '100%', paddingHorizontal: '7%', paddingTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity
             onPress={() => changePaymentModalState(true)}
@@ -304,17 +319,17 @@ function LeftSide(props) {
               end={{ x: 1, y: 0 }}
               colors={['#DB3E69', '#FD9C6C']}
             >
-              <Text style={styles.lsproceedButtonText}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
+              <Text style={[styles.lsproceedButtonText, { fontSize: 22, }]}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => saveBuffer()}
             onPressIn={() => setOnPressBuffer(true)}
             onPressOut={() => setOnPressBuffer(false)}
-            style={[styles.proceedContainer, styles.zProceedEx, receiptSum > 0 && bufferPressed && { backgroundColor: '#E4616260', }, receiptSum <= 0 && { borderColor: '#E4616280' },]}
+            style={[styles.proceedContainer, styles.zProceedEx, receiptSum > 0 && bufferPressed && { backgroundColor: '#E4616260', }, (receiptSum <= 0 || bufferHasChanges) && { borderColor: '#E4616280' },]}
             activeOpacity={1}
           >
-            <View style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}>
+            <View style={[styles.lsproceedButton, (receiptSum <= 0 || bufferHasChanges) && { opacity: 0.5 }]}>
               <FastImage
                 style={{ width: 30, height: 30, }}
                 source={require('@images/print.png')}

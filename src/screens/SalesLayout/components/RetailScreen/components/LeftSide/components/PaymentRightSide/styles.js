@@ -100,7 +100,7 @@ const base = {
   },
   commentContainer: {
     width: '85%',
-    height: 80,
+    height: 70,
     marginLeft: leftPadding,
     paddingTop: 20,
     padding: 20,
