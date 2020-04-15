@@ -85,7 +85,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(1200, {
+  maxHeight(670, {
     loginHeading: {
       fontSize: 12,
     },

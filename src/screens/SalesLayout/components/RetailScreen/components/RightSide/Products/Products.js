@@ -152,7 +152,7 @@ function Products(props) {
                   style={[styles[`colsProduct${layout}`], { height: calculateColHeight(layout) }, key === 0 && { marginLeft: 0, }]}
                   onPress={() => changeActiveCategory(index, key)}
                   activeOpacity={1}
-                  scale={0.95} key={key}
+                  key={key}
                 >
                   {rowItem.img_url !== '' ? (
                     <FastImage
@@ -209,7 +209,7 @@ function Products(props) {
                       <TouchableOpacity
                         onPress={() => dispatch(addProductQuantity(rowItem))}
                         style={{ flex: 1, }}
-                        activeOpacity={0.85}
+                        activeOpacity={0.75}
                       >
                         {rowItem.color && (
                           <LinearGradient
@@ -218,7 +218,7 @@ function Products(props) {
                             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                           >
                             <FastImage
-                              style={{ width: '100%', height: '80%', opacity: 1, borderRadius: 3, }}
+                              style={{ position: 'absolute', top: 0, width: '100%', height: '80%', opacity: 1, borderRadius: 3, }}
                               source={{ uri: rowItem.img_url || '', priority: FastImage.priority.high, }}
                             />
 
@@ -233,38 +233,43 @@ function Products(props) {
                                 <Text style={[styles[`categoryTitleText${layout}`], { color: '#FFFFFF' }]}>{rowItem.size}</Text>
                               </View>
                             ) : null}
-
-                            {(rowItem.img_url && rowItem.img_url !== '') ? (
-                              <View
-                                style={[styles[`categoryTitle${layout}`], { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', bottom: -1, }]}
-                                onPress={() => changeActiveCategory(index, key)}
-                                activeOpacity={1} key={index}
-                              >
-                                <Text
-                                  style={[styles[`categoryTitleText${layout}`], { maxWidth: '70%', }]}
-                                  numberOfLines={2}
-                                  ellipsizeMode='tail'
-                                >
-                                  {rowItem.title}
-                                </Text>
-
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', width: 35, }}>
-                                  <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.price}₴</Text>
-                                </View>
-                              </View>
-                            ) : (
-                                <Text
-                                  numberOfLines={4}
-                                  textBreakStrategy='balanced'
-                                  ellipsizeMode='tail'
-                                  style={styles[`variantText${layout}`]}
-                                >
-                                  {rowItem.title}
-                                </Text>
-                              )}
                           </LinearGradient>
                         )}
                       </TouchableOpacity>
+                      {(rowItem.img_url && rowItem.img_url !== '') ? (
+                        <TouchableOpacity
+                          style={[styles[`categoryTitle${layout}`], { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', bottom: -1, }]}
+                          onPress={() => dispatch(addProductQuantity(rowItem))}
+                          activeOpacity={1}
+                          key={index}
+                        >
+                          <Text
+                            style={[styles[`categoryTitleText${layout}`], { maxWidth: '70%', }]}
+                            numberOfLines={2}
+                            ellipsizeMode='tail'
+                          >
+                            {rowItem.title}
+                          </Text>
+
+                          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', width: 35, }}>
+                            <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.price}₴</Text>
+                          </View>
+                        </TouchableOpacity>
+                      ) : (
+                          <TouchableOpacity
+                            onPress={() => dispatch(addProductQuantity(rowItem))}
+                            activeOpacity={0.5}
+                          >
+                            <Text
+                              numberOfLines={4}
+                              textBreakStrategy='balanced'
+                              ellipsizeMode='tail'
+                              style={styles[`variantText${layout}`]}
+                            >
+                              {rowItem.title}
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                     </View>
                   )
               ))}

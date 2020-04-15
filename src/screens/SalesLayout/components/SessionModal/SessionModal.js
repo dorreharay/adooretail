@@ -35,7 +35,7 @@ function SessionModal(props) {
 
     NavigationService.setTopLevelNavigator(navigatorRef.current)
 
-    NavigationService.navigate('InputCash')
+    NavigationService.jumpTo('InputCash')
   }
 
   const startSession = () => {
@@ -47,7 +47,7 @@ function SessionModal(props) {
 
     NavigationService.setTopLevelNavigator(navigatorRef.current)
 
-    NavigationService.navigate('InputCash')
+    NavigationService.jumpTo('InputCash')
   }
 
   const handleBackButton = () => {

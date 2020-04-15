@@ -57,7 +57,7 @@ function NoAccount(props) {
       setSuccessVisibility('success')
 
       setTimeout(() => {
-        navigation.navigate('Login')
+        navigation.jumpTo('Login')
         callback()
 
         setTimeout(() => {

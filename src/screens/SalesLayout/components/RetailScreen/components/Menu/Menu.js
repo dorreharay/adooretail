@@ -20,7 +20,7 @@ function Menu(props) {
     {
       name: 'Історія замовлень',
       onPress: () => {
-        navigation.navigate('ControlLayout', {
+        navigation.jumpTo('ControlLayout', {
           screen: 0,
         })
         closeMenu()
@@ -29,7 +29,7 @@ function Menu(props) {
     {
       name: 'Транзакції',
       onPress: () => {
-        navigation.navigate('ControlLayout', {
+        navigation.jumpTo('ControlLayout', {
           screen: 1,
         })
         closeMenu()
@@ -37,7 +37,7 @@ function Menu(props) {
     },
     {
       name: 'Девайси', onPress: () => {
-        navigation.navigate('ControlLayout', {
+        navigation.jumpTo('ControlLayout', {
           screen: 2,
         })
         closeMenu()
@@ -46,7 +46,7 @@ function Menu(props) {
     {
       name: 'Налаштування',
       onPress: () => {
-        navigation.navigate('ControlLayout', {
+        navigation.jumpTo('ControlLayout', {
           screen: 4,
         })
         closeMenu()
@@ -65,7 +65,7 @@ function Menu(props) {
     dispatch(setEndOfSessionStatus(true))
     closeMenu()
 
-    navigation.navigate('InputCash')
+    navigation.jumpTo('InputCash')
   }
 
   return (

@@ -38,9 +38,11 @@ function RightSide(props) {
 
   const netInfo = useNetInfo();
 
+  
   const layout = useSelector(state => state.orders.layout)
   const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const currentAccount = useSelector(currentAccountSelector)
+  const products = useSelector(state => state.temp.products)
   const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -91,7 +93,7 @@ function RightSide(props) {
   }
 
   const updatePairedDevices = async () => {
-    navigation.navigate('ControlLayout', {
+    navigation.jumpTo('ControlLayout', {
       screen: 2,
     })
   }
@@ -158,7 +160,7 @@ function RightSide(props) {
         />
       </View>
       <Products
-        products={account.products}
+        products={products}
         receipts={receipts}
         setReceipts={setReceipts}
         selectedInstance={selectedInstance}

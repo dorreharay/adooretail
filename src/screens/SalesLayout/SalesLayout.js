@@ -8,7 +8,8 @@ import _ from 'lodash'
 import styles from './styles'
 
 import { currentAccountSelector } from '@selectors'
-import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts } from '@reducers/UserReducer'
+import { saveCurrentAccountIndex, saveCurrentAccountToken, } from '@reducers/UserReducer'
+import { setProducts, } from '@reducers/TempReducer'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
 import Pagination from './components/Pagination/Pagination'
@@ -24,7 +25,7 @@ function SalesLayout({ navigation, }) {
 
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(currentAccountSelector)
-  const products = currentAccount ? currentAccount.products : []
+  const products = useSelector(state => state.temp.products)
   const accounts = useSelector(state => state.user.accounts)
 
   const [animatedScale] = useState(new Animated.Value(1))
@@ -79,7 +80,7 @@ function SalesLayout({ navigation, }) {
   }
 
   const addAccount = () => {
-    navigation.navigate('NoAccount')
+    navigation.jumpTo('NoAccount')
   }
 
   useMemo(() => {

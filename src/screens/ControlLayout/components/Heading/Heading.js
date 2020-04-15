@@ -12,7 +12,7 @@ function Heading(props) {
     <View style={styles.container}>
       <SharedButton
         style={styles.backButton}
-        onPress={() => navigation.navigate('SalesLayout')}
+        onPress={() => navigation.jumpTo('SalesLayout')}
         scale={0.9}
       >
         <View style={styles.backButtonInner}>

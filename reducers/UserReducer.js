@@ -10,7 +10,6 @@ const SET_START_CASH = 'SET_START_CASH';
 const SET_EMPLOYEES = 'SET_EMPLOYEES';
 const SAVE_CURRENT_ACCOUNT_INDEX = 'SAVE_CURRENT_ACCOUNT_INDEX';
 const SAVE_CURRENT_ACCOUNT_TOKEN = 'SAVE_CURRENT_ACCOUNT_TOKEN';
-const SET_PRODUCTS = 'SET_PRODUCTS';
 const ADD_FIVE_MINUTES_TO_SHIFT = 'ADD_FIVE_MINUTES_TO_SHIFT';
 const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT';
 const SAVE_LOCAL_RECEIPT = 'SAVE_LOCAL_RECEIPT';
@@ -22,6 +21,7 @@ const SAVE_TRANSACTION = 'SAVE_TRANSACTION';
 const SET_NEED_TO_REENTER = 'SET_NEED_TO_REENTER';
 const SET_HISTORY = 'SET_HISTORY'
 const SET_ACTIVE_BACKGROUND_INDEX = 'SET_ACTIVE_BACKGROUND_INDEX'
+const RESET_SESSION = 'RESET_SESSION'
 
 const initialState = {
   token: '',
@@ -134,13 +134,6 @@ export function syncReceipt(receipt) {
   };
 }
 
-export function setProducts(payload) {
-  return {
-    type: SET_PRODUCTS,
-    payload
-  }
-}
-
 export function saveCurrentAccountIndex(payload) {
   return {
     type: SAVE_CURRENT_ACCOUNT_INDEX,
@@ -176,6 +169,12 @@ export function updateCurrentSession(payload) {
   }
 }
 
+export function resetSessions(payload) {
+  return {
+    type: RESET_SESSION,
+    payload
+  }
+}
 
 export function setStartCash(payload) {
   return {
@@ -359,14 +358,6 @@ const ACTION_HANDLERS = {
 
     return { ...state, accounts: newAccounts, }
   },
-  [SET_PRODUCTS]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
-    const newProducts = action.payload
-
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, products: newProducts }) : item)
-
-    return { ...state, accounts: newAccounts, }
-  },
   [ADD_FIVE_MINUTES_TO_SHIFT]: (state, action) => {
     const { accounts, currentAccountIndex, } = state
 
@@ -395,6 +386,13 @@ const ACTION_HANDLERS = {
   },
   [SAVE_CURRENT_ACCOUNT_TOKEN]: (state, action) => {
     return { ...state, currentAccountToken: action.payload }
+  },
+  [RESET_SESSION]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, localSessions: [] }) : item)
+
+    return { ...state, accounts: newAccounts, }
   },
   [UPDATE_CURRENT_SESSIONS]: (state, action) => {
     const { status, endCash, newSessionProp } = action.payload

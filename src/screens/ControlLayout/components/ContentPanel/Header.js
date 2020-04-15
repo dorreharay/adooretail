@@ -26,7 +26,7 @@ function Header(props) {
         <SharedButton
           style={styles.backButton}
           iconStyle={{ width: 20, height: 20, }}
-          onPress={() => navigation.navigate('SalesLayout')}
+          onPress={() => navigation.jumpTo('SalesLayout')}
           borderRadius={0}
           scale={0.9}
         >

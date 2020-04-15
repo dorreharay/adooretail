@@ -25,13 +25,13 @@ function NewControlLayout(props) {
     }
   }
 
-  useEffect(() => {
-    if (carouselRef.current) {
-      if (navigation.state.params) {
-        setActiveTab(navigation.state.params.screen, false)
-      }
-    }
-  }, [navigation, carouselRef.current])
+  //useEffect(() => {
+  //  if (carouselRef.current) {
+  //    if (navigation.state.params) {
+  //      setActiveTab(navigation.state.params.screen, false)
+  //    }
+  //  }
+  //}, [navigation, carouselRef.current])
 
   return (
     <View style={styles.container}>

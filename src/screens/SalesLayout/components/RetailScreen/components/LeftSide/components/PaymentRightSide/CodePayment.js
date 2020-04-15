@@ -19,7 +19,7 @@ function CodePayment(props) {
             buttonNegative: 'Відхилити',
           }}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            // setTimeout(() => navigation.navigate('Login'), 250)
+            // setTimeout(() => navigation.jumpTo('Login'), 250)
           }}
         />
       </View>

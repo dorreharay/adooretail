@@ -9,7 +9,7 @@ import styles from './styles'
 import { cashKeyboardLayout } from '@keyboards'
 
 import { currentAccountSelector } from '@selectors'
-import { setStartCash, updateCurrentSession, restoreDefaultShift, } from '@reducers/UserReducer'
+import { setStartCash, updateCurrentSession, restoreDefaultShift, resetSessions, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer'
 
 import LoginLoader from '@shared/LoginLoader';
@@ -60,9 +60,9 @@ function InputCash(props) {
 
   const handleBackPress = () => {
     if (endOfSession) {
-      navigation.navigate('SalesLayout')
+      navigation.jumpTo('SalesLayout')
     } else {
-      navigation.navigate('Login')
+      navigation.jumpTo('Login')
     }
   }
 
@@ -75,9 +75,11 @@ function InputCash(props) {
 
         dispatch(setEndOfSessionStatus(false))
 
-        navigation.navigate('Login')
+        navigation.jumpTo('Login')
 
         await syncSessions(() => {}, null, 1)
+
+        dispatch(resetSessions())
       } catch (e) {
         console.log(e.message)
       } finally {
@@ -92,7 +94,7 @@ function InputCash(props) {
 
       dispatch(setStartCash(currentInput))
 
-      navigation.navigate('InputEmployee')
+      navigation.jumpTo('InputEmployee')
 
       setLoadingStatus(false)
     } catch (e) {

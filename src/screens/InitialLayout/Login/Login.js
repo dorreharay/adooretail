@@ -64,7 +64,7 @@ function Login(props) {
 
   const validateDeviceID = async (enteredPinCode) => {
     if (!currentAccount || !currentAccount.registered_device_ids) {
-      navigation.navigate('NoAccount')
+      navigation.jumpTo('NoAccount')
       resetState()
 
       return
@@ -95,11 +95,9 @@ function Login(props) {
       dispatch(setNeedToReenter(false))
 
       if (currentSession.length !== 0 && !currentSession.endTime) {
-        console.log('currentSession')
-
-        navigation.navigate('SalesLayout')
+        navigation.jumpTo('SalesLayout')
       } else {
-        navigation.navigate('InputCash')
+        navigation.jumpTo('InputCash')
       }
 
       resetState()

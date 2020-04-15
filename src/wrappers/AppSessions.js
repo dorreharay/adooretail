@@ -10,6 +10,8 @@ import BackgroundTimer from 'react-native-background-timer';
 
 import { syncSessions, validateSessionRoutine, } from '@requests'
 
+import * as NavigationService from '../../xnavigation/NavigationService';
+
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
 import { setNeedToReenter, } from '@reducers/UserReducer'
@@ -20,7 +22,7 @@ import SessionModal from '../screens/SalesLayout/components/SessionModal/Session
 
 function AppSessions(props) {
   const {
-    children, navigatorRef, NavigationService,
+    children, navigatorRef,
   } = props
 
   const timerRef1 = useRef(null)
@@ -38,6 +40,7 @@ function AppSessions(props) {
 
   const dispatch = useDispatch()
   const netInfo = useNetInfo()
+  // const navigation = useNavigation()
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
   const [prevNetState, setPrevNetState] = useState(false)
@@ -72,13 +75,12 @@ function AppSessions(props) {
 
   const gotoScreen = async (screen, callback) => {
     timerRef1.current = setTimeout(() => {
-      NavigationService.setTopLevelNavigator(navigatorRef.current)
       timerRef2.current = setTimeout(async () => {
-        if (screen === 'SalesLayout') {
-          NavigationService.navigate('ControlLayout')
+        if (false && screen === 'SalesLayout') {
+          // navigation.jumpTo('ControlLayout')
 
           setTimeout(() => {
-            NavigationService.navigate(screen)
+            // navigation.jumpTo(screen)
           }, 400)
         } else {
           NavigationService.navigate(screen)
@@ -95,8 +97,8 @@ function AppSessions(props) {
         }
 
         callback()
-      }, 600)
-    }, 500)
+      }, 1000)
+    }, 1000)
   }
 
   useEffect(() => {
@@ -124,7 +126,7 @@ function AppSessions(props) {
     } else {
       synchronizeSessions()
     }
-  }, [])
+  }, [accounts.length])
 
   const saveDimensions = () => {
     let deviceWidth = Dimensions.get('screen').width
@@ -192,7 +194,7 @@ function AppSessions(props) {
             if (accounts.length !== 0) {
               dispatch(setNeedToReenter(true))
               NavigationService.setTopLevelNavigator(navigatorRef.current)
-              NavigationService.navigate('Login')
+              NavigationService.jumpTo('Login')
             }
           }
         }}
@@ -208,7 +210,7 @@ function AppSessions(props) {
       >
         <SharedBackground
           image={0}
-          navigation={NavigationService}
+          navigation={null}
         >
           <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
             <View style={styles.versionContainer}>

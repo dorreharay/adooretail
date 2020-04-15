@@ -40,7 +40,7 @@ function InputEmployees({ navigation }) {
   }
 
   const handleBackPress = () => {
-    navigation.navigate('InputCash')
+    navigation.jumpTo('InputCash')
   }
 
   const handleProceed = async () => {
@@ -71,7 +71,7 @@ function InputEmployees({ navigation }) {
         transactions: [],
       }
 
-      navigation.navigate('SalesLayout')
+      navigation.jumpTo('SalesLayout')
 
       dispatch(updateCurrentSession({ status: 'new', newSessionProp: newSession }))
       dispatch(setEmployees([]))

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useMemo, } from 'react'
 import { View, } from 'react-native'
 import { useDispatch, useSelector, } from 'react-redux'
+import {DURATION} from 'react-native-easy-toast'
 import _ from 'lodash'
 import styles from './styles'
 import API from '@api'
@@ -27,15 +28,19 @@ function RetailScreen(props) {
   const setPaymentModalState = (state) => setPaymentModalVisibility(state)
   const loadProducts = async (token) => {
     try {
-      toastRef.current.show("Синхронізація", 1000);
+      toastRef.current.show("Синхронізація", DURATION.FOREVER);
       const data = await API.getProducts({}, token)
       if (!data) {
+        toastRef.current.close()
+
         throw new Error('Not valid request')
       }
       updateLayout(data, layout)
     } catch (error) {
       console.warn('Failed to fetch products', error)
       toastRef.current.show("Помилка мережі", 1000);
+    } finally {
+      toastRef.current.close()
     }
   }
 

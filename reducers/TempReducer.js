@@ -5,6 +5,7 @@ const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
 const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
 const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
 const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES'
+const SET_PRODUCTS = 'SET_PRODUCTS';
 
 const SET_SELECTED_RECEIPT = 'SET_SELECTED_RECEIPT'
 const SET_RECEIPTS = 'SET_RECEIPTS'
@@ -22,7 +23,8 @@ const initialState = {
   bluetoothDevices: {
     found: [],
     paired: [],
-  }
+  },
+  products: [],
 };
 
 export function setModalStatus(payload) {
@@ -49,6 +51,13 @@ export function setOrientationDimensions(payload) {
 export function setCurrentRoute(payload) {
   return {
     type: SET_CURRENT_ROUTE,
+    payload
+  }
+}
+
+export function setProducts(payload) {
+  return {
+    type: SET_PRODUCTS,
     payload
   }
 }
@@ -127,10 +136,10 @@ export function substractProductQuantity(payload) {
     let newReceiptsInstance = []
   
     if (product.quantity === 1) {
-      newReceiptsInstance = receipt.filter((item, index) => item.title !== product.title)
+      newReceiptsInstance = receipt.filter((item, index) => item.hash_id !== product.hash_id)
     } else {
       newReceiptsInstance = receipt.map((item, index) => {
-        if (item.title === product.title) {
+        if (item.hash_id === product.hash_id) {
           return ({ ...item, quantity: item.quantity - 1 })
         }
 
@@ -193,6 +202,9 @@ const ACTION_HANDLERS = {
   },
   [SET_BLUETOOTH_DEVICES]: (state, action) => {
     return { ...state, bluetoothDevices: action.payload }
+  },
+  [SET_PRODUCTS]: (state, action) => {
+    return { ...state, products: action.payload, }
   },
 };
 

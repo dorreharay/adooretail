@@ -87,7 +87,7 @@ function ConfigureAccount(props) {
   }
 
   const gotoLogin = () => {
-    navigation.navigate('Login')
+    navigation.jumpTo('Login')
   }
 
   return (

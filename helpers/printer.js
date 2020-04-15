@@ -20,6 +20,14 @@ const printOptionsHeading = {
   fonttype: 1
 }
 
+
+const printOptionsTotal = {
+  ...printOptions,
+  widthtimes: 1,
+  heigthtimes: 1,
+  fonttype: 1
+}
+
 function parceCyrrilicText(text) {
   return (
     text
@@ -167,7 +175,7 @@ export async function printReceipt(receipt, address) {
       await printColumn(['', '', 'Знижка:', `-${parceCyrrilicText(receipt.discount)}`], { spaces: 1, paddingLeft: 2 }, 'total')
     }
 
-    await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+    await printRegularLine('---------------------------------------------', { spaces: 2, paddingLeft: 2 })
 
     await printColumn(['', '', 'До сплати:', `${receipt ? receipt.total : '0'} грн`], { paddingLeft: 2 }, 'total')
 
@@ -287,11 +295,11 @@ const performColumnPrint = async (values) => {
 }
 
 const performTotalColumnPrint = async (values) => {
-  let columnWidths = [10, 12, 12, 10];
+  let columnWidths = [2, 8, 11, 10];
   await BluetoothEscposPrinter.printColumn(
     columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
     values,
-    printOptions
+    printOptionsTotal
   );
 }
 
