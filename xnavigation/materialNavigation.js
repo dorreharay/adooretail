@@ -1,6 +1,6 @@
 import React, { useRef, } from 'react'
 import { Platform } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -20,13 +20,15 @@ const Tab = createMaterialTopTabNavigator();
 
 function AppContainer() {
   const dispatch = useDispatch()
+  const currentRoute = useSelector(state => state.temp.currentRoute)
 
   return (
     <NavigationContainer
       ref={navigationRef}
       onStateChange={(state) => {
-        if(Platform.OS === 'android') {
-          // dispatch(setCurrentRoute(state.index))
+        console.log('-------------------->')
+        if(state.index !== currentRoute) {
+          dispatch(setCurrentRoute(state.index))
         }
       }}
     >

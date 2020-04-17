@@ -5,8 +5,6 @@ import LinearGradient from 'react-native-linear-gradient'
 import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
 import FastImage from 'react-native-fast-image'
 
-import NavigationService from '../../../../../xnavigation/NavigationService';
-
 import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, } from '@fonts'
 import { getFormattedDate, } from '@dateFormatter'
 
@@ -16,7 +14,7 @@ import { setModalStatus, setEndOfSessionStatus } from '@reducers/TempReducer'
 
 function SessionModal(props) {
   const {
-    intervalRef, navigatorRef,
+    intervalRef, NavigationService,
     isVisible,
   } = props
 
@@ -33,9 +31,7 @@ function SessionModal(props) {
 
     clearInterval(intervalRef.current)
 
-    NavigationService.setTopLevelNavigator(navigatorRef.current)
-
-    NavigationService.jumpTo('InputCash')
+    NavigationService.navigate('InputCash')
   }
 
   const startSession = () => {
@@ -45,9 +41,7 @@ function SessionModal(props) {
 
     clearInterval(intervalRef.current)
 
-    NavigationService.setTopLevelNavigator(navigatorRef.current)
-
-    NavigationService.jumpTo('InputCash')
+    NavigationService.navigate('InputCash')
   }
 
   const handleBackButton = () => {

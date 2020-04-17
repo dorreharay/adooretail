@@ -56,6 +56,9 @@ function AppSessions(props) {
 
   useEffect(() => {
     if (accounts.length !== 0) {
+      BackgroundTimer.clearInterval(syncRef.current);
+      BackgroundTimer.clearInterval(validationRef.current);
+
       validationRef.current = BackgroundTimer.setInterval(() => {
         validateSessionRoutine()
       }, currentAccount && currentAccount.client_data && currentAccount.client_data.shift_validation_period || (30 * 1000));
@@ -224,7 +227,7 @@ function AppSessions(props) {
           <SessionModal
             isVisible={modalStatus !== ''}
             intervalRef={intervalRef}
-            navigatorRef={navigatorRef}
+            NavigationService={NavigationService}
           />
         )}
       </AnimatedSplash>
