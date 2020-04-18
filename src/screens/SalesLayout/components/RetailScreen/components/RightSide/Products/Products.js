@@ -8,16 +8,20 @@ import styles from './styles'
 
 import { addProductQuantity } from '@reducers/TempReducer'
 
+import { currentAccountSelector } from '@selectors'
+
 import { deviceWidth } from '@dimensions'
 
 function Products(props) {
-  const { products, searchTerm, paymentModalVisible, } = props;
+  const { searchTerm, paymentModalVisible, } = props;
 
   const scrollView = useRef(null)
 
   const dispatch = useDispatch()
 
   const layout = useSelector(state => state.orders.layout)
+
+  const { products } = useSelector(currentAccountSelector)
 
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)

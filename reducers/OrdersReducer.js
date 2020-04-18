@@ -3,6 +3,7 @@ const SET_SLIDE_INDEX = 'SET_SLIDE_INDEX';
 const SET_LAYOUT = 'SET_LAYOUT';
 const SET_ACTIVE_SLIDE = 'SET_ACTIVE_SLIDE';
 const SET_RECEIPTS = 'SET_RECEIPTS';
+const SET_PRODUCTS = 'SET_PRODUCTS'
 
 const initialState = {
   products: [],
@@ -46,6 +47,13 @@ export function setSlideIndex(payload) {
   }
 }
 
+export function setProducts(payload) {
+  return {
+    type: SET_PRODUCTS,
+    payload
+  }
+}
+
 
 const ACTION_HANDLERS = {
   [SET_OPEN_ORDER]: (state, action) => {
@@ -64,6 +72,9 @@ const ACTION_HANDLERS = {
   },
   [SET_RECEIPTS]: (state, action) => {
     return {...state, receipts: action.payload}
+  },
+  [SET_PRODUCTS]: (state, action) => {
+    return {...state, products: action.payload}
   },
 };
 

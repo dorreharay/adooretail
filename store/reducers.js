@@ -25,7 +25,7 @@ const ordersPersistConfig = {
 const usersPersistConfig = {
   key: 'users',
   storage: AsyncStorage,
-  blacklist: ['modalStatus', 'products']
+  blacklist: ['modalStatus']
 }
 
 const appReducer = combineReducers({

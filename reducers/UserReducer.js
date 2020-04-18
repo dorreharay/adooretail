@@ -22,6 +22,7 @@ const SET_NEED_TO_REENTER = 'SET_NEED_TO_REENTER';
 const SET_HISTORY = 'SET_HISTORY'
 const SET_ACTIVE_BACKGROUND_INDEX = 'SET_ACTIVE_BACKGROUND_INDEX'
 const RESET_SESSION = 'RESET_SESSION'
+const SET_PRODUCTS = 'SET_PRODUCTS';
 
 const initialState = {
   token: '',
@@ -214,6 +215,13 @@ export function saveTransaction(payload) {
 export function setNeedToReenter(payload) {
   return {
     type: SET_NEED_TO_REENTER,
+    payload
+  }
+}
+
+export function setProducts(payload) {
+  return {
+    type: SET_PRODUCTS,
     payload
   }
 }
@@ -444,6 +452,14 @@ const ACTION_HANDLERS = {
   },
   [SET_ACTIVE_BACKGROUND_INDEX]: (state, action) => {
     return { ...state, activeBackgroundIndex: action.payload }
+  },
+  [SET_PRODUCTS]: (state, action) => {
+    const { accounts, currentAccountIndex } = state
+    const newProducts = action.payload
+
+    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, products: newProducts }) : item)
+
+    return { ...state, accounts: newAccounts, }
   },
 };
 

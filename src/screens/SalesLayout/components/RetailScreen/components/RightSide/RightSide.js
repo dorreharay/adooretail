@@ -42,7 +42,6 @@ function RightSide(props) {
   const layout = useSelector(state => state.orders.layout)
   const currentAccountToken = useSelector(state => state.user.currentAccountToken)
   const currentAccount = useSelector(currentAccountSelector)
-  const products = useSelector(state => state.temp.products)
   const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -160,7 +159,6 @@ function RightSide(props) {
         />
       </View>
       <Products
-        products={products}
         receipts={receipts}
         setReceipts={setReceipts}
         selectedInstance={selectedInstance}

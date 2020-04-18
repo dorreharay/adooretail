@@ -5,7 +5,6 @@ const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
 const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
 const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
 const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES'
-const SET_PRODUCTS = 'SET_PRODUCTS';
 
 const SET_SELECTED_RECEIPT = 'SET_SELECTED_RECEIPT'
 const SET_RECEIPTS = 'SET_RECEIPTS'
@@ -202,9 +201,6 @@ const ACTION_HANDLERS = {
   },
   [SET_BLUETOOTH_DEVICES]: (state, action) => {
     return { ...state, bluetoothDevices: action.payload }
-  },
-  [SET_PRODUCTS]: (state, action) => {
-    return { ...state, products: action.payload, }
   },
 };
 
