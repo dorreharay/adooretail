@@ -26,7 +26,6 @@ function AppContainer() {
     <NavigationContainer
       ref={navigationRef}
       onStateChange={(state) => {
-        console.log('-------------------->')
         if(state.index !== currentRoute) {
           dispatch(setCurrentRoute(state.index))
         }

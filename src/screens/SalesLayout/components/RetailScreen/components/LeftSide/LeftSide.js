@@ -40,6 +40,7 @@ function LeftSide(props) {
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
   const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))
   const [bufferPressed, setOnPressBuffer] = useState(false)
+  const [bufferButtonDisabled, setBufferButtonState] = useState(true)
 
   const validateTime = () => {
     const fullDate = getUpperCaseDate('dddd  |  HH:mm')
@@ -69,7 +70,7 @@ function LeftSide(props) {
 
     let diff = _.difference(newReceipt, oldReceipt, 'quantity')
 
-        diff = diff.filter(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))
+    diff = diff.filter(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))
 
     const temp = diff.map(newItem => {
       const oldItem = oldReceipt.find(elem => elem.time === newItem.time)
@@ -100,13 +101,13 @@ function LeftSide(props) {
     oldReceipt = oldReceipt.sort((a, b) => parseInt(a.time.slice(-5).replace(':', '')) - parseInt(b.time.slice(-5).replace(':', '')))
     newReceipt = newReceipt.sort((a, b) => parseInt(a.time.slice(-5).replace(':', '')) - parseInt(b.time.slice(-5).replace(':', '')))
 
-    if(diffWithNewItems.length === 0) {
+    if (diffWithNewItems.length === 0) {
       console.log('-------> 2-1 нічого не змінилось, скіпаю')
 
       return newDiff
     }
 
-    if(diffWithNewItems.every(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))) {
+    if (diffWithNewItems.every(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))) {
       console.log('-------> 2-2 нічого не змінилось, скіпаю')
 
       return newDiff
@@ -131,7 +132,7 @@ function LeftSide(props) {
     oldReceipt = oldReceipt.sort((a, b) => parseInt(a.time.slice(-5).replace(':', '')) - parseInt(b.time.slice(-5).replace(':', '')))
     newReceipt = newReceipt.sort((a, b) => parseInt(a.time.slice(-5).replace(':', '')) - parseInt(b.time.slice(-5).replace(':', '')))
 
-    if(newReceipt.length === oldReceipt.length && newReceipt.every(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))) {
+    if (newReceipt.length === oldReceipt.length && newReceipt.every(item => oldReceipt.find(elem => elem.hash_id === item.hash_id))) {
       console.log('-------> 3-1 нічого не змінилось, скіпаю')
 
       return newDiff
@@ -159,18 +160,36 @@ function LeftSide(props) {
   }
 
   const saveBuffer = async () => {
-    if (receiptSum <= 0) return
+    if (bufferButtonDisabled) return
 
-    const currentReceipt = receipts[selectedReceiptIndex]
-    const bufferedReceipt = buffer[selectedReceiptIndex]
-    const oldReceipt = oldReceiptState[selectedReceiptIndex]
-
-    compareReceipts(bufferedReceipt, currentReceipt, oldReceipt)
+    await performPrinterScript()
   }
 
-  const compareReceipts = async (oldBuffer, newReceipt, oldReceipt) => {
+  const performPrinterScript = async () => {
+    try {
+      const bufferInstance = await compareReceipts()
+
+      const newReceipt = receipts[selectedReceiptIndex]
+
+      if (bufferInstance) {
+        const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? newReceipt : item)
+
+        setOldReceipt(newOldReceipt)
+        updateBuffer(bufferInstance)
+
+        await printNewBuffer(bufferInstance)
+      }
+    } catch (error) {
+      console.log('Need to connect device')
+    }
+  }
+
+  const compareReceipts = async () => {
+    const newReceipt = receipts[selectedReceiptIndex]
+    const oldBuffer = buffer[selectedReceiptIndex]
+    const oldReceipt = oldReceiptState[selectedReceiptIndex]
+
     let newDiff = []
-    let temp = []
 
     if (oldBuffer === null) {
       console.log('-------> 0 буфер пустий')
@@ -192,17 +211,11 @@ function LeftSide(props) {
 
     console.log('newDiff ===>', newDiff)
 
-    const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? newReceipt : item)
-
-    setOldReceipt(newOldReceipt)
-
-    if (newDiff.every(item => item === undefined)) return
+    if (newDiff.every(item => item === undefined)) return null
 
     const bufferInstance = { ...buffer[selectedReceiptIndex], hash_id: oldBuffer === null ? guidGenerator() : buffer[selectedReceiptIndex].hash_id, receipt: newDiff }
 
-    updateBuffer(bufferInstance)
-
-    await printNewBuffer(bufferInstance)
+    return bufferInstance
   }
 
   useEffect(() => {
@@ -219,10 +232,15 @@ function LeftSide(props) {
     return receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)
   }, [receipts, selectedReceiptIndex])
 
-  const bufferHasChanges = useMemo(() => {
-    return false
-    // return _.difference(receipts[selectedReceiptIndex], oldReceiptState[selectedReceiptIndex]).length === 0
-  }, [receipts, oldReceiptState])
+  useEffect(() => {
+    async function deepBufferCheck() {
+      const bufferInstance = await compareReceipts()
+
+      setBufferButtonState(!!!bufferInstance)
+    }
+
+    deepBufferCheck()
+  }, [receiptSum, buffer[selectedReceiptIndex]])
 
   return (
     <View style={styles.container}>
@@ -322,14 +340,23 @@ function LeftSide(props) {
               <Text style={[styles.lsproceedButtonText, { fontSize: 22, }]}>ОПЛАТА {receiptSum ? receiptSum : 0}₴ </Text>
             </LinearGradient>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => saveBuffer()}
             onPressIn={() => setOnPressBuffer(true)}
             onPressOut={() => setOnPressBuffer(false)}
-            style={[styles.proceedContainer, styles.zProceedEx, receiptSum > 0 && bufferPressed && { backgroundColor: '#E4616260', }, (receiptSum <= 0 || bufferHasChanges) && { borderColor: '#E4616280' },]}
+            style={[
+              styles.proceedContainer,
+              styles.zProceedEx,
+              !bufferButtonDisabled && bufferPressed && { backgroundColor: '#E4616260', },
+              bufferButtonDisabled && { borderColor: '#E4616280' },
+            ]}
             activeOpacity={1}
           >
-            <View style={[styles.lsproceedButton, (receiptSum <= 0 || bufferHasChanges) && { opacity: 0.5 }]}>
+            <View style={[
+              styles.lsproceedButton,
+              bufferButtonDisabled && { opacity: 0.5 }
+            ]}>
               <FastImage
                 style={{ width: 30, height: 30, }}
                 source={require('@images/print.png')}
