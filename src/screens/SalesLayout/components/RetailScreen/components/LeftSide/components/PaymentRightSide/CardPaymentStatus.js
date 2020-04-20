@@ -51,7 +51,7 @@ function CardPaymentStatus(props) {
       <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', }}>
         <View style={{ flexDirection: 'row', width: '90%', }}>
           <Animated.View style={[styles.statusDot, { backgroundColor: statusColor }, { opacity: statusDotOpacity }]} />
-          <Text style={styles.paidText}>{statusText}</Text>
+          <Text style={[styles.paidText, { fontSize: 22 }]}>{statusText}</Text>
         </View>
       </View>
     </View>

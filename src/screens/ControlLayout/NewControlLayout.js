@@ -12,7 +12,7 @@ import Settings from './components/ContentPanel/Pages/Settings/Settings'
 import { deviceWidth, deviceHeight, } from '@dimensions'
 
 function NewControlLayout(props) {
-  const { navigation } = props
+  const { navigation, route } = props
 
   const carouselRef = useRef(null)
 
@@ -25,13 +25,13 @@ function NewControlLayout(props) {
     }
   }
 
-  //useEffect(() => {
-  //  if (carouselRef.current) {
-  //    if (navigation.state.params) {
-  //      setActiveTab(navigation.state.params.screen, false)
-  //    }
-  //  }
-  //}, [navigation, carouselRef.current])
+  useEffect(() => {
+   if (route && carouselRef.current) {
+     if (route.params) {
+       setActiveTab(route.params.screen, false)
+     }
+   }
+  }, [route, carouselRef.current])
 
   return (
     <View style={styles.container}>

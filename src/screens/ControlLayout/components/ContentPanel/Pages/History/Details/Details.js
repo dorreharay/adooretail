@@ -29,7 +29,7 @@ function Details(props) {
       active_filter: "day",
     }, () => setLoadingStatus(false)))
   }, [])
-  
+
   const dispatch = useDispatch()
 
   const currentAccount = useSelector(currentAccountSelector)
@@ -107,8 +107,19 @@ function Details(props) {
     menuRef.current.show()
   }
 
+  const loadAgain = () => {
+    setLoadingStatus(true)
+
+    dispatch(getSessions({
+      active_sort: activeSort.code,
+      active_filter: activeFilter.code,
+    }, () => setLoadingStatus(false)))
+  }
+
   const hideMenu = (ref, type, code, relativeName) => {
-    ref.current.hide()
+    if(ref.current) {
+      ref.current.hide()
+    }
 
     if (type === 'filter') {
       setLoadingStatus(true)
@@ -242,26 +253,15 @@ function Details(props) {
           </MenuItem>
           </Menu>
 
-          {loading ? (
-            <View style={{ justifyContent: 'center', marginLeft: 30, height: 40, }}>
-              {/* <View style={{ width: 25, height: 25, borderRadius: 100, borderWidth: 3, borderColor: '#E36062' }}>
-
-              </View> */}
-              <Progress.Circle
-                endAngle={0.7}
-                size={25} color={'#E36062'}
-                borderWidth={2} indeterminate={true}
-              />
-            </View>
-
-          ) : (
-              <View style={{ justifyContent: 'center', marginLeft: 30, height: 40, }}>
-                <View style={{ width: 25, height: 25, borderRadius: 100, borderWidth: 1, borderColor: '#cccc' }}>
-
-                </View>
-              </View>
-            )}
-
+          <View style={{ justifyContent: 'center', marginLeft: 30, height: 40, }}>
+            <SharedButton
+              onPress={loadAgain}
+              style={{ width: 25, height: 25, marginRight: 10, backgroundColor: '#FFFFFF00' }}
+              iconStyle={{ width: 22, height: 22, }}
+              source={require('@images/reload.png')} scale={0.6}
+              rotateOnPress loadAgain={loadAgain}
+            />
+          </View>
         </View>
       </View>
       <Collapsible style={{ paddingVertical: 15, paddingHorizontal: 45, }} collapsed={!detailsExpanded}>
@@ -278,7 +278,7 @@ function Details(props) {
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Поставки</Text> - <Text style={styles.paymentDetailsText}>{transactionsDelivery || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Витрати</Text> - <Text style={styles.paymentDetailsText}>{transactionsDelivery || 0} грн</Text></Text>
         </View>
 
         <View style={styles.paymentDetails}>

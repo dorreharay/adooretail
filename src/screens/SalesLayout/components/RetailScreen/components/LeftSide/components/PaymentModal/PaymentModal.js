@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, ScrollView, Keyboard, Animated, KeyboardAvoidingView, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient';
@@ -58,6 +59,7 @@ const PaymentModal = (props) => {
   const [employeesListVisible, setEmployeesListVisibility] = useState(false)
   const [currentEmployee, setCurrentEmployee] = useState((currentSession && currentSession.employees) ? currentSession.employees[0] : '-')
   const [modalOffset, setModalOffset] = useState(0)
+  const [amountFocused, setAmountFocused] = useState(false)
 
   const [activeDiscount, setActiveDiscount] = useState(0)
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
@@ -120,7 +122,7 @@ const PaymentModal = (props) => {
         dispatch(syncReceipt(payload))
       }, 300)
     } catch (error) {
-
+      throw new Error()
     }
   }
 
@@ -186,20 +188,20 @@ const PaymentModal = (props) => {
   }, [])
 
   useEffect(() => {
-    willShowRef.current = Keyboard.addListener('keyboardWillShow', () => {
+    function upModal() {
       setModalOffset(-200)
-    });
-    willHideRef.current = Keyboard.addListener('keyboardWillHide', () => {
+    }
+
+    function downModal() {
       setModalOffset(0)
-    });
+    }
+
+    willShowRef.current = Keyboard.addListener('keyboardWillShow', upModal);
+    willHideRef.current = Keyboard.addListener('keyboardWillHide', downModal);
 
     return () => {
-      Keyboard.removeListener("keyboardWillShow", () => {
-        setModalOffset(-200)
-      });
-      Keyboard.removeListener("keyboardWillHide", () => {
-        setModalOffset(0)
-      });
+      Keyboard.removeListener("keyboardWillShow", upModal);
+      Keyboard.removeListener("keyboardWillHide", downModal);
     }
   }, [])
 
@@ -233,83 +235,94 @@ const PaymentModal = (props) => {
   }, [receipts, selectedReceiptIndex])
 
   return (
-    <View style={[styles.paymentWrapperContainer, { top: 4000, }, isVisible && { top: modalOffset },]}>
+    <View style={[styles.paymentWrapperContainer, { top: 4000, }, isVisible && { top: modalOffset, },]}>
       <TouchableOpacity
         style={styles.paymentWrapper}
+        onPress={() => setPaymentModalVisibility(false)}
         activeOpacity={1}
       />
-      <View style={[styles.paymentModal, { width: deviceHeight < 500 ? deviceWidth * 0.72 : deviceWidth * 0.7, height: deviceHeight < 500 ? deviceHeight * 0.9 : deviceWidth * 0.55, }]}>
-        <PaymentLeftSide
-          pTypes={pTypes}
-          selectedType={selectedType}
-          selectPType={selectPType}
-          setEmployeesListVisibility={setEmployeesListVisibility}
-          currentEmployee={currentEmployee}
-        />
-        <PaymentRightSide
-          selectedType={selectedType}
-          setPaymentModalVisibility={setPaymentModalVisibility}
-          initialStatuses={initialStatuses}
-          status={status} total={receiptSum}
-          setStatus={setStatus} resetStatus={resetStatus}
-          buttonAccessible={buttonAccessible}
-          enteredSum={enteredSum} saveReceipt={saveReceipt}
-          setEnteredSum={setEnteredSum} isVisible={isVisible}
-          setButtonAccessibility={setButtonAccessibility}
-          activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
-          discounts={discounts} setDiscounts={setDiscounts}
-          comment={comment} setComment={setComment}
-          toBePaid={toBePaid} setToByPaid={setToByPaid}
-        />
-      </View>
+      <KeyboardAwareScrollView
+        style={{ paddingTop: (deviceHeight - (deviceHeight * 0.85)) / 2, zIndex: 13, }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        extraScrollHeight={amountFocused ? 0 : 200}
+        keyboardOpeningTime={0}
+        enableOnAndroid={true}
+      >
 
-      {employeesListVisible && (
-        <TouchableOpacity
-          style={[styles.employeesListContainer, { width: deviceWidth, height: deviceHeight, left: 0, }]}
-          onPress={() => setEmployeesListVisibility(false)}
-          activeOpacity={1}
-        >
-          <View style={{ width: '37%', height: '50%', borderRadius: 3, backgroundColor: '#FFFFFF' }}>
-            <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
+        <View style={styles.paymentModal}>
+          <PaymentLeftSide
+            pTypes={pTypes}
+            selectedType={selectedType}
+            selectPType={selectPType}
+            setEmployeesListVisibility={setEmployeesListVisibility}
+            currentEmployee={currentEmployee}
+          />
+          <PaymentRightSide
+            selectedType={selectedType}
+            setPaymentModalVisibility={setPaymentModalVisibility}
+            initialStatuses={initialStatuses}
+            status={status} total={receiptSum}
+            setStatus={setStatus} resetStatus={resetStatus}
+            buttonAccessible={buttonAccessible}
+            enteredSum={enteredSum} saveReceipt={saveReceipt}
+            setEnteredSum={setEnteredSum} isVisible={isVisible}
+            setButtonAccessibility={setButtonAccessibility}
+            activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
+            discounts={discounts} setDiscounts={setDiscounts}
+            comment={comment} setComment={setComment}
+            toBePaid={toBePaid} setToByPaid={setToByPaid}
+            setAmountFocused={setAmountFocused}
+          />
+        </View>
 
-            <ScrollView style={styles.employeesList}>
-              {currentSession && currentSession.employees && currentSession.employees.map((item, key) => (
-                <Ripple
-                  style={styles.employeesListItem}
-                  onPress={() => {
-                    if (currentEmployee === item) return
+        {employeesListVisible && (
+          <TouchableOpacity
+            style={[styles.employeesListContainer, { width: deviceWidth, height: deviceHeight, left: 0, }]}
+            onPress={() => setEmployeesListVisibility(false)}
+            activeOpacity={1}
+          >
+            <View style={{ width: '37%', height: '50%', borderRadius: 3, backgroundColor: '#FFFFFF' }}>
+              <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
 
-                    setEmployeesListVisibility(false)
-                    setCurrentEmployee(item)
-                  }}
-                  rippleColor={`#C4C4C4`}
-                  rippleFades key={key}
-                >
-                  <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                    <FastImage
-                      style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
-                      source={{ uri: currentAccount && currentAccount.img_url || '' }}
-                    />
-                    <Text style={styles.employeesListItemName}>{item}</Text>
-                  </View>
-                  <View style={styles.pickEmployeeButton}>
-                    <SharedButton>
-                      <LinearGradient
-                        style={styles.pickEmployeeButtonLinear}
-                        start={{ x: 1, y: 1 }}
-                        end={{ x: 0, y: 2 }}
-                        colors={currentEmployee !== item ? ['#DB3E69', '#FD9C6C'] : ['#f4f4f4', '#f4f4f4']}
-                      >
-                        <Text style={[styles.pickEmployeeButtonText, currentEmployee === item && { color: '#A4A4A4' }]}>обрати</Text>
-                      </LinearGradient>
-                    </SharedButton>
-                  </View>
-                </Ripple>
-              ))}
-            </ScrollView>
-          </View>
-        </TouchableOpacity>
-      )}
+              <ScrollView style={styles.employeesList}>
+                {currentSession && currentSession.employees && currentSession.employees.map((item, key) => (
+                  <Ripple
+                    style={styles.employeesListItem}
+                    onPress={() => {
+                      if (currentEmployee === item) return
+
+                      setEmployeesListVisibility(false)
+                      setCurrentEmployee(item)
+                    }}
+                    rippleColor={`#C4C4C4`}
+                    rippleFades key={key}
+                  >
+                    <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                      <FastImage
+                        style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
+                        source={{ uri: currentAccount && currentAccount.img_url || '' }}
+                      />
+                      <Text style={styles.employeesListItemName}>{item}</Text>
+                    </View>
+                    <View style={styles.pickEmployeeButton}>
+                      <SharedButton>
+                        <LinearGradient
+                          style={styles.pickEmployeeButtonLinear}
+                          start={{ x: 1, y: 1 }}
+                          end={{ x: 0, y: 2 }}
+                          colors={currentEmployee !== item ? ['#DB3E69', '#FD9C6C'] : ['#f4f4f4', '#f4f4f4']}
+                        >
+                          <Text style={[styles.pickEmployeeButtonText, currentEmployee === item && { color: '#A4A4A4' }]}>обрати</Text>
+                        </LinearGradient>
+                      </SharedButton>
+                    </View>
+                  </Ripple>
+                ))}
+              </ScrollView>
+            </View>
+          </TouchableOpacity>
+        )}
+      </KeyboardAwareScrollView>
     </View>
   )
 }

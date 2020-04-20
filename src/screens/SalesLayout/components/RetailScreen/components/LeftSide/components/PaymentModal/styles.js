@@ -1,6 +1,8 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
 import { GILROY_MEDIUM, GILROY_REGULAR, PROBA_LIGHT, PROBA_MEDIUM } from '@fonts'
 
+import { deviceWidth, deviceHeight } from '@dimensions'
+
 const base = {
   container: {
     flex: 1,
@@ -29,8 +31,8 @@ const base = {
   },
   paymentModal: {
     flexDirection: 'row',
-    width: 500,
-    height: 550,
+    width: deviceWidth * 0.7,
+    height: deviceHeight * 0.85,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     zIndex: 20,

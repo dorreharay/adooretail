@@ -79,11 +79,11 @@ function AppSessions(props) {
   const gotoScreen = async (screen, callback) => {
     timerRef1.current = setTimeout(() => {
       timerRef2.current = setTimeout(async () => {
-        if (false && screen === 'SalesLayout') {
-          // navigation.jumpTo('ControlLayout')
+        if (screen === 'SalesLayout') {
+          NavigationService.navigate('ControlLayout')
 
           setTimeout(() => {
-            // navigation.jumpTo(screen)
+            NavigationService.navigate(screen)
           }, 400)
         } else {
           NavigationService.navigate(screen)

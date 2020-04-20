@@ -123,7 +123,7 @@ function LeftSide(props) {
   }
 
   const checkDeletedItems = (newReceipt, oldReceipt, newDiff) => {
-    console.log('-------> 3 перевірка виделених елементів')
+    console.log('-------> 3 перевірка видалених елементів')
 
     const diff = _.difference(oldReceipt, newReceipt)
 
@@ -152,10 +152,6 @@ function LeftSide(props) {
   const updateBuffer = (data) => {
     const newBuffer = buffer.map((item, index) => index === selectedReceiptIndex ? data : item)
 
-    // console.log('old buffer ->>>>>>>', buffer[selectedReceiptIndex] ? buffer[selectedReceiptIndex].receipt : null)
-
-    // console.log('new buffer ->>>>>>>', newBuffer[selectedReceiptIndex].receipt)
-
     setBuffer(newBuffer)
   }
 
@@ -172,12 +168,12 @@ function LeftSide(props) {
       const newReceipt = receipts[selectedReceiptIndex]
 
       if (bufferInstance) {
+        await printNewBuffer(bufferInstance)
+
         const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? newReceipt : item)
 
         setOldReceipt(newOldReceipt)
         updateBuffer(bufferInstance)
-
-        await printNewBuffer(bufferInstance)
       }
     } catch (error) {
       console.log('Need to connect device')

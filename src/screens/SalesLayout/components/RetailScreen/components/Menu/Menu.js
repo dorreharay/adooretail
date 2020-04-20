@@ -10,9 +10,10 @@ import { setEmployees, setStartCash, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer';
 
 import SharedButton from '@shared/SharedButton'
+import FastImage from 'react-native-fast-image';
 
 function Menu(props) {
-  const { isVisible, closeMenu, navigation, openChangeAccountOverview, } = props
+  const { isVisible, closeMenu, navigation, setTransactionModalVisiblity, } = props
 
   const dispatch = useDispatch()
 
@@ -27,16 +28,17 @@ function Menu(props) {
       }
     },
     {
-      name: 'Транзакції',
+      name: 'Створити транзакцію',
       onPress: () => {
-        navigation.jumpTo('ControlLayout', {
-          screen: 1,
-        })
+        // navigation.jumpTo('ControlLayout', {
+        //   screen: 1,
+        // })
+
         closeMenu()
       }
     },
     {
-      name: 'Девайси', onPress: () => {
+      name: 'Bluetooth девайси', onPress: () => {
         navigation.jumpTo('ControlLayout', {
           screen: 2,
         })
@@ -88,10 +90,29 @@ function Menu(props) {
           {menuButtons.map((button, index) => (
             <TouchableOpacity
               style={[styles.modalItem, index === 0 && styles.withTopBorderRadius]}
-              onPress={button.onPress}
+              onPress={() => {
+                if (index === 1) {
+                  setTransactionModalVisiblity(true)
+                }
+                button.onPress()
+              }}
               activeOpacity={1}
               key={index}
             >
+              {index === 1 && (
+                <FastImage
+                  style={{ width: 16, height: 16, marginRight: 12 }}
+                  source={require('@images/right-arrow.png')}
+                />
+              )}
+
+              {index === 2 && (
+                <FastImage
+                  style={{ width: 16, height: 16, marginRight: 13 }}
+                  source={require('@images/tprinter.png')}
+                />
+              )}
+
               <Text style={styles.modalItemText}>{button.name}</Text>
             </TouchableOpacity>
           ))}

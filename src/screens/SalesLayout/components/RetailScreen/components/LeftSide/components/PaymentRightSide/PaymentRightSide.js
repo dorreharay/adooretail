@@ -15,7 +15,7 @@ function PaymentRightSide(props) {
     saveReceipt, setButtonAccessibility,
     isVisible, activeDiscount, setActiveDiscount, 
     discounts, setDiscounts, comment, setComment,
-    toBePaid, setToByPaid,
+    toBePaid, setToByPaid, setAmountFocused,
   } = props
 
   const [invalidColor, setInvalidColor] = useState(false)
@@ -98,7 +98,7 @@ function PaymentRightSide(props) {
           isVisible={isVisible} toBePaid={toBePaid}  setToByPaid={setToByPaid}
           activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
           discounts={discounts} setDiscounts={setDiscounts}
-          comment={comment} setComment={setComment}
+          comment={comment} setComment={setComment} setAmountFocused={setAmountFocused}
         />
       ) : (
           <CodePayment />

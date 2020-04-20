@@ -15,7 +15,7 @@ function PaymentType(props) {
   const {
     selectedType, enteredSum, toBePaid, invalidColor, status, setStatus,
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
-    handleChangeSum, receipt, saveReceipt,
+    handleChangeSum, receipt, saveReceipt, setAmountFocused,
     isVisible, discounts, setActiveDiscount, activeDiscount, comment, setComment,
   } = props
 
@@ -175,8 +175,15 @@ function PaymentType(props) {
                 value={`${enteredSum}`}
                 onChangeText={handleChangeSum}
                 keyboardType='number-pad'
-                onFocus={() => handleChangeSum('')}
+                maxLength={4}
+                textAlign={'center'}
+                onFocus={() => {
+                  handleChangeSum('')
+                  setAmountFocused(true)
+                }}
                 onBlur={() => {
+                  setAmountFocused(false)
+
                   if (enteredSum == '') {
                     handleChangeSum(`${toBePaid}`)
                   }
@@ -199,84 +206,66 @@ function PaymentType(props) {
         )}
       </View>
 
-      {deviceHeight > 500 && (
-        <View>
-          <TouchableOpacity
-            style={{ alignItems: 'center', flexDirection: 'row' }}
-            onPress={() => handleExpand(discountCollapsed, 'discount')}
-            activeOpacity={0.8}
+      <View>
+        <TouchableOpacity
+          style={{ alignItems: 'center', flexDirection: 'row' }}
+          onPress={() => handleExpand(discountCollapsed, 'discount')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.headingText}>Знижка</Text>
+          <AnimatedImage
+            style={[styles.arrowStyles, { transform: [{ rotate: spinD }] }]}
+            source={require('@images/down-arrow.png')}
+          />
+        </TouchableOpacity>
+
+
+        <Collapsible style={styles.discountWrapper} collapsed={discountCollapsed}>
+          <ScrollView
+            style={styles.discountContainer}
+            contentContainerStyle={{ paddingBottom: 2, }}
+            horizontal
           >
-            <Text style={[styles.headingText, { fontSize: 18, paddingBottom: 0, }]}>Знижка</Text>
-            <AnimatedImage
-              style={{ width: 13, height: 13, marginLeft: '2%', marginTop: '7.5%', transform: [{ rotate: spinD }] }}
-              source={require('@images/down-arrow.png')}
-            />
-          </TouchableOpacity>
+            {discounts && discounts.map((item, index) => (
+              <View style={[styles.discountItem, index === activeDiscount && styles.activeDiscountItem]}>
+                <SharedButton
+                  style={{ flex: 1, width: '100%', }}
+                  onPress={() => setActiveDiscount(index)}
+                  scale={0.8}
+                  key={index}
+                >
+                  <Text style={[styles.discountItemText, index === activeDiscount && styles.activeDiscountItemText]}>{item.percent}%</Text>
+                </SharedButton>
+              </View>
+            ))}
+          </ScrollView>
+        </Collapsible>
+      </View>
+
+      <View style={{}}>
+        <TouchableOpacity
+          style={{ alignItems: 'center', flexDirection: 'row', }}
+          onPress={() => handleExpand(commentCollapsed, 'comment')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.headingCommentText}>Коментар</Text>
+          <AnimatedImage
+            style={[styles.arrowCommentStyles, { transform: [{ rotate: spinC }] }]}
+            source={require('@images/down-arrow.png')}
+          />
+        </TouchableOpacity>
 
 
-          <Collapsible style={{ paddingTop: '3%' }} collapsed={discountCollapsed}>
-            <ScrollView
-              style={styles.discountContainer}
-              contentContainerStyle={{ paddingBottom: 2, }}
-              horizontal
-            >
-              {discounts && discounts.map((item, index) => (
-                <View style={[styles.discountItem, index === activeDiscount && styles.activeDiscountItem]}>
-                  <SharedButton
-                    style={{ flex: 1, width: '100%', }}
-                    onPress={() => setActiveDiscount(index)}
-                    scale={0.8}
-                    key={index}
-                  >
-                    <Text style={[styles.discountItemText, index === activeDiscount && styles.activeDiscountItemText]}>{item.percent}%</Text>
-                  </SharedButton>
-                </View>
-
-              ))}
-            </ScrollView>
-          </Collapsible>
-        </View>
-      )}
-
-
-      {deviceHeight > 500 && (
-        <View style={{ }}>
-          <TouchableOpacity
-            style={{ alignItems: 'center', flexDirection: 'row', }}
-            onPress={() => handleExpand(commentCollapsed, 'comment')}
-            activeOpacity={0.8}
-          >
-            <Text style={[styles.headingText, { fontSize: 18, paddingTop: '3%', paddingBottom: 0, }]}>Коментар</Text>
-            <AnimatedImage
-              style={{ width: 13, height: 13, marginLeft: '2%', marginTop: '3.4%', transform: [{ rotate: spinC }] }}
-              source={require('@images/down-arrow.png')}
-            />
-          </TouchableOpacity>
-
-
-          <Collapsible style={{ paddingTop: '4%' }} collapsed={commentCollapsed}>
-            <TextInput
-              value={comment}
-              onChangeText={handleChangeText}
-              style={styles.commentContainer}
-              placeholder='Ваш коментар'
-              multiline
-            />
-          </Collapsible>
-        </View>
-      )}
-      {/* <View style={{ height: '40%', }}>
-        <Text style={styles.headingText}>Замовлення</Text>
-
-        <ScrollView style={styles.orderContainer} contentContainerStyle={{ paddingBottom: 2, }}>
-          {receipt && receipt.map((item, index) => (
-            <View style={styles.orderItem} key={index}>
-              <Text style={[styles.orderItemText, { width: '65%', }]}>{item.title} x {item.quantity}</Text>
-              <Text style={styles.orderItemText}>{item.price} грн</Text>
-            </View>
-          ))}
-        </ScrollView>
-      </View> */}
+        <Collapsible style={{ paddingTop: '4%' }} collapsed={commentCollapsed}>
+          <TextInput
+            value={comment}
+            onChangeText={handleChangeText}
+            style={styles.commentContainer}
+            placeholder='Ваш коментар'
+            multiline
+          />
+        </Collapsible>
+      </View>
 
       <PaymentSubmit
         status={status}

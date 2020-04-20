@@ -21,7 +21,7 @@ function TransactionButtons({ activeButton, setActiveButton }) {
             // colors={activeButton === 0 ? ['#DB3E69', '#FD9C6C'] : ['#00000000', '#00000000']}
             colors={['#00000000', '#00000000']}
           >
-            <Text style={[styles.buttonText, activeButton === 0 && styles.activeButton]}>Поставка</Text>
+            <Text style={[styles.buttonText, activeButton === 0 && styles.activeButton]}>Витрата</Text>
           </LinearGradient>
         </SharedButton>
       </View>

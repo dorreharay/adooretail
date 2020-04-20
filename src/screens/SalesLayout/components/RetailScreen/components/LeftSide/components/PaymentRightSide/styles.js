@@ -25,6 +25,14 @@ const base = {
     fontSize: 25,
     fontFamily: GILROY_MEDIUM,
   },
+  headingCommentText: {
+    paddingLeft: leftPadding,
+    paddingTop: 0,
+    paddingBottom: '1%',
+    color: '#343434',
+    fontSize: 25,
+    fontFamily: GILROY_MEDIUM,
+  },
   toByPaid: {
     borderLeftWidth: 1,
     borderColor: '#D6D6D6',
@@ -52,8 +60,7 @@ const base = {
     borderRadius: 100,
   },
   paidInput: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    width: 80,
     marginRight: 15,
     borderWidth: 1.5,
     borderColor: '#343434',
@@ -111,6 +118,11 @@ const base = {
     color: '#343434',
     fontSize: 20,
     fontFamily: PROBA_REGULAR,
+    textAlignVertical: 'top'
+  },
+  discountWrapper: {
+    paddingTop: 0,
+    paddingBottom: '4%',
   },
   discountItem: {
     alignItems: 'center',
@@ -163,10 +175,50 @@ const base = {
     height: '70%',
     backgroundColor: '#181619',
   },
+  arrowStyles: {
+    width: 13,
+    height: 13, 
+    marginLeft: '2%',
+    marginTop: '3%',
+  },
+  arrowCommentStyles: {
+    width: 13,
+    height: 13,
+    marginLeft: '2%',
+    marginTop: 0,
+  },
 };
 
 const styles = createStyles(
   base,
+
+  maxHeight(670, {
+    headingText: {
+      paddingBottom: 0,
+      fontSize: 20,
+    },
+    headingCommentText: {
+      fontSize: 20,
+      paddingTop: '3%',
+      paddingBottom: 0,
+    },
+    arrowStyles: {
+      width: 13,
+      height: 13, 
+      marginLeft: '2%',
+      marginTop: '7.5%',
+    },
+    arrowCommentStyles: {
+      width: 13,
+      height: 13,
+      marginLeft: '2%',
+      marginTop: '4.1%',
+    },
+    discountWrapper: {
+      paddingTop: '3%',
+      paddingBottom: 0,
+    }
+  }),
 
   maxHeight(500, {
     headingText: {

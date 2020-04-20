@@ -25,14 +25,18 @@ function PaymentSubmit(props) {
       return () => { }
     }
 
-    return selectedType.onPress(() => {
-      saveReceipt(selectedType.apiName, receipt)
-      if (selectedType.index === 1) {
-        timerRef.current = setTimeout(() => {
+    return selectedType.onPress(async () => {
+      try {
+        await saveReceipt(selectedType.apiName, receipt)
+        if (selectedType.index === 1) {
+          timerRef.current = setTimeout(() => {
+            dispatch(clearCurrentReceipt())
+          }, 500)
+        } else {
           dispatch(clearCurrentReceipt())
-        }, 500)
-      } else {
-        dispatch(clearCurrentReceipt())
+        }
+      } catch (error) {
+
       }
     })
   }

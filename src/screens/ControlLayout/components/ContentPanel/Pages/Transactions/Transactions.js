@@ -107,8 +107,8 @@ function Transactions() {
 
           <Text style={styles.inputHeading}>
             Введіть суму
-            {activeButton === 0 && ' поставки'}
-            {activeButton === 1 && ' витрати'}
+            {activeButton === 0 && ' витрати'}
+            {activeButton === 1 && ' інкасації'}
             {activeButton === 2 && ' прибутку'}
           </Text>
 
@@ -134,7 +134,7 @@ function Transactions() {
               multiline
               onChangeText={text => setEnteredComment(text)}
               keyboardType='number-pad'
-              placeholder='Введіть коментар до поставки'
+              placeholder='Введіть коментар до транзакції'
             />
           </View>
         </View>

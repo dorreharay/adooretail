@@ -5,6 +5,7 @@ import { useDispatch, useSelector, } from 'react-redux'
 import styles from '../styles'
 
 import { addProductQuantity, substractProductQuantity, deleteCurrentReceiptItem } from '@reducers/TempReducer' 
+import { handleSize } from '@printer'
 
 import SharedButton from '@shared/SharedButton';
 
@@ -45,7 +46,7 @@ function Receipt(props) {
       {receipts[selectedReceiptIndex].map((item, index) => (
         <View style={styles.receiptItem} key={index}>
           <View style={styles.receiptTitle}>
-      <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}{item.size ? `, ${item.size === 'S' ? 'малий' : item.size === 'M' ? 'середній' : 'великий'}` : ''}</Text>
+      <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}{item.size ? `, ${handleSize(item.size)}` : ''}</Text>
           </View>
           <View style={styles.receiptDetails}>
             <View style={styles.receiptOnePriceContainer}>

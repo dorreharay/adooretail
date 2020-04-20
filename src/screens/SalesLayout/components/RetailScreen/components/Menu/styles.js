@@ -41,7 +41,8 @@ const base = {
     borderRadius: 5,
   },
   modalItem: {
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
     width: 320,
     height: 70,
     paddingLeft: 25,

@@ -8,12 +8,14 @@ import API from '@api'
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
 import Menu from './components/Menu/Menu';
+
 import PaymentModal from './components/LeftSide/components/PaymentModal/PaymentModal';
+import Transaction from './components/Transaction/Transaction'
 
 function RetailScreen(props) {
   const {
     products, navigation, openChangeAccountOverview,
-    account, updateLayout, toastRef, layout, 
+    account, updateLayout, toastRef, layout,
   } = props;
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -22,6 +24,7 @@ function RetailScreen(props) {
 
   const [menuVisible, setMenuVisibility] = useState(false)
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
+  const [transactionModalVisible, setTransactionModalVisiblity] = useState(false)
   const [buffer, setBuffer] = useState([null, null, null, null])
   const [oldReceiptState, setOldReceipt] = useState([null, null, null, null])
 
@@ -74,6 +77,7 @@ function RetailScreen(props) {
         isVisible={menuVisible}
         closeMenu={closeMenu}
         openChangeAccountOverview={openChangeAccountOverview}
+        setTransactionModalVisiblity={setTransactionModalVisiblity}
         navigation={navigation}
       />
       <PaymentModal
@@ -83,6 +87,10 @@ function RetailScreen(props) {
         setBuffer={setBuffer}
         oldReceiptState={oldReceiptState}
         setOldReceipt={setOldReceipt}
+      />
+      <Transaction 
+        isVisible={transactionModalVisible}
+        setTransactionModalVisiblity={setTransactionModalVisiblity}
       />
     </View>
   )
