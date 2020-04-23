@@ -40,6 +40,7 @@ const base = {
     width: '70%',
     height: '100%',
     padding: '5%',
+    paddingTop: '3%',
     backgroundColor: '#FFFFFF00',
   },
   rightSide: {
@@ -124,6 +125,15 @@ const base = {
     color: '#6C6C6C',
     fontSize: 20,
     fontFamily: GILROY_MEDIUM,
+  },
+  closeButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  closeText: {
+    color: '#343434',
+    fontSize: 20,
+    fontFamily: GILROY_REGULAR,
   }
 };
 

@@ -40,14 +40,14 @@ function Transaction(props) {
   }
 
   const handleSubmit = () => {
-    if(canProceed) {
+    if (canProceed) {
       function guidGenerator() {
         let S4 = function () {
           return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
         };
         return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
       }
-  
+
       dispatch(saveTransaction({
         type: selectedTransactionType,
         sum: amount,
@@ -57,7 +57,7 @@ function Transaction(props) {
         employees: currentSession.employees,
         localId: guidGenerator(),
       }))
-  
+
       setAmount('0')
       setComment('')
 
@@ -91,9 +91,20 @@ function Transaction(props) {
       >
         <View style={styles.container}>
           <View style={styles.leftSide}>
-            <Text style={styles.headingText}>
-              Транзакція
-          </Text>
+            <View style={{ flexDirection: 'row', width: '100%', height: 50, alignItems: 'center', justifyContent: 'space-between',  }}>
+              <Text style={styles.headingText}>
+                Транзакція
+              </Text>
+
+              <TouchableOpacity 
+                style={styles.closeButton}
+                onPress={() => setTransactionModalVisiblity(false)}
+              >
+                <Text style={styles.closeText}>
+                  Закрити
+                </Text>
+              </TouchableOpacity>
+            </View>
 
             <View style={styles.amountContainer}>
               <TextInput

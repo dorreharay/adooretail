@@ -266,31 +266,38 @@ function Details(props) {
       </View>
       <Collapsible style={{ paddingVertical: 15, paddingHorizontal: 45, }} collapsed={!detailsExpanded}>
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Безготівковий підсумок</Text> - <Text style={styles.paymentDetailsText}>{todayCardSum || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Безготівковий підсумок</Text>:</Text>
+          <Text style={styles.paymentDetailsText}>{todayCardSum || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Готівковий підсумок</Text> - <Text style={styles.paymentDetailsText}>{todayCashSum || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Готівковий підсумок</Text>:</Text>
+          <Text style={styles.paymentDetailsText}>{todayCashSum || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Всього</Text> - <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Всього</Text>:</Text>
+          <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Витрати</Text> - <Text style={styles.paymentDetailsText}>{transactionsDelivery || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Витрати</Text>:</Text>
+          <Text style={styles.paymentDetailsText}>-{transactionsDelivery || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Інкасації</Text> - <Text style={styles.paymentDetailsText}>{transactionsIncasations || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Інкасації</Text>:</Text>
+          <Text style={styles.paymentDetailsText}>-{transactionsIncasations || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Прибуток</Text> - <Text style={styles.paymentDetailsText}>{transactionsIncome || 0} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Прибуток</Text>:</Text>
+          <Text style={styles.paymentDetailsText}>{transactionsIncome || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Підсумок</Text>: <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) - (transactionsDelivery || 0) - (transactionsIncasations || 0) + (transactionsIncome || 0)} грн</Text></Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text style={{}}>Підсумок</Text>:</Text>
+          <Text style={styles.paymentDetailsText}>{(todayCashSum || 0) + (todayCardSum || 0) - (transactionsDelivery || 0) - (transactionsIncasations || 0) + (transactionsIncome || 0)} грн</Text>
         </View>
 
         <SharedButton

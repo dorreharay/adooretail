@@ -16,7 +16,15 @@ const base = {
   },
   paymentDetails: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '40%',
+    flexDirection: 'row',
     marginBottom: 20,
+    paddingBottom: 7,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#CCC',
+    borderBottomStyle: "dashed",
+    borderBottomRadius: 1,
   },
   paymentDetailsButton: {
     height: 40,

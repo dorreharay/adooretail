@@ -87,6 +87,7 @@ export async function printNewBuffer(receipt) {
       if (kitchenReceipts) {
         await asyncForEach(kitchenReceipts, async (item) => {
           await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), ``, ``, `${item.diff ? item.diff : item.quantity} шт`], { paddingLeft: 2 }, 'buffer')
+          await printRegularLine('', { spaces: 1, paddingLeft: 2 })
         })
       }
   
@@ -114,6 +115,7 @@ export async function printNewBuffer(receipt) {
       if (paydeskReceipts) {
         await asyncForEach(paydeskReceipts, async (item) => {
           await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), ``, ``, `${item.diff ? item.diff : item.quantity} шт`], { paddingLeft: 2 }, 'buffer')
+          await printRegularLine('', { spaces: 1, paddingLeft: 2 })
         })
       }
   
@@ -124,7 +126,7 @@ export async function printNewBuffer(receipt) {
       await cutLine()
     }
   } catch (error) {
-    Alert.alert('Принтер не налаштовано')
+    Alert.alert('Принтер не підключено')
     throw new Error()
     console.log(error.message)
   }
@@ -196,6 +198,8 @@ export async function printReceipt(receipt, address) {
       await asyncForEach(receipt.receipt, async (item, index) => { 
         await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
 
+        await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+
         // if(item.size && item.size !== '') {
         //   await printColumn([parceCyrrilicText(`${handleSize(item.size)}`), ``, ``, ``], { paddingLeft: 2 })
         // }
@@ -235,7 +239,7 @@ export async function printReceipt(receipt, address) {
 
     await cutLine()
   } catch (error) {
-    Alert.alert('Принтер не налаштовано')
+    Alert.alert('Принтер не підключено')
     throw new Error()
     console.log(error.message)
   }
