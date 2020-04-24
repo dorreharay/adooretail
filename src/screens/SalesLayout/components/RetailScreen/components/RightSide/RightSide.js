@@ -27,7 +27,7 @@ function RightSide(props) {
   const {
     openMenu, loadProducts, receipts, setReceipts,
     selectedInstance, account, addProductQuantity,
-    paymentModalVisible, navigation,
+    paymentModalVisible, navigation, updateProductsLayout,
   } = props;
 
   const dispatch = useDispatch()
@@ -165,6 +165,7 @@ function RightSide(props) {
         searchTerm={searchTerm}
         addProductQuantity={addProductQuantity}
         paymentModalVisible={paymentModalVisible}
+        updateProductsLayout={updateProductsLayout}
       />
     </View>
   )

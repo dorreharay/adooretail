@@ -1,12 +1,17 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { useDispatch, useSelector, } from 'react-redux'
 import styles from './styles'
+
+import { currentAccountSelector, } from '@selectors'
 
 import SharedButton from '@shared/SharedButton'
 
 function Heading(props) {
   const { navigation, activeTab, setActiveTab, } = props
+
+  const currentAccount = useSelector(currentAccountSelector)
 
   return (
     <View style={styles.container}>
@@ -87,7 +92,7 @@ function Heading(props) {
           />
 
           <Text style={styles.accountName}>
-            Ho Chu Bo dev
+            {currentAccount.business_name}
           </Text>
         </View>
       </SharedButton>

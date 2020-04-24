@@ -10,7 +10,7 @@ import Login from '../src/screens/InitialLayout/Login/Login'
 import InputCash from '../src/screens/InitialLayout/InputCash/InputCash';
 import InputEmployees from '../src/screens/InitialLayout/InputEmployees/InputEmployees';
 import SalesLayout from '../src/screens/SalesLayout/SalesLayout'
-import ControlLayout from '../src/screens/ControlLayout/NewControlLayout'
+import ControlLayout from '../src/screens/ControlLayout/ControlLayout'
 
 import { setCurrentRoute } from '@reducers/TempReducer'
 

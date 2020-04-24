@@ -72,6 +72,7 @@ function RetailScreen(props) {
         products={products} loadProducts={loadProducts}
         account={account} openMenu={openMenu}
         navigation={navigation} paymentModalVisible={paymentModalVisible}
+        updateProductsLayout={updateLayout}
       />
       <Menu
         isVisible={menuVisible}
