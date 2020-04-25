@@ -245,23 +245,26 @@ function Products(props) {
                       activeOpacity={0.75}
                     >
                       {rowItem.color && rowItem.color !== '' ? (
-                        <View
-                          style={[styles.variant, { backgroundColor: rowItem.color }]}
-                        // colors={(rowItem.img_url && rowItem.img_url !== '') ? ['#484848', '#000000'] : [rowItem.color, rowItem.shadow]}
-                        // start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                        >
+                        <View style={[styles.variant, { backgroundColor: rowItem.color }]}>
+
                           <FastImage
                             style={{ position: 'absolute', top: 0, width: '100%', height: '80%', opacity: 1, borderRadius: 3, }}
                             source={{ uri: rowItem.img_url || '', priority: FastImage.priority.high, }}
                           />
+{/* 
+                          {(!rowItem.img_url || rowItem.img_url === '') && rowItem.size ? (
+                            <View style={[styles[`variantPrice${layout}`], { right: 55, backgroundColor: '#FFFFFF00', }]}>
+                              <Text style={styles[`variantSizeText${layout}`]}>{rowItem.size}</Text>
+                            </View>
+                          ) : null} */}
 
-                          {(rowItem.img_url === '') ? (
+                          {(!rowItem.img_url || rowItem.img_url === '') && rowItem.size ? (
                             <View style={styles[`variantPrice${layout}`]}>
-                              <Text style={styles[`variantPriceText${layout}`]}>{rowItem.price}₴</Text>
+                              <Text style={styles[`variantPriceText${layout}`]}>{rowItem.size}</Text>
                             </View>
                           ) : null}
 
-                          {(rowItem.img_url !== '' && rowItem.size) ? (
+                          {((rowItem.img_url && rowItem.img_url !== '') && rowItem.size) ? (
                             <View style={[styles[`variantSize${layout}`], { backgroundColor: rowItem.color }]}>
                               <Text style={[styles[`categoryTitleText${layout}`], { color: '#FFFFFF' }]}>{rowItem.size}</Text>
                             </View>
@@ -269,7 +272,7 @@ function Products(props) {
                         </View>
                       ) : (<View />)}
                     </TouchableOpacity>
-                    {(rowItem.img_url && rowItem.img_url !== '') ? (
+                    {/* {(rowItem.img_url && rowItem.img_url !== '') ? ( */}
                       <TouchableOpacity
                         style={[styles[`categoryTitle${layout}`], { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', bottom: -1, }]}
                         onPress={() => dispatch(addProductQuantity(rowItem))}
@@ -284,11 +287,11 @@ function Products(props) {
                           {rowItem.title}
                         </Text>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', width: 35, }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', width: layout === 3 ? 65 : 35, }}>
                           <Text style={styles[`categoryTitleText${layout}`]}>{rowItem.price}₴</Text>
                         </View>
                       </TouchableOpacity>
-                    ) : (
+                    {/* ) : (
                         <TouchableOpacity
                           onPress={() => dispatch(addProductQuantity(rowItem))}
                           activeOpacity={0.5}
@@ -302,7 +305,7 @@ function Products(props) {
                             {rowItem.title}
                           </Text>
                         </TouchableOpacity>
-                      )}
+                      )} */}
                   </View>
                 )
             ))}

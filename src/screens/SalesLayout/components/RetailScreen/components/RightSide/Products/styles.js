@@ -33,7 +33,7 @@ const base = {
     position: 'absolute',
     bottom: 0,
     left: 0,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     paddingVertical: 15,
     borderBottomLeftRadius: 3,
     borderBottomRightRadius: 3,
@@ -174,6 +174,24 @@ const base = {
     fontFamily: PROBA_REGULAR,
     lineHeight: 15,
   },
+  variantSizeText3: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: PROBA_MEDIUM,
+    lineHeight: 20,
+  },
+  variantSizeText4: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: PROBA_MEDIUM,
+    lineHeight: 20,
+  },
+  variantSizeText5: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontFamily: PROBA_MEDIUM,
+    lineHeight: 18,
+  },
   variantSize3: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -184,6 +202,7 @@ const base = {
     height: 40,
     // borderWidth: 1,
     borderRadius: 100,
+    zIndex: 15,
   },
   variantSize4: {
     alignItems: 'center',

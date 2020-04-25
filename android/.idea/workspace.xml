@@ -2,50 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/release/app.aab" beforeDir="false" afterPath="$PROJECT_DIR$/app/release/app.aab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/ControlLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/ControlLayout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/NewControlLayout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/ContentPanel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Header.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/AllCategories/AllCategories.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/AllCategories/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Devices/BluetoothConnectionButton/BluetoothConnectionButton.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Devices/BluetoothConnectionButton/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Devices/Devices.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Devices/ScannedBluetoothDevices/ScannedBluetoothDevices.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Devices/ScannedBluetoothDevices/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Devices/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/Details/Details.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/Details/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/Filters/Filters.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/Filters/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/History.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/HistoryList/HistoryList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/HistoryList/ReceiptModal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/HistoryList/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/History/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/PointScheme/Drag/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/PointScheme/Drag/src/Connector.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/PointScheme/Drag/src/DragResizeBlock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/PointScheme/Drag/src/DragResizeContainer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/PointScheme/PointScheme.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/PointScheme/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Settings/Settings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Settings/SwitchButtons.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Settings/SwitchWithTitle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Settings/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Transactions/TransactionButtons/TransactionButtons.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Transactions/TransactionButtons/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Transactions/Transactions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/Pages/Transactions/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ContentPanel/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ControlPanel/ControlPanel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/ControlPanel/styles.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Heading/Heading.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Heading/Heading.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/Products/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/Products/Products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnavigation/materialNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../xnavigation/materialNavigation.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

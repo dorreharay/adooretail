@@ -10,7 +10,7 @@ const base = {
   },
   switchText: {
     minWidth: '15%',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: GILROY_REGULAR,
   },
   settingsTitle: {
@@ -25,10 +25,10 @@ const base = {
     paddingHorizontal: 30,
     paddingVertical: 18,
     borderWidth: 1,
-    borderColor: '#BFBFBF',
+    borderColor: '#E66960',
   },
   buttonText: {
-    color: '#BFBFBF',
+    color: '#E66960',
     fontSize: 18,
     fontFamily: GILROY_REGULAR,
   },
