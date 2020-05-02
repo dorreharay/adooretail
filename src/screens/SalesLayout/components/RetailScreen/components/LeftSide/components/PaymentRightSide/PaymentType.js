@@ -1,5 +1,5 @@
 import React, { useState, useEffect, } from 'react'
-import { View, Text, ScrollView, TextInput, TouchableOpacity, Animated, Easing, } from 'react-native'
+import { View, Text, ScrollView, TextInput, TouchableOpacity, Animated, Easing, TouchableOpacityBase, } from 'react-native'
 import Collapsible from 'react-native-collapsible';
 import styles from './styles'
 
@@ -7,6 +7,7 @@ import PaymentSubmit from '../PaymentSubmit'
 import CardPaymentStatus from './CardPaymentStatus'
 
 import SharedButton from '@shared/SharedButton'
+import SharedPaymentOption from '@shared/SharedPaymentOption/SharedPaymentOption'
 import FastImage from 'react-native-fast-image';
 
 import { deviceHeight } from '@dimensions'
@@ -17,12 +18,15 @@ function PaymentType(props) {
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
     handleChangeSum, receipt, saveReceipt, setAmountFocused,
     isVisible, discounts, setActiveDiscount, activeDiscount, comment, setComment,
+    selectedService, setSelectedService,
   } = props
 
   const [spinComment, setSpinComment] = useState(new Animated.Value(0))
-  const [spinDiscount, setSpinDiscount] = useState(new Animated.Value(1))
+  const [spinDiscount, setSpinDiscount] = useState(new Animated.Value(0))
+  const [spinType, setSpinType] = useState(new Animated.Value(0))
   const [discountCollapsed, setDiscountCollapsed] = useState(true)
-  const [commentCollapsed, setCommentCollapsed] = useState(false)
+  const [commentCollapsed, setCommentCollapsed] = useState(true)
+  const [typeCollapsed, setTypeCollapsed] = useState(true)
 
   const expandComment = () => {
     Animated.timing(
@@ -44,10 +48,11 @@ function PaymentType(props) {
     ).start()
 
     setDiscountCollapsed(true)
+    setTypeCollapsed(true)
     setCommentCollapsed(false)
   }
 
-  const collapseComment = () => {
+  const collapseAll = () => {
     Animated.timing(
       spinComment,
       {
@@ -60,13 +65,23 @@ function PaymentType(props) {
     Animated.timing(
       spinDiscount,
       {
-        toValue: 1,
+        toValue: 0,
         duration: 100,
         easing: Easing.ease,
       }
     ).start()
 
-    setDiscountCollapsed(false)
+    Animated.timing(
+      spinType,
+      {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
+    setDiscountCollapsed(true)
+    setTypeCollapsed(true)
     setCommentCollapsed(true)
   }
 
@@ -90,12 +105,13 @@ function PaymentType(props) {
     ).start()
 
     setDiscountCollapsed(false)
+    setTypeCollapsed(true)
     setCommentCollapsed(true)
   }
 
-  const collapseDiscount = () => {
+  const expandType = () => {
     Animated.timing(
-      spinComment,
+      spinType,
       {
         toValue: 1,
         duration: 100,
@@ -112,8 +128,18 @@ function PaymentType(props) {
       }
     ).start()
 
+    Animated.timing(
+      spinComment,
+      {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.ease,
+      }
+    ).start()
+
     setDiscountCollapsed(true)
-    setCommentCollapsed(false)
+    setTypeCollapsed(false)
+    setCommentCollapsed(true)
   }
 
   const handleExpand = (collapsed, type) => {
@@ -121,7 +147,7 @@ function PaymentType(props) {
       if (collapsed) {
         expandComment()
       } else {
-        collapseComment()
+        collapseAll()
       }
     }
 
@@ -129,7 +155,15 @@ function PaymentType(props) {
       if (collapsed) {
         expandDiscount()
       } else {
-        collapseDiscount()
+        collapseAll()
+      }
+    }
+
+    if (type === 'type') {
+      if (collapsed) {
+        expandType()
+      } else {
+        collapseAll()
       }
     }
   }
@@ -143,9 +177,12 @@ function PaymentType(props) {
     setComment('')
 
     setSpinComment(new Animated.Value(0))
-    setSpinDiscount(new Animated.Value(1))
+    setSpinDiscount(new Animated.Value(0))
+    setSpinType(new Animated.Value(0))
     setDiscountCollapsed(true)
-    setCommentCollapsed(false)
+    setCommentCollapsed(true)
+    setTypeCollapsed(true)
+    setSelectedService(null)
   }, [isVisible])
 
   const spinD = spinDiscount.interpolate({
@@ -154,6 +191,11 @@ function PaymentType(props) {
   })
 
   const spinC = spinComment.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '180deg']
+  })
+
+  const spinT = spinType.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '180deg']
   })
@@ -206,13 +248,96 @@ function PaymentType(props) {
         )}
       </View>
 
-      <View>
+      {selectedType.index === 1 && (
+        <View style={styles.optionContainer}>
+          <TouchableOpacity
+            style={styles.optionHeadingContainer}
+            onPress={() => handleExpand(typeCollapsed, 'type')}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.optionHeadingText}>Сервіс</Text>
+            <AnimatedImage
+              style={[styles.arrowStyles, { transform: [{ rotate: spinT }] }]}
+              source={require('@images/down-arrow.png')}
+            />
+          </TouchableOpacity>
+
+
+          <Collapsible style={styles.collapsibleContainer} collapsed={typeCollapsed}>
+            <View style={styles.optionTypes}>
+              <TouchableOpacity
+                style={[styles.optionType, selectedService === null && { backgroundColor: '#181619', }]}
+                onPress={() => setSelectedService(null)}
+                activeOpacity={0.8}
+              >
+                <Text style={[styles.optionTypeText, selectedService === null && { color: '#FFF', }]}>
+                  Немає
+              </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.optionType, selectedService === 'glovo' && { backgroundColor: '#181619', }]}
+                onPress={() => setSelectedService('glovo')}
+                activeOpacity={0.8}
+              >
+                <Text style={[styles.optionTypeText, selectedService === 'glovo' && { color: '#FFF', }]}>
+                  GLOVO
+              </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.optionType, selectedService === 'raketa' && { backgroundColor: '#181619', }]}
+                onPress={() => setSelectedService('raketa')}
+                activeOpacity={0.8}
+              >
+                <Text style={[styles.optionTypeText, selectedService === 'raketa' && { color: '#FFF', }]}>
+                  RAKETA
+              </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.optionType, selectedService === 'uber' && { backgroundColor: '#181619', }]}
+                onPress={() => setSelectedService('uber')}
+                activeOpacity={0.8}
+              >
+                <Text style={[styles.optionTypeText, selectedService === 'uber' && { color: '#FFF', }]}>
+                  UBER EATS
+              </Text>
+              </TouchableOpacity>
+            </View>
+          </Collapsible>
+        </View>
+      )}
+
+      <View style={styles.optionContainer}>
         <TouchableOpacity
-          style={{ alignItems: 'center', flexDirection: 'row' }}
+          style={styles.optionHeadingContainer}
+          onPress={() => handleExpand(commentCollapsed, 'comment')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.optionHeadingText}>Коментар</Text>
+          <AnimatedImage
+            style={[styles.arrowStyles, { transform: [{ rotate: spinC }] }]}
+            source={require('@images/down-arrow.png')}
+          />
+        </TouchableOpacity>
+
+
+        <Collapsible style={styles.collapsibleContainer} collapsed={commentCollapsed}>
+          <TextInput
+            value={comment}
+            onChangeText={handleChangeText}
+            style={styles.commentContainer}
+            placeholder='Ваш коментар'
+            multiline
+          />
+        </Collapsible>
+      </View>
+
+      <View style={styles.optionContainer}>
+        <TouchableOpacity
+          style={styles.optionHeadingContainer}
           onPress={() => handleExpand(discountCollapsed, 'discount')}
           activeOpacity={0.8}
         >
-          <Text style={styles.headingText}>Знижка</Text>
+          <Text style={styles.optionHeadingText}>Знижка</Text>
           <AnimatedImage
             style={[styles.arrowStyles, { transform: [{ rotate: spinD }] }]}
             source={require('@images/down-arrow.png')}
@@ -220,11 +345,11 @@ function PaymentType(props) {
         </TouchableOpacity>
 
 
-        <Collapsible style={styles.discountWrapper} collapsed={discountCollapsed}>
+        <Collapsible style={styles.collapsibleContainer} collapsed={discountCollapsed}>
           <ScrollView
-            style={styles.discountContainer}
-            contentContainerStyle={{ paddingBottom: 2, }}
+            contentContainerStyle={styles.contentContainerStyle}
             horizontal
+            showsHorizontalScrollIndicator={false}
           >
             {discounts && discounts.map((item, index) => (
               <View style={[styles.discountItem, index === activeDiscount && styles.activeDiscountItem]}>
@@ -239,31 +364,6 @@ function PaymentType(props) {
               </View>
             ))}
           </ScrollView>
-        </Collapsible>
-      </View>
-
-      <View style={{}}>
-        <TouchableOpacity
-          style={{ alignItems: 'center', flexDirection: 'row', }}
-          onPress={() => handleExpand(commentCollapsed, 'comment')}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.headingCommentText}>Коментар</Text>
-          <AnimatedImage
-            style={[styles.arrowCommentStyles, { transform: [{ rotate: spinC }] }]}
-            source={require('@images/down-arrow.png')}
-          />
-        </TouchableOpacity>
-
-
-        <Collapsible style={{ paddingTop: '4%' }} collapsed={commentCollapsed}>
-          <TextInput
-            value={comment}
-            onChangeText={handleChangeText}
-            style={styles.commentContainer}
-            placeholder='Ваш коментар'
-            multiline
-          />
         </Collapsible>
       </View>
 

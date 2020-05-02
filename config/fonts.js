@@ -15,6 +15,7 @@ const PROBA_BOLD = Platform.OS === 'android' ? 'probapro_bold' : 'ProbaPro-Bold'
 const GILROY_LIGHT = Platform.OS === 'android' ? 'gilroy_light' : 'Gilroy-Light'
 const GILROY_REGULAR = Platform.OS === 'android' ? 'gilroy_regular' : 'Gilroy-Regular'
 const GILROY_MEDIUM = Platform.OS === 'android' ? 'gilroy_medium' : 'Gilroy-Medium'
+const GILROY_SEMIBOLD = Platform.OS === 'android' ? 'gilroy_semibold' : 'Gilroy-SemiBold'
 const GILROY_BOLD = Platform.OS === 'android' ? 'gilroy_bold' : 'Gilroy-Bold'
 
 const GEOMETRIA_LIGHT = Platform.OS === 'android' ? 'geometria_light' : 'Geometria-Light'
@@ -43,6 +44,7 @@ export {
   GILROY_LIGHT,
   GILROY_REGULAR,
   GILROY_MEDIUM,
+  GILROY_SEMIBOLD,
   GILROY_BOLD,
 
   GEOMETRIA_LIGHT,

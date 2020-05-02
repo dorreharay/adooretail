@@ -29,7 +29,7 @@ const base = {
   },
   paymentTypeName: {
     color: '#575759',
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: GILROY_MEDIUM,
     lineHeight: 30,
   },
@@ -75,7 +75,7 @@ const base = {
   currentEmployeeName: {
     marginLeft: 85,
     color: '#FFFFFF',
-    fontSize: 19,
+    fontSize: 16,
     fontFamily: GILROY_REGULAR,
   },
   editButton: {

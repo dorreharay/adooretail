@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, MUSEO_REGULAR, MUSEO_MEDIUM, } from '@fonts'
+import { PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
 
 const leftPadding = '7.5%'
 
@@ -10,6 +10,9 @@ const base = {
     height: '100%',
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
+  },
+  contentContainerStyle: {
+    paddingLeft: leftPadding,
   },
   heading: {
     alignItems: 'center',
@@ -50,6 +53,7 @@ const base = {
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 25,
+    marginBottom: 20,
     height: 50,
     paddingLeft: leftPadding,
   },
@@ -75,6 +79,11 @@ const base = {
     fontSize: 25,
     fontFamily: GILROY_REGULAR,
     lineHeight: 30,
+  },
+  waitingText: {
+    color: '#343434',
+    fontSize: 25,
+    fontFamily: GILROY_REGULAR,
   },
   changeText: {
     color: '#9A9A9A',
@@ -106,11 +115,11 @@ const base = {
     color: '#E35E62',
   },
   commentContainer: {
+    alignItems: 'center',
     width: '85%',
     height: 70,
     marginLeft: leftPadding,
-    paddingTop: 20,
-    padding: 20,
+    paddingHorizontal: 20,
     borderWidth: 1.5,
     borderColor: '#E3E3E3',
     borderRadius: 5,
@@ -118,11 +127,22 @@ const base = {
     color: '#343434',
     fontSize: 20,
     fontFamily: PROBA_REGULAR,
-    textAlignVertical: 'top'
+    textAlignVertical: 'center'
   },
-  discountWrapper: {
-    paddingTop: 0,
-    paddingBottom: '4%',
+  optionHeadingContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingLeft: leftPadding,
+    // marginTop: 25,
+    marginBottom: 15,
+  },
+  optionHeadingText: {
+    color: '#343434',
+    fontSize: 25,
+    fontFamily: GILROY_MEDIUM,
+  },
+  collapsibleContainer: {
+    paddingBottom: 20,
   },
   discountItem: {
     alignItems: 'center',
@@ -177,9 +197,8 @@ const base = {
   },
   arrowStyles: {
     width: 13,
-    height: 13, 
-    marginLeft: '2%',
-    marginTop: '3%',
+    height: 13,
+    marginLeft: 10,
   },
   arrowCommentStyles: {
     width: 13,
@@ -187,16 +206,34 @@ const base = {
     marginLeft: '2%',
     marginTop: 0,
   },
+  optionTypes: {
+    flexDirection: 'row',
+    paddingLeft: leftPadding,
+  },
+  optionType: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '20%',
+    paddingVertical: 12,
+    marginRight: 3,
+    borderWidth: 1,
+    borderRadius: 3,
+  },
+  optionTypeText: {
+    color: '#000',
+    fontSize: 15,
+    fontFamily: GILROY_MEDIUM,
+  },
 };
 
 const styles = createStyles(
   base,
 
   maxHeight(670, {
-    headingText: {
-      paddingBottom: 0,
-      fontSize: 20,
-    },
+    // headingText: {
+    //   paddingBottom: 0,
+    //   fontSize: 20,
+    // },
     headingCommentText: {
       fontSize: 20,
       paddingTop: '3%',
@@ -220,14 +257,23 @@ const styles = createStyles(
     }
   }),
 
-  maxHeight(500, {
-    headingText: {
-      paddingTop: '2%',
-      paddingBottom: 0,
-      fontSize: 15,
+  maxHeight(600, {
+    optionHeadingContainer: {
+      marginBottom: 10,
+    },
+    optionHeadingText: {
+      fontSize: 18,
+    },
+    collapsibleContainer: {
+      paddingBottom: 15,
+    },
+    arrowStyles: {
+      width: 10,
+      height: 10,
+      marginLeft: 10,
     },
     toByPaidText: {
-      fontSize: 15,
+      fontSize: 20,
     },
     paidText: {
       fontSize: 20,
@@ -240,6 +286,29 @@ const styles = createStyles(
     paidInput: {
       color: '#343434',
       fontSize: 20,
+      fontFamily: GILROY_MEDIUM,
+    },
+    discountItem: {
+      width: 45,
+      height: 45,
+      marginRight: 10,
+    },
+    discountItemText: {
+      fontSize: 17,
+    },
+    commentContainer: {
+      height: 50,
+
+      color: '#343434',
+      fontSize: 15,
+    },
+    optionType: {
+      width: '20%',
+      paddingVertical: 8,
+    },
+    optionTypeText: {
+      color: '#000',
+      fontSize: 12,
       fontFamily: GILROY_MEDIUM,
     },
   })

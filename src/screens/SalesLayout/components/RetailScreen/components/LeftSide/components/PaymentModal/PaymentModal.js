@@ -65,6 +65,7 @@ const PaymentModal = (props) => {
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
   const [comment, setComment] = useState('')
   const [toBePaid, setToByPaid] = useState(receiptSum)
+  const [selectedService, setSelectedService] = useState(null)
 
   const saveReceipt = async (paymentType) => {
     function guidGenerator() {
@@ -101,6 +102,7 @@ const PaymentModal = (props) => {
       transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
       employee: currentEmployee,
       comment: comment,
+      service: selectedService,
     }
 
     if (!payload) return
@@ -272,57 +274,58 @@ const PaymentModal = (props) => {
             comment={comment} setComment={setComment}
             toBePaid={toBePaid} setToByPaid={setToByPaid}
             setAmountFocused={setAmountFocused}
+            selectedService={selectedService}
+            setSelectedService={setSelectedService}
           />
         </View>
-
-        {employeesListVisible && (
-          <TouchableOpacity
-            style={[styles.employeesListContainer, { width: deviceWidth, height: deviceHeight, left: 0, }]}
-            onPress={() => setEmployeesListVisibility(false)}
-            activeOpacity={1}
-          >
-            <View style={{ width: '37%', height: '50%', borderRadius: 3, backgroundColor: '#FFFFFF' }}>
-              <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
-
-              <ScrollView style={styles.employeesList}>
-                {currentSession && currentSession.employees && currentSession.employees.map((item, key) => (
-                  <Ripple
-                    style={styles.employeesListItem}
-                    onPress={() => {
-                      if (currentEmployee === item) return
-
-                      setEmployeesListVisibility(false)
-                      setCurrentEmployee(item)
-                    }}
-                    rippleColor={`#C4C4C4`}
-                    rippleFades key={key}
-                  >
-                    <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                      <FastImage
-                        style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
-                        source={{ uri: currentAccount && currentAccount.img_url || '' }}
-                      />
-                      <Text style={styles.employeesListItemName}>{item}</Text>
-                    </View>
-                    <View style={styles.pickEmployeeButton}>
-                      <SharedButton>
-                        <LinearGradient
-                          style={styles.pickEmployeeButtonLinear}
-                          start={{ x: 1, y: 1 }}
-                          end={{ x: 0, y: 2 }}
-                          colors={currentEmployee !== item ? ['#DB3E69', '#FD9C6C'] : ['#f4f4f4', '#f4f4f4']}
-                        >
-                          <Text style={[styles.pickEmployeeButtonText, currentEmployee === item && { color: '#A4A4A4' }]}>обрати</Text>
-                        </LinearGradient>
-                      </SharedButton>
-                    </View>
-                  </Ripple>
-                ))}
-              </ScrollView>
-            </View>
-          </TouchableOpacity>
-        )}
       </KeyboardAwareScrollView>
+      {employeesListVisible && (
+        <TouchableOpacity
+          style={[styles.employeesListContainer, { width: deviceWidth, height: deviceHeight, left: 0, }]}
+          onPress={() => setEmployeesListVisibility(false)}
+          activeOpacity={1}
+        >
+          <View style={{ width: '37%', height: '50%', borderRadius: 3, backgroundColor: '#FFFFFF' }}>
+            <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
+
+            <ScrollView style={styles.employeesList}>
+              {currentSession && currentSession.employees && currentSession.employees.map((item, key) => (
+                <Ripple
+                  style={styles.employeesListItem}
+                  onPress={() => {
+                    if (currentEmployee === item) return
+
+                    setEmployeesListVisibility(false)
+                    setCurrentEmployee(item)
+                  }}
+                  rippleColor={`#C4C4C4`}
+                  rippleFades key={key}
+                >
+                  <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                    <FastImage
+                      style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
+                      source={{ uri: currentAccount && currentAccount.img_url || '' }}
+                    />
+                    <Text style={styles.employeesListItemName}>{item}</Text>
+                  </View>
+                  <View style={styles.pickEmployeeButton}>
+                    <SharedButton>
+                      <LinearGradient
+                        style={styles.pickEmployeeButtonLinear}
+                        start={{ x: 1, y: 1 }}
+                        end={{ x: 0, y: 2 }}
+                        colors={currentEmployee !== item ? ['#DB3E69', '#FD9C6C'] : ['#f4f4f4', '#f4f4f4']}
+                      >
+                        <Text style={[styles.pickEmployeeButtonText, currentEmployee === item && { color: '#A4A4A4' }]}>обрати</Text>
+                      </LinearGradient>
+                    </SharedButton>
+                  </View>
+                </Ripple>
+              ))}
+            </ScrollView>
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   )
 }
