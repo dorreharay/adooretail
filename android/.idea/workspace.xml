@@ -12,11 +12,12 @@
       <change afterPath="$PROJECT_DIR$/../assets/images/ubereats-icon.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/DeliveryPicker/DeliveryPicker.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/DeliveryPicker/styles.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/DeliveryPickerOld/DeliveryPickerOld.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/DeliveryPickerOld/styles.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/EmployeePicker/EmployeePicker.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/EmployeePicker/styles.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle____local_aars______________Library_Android_sdk_build_tools_28_0_3_renderscript_lib_androidx_rs_jar_unspecified_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
@@ -43,8 +44,10 @@
       <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentSubmit.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentSubmit.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/Receipt.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/Receipt.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/Products/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/Products/Products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/Products/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/Products/styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/RightSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/RightSide.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/shared/SharedBackground.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/shared/SharedBackground.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/wrappers/AppSessions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/wrappers/AppSessions.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +55,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_7_API_29" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="4JPNU19110101025" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
