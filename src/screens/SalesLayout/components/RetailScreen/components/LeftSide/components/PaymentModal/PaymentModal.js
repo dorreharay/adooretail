@@ -2,20 +2,19 @@ import React, { useState, useEffect, useRef, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, ScrollView, Keyboard, Animated, KeyboardAvoidingView, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import Ripple from 'react-native-material-ripple';
-import FastImage from 'react-native-fast-image'
-import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles'
 
-import { syncReceipt } from '@reducers/UserReducer'
+import { syncReceipt, setCurrentService, } from '@reducers/UserReducer'
 import { printReceipt } from '@printer'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { getFormattedDate, } from '@dateFormatter'
 
 import SharedButton from '@shared/SharedButton'
-import PaymentLeftSide from '../PaymentLeftSide/PaymentLeftSide';
-import PaymentRightSide from '../PaymentRightSide/PaymentRightSide';
+import PaymentLeftSide from './components/PaymentLeftSide/PaymentLeftSide';
+import PaymentRightSide from './components/PaymentRightSide/PaymentRightSide';
+import EmployeePicker from './components/EmployeePicker/EmployeePicker'
+import DeliveryPickerOld from './components/DeliveryPickerOld/DeliveryPickerOld'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
@@ -28,10 +27,13 @@ const PaymentModal = (props) => {
   const willHideRef = useRef(null)
 
   const dispatch = useDispatch()
+
+  const currentService = useSelector(state => state.user.currentService) || 0
+  const currentEmployee = useSelector(state => state.user.currentEmployee) || 0
   const currentSession = useSelector(currentSessionSelector)
   const currentAccount = useSelector(currentAccountSelector)
-  const receipts = useSelector(state => state.temp.receipts)
-  const selectedReceiptIndex = useSelector(state => state.temp.selectedReceiptIndex)
+  const receipts = useSelector(state => state.orders.receipts)
+  const selectedReceiptIndex = useSelector(state => state.orders.selectedReceiptIndex)
 
   const initialStatuses = {
     initial: {
@@ -57,7 +59,6 @@ const PaymentModal = (props) => {
   const [status, setStatus] = useState(initialStatuses.waiting)
   const [enteredSum, setEnteredSum] = useState('0')
   const [employeesListVisible, setEmployeesListVisibility] = useState(false)
-  const [currentEmployee, setCurrentEmployee] = useState((currentSession && currentSession.employees) ? currentSession.employees[0] : '-')
   const [modalOffset, setModalOffset] = useState(0)
   const [amountFocused, setAmountFocused] = useState(false)
 
@@ -65,7 +66,7 @@ const PaymentModal = (props) => {
   const [discounts, setDiscounts] = useState([{ percent: 0 }, { percent: 10 }, { percent: 20 }, { percent: 30 }, { percent: 50 }])
   const [comment, setComment] = useState('')
   const [toBePaid, setToByPaid] = useState(receiptSum)
-  const [selectedService, setSelectedService] = useState(null)
+  const [deliveryListVisible, setDeliveryListVisibility] = useState(false)
 
   const saveReceipt = async (paymentType) => {
     function guidGenerator() {
@@ -100,9 +101,9 @@ const PaymentModal = (props) => {
       first_product_time: timeStart,
       last_product_time: timeEnd,
       transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
-      employee: currentEmployee,
+      employee: currentSession ? currentSession.employees[currentEmployee] : '',
       comment: comment,
-      service: selectedService,
+      service: currentAccount && currentAccount.available_services ? currentAccount.available_services[currentService].id : '',
     }
 
     if (!payload) return
@@ -122,6 +123,7 @@ const PaymentModal = (props) => {
 
       timerRef2.current = setTimeout(() => {
         dispatch(syncReceipt(payload))
+        dispatch(setCurrentService(0))
       }, 300)
     } catch (error) {
       throw new Error()
@@ -135,7 +137,7 @@ const PaymentModal = (props) => {
       index: 0,
       name: 'Готівка',
       apiName: 'cash',
-      imageSource: require('@images/dollar.png'),
+      imageSource: require('@images/cash.png'),
       onPress: (callBack) => {
         callBack()
         setPaymentModalVisibility(false)
@@ -246,7 +248,7 @@ const PaymentModal = (props) => {
       <KeyboardAwareScrollView
         style={{ paddingTop: (deviceHeight - (deviceHeight * 0.85)) / 2, zIndex: 13, }}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        extraScrollHeight={amountFocused ? 0 : 200}
+        extraScrollHeight={amountFocused ? 0 : 100}
         keyboardOpeningTime={0}
         enableOnAndroid={true}
       >
@@ -258,6 +260,7 @@ const PaymentModal = (props) => {
             selectPType={selectPType}
             setEmployeesListVisibility={setEmployeesListVisibility}
             currentEmployee={currentEmployee}
+            setDeliveryListVisibility={setDeliveryListVisibility}
           />
           <PaymentRightSide
             selectedType={selectedType}
@@ -274,58 +277,17 @@ const PaymentModal = (props) => {
             comment={comment} setComment={setComment}
             toBePaid={toBePaid} setToByPaid={setToByPaid}
             setAmountFocused={setAmountFocused}
-            selectedService={selectedService}
-            setSelectedService={setSelectedService}
           />
         </View>
       </KeyboardAwareScrollView>
-      {employeesListVisible && (
-        <TouchableOpacity
-          style={[styles.employeesListContainer, { width: deviceWidth, height: deviceHeight, left: 0, }]}
-          onPress={() => setEmployeesListVisibility(false)}
-          activeOpacity={1}
-        >
-          <View style={{ width: '37%', height: '50%', borderRadius: 3, backgroundColor: '#FFFFFF' }}>
-            <Text style={styles.employeesListHeading}>Оберіть працівника</Text>
-
-            <ScrollView style={styles.employeesList}>
-              {currentSession && currentSession.employees && currentSession.employees.map((item, key) => (
-                <Ripple
-                  style={styles.employeesListItem}
-                  onPress={() => {
-                    if (currentEmployee === item) return
-
-                    setEmployeesListVisibility(false)
-                    setCurrentEmployee(item)
-                  }}
-                  rippleColor={`#C4C4C4`}
-                  rippleFades key={key}
-                >
-                  <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                    <FastImage
-                      style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
-                      source={{ uri: currentAccount && currentAccount.img_url || '' }}
-                    />
-                    <Text style={styles.employeesListItemName}>{item}</Text>
-                  </View>
-                  <View style={styles.pickEmployeeButton}>
-                    <SharedButton>
-                      <LinearGradient
-                        style={styles.pickEmployeeButtonLinear}
-                        start={{ x: 1, y: 1 }}
-                        end={{ x: 0, y: 2 }}
-                        colors={currentEmployee !== item ? ['#DB3E69', '#FD9C6C'] : ['#f4f4f4', '#f4f4f4']}
-                      >
-                        <Text style={[styles.pickEmployeeButtonText, currentEmployee === item && { color: '#A4A4A4' }]}>обрати</Text>
-                      </LinearGradient>
-                    </SharedButton>
-                  </View>
-                </Ripple>
-              ))}
-            </ScrollView>
-          </View>
-        </TouchableOpacity>
-      )}
+      <EmployeePicker
+        visible={employeesListVisible}
+        onClickOutside={setEmployeesListVisibility}
+      />
+      <DeliveryPickerOld
+        visible={deliveryListVisible}
+        onClickOutside={setDeliveryListVisibility}
+      />
     </View>
   )
 }

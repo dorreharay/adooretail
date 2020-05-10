@@ -92,7 +92,7 @@ function Heading(props) {
           />
 
           <Text style={styles.accountName}>
-            {currentAccount.business_name}
+            {currentAccount ? currentAccount.business_name : ''}
           </Text>
         </View>
       </SharedButton>

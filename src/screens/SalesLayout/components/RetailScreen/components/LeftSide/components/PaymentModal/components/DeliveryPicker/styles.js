@@ -1,0 +1,77 @@
+import { createStyles, maxHeight, } from 'react-native-media-queries';
+import { GILROY_MEDIUM, GILROY_REGULAR, MUSEO_MEDIUM, } from '@fonts'
+
+const leftPadding = '12%'
+
+import { deviceWidth, deviceHeight } from '@dimensions'
+
+const base = {
+  employeesListContainer: {
+    position: 'absolute',
+    left: 0,
+    width: deviceWidth,
+    height: deviceHeight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#00000066',
+    zIndex: 1000,
+  },
+  employeesListHeading: {
+    margin: 30,
+    marginBottom: 20,
+    marginLeft: 30,
+    fontSize: 25,
+    fontFamily: GILROY_MEDIUM,
+  },
+  employeesList: {
+    width: '100%',
+    height: '100%',
+    zIndex: 1000,
+  },
+  employeesListItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+    height: 80,
+    paddingHorizontal: 15,
+    borderRadius: 100,
+  },
+  employeesListItemName: {
+    marginLeft: 20,
+    fontSize: 20,
+    fontFamily: GILROY_REGULAR,
+  },
+  pickEmployeeButton: {
+
+  },
+  pickEmployeeButtonLinear: {
+    padding: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  pickEmployeeButtonText: {
+    color: '#FFF',
+    fontSize: 15,
+    fontFamily: GILROY_MEDIUM,
+  },
+  frame: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 74,
+    height: 74,
+    borderWidth: 2.5,
+    borderColor: '#FFFFFF00',
+    borderRadius: 300,
+  }
+};
+
+const styles = createStyles(
+  base,
+
+  maxHeight(500, {
+    
+  })
+);
+
+export default styles

@@ -25,17 +25,14 @@ const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
   const {
-    openMenu, loadProducts, receipts, setReceipts,
-    selectedInstance, account, addProductQuantity,
-    paymentModalVisible, navigation, updateProductsLayout,
+    openMenu, loadProducts, updateProductsLayout,
+    paymentModalVisible, navigation,
   } = props;
 
   const dispatch = useDispatch()
 
   const toast = useRef(null)
   const inputRef = useRef(null)
-  const throttleParams = useRef((callback) => _.throttle(() => callback(), 3000, { trailing: false, leading: false }));
-
   const netInfo = useNetInfo();
 
   
@@ -45,8 +42,6 @@ function RightSide(props) {
   const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
 
   const [searchTerm, setSearchTerm] = useState('')
-  const [devicesLength, setDevicesLength] = useState(0)
-  const [printerLoading, setPrinterLoading] = useState(false)
 
   const loadAgain = async () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
@@ -55,16 +50,11 @@ function RightSide(props) {
       return
     }
 
-    loadProducts(account.token)
+    loadProducts(currentAccount.token)
     await syncSessions(() => { })
   }
 
   useEffect(() => {
-    // throttleParams.current(() => {
-    //   console.log('aaaaa')
-    // })
-
-    // validateSessionRoutine()
     loadProducts(currentAccountToken)
   }, [currentAccountToken])
 
@@ -85,12 +75,7 @@ function RightSide(props) {
 
     dispatch(setLayout(newLayout))
   }
-
-  const handleMessage = async () => {
-    console.log('%c%s', 'color: red; font: 1.5rem Tahoma;', 'socket request')
-    await API.sendMessage('nuckles')
-  }
-
+  
   const updatePairedDevices = async () => {
     navigation.jumpTo('ControlLayout', {
       screen: 2,
@@ -159,11 +144,7 @@ function RightSide(props) {
         />
       </View>
       <Products
-        receipts={receipts}
-        setReceipts={setReceipts}
-        selectedInstance={selectedInstance}
         searchTerm={searchTerm}
-        addProductQuantity={addProductQuantity}
         paymentModalVisible={paymentModalVisible}
         updateProductsLayout={updateProductsLayout}
       />

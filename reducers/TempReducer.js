@@ -1,13 +1,11 @@
 import { getFormattedDate, } from '@dateFormatter'
+import { setReceipts } from './OrdersReducer'
 
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
 const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
 const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
 const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
 const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES'
-
-const SET_SELECTED_RECEIPT = 'SET_SELECTED_RECEIPT'
-const SET_RECEIPTS = 'SET_RECEIPTS'
 
 const initialState = {
   endOfSession: false,
@@ -17,8 +15,6 @@ const initialState = {
   },
   currentRoute: 0,
   modalStatus: '',
-  selectedReceiptIndex: 0,
-  receipts: [[], [], [], []],
   bluetoothDevices: {
     found: [],
     paired: [],
@@ -61,20 +57,6 @@ export function setProducts(payload) {
   }
 }
 
-export function setSelectedReceipt(payload) {
-  return {
-    type: SET_SELECTED_RECEIPT,
-    payload
-  }
-}
-
-export function setReceipts(payload) {
-  return {
-    type: SET_RECEIPTS,
-    payload
-  }
-}
-
 export function setBluetoothDevices(payload) {
   return {
     type: SET_BLUETOOTH_DEVICES,
@@ -84,9 +66,9 @@ export function setBluetoothDevices(payload) {
 
 export function addProductQuantity(payload) {
   return function (dispatch, getState) {
-    const state = getState().temp
+    const state = getState()
 
-    const { selectedReceiptIndex, receipts, } = state
+    const { selectedReceiptIndex, receipts, } = state.orders
     const product = payload
 
     let receipt = receipts[selectedReceiptIndex]
@@ -125,9 +107,9 @@ export function addProductQuantity(payload) {
 
 export function substractProductQuantity(payload) {
   return function (dispatch, getState) {
-    const state = getState().temp
+    const state = getState()
 
-    const { selectedReceiptIndex, receipts, } = state
+    const { selectedReceiptIndex, receipts, } = state.orders
     const product = payload
 
     let receipt = receipts[selectedReceiptIndex]
@@ -154,10 +136,10 @@ export function substractProductQuantity(payload) {
 
 export function deleteCurrentReceiptItem(payload) {
   return function (dispatch, getState) {
-    const state = getState().temp
+    const state = getState()
     const receiptIndex = payload
 
-    const { selectedReceiptIndex, receipts, } = state
+    const { selectedReceiptIndex, receipts, } = state.orders
 
     const updatedReceipt = receipts[selectedReceiptIndex].filter((item, index) => index !== receiptIndex)
   
@@ -169,9 +151,9 @@ export function deleteCurrentReceiptItem(payload) {
 
 export function clearCurrentReceipt() {
   return function (dispatch, getState) {
-    const state = getState().temp
+    const state = getState()
 
-    const { selectedReceiptIndex, receipts, } = state
+    const { selectedReceiptIndex, receipts, } = state.orders
   
     const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? [] : item)
   
@@ -191,13 +173,6 @@ const ACTION_HANDLERS = {
   },
   [SET_MODAL_STATUS]: (state, action) => {
     return { ...state, modalStatus: action.payload }
-  },
-
-  [SET_SELECTED_RECEIPT]: (state, action) => {
-    return { ...state, selectedReceiptIndex: action.payload }
-  },
-  [SET_RECEIPTS]: (state, action) => {
-    return { ...state, receipts: action.payload }
   },
   [SET_BLUETOOTH_DEVICES]: (state, action) => {
     return { ...state, bluetoothDevices: action.payload }

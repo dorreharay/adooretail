@@ -1,9 +1,15 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_MEDIUM, PROBA_REGULAR, } from '@fonts'
 
+
+import { deviceWidth, deviceHeight } from '@dimensions'
+
 const base = {
   container: {
     flex: 1,
+    position: 'absolute',
+    width: '100%',
+    height: deviceHeight * 0.9,
     marginTop: 20,
   },
   row: {

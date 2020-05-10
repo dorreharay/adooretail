@@ -45,7 +45,7 @@ function SharedBackground({ image, children, }) {
             onPress={changeBackgroudIndex}
             scale={0.85}
           >
-            <Logo width={65} height={65} />
+            <Logo width={40} height={40} />
           </SharedButton>
         )}
 

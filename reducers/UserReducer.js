@@ -23,6 +23,8 @@ const SET_HISTORY = 'SET_HISTORY'
 const SET_ACTIVE_BACKGROUND_INDEX = 'SET_ACTIVE_BACKGROUND_INDEX'
 const RESET_SESSION = 'RESET_SESSION'
 const SET_PRODUCTS = 'SET_PRODUCTS';
+const SET_CURRENT_EMPLOYEE = 'SET_CURRENT_EMPLOYEE';
+const SET_CURRENT_SERVICE = 'SET_CURRENT_SERVICE';
 
 const initialState = {
   token: '',
@@ -33,6 +35,8 @@ const initialState = {
   bounds: [],
   accounts: [],
   activeBackgroundIndex: 0,
+  currentEmployee: 0,
+  currentService: 0,
 };
 
 export function addAccount(payload) {
@@ -82,6 +86,20 @@ export function setHistoryAndOptions(payload, options) {
     type: SET_HISTORY,
     payload,
     options,
+  }
+}
+
+export function setCurrentEmployee(payload) {
+  return {
+    type: SET_CURRENT_EMPLOYEE,
+    payload
+  }
+}
+
+export function setCurrentService(payload) {
+  return {
+    type: SET_CURRENT_SERVICE,
+    payload
   }
 }
 
@@ -460,6 +478,12 @@ const ACTION_HANDLERS = {
     const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, products: newProducts }) : item)
 
     return { ...state, accounts: newAccounts, }
+  },
+  [SET_CURRENT_EMPLOYEE]: (state, action) => {
+    return { ...state, currentEmployee: action.payload }
+  },
+  [SET_CURRENT_SERVICE]: (state, action) => {
+    return { ...state, currentService: action.payload }
   },
 };
 

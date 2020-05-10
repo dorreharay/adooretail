@@ -12,7 +12,8 @@ import { deviceHeight } from '@dimensions'
 import { getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
 import { currentAccountSelector, } from '@selectors'
 import { printNewBuffer } from '@printer'
-import { clearCurrentReceipt, setSelectedReceipt, } from '@reducers/TempReducer'
+import { clearCurrentReceipt, } from '@reducers/TempReducer'
+import { setSelectedReceipt, } from '@reducers/OrdersReducer'
 
 import ClockIcon from '@images/wall-clock.svg'
 
@@ -34,8 +35,8 @@ function LeftSide(props) {
   const dispatch = useDispatch()
 
   const currentAccount = useSelector(currentAccountSelector)
-  const receipts = useSelector(state => state.temp.receipts)
-  const selectedReceiptIndex = useSelector(state => state.temp.selectedReceiptIndex)
+  const receipts = useSelector(state => state.orders.receipts)
+  const selectedReceiptIndex = useSelector(state => state.orders.selectedReceiptIndex)
 
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
   const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))

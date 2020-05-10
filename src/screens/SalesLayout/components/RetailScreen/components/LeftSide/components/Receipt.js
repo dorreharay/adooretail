@@ -15,7 +15,7 @@ function Receipt(props) {
   const activatedRef = useRef(null)
   const dispatch = useDispatch()
 
-  const { selectedReceiptIndex, receipts } = useSelector(state => state.temp)
+  const { selectedReceiptIndex, receipts } = useSelector(state => state.orders)
 
   const [activatedIndex, setActivatedIndex] = useState(false)
 

@@ -94,7 +94,7 @@ function AppSessions(props) {
         }
 
         try {
-          await synchronizeSessions()
+          synchronizeSessions()
         } catch (error) {
           setInitialLoadingVisibility(true)
         }
