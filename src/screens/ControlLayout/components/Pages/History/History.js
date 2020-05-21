@@ -11,7 +11,7 @@ import HistoryList from './HistoryList/HistoryList'
 function History(props) {
   const { navigation } = props
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
 
   const [activeFilter, setActiveFilter] = useState({ code: 'day', name: 'За сьогодні' })
   const [activeSort, setActiveSort] = useState({ code: 'time-desc', name: 'Спадання за часом' })
@@ -19,6 +19,8 @@ function History(props) {
   const [loading, setLoadingStatus] = useState(false)
 
   const historyList = useMemo(() => {
+    if (!currentAccount) return []
+    
     let newHistory = currentAccount && currentAccount.history || []
     
     if (withoutEmptySessions) {
@@ -26,7 +28,7 @@ function History(props) {
     }
 
     return newHistory
-  }, [currentAccount.history, withoutEmptySessions,])
+  }, [currentAccount, withoutEmptySessions,])
 
   const toggleEmptySessions = () => {
     setWithoutStatus(!withoutEmptySessions)

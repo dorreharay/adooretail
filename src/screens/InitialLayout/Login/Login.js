@@ -33,7 +33,7 @@ function Login(props) {
 
   const dispatch = useDispatch();
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const currentSession = useSelector(currentSessionSelector)
 
   const [passwordArray, setPasswordArray] = useState(initialPassword)

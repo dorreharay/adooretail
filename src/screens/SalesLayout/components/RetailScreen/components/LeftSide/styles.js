@@ -84,9 +84,10 @@ const base = {
     alignItems: 'center',
     width: '100%',
     paddingLeft: 35,
-    paddingRight: 10,
+    paddingRight: 20,
     paddingTop: 15,
     paddingBottom: 10,
+    // backgroundColor: '#FCBC7933'
   },
   receiptTitle: {
     width: '100%',

@@ -12,6 +12,7 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		179B69E42D6441D18247DCCC /* gilroy_semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA320000D74644B7AF41B6 /* gilroy_semibold.ttf */; };
 		188A66E9B244465B8DCACE1F /* Geometria-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26207D48A2534FE79A2FA186 /* Geometria-Light.ttf */; };
 		2734888426954D5593070007 /* Geometria-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 468EE77A7DEE49948BA9E67F /* Geometria-Bold.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -47,7 +48,6 @@
 		EE65EF91327B4E94A2D61ADB /* gilroy_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24C5000F6F964FD89C581C1C /* gilroy_light.ttf */; };
 		F5F0B50E3D6048D5A8C37A4D /* gilroy_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 374866825A1945418707E35A /* gilroy_regular.ttf */; };
 		FC315CC206544636B9CCC72F /* Circe-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 167F19FF9ACF4B0693C42FFB /* Circe-Light.ttf */; };
-		179B69E42D6441D18247DCCC /* gilroy_semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA320000D74644B7AF41B6 /* gilroy_semibold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +106,7 @@
 		47E7AF4CB88C4AA7904F5CB7 /* ttcommons_demibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ttcommons_demibold.ttf; path = ../assets/fonts/ttcommons_demibold.ttf; sourceTree = "<group>"; };
 		4B3E3802A23E4B1E9E4BCCDA /* comfortaa_regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = comfortaa_regular.ttf; path = ../assets/fonts/comfortaa_regular.ttf; sourceTree = "<group>"; };
 		4B48E21EEE6D46EA99345707 /* probapro_bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = probapro_bold.ttf; path = ../assets/fonts/probapro_bold.ttf; sourceTree = "<group>"; };
+		4CCA320000D74644B7AF41B6 /* gilroy_semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = gilroy_semibold.ttf; path = ../assets/fonts/gilroy_semibold.ttf; sourceTree = "<group>"; };
 		4DEE8A4C29BD469C9158B109 /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Medium.ttf"; path = "../assets/fonts/Gilroy-Medium.ttf"; sourceTree = "<group>"; };
 		520FF95F89DE434F84602151 /* Gilroy-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Light.ttf"; path = "../assets/fonts/Gilroy-Light.ttf"; sourceTree = "<group>"; };
 		5507D759A4FF492A809CDC42 /* probapro_light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = probapro_light.ttf; path = ../assets/fonts/probapro_light.ttf; sourceTree = "<group>"; };
@@ -150,7 +151,6 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FF2845785FD26B1C9CB1E884 /* libPods-adooretail-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adooretail-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CCA320000D74644B7AF41B6 /* gilroy_semibold.ttf */ = {isa = PBXFileReference; name = "gilroy_semibold.ttf"; path = "../assets/fonts/gilroy_semibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -441,7 +441,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 9CF2H73UZW;
+						DevelopmentTeam = SGMN4DGZ42;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -466,6 +466,8 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* adooretail */,
@@ -475,6 +477,9 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -775,7 +780,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -803,7 +807,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -823,7 +826,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 9CF2H73UZW;
+				DEVELOPMENT_TEAM = SGMN4DGZ42;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/..",
@@ -849,7 +852,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9CF2H73UZW;
+				DEVELOPMENT_TEAM = SGMN4DGZ42;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/..",
@@ -890,7 +893,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -926,7 +928,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -961,7 +962,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -996,7 +996,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

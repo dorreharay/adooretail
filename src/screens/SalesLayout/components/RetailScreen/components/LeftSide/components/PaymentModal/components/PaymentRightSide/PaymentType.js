@@ -25,7 +25,7 @@ function PaymentType(props) {
     selectedService,
   } = props
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const currentService = useSelector(state => state.user.currentService) || 0
 
   const [spinComment, setSpinComment] = useState(new Animated.Value(1))

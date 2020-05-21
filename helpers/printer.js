@@ -59,10 +59,8 @@ export async function printNewBuffer(receipt) {
   try {
     const currentStore = store.getState()
 
-    const { accounts, currentAccountToken, currentAccountIndex, } = currentStore.user
+    const { accounts, currentAccount, } = currentStore.user
     const { currentRoute, } = currentStore.temp
-
-    const currentAccount = accounts[currentAccountIndex]
 
     const kitchenReceipts = receipt.receipt.filter(item => item.department === 'kitchen')
     const paydeskReceipts = receipt.receipt.filter(item => item.department === 'paydesk')
@@ -140,10 +138,8 @@ export async function printReceipt(receipt, address) {
 
     const currentStore = store.getState()
 
-    const { accounts, currentAccountToken, currentAccountIndex, } = currentStore.user
+    const { currentAccount, } = currentStore.user
     const { currentRoute, } = currentStore.temp
-
-    const currentAccount = accounts[currentAccountIndex]
 
     const { receipt_name, receipt_description } = currentAccount
 

@@ -25,16 +25,16 @@ const base = {
     paddingHorizontal: 30,
     paddingVertical: 18,
     borderWidth: 1,
-    borderColor: '#E66960',
+    borderColor: '#000000',
   },
   buttonText: {
-    color: '#E66960',
+    color: '#000000',
     fontSize: 18,
     fontFamily: GILROY_REGULAR,
   },
   active: {
-    backgroundColor: '#E66960',
-    borderColor: '#E66960',
+    backgroundColor: '#000000',
+    borderColor: '#000000',
   },
   activeText: {
     color: '#FFFFFF',

@@ -12,7 +12,7 @@ import SwitchButtons from './SwitchButtons';
 const Settings = () => {
   const dispatch = useDispatch()
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
 
   const updateSettings = (newValue, prop) => {
     let payload = null

@@ -34,7 +34,7 @@ function LeftSide(props) {
 
   const dispatch = useDispatch()
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const receipts = useSelector(state => state.orders.receipts)
   const selectedReceiptIndex = useSelector(state => state.orders.selectedReceiptIndex)
 

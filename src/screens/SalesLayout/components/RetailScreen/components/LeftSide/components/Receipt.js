@@ -42,11 +42,11 @@ function Receipt(props) {
   }
 
   return (
-    <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, paddingRight: 10, }}>
+    <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, }}>
       {receipts[selectedReceiptIndex].map((item, index) => (
         <View style={styles.receiptItem} key={index}>
           <View style={styles.receiptTitle}>
-      <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}{item.size ? `, ${handleSize(item.size)}` : ''}</Text>
+            <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}{item.size ? `, ${handleSize(item.size)}` : ''}</Text>
           </View>
           <View style={styles.receiptDetails}>
             <View style={styles.receiptOnePriceContainer}>

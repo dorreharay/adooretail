@@ -10,7 +10,6 @@ import styles from './styles'
 import { getDateByCondition, } from '@dateFormatter'
 import { getSessions, setHistoryAndOptions, } from '@reducers/UserReducer'
 
-import { currentAccountSelector, } from '@selectors'
 import SharedButton from '@shared/SharedButton';
 
 function Details(props) {
@@ -20,6 +19,8 @@ function Details(props) {
   } = props
 
   useEffect(() => {
+    if (!currentAccount) return
+    
     dispatch(setHistoryAndOptions([]))
 
     setLoadingStatus(true)
@@ -32,7 +33,7 @@ function Details(props) {
 
   const dispatch = useDispatch()
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
 
   const menuRef1 = useRef(null)
   const menuRef2 = useRef(null)

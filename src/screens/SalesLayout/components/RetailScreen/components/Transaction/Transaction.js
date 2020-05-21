@@ -160,7 +160,7 @@ function Transaction(props) {
               activeOpacity={1}
             >
               <FastImage
-                style={{ width: 15, height: 15, marginRight: 10, opacity: selectedTransactionType === 'delivery' ? 1 : 0.5 }}
+                style={{ width: 25, height: 25, marginRight: 10, opacity: selectedTransactionType === 'delivery' ? 1 : 0.5 }}
                 source={require('@images/outcome.png')}
               />
               <Text style={[styles.typeItemText, selectedTransactionType === 'delivery' && styles.typeItemTextActive]}>Витрата</Text>
@@ -172,7 +172,7 @@ function Transaction(props) {
               activeOpacity={1}
             >
               <FastImage
-                style={{ width: 15, height: 15, marginRight: 10, opacity: selectedTransactionType === 'incasation' ? 1 : 0.5 }}
+                style={{ width: 25, height: 25, marginRight: 10, opacity: selectedTransactionType === 'incasation' ? 1 : 0.5 }}
                 source={require('@images/incasation.png')}
               />
               <Text style={[styles.typeItemText, selectedTransactionType === 'incasation' && styles.typeItemTextActive]}>Інкасація</Text>
@@ -184,7 +184,7 @@ function Transaction(props) {
               activeOpacity={1}
             >
               <FastImage
-                style={{ width: 15, height: 15, marginRight: 10, opacity: selectedTransactionType === 'income' ? 1 : 0.5 }}
+                style={{ width: 25, height: 25, marginRight: 10, opacity: selectedTransactionType === 'income' ? 1 : 0.5 }}
                 source={require('@images/income.png')}
               />
               <Text style={[styles.typeItemText, selectedTransactionType === 'income' && styles.typeItemTextActive]}>Прибуток</Text>

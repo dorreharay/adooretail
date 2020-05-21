@@ -11,16 +11,14 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
   const currentStore = store.getState()
   const dispatch = store.dispatch
 
-  const { accounts, currentAccountToken, currentAccountIndex, } = currentStore.user
+  const { currentAccount } = currentStore.user
   const { currentRoute, } = currentStore.temp
 
-  if (accounts.length === 0) {
+  if (!currentAccount) {
     callback()
 
     return
   }
-
-  const currentAccount = accounts[currentAccountIndex]
 
   const { localSessions, settings, passcode } = currentAccount
 
@@ -28,7 +26,7 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
     const data = await API.synchronizeSessions({
       localSessions: getLastItems(newLocalSessions ? newLocalSessions : localSessions, customOffset ? customOffset : 5),
       newSettings: settings,
-    }, currentAccountToken)
+    }, currentAccount.id)
 
     const { shift_start, shift_end, client_data, } = data
     const { passcode: clientPasscode } = client_data
@@ -48,14 +46,13 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
   }
 }
 
-export function validateByRoute(shift_start, shift_end, callback) {
+export function validateByRoute(shift_start, shift_end, callback = () => {}) {
   const currentStore = store.getState()
   const dispatch = store.dispatch
 
-  const { accounts, } = currentStore.user
-  const { currentRoute, } = currentStore.temp
+  const { currentAccount, } = currentStore.user
 
-  if (accounts.length !== 0) {
+  if (currentAccount) {
     validateSessionRoutine(shift_start, shift_end, callback)
     callback()
   } else {
@@ -66,9 +63,10 @@ export function validateByRoute(shift_start, shift_end, callback) {
 export function validateSessionRoutine(shift_start, shift_end, callback) {
   const dispatch = store.dispatch
   const currentStore = store.getState()
-  const { accounts, currentAccountIndex, } = currentStore.user
+  const { currentAccount } = currentStore.user
   const { modalStatus } = currentStore.temp
-  const currentAccount = accounts[currentAccountIndex]
+
+  if (currentAccount) return 
 
   const { localSessions, settings } = currentAccount
 
@@ -102,8 +100,6 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
   if (isValid && modalStatus !== '') {
     dispatch(setModalStatus(''))
   }
-
-  console.log(currentAccount.localSessions)
 
   if (!isValid) {
     if (currentAccount.localSessions.length === 0) {

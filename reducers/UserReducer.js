@@ -3,18 +3,14 @@ import { syncSessions, } from '@requests'
 import _ from 'lodash'
 import API from '../rest/api'
 
-const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
 const UPDATE_CURRENT_SESSIONS = 'UPDATE_CURRENT_SESSIONS';
 const SET_START_CASH = 'SET_START_CASH';
 const SET_EMPLOYEES = 'SET_EMPLOYEES';
-const SAVE_CURRENT_ACCOUNT_INDEX = 'SAVE_CURRENT_ACCOUNT_INDEX';
-const SAVE_CURRENT_ACCOUNT_TOKEN = 'SAVE_CURRENT_ACCOUNT_TOKEN';
 const ADD_FIVE_MINUTES_TO_SHIFT = 'ADD_FIVE_MINUTES_TO_SHIFT';
 const RESTORE_DEFAULT_SHIFT = 'RESTORE_DEFAULT_SHIFT';
 const SAVE_LOCAL_RECEIPT = 'SAVE_LOCAL_RECEIPT';
 const SYNC_DATA = 'SYNC_DATA';
-const SET_BOUNDS = 'SET_BOUNDS';
 const SET_SETTINGS = 'SET_SETTINGS';
 const ADD_ACCOUNT = 'ADD_ACCOUNT';
 const SAVE_TRANSACTION = 'SAVE_TRANSACTION';
@@ -27,13 +23,8 @@ const SET_CURRENT_EMPLOYEE = 'SET_CURRENT_EMPLOYEE';
 const SET_CURRENT_SERVICE = 'SET_CURRENT_SERVICE';
 
 const initialState = {
-  token: '',
   startCash: 0,
-  initialLoading: true,
-  currentAccountIndex: 0,
-  currentAccountToken: '',
-  bounds: [],
-  accounts: [],
+  currentAccount: null,
   activeBackgroundIndex: 0,
   currentEmployee: 0,
   currentService: 0,
@@ -56,13 +47,6 @@ export function setSettings(payload) {
 export function setActiveBackgroundIndex(payload) {
   return {
     type: SET_ACTIVE_BACKGROUND_INDEX,
-    payload
-  }
-}
-
-export function setBounds(payload) {
-  return {
-    type: SET_BOUNDS,
     payload
   }
 }
@@ -104,13 +88,11 @@ export function setCurrentService(payload) {
 }
 
 export function getSessions(changedOptions, callback) {
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     try {
       const store = getState()
 
-      const { accounts, currentAccountIndex, currentAccountToken, } = store.user
-
-      const currentAccount = accounts[currentAccountIndex]
+      const { currentAccount, } = store.user
 
       const payload = {
         offset: changedOptions.offset ? changedOptions.offset === 'onemore' ? currentAccount.historyOptions.offset + 1 : changedOptions.active_filter ? 1 : changedOptions.offset : currentAccount.historyOptions.offset,
@@ -120,7 +102,7 @@ export function getSessions(changedOptions, callback) {
       }
 
       const data = await API.getSessions({
-        token: currentAccountToken,
+        token: currentAccount.id,
         ...payload,
       })
 
@@ -134,37 +116,23 @@ export function getSessions(changedOptions, callback) {
 }
 
 export function syncReceipt(receipt) {
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     try {
       const store = getState()
 
-      const { accounts, currentAccountIndex } = store.user
+      const { currentAccount } = store.user
 
-      const newLocalSessions = accounts[currentAccountIndex].localSessions.map((elem, key) => {
-        return accounts[currentAccountIndex].localSessions.length - 1 === key ? ({ ...elem, receipts: [...elem.receipts, receipt] }) : elem
+      const newLocalSessions = currentAccount.localSessions.map((elem, key) => {
+        return currentAccount.localSessions.length - 1 === key ? ({ ...elem, receipts: [...elem.receipts, receipt] }) : elem
       })
-  
+
       dispatch(saveLocalReceipt(receipt))
 
-      await syncSessions(() => {}, newLocalSessions)
+      await syncSessions(() => { }, newLocalSessions)
     } catch (error) {
       console.log(error)
     }
   };
-}
-
-export function saveCurrentAccountIndex(payload) {
-  return {
-    type: SAVE_CURRENT_ACCOUNT_INDEX,
-    payload
-  }
-}
-
-export function saveCurrentAccountToken(payload) {
-  return {
-    type: SAVE_CURRENT_ACCOUNT_TOKEN,
-    payload
-  }
 }
 
 export function changeAccount(payload) {
@@ -246,8 +214,8 @@ export function setProducts(payload) {
 
 const ACTION_HANDLERS = {
   [SAVE_TRANSACTION]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
-    const localSessions = accounts[currentAccountIndex].localSessions
+    const { currentAccount } = state
+    const localSessions = currentAccount.localSessions
     const newTransaction = action.payload
 
     const lastIndex = localSessions.length - 1
@@ -266,20 +234,16 @@ const ACTION_HANDLERS = {
       }
     })
 
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, localSessions: updatedSessions }) : item)
-
-    return { ...state, accounts: newAccounts, }
+    return { ...state, currentAccount: ({ ...currentAccount, localSessions: updatedSessions }), }
   },
   [SET_NEED_TO_REENTER]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
+    const { currentAccount } = state
+
     const newNeedToReenter = action.payload
 
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, needToReenter: newNeedToReenter }) : item)
-
-    return { ...state, accounts: newAccounts, }
+    return { ...state, currentAccount: ({ ...currentAccount, needToReenter: newNeedToReenter }), }
   },
   [ADD_ACCOUNT]: (state, action) => {
-    const { accounts, } = state
     const data = action.payload.result
     const client_data = action.payload.client_data
 
@@ -300,131 +264,90 @@ const ACTION_HANDLERS = {
       }
     }
 
-    // let final = []
-
-    // if(accounts.length === 0) {
-    //   final = [...accounts, ...[payload, {}]]
-    // } else {
-    //   const temp = [...accounts, payload].filter(item => !_.isEmpty(item))
-
-    //   final = [...temp, {}]
-    // }
-
     return {
       ...state,
-      // accounts: final,
-      accounts: [...accounts, payload],
-      currentAccountIndex: [...accounts, {}].length - 1,
-      currentAccountToken: data._id,
+      currentAccount: payload,
     }
   },
   [SET_SETTINGS]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
+    const { currentAccount } = state
     const data = action.payload
 
-    const newAccounts = accounts.map((item, id) => {
-      if (id === currentAccountIndex) {
-        return ({
-          ...item,
-          settings: data,
-        })
-      } else {
-        return item
-      }
-    })
-
-    return { ...state, accounts: newAccounts, }
+    return {
+      ...state,
+      currentAccount: {
+        ...currentAccount,
+        settings: data,
+      },
+    }
   },
   [SYNC_DATA]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
+    const { currentAccount } = state
     const data = action.payload
 
-    const newAccounts = accounts.map((item, id) => {
-      if (id === currentAccountIndex) {
-        return ({
-          ...item,
-          ...data,
-          passcodes: data.client_data.passcodes,
-          updatePeriod: data.client_data.update_period,
-        })
-      } else {
-        return item
-      }
-    })
-
-    return { ...state, accounts: newAccounts, }
+    return {
+      ...state,
+      currentAccount: {
+        ...currentAccount,
+        ...data,
+        passcodes: data.client_data.passcodes,
+        updatePeriod: data.client_data.update_period,
+      },
+    }
   },
   [SET_HISTORY]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
+    const { currentAccount } = state
     const data = action.payload
     const options = action.options
 
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, history: data, historyOptions: options ? options : ({ ...item.historyOptions, offset: 1, }) }) : item)
-
-    return { ...state, accounts: newAccounts, }
+    return {
+      ...state,
+      currentAccount: {
+        ...currentAccount,
+        history: data,
+        historyOptions: options ? options : ({ ...currentAccount.historyOptions, offset: 1, })
+      },
+    }
   },
   [SAVE_LOCAL_RECEIPT]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
+    const { currentAccount } = state
     const newReceipt = action.payload
 
-    const newAccounts = accounts.map((item, id) => {
-      if (id === currentAccountIndex) {
-        const lastSessionIndex = item.localSessions.length - 1
-        
-        const newLocalSessions = item.localSessions.map((elem, key) => lastSessionIndex === key ? ({ ...elem, receipts: [...elem.receipts, newReceipt] }) : elem)
+    const lastSessionIndex = currentAccount.localSessions.length - 1
 
-        return ({
-          ...item,
-          localSessions: newLocalSessions
-        })
-      } else {
-        return item
+    const newLocalSessions = currentAccount.localSessions.map((elem, key) => lastSessionIndex === key ? ({ ...elem, receipts: [...elem.receipts, newReceipt] }) : elem)
+
+    return ({
+      ...state,
+      currentAccount: {
+        ...currentAccount,
+        localSessions: newLocalSessions
       }
     })
-
-    return { ...state, accounts: newAccounts, }
   },
   [ADD_FIVE_MINUTES_TO_SHIFT]: (state, action) => {
-    const { accounts, currentAccountIndex, } = state
+    const { currentAccount, } = state
 
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, shift_end: { ...item.shift_end, minutes: item.shift_end.minutes + 5 } }) : item)
-
-    return { ...state, accounts: newAccounts, }
+    return { ...state, currentAccount: ({ ...currentAccount, shift_end: { ...currentAccount.shift_end, minutes: currentAccount.shift_end.minutes + 5 } }), }
   },
   [RESTORE_DEFAULT_SHIFT]: (state, action) => {
-    const { accounts, currentAccountIndex, } = state
+    const { currentAccount, } = state
 
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, shift_end: item.default_shift_end }) : item)
-
-    return { ...state, accounts: newAccounts, }
+    return { ...state, currentAccount: ({ ...currentAccount, shift_end: currentAccount.default_shift_end }), }
   },
   [CHANGE_ACCOUNT]: (state, action) => {
     return { ...state, currentAccount: action.payload }
   },
-  [SET_AUTH_TOKEN]: (state, action) => {
-    return { ...state, token: action.payload }
-  },
-  [SAVE_CURRENT_ACCOUNT_INDEX]: (state, action) => {
-    return { ...state, currentAccountIndex: action.payload }
-  },
-  [SET_BOUNDS]: (state, action) => {
-    return { ...state, bounds: action.payload }
-  },
-  [SAVE_CURRENT_ACCOUNT_TOKEN]: (state, action) => {
-    return { ...state, currentAccountToken: action.payload }
-  },
   [RESET_SESSION]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
+    const { currentAccount } = state
 
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, localSessions: [] }) : item)
-
-    return { ...state, accounts: newAccounts, }
+    return { ...state, currentAccount: { ...currentAccount, localSessions: [] }, }
   },
   [UPDATE_CURRENT_SESSIONS]: (state, action) => {
     const { status, endCash, newSessionProp } = action.payload
-    const { accounts, currentAccountIndex } = state
+    const { currentAccount } = state
 
-    const localSessions = accounts[currentAccountIndex].localSessions
+    const localSessions = currentAccount.localSessions
 
     let newSession = {}, updatedSessions = []
 
@@ -458,9 +381,7 @@ const ACTION_HANDLERS = {
       })
     }
 
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, localSessions: updatedSessions }) : item)
-
-    return { ...state, accounts: newAccounts, }
+    return { ...state, currentAccount: { ...currentAccount, localSessions: updatedSessions }, }
   },
   [SET_START_CASH]: (state, action) => {
     return { ...state, startCash: action.payload }
@@ -472,12 +393,10 @@ const ACTION_HANDLERS = {
     return { ...state, activeBackgroundIndex: action.payload }
   },
   [SET_PRODUCTS]: (state, action) => {
-    const { accounts, currentAccountIndex } = state
+    const { currentAccount } = state
     const newProducts = action.payload
 
-    const newAccounts = accounts.map((item, id) => id === currentAccountIndex ? ({ ...item, products: newProducts }) : item)
-
-    return { ...state, accounts: newAccounts, }
+    return { ...state, currentAccount: { ...currentAccount, products: newProducts }, }
   },
   [SET_CURRENT_EMPLOYEE]: (state, action) => {
     return { ...state, currentEmployee: action.payload }

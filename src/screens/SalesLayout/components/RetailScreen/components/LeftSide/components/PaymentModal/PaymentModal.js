@@ -31,7 +31,7 @@ const PaymentModal = (props) => {
   const currentService = useSelector(state => state.user.currentService) || 0
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0
   const currentSession = useSelector(currentSessionSelector)
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const receipts = useSelector(state => state.orders.receipts)
   const selectedReceiptIndex = useSelector(state => state.orders.selectedReceiptIndex)
 

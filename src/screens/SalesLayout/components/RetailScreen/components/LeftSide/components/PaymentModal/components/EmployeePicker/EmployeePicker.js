@@ -18,7 +18,7 @@ function EmployeePicker(props) {
 
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0
   const currentSession = useSelector(currentSessionSelector)
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
 
   if (!visible) return null
 

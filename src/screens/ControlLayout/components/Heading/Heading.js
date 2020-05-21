@@ -11,7 +11,7 @@ import SharedButton from '@shared/SharedButton'
 function Heading(props) {
   const { navigation, activeTab, setActiveTab, } = props
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
 
   return (
     <View style={styles.container}>

@@ -32,30 +32,18 @@ function AppSessions(props) {
   const intervalRef = useRef(false)
   const validationRef = useRef(null)
 
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const currentSession = useSelector(currentSessionSelector)
-  const currentAccount = useSelector(currentAccountSelector)
   const modalStatus = useSelector(state => state.temp.modalStatus)
   const currentRoute = useSelector(state => state.temp.currentRoute)
-  const accounts = useSelector(state => state.user.accounts)
 
   const dispatch = useDispatch()
-  const netInfo = useNetInfo()
-  // const navigation = useNavigation()
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
-  const [prevNetState, setPrevNetState] = useState(false)
   const [initialLoadingVisibility, setInitialLoadingVisibility] = useState(false)
 
-  const synchronizeSessions = async () => {
-    if (accounts.length !== 0) {
-      await syncSessions(() => {
-        setInitialLoadingVisibility(true)
-      })
-    }
-  }
-
   useEffect(() => {
-    if (accounts.length !== 0) {
+    if (currentAccount) {
       BackgroundTimer.clearInterval(syncRef.current);
       BackgroundTimer.clearInterval(validationRef.current);
 
@@ -66,7 +54,7 @@ function AppSessions(props) {
       BackgroundTimer.clearInterval(syncRef.current);
 
       syncRef.current = BackgroundTimer.setInterval(() => {
-        synchronizeSessions()
+        syncSessions()
       }, currentAccount && currentAccount.client_data && currentAccount.client_data.update_period || (30 * 1000));
     }
 
@@ -74,34 +62,37 @@ function AppSessions(props) {
       BackgroundTimer.clearInterval(syncRef.current);
       BackgroundTimer.clearInterval(validationRef.current);
     };
-  }, [accounts, currentAccount, modalStatus, currentSession, currentRoute, netInfo])
+  }, [currentAccount])
 
-  const gotoScreen = async (screen, callback) => {
-    timerRef1.current = setTimeout(() => {
-      timerRef2.current = setTimeout(async () => {
-        if (screen === 'SalesLayout') {
-          NavigationService.navigate('ControlLayout')
+  useEffect(() => {
+    if (currentAccount) {
+      if (!currentSession.endTime && currentSession.length !== 0) {
+        if (currentAccount.needToReenter) {
 
-          setTimeout(() => {
-            NavigationService.navigate(screen)
-          }, 400)
-        } else {
-          NavigationService.navigate(screen)
+          timerRef1.current = setTimeout(() => {
+            setInitialLoadingVisibility(true)
+          }, 1500)
+
+          return
         }
 
-        if (accounts.length === 0) {
-          setInitialLoadingVisibility(true)
-        }
+        NavigationService.navigate('SalesLayout')
+        dispatch(setCurrentRoute(4))
+      }
 
-        try {
-          synchronizeSessions()
-        } catch (error) {
-          setInitialLoadingVisibility(true)
-        }
+      syncSessions()
 
-        callback()
-      }, 1000)
-    }, 1000)
+      timerRef1.current = setTimeout(() => {
+        setInitialLoadingVisibility(true)
+      }, 1500)
+    } else {
+      NavigationService.navigate('NoAccount')
+      dispatch(setCurrentRoute(0))
+    }
+  }, [])
+
+  const gotoScreen = async (screen) => {
+    NavigationService.navigate(screen)
   }
 
   useEffect(() => {
@@ -112,51 +103,14 @@ function AppSessions(props) {
   }, [])
 
   useEffect(() => {
-    if (accounts.length === 0) {
-      gotoScreen('NoAccount', () => dispatch(setCurrentRoute(0)))
-
-      return
+    clearInterval(intervalRef.current)
+    return () => {
+      clearInterval(intervalRef.current)
     }
-
-    if (!currentSession.endTime && currentSession.length !== 0) {
-      if (currentAccount.needToReenter) {
-        setInitialLoadingVisibility(true)
-
-        return
-      }
-
-      gotoScreen('SalesLayout', () => dispatch(setCurrentRoute(4)))
-    } else {
-      synchronizeSessions()
-    }
-  }, [accounts.length])
-
-  const saveDimensions = () => {
-    let deviceWidth = Dimensions.get('screen').width
-    let deviceHeight = Dimensions.get('screen').height
-
-    dispatch(setOrientationDimensions({ deviceWidth, deviceHeight }))
-  }
-
-  const onOrientationChange = (orientation) => {
-    if (orientation === 'PORTRAIT') {
-      // Orientation.lockToLandscapeLeft()
-      saveDimensions()
-    }
-  }
+  }, [currentAccount, currentRoute, modalStatus,])
 
   useEffect(() => {
-    Orientation.getOrientation((err, orientation) => {
-
-      if (orientation === 'PORTRAIT') {
-        // Orientation.lockToLandscapeLeft()
-      }
-    });
-
-    onOrientationChange()
-    Orientation.addOrientationListener(onOrientationChange);
-
-    return () => Orientation.removeOrientationListener(onOrientationChange);
+    getBuildInfo()
   }, [])
 
   const getBuildInfo = async () => {
@@ -167,17 +121,6 @@ function AppSessions(props) {
 
     return () => { }
   }
-
-  useEffect(() => {
-    getBuildInfo()
-  }, [])
-
-  useEffect(() => {
-    clearInterval(intervalRef.current)
-    return () => {
-      clearInterval(intervalRef.current)
-    }
-  }, [currentAccount, currentRoute, modalStatus,])
 
   const screenProps = {
     initialLoadingVisibility,
@@ -223,13 +166,13 @@ function AppSessions(props) {
           </View>
         </SharedBackground>
 
-        {accounts.length !== 0 && (
+        {/* {accounts.length !== 0 && (
           <SessionModal
             isVisible={modalStatus !== ''}
             intervalRef={intervalRef}
             NavigationService={NavigationService}
           />
-        )}
+        )} */}
       </AnimatedSplash>
       {/* </UserInactivity> */}
     </>

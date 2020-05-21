@@ -15,7 +15,7 @@ import Transaction from './components/Transaction/Transaction'
 function RetailScreen(props) {
   const {
     products, navigation, openChangeAccountOverview,
-    account, updateLayout, toastRef, layout,
+    updateLayout, toastRef, layout,
   } = props;
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -70,7 +70,7 @@ function RetailScreen(props) {
       />
       <RightSide
         products={products} loadProducts={loadProducts}
-        account={account} openMenu={openMenu}
+        openMenu={openMenu}
         navigation={navigation} paymentModalVisible={paymentModalVisible}
         updateProductsLayout={updateLayout}
       />

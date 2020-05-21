@@ -37,7 +37,6 @@ function AppContainer() {
         backBehavior='none'
         swipeEnabled={false}
         tabBar={() => null}
-        lazy={true}
         removeClippedSubviews={Platform.OS === 'android'}
         sceneContainerStyle={{
           backgroundColor: '#FFFFFF00'

@@ -16,7 +16,7 @@ function DeliveryPicker(props) {
 
   const dispatch = useDispatch()
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const currentService = useSelector(state => state.user.currentService) || 0
 
   const renderServiceIcon = (id) => {

@@ -22,7 +22,7 @@ function PaymentLeftSide(props) {
   const currentSession = useSelector(currentSessionSelector)
   const currentService = useSelector(state => state.user.currentService) || 0
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
 
   const renderServiceIcon = () => {
     if (currentService === 0) {
@@ -87,7 +87,7 @@ function PaymentLeftSide(props) {
           <View style={styles.currentEmployeeImageWrapper}>
             <FastImage
               style={styles.currentEmployeeImage}
-              source={{ uri: currentAccount.img_url }}
+              source={{ uri: currentAccount && currentAccount.img_url || '' }}
             />
             <View style={styles.currentEmployeeBorder} />
           </View>

@@ -20,7 +20,7 @@ function SessionModal(props) {
 
   const dispatch = useDispatch()
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const modalStatus = useSelector(state => state.temp.modalStatus)
 
   const endSession = () => {

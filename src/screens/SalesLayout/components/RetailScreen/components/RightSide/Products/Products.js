@@ -20,7 +20,9 @@ function Products(props) {
   const dispatch = useDispatch()
 
   const layout = useSelector(state => state.orders.layout)
-  const { products } = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
+
+  const products = currentAccount && currentAccount.products || null
 
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)
@@ -67,7 +69,7 @@ function Products(props) {
   }
 
   useEffect(() => {
-    if (activeCategory) {
+    if (activeCategory && products) {
       console.log('savedActiveCategoryPath', savedActiveCategoryPath)
 
       const { index, key } = savedActiveCategoryPath
@@ -77,6 +79,7 @@ function Products(props) {
   }, [products])
 
   const resetCategory = () => {
+    if (!products) return
     scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
     setCategoryVisibility(false)
     setActiveCategory(null)
@@ -99,7 +102,7 @@ function Products(props) {
   }
 
   useEffect(() => {
-    if (!activeCategory) {
+    if (!activeCategory && products) {
       const flattened = products.flat()
 
       updateProductsLayout(flattened, layout)
@@ -150,6 +153,8 @@ function Products(props) {
   }, [searchTerm, layout])
 
   const actualList = useMemo(() => {
+    if (!products) return []
+
     return [searchResult.length > 0 ? searchResult : products][0]
   }, [searchResult, products])
 

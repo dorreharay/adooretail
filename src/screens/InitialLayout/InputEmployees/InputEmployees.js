@@ -20,7 +20,7 @@ function InputEmployees({ navigation }) {
 
   const dispatch = useDispatch();
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const employees = currentAccount && currentAccount.employees || []
   const shift_start = currentAccount && currentAccount.shift_start
   const shift_end = currentAccount && currentAccount.shift_end

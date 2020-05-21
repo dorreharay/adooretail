@@ -11,7 +11,7 @@ import { currentAccountSelector, } from '@selectors'
 function EmployeesList(props) {
   const { employees, checked, handleCheck, } = props
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
 
   return (
     <View style={styles.сontainer}>

@@ -16,7 +16,7 @@ function DeliveryPickerOld(props) {
 
   const dispatch = useDispatch()
 
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
 
   const renderServiceIcon = (id) => {
     if (id === 0) {

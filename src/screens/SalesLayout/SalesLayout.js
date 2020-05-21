@@ -8,7 +8,7 @@ import _ from 'lodash'
 import styles from './styles'
 
 import { currentAccountSelector } from '@selectors'
-import { saveCurrentAccountIndex, saveCurrentAccountToken, setProducts, } from '@reducers/UserReducer'
+import { saveCurrentAccountIndex, setProducts, } from '@reducers/UserReducer'
 // import { setProducts, } from '@reducers/OrdersReducer'
 
 import RetailScreen from './components/RetailScreen/RetailScreen';
@@ -24,7 +24,7 @@ function SalesLayout({ navigation, }) {
   const dispatch = useDispatch()
 
   const layout = useSelector(state => state.orders.layout)
-  const currentAccount = useSelector(currentAccountSelector)
+  const currentAccount = useSelector(state => state.user.currentAccount)
   const accounts = useSelector(state => state.user.accounts)
   const products = useSelector(state => state.user.products)
 
@@ -32,7 +32,7 @@ function SalesLayout({ navigation, }) {
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
 
   useEffect(() => {
-    if(currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
+    if (currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
       performPrinterScanAndConnect()
     }
   }, [currentAccount])
@@ -52,11 +52,10 @@ function SalesLayout({ navigation, }) {
     setAccountWrapperVisibility(true)
   }
 
-  const closeChangeAccountOverview = (account, index, token) => {
+  const closeChangeAccountOverview = (index, token) => {
     animate()
 
     dispatch(saveCurrentAccountIndex(index))
-    dispatch(saveCurrentAccountToken(token))
 
     setAccountWrapperVisibility(false)
   }
@@ -91,73 +90,33 @@ function SalesLayout({ navigation, }) {
 
   return (
     <View style={styles.container}>
-      <Swiper
-        ref={swiperRef}
-        style={styles.wrapper}
-        showsButtons={accountWrapperVisibile}
-        bounces={false} loop={false}
-        removeClippedSubviews={false}
-        scrollEnabled={accountWrapperVisibile}
-        buttonWrapperStyle={{ paddingHorizontal: 0, paddingVertical: 0, }}
-        showsButtons={false}
-        renderPagination={(index, total) => {
-          return (
-            <Pagination
-              swiperRef={swiperRef}
-              accountWrapperVisibile={accountWrapperVisibile}
-              total={total}
-              index={index}
-            />
-          )
-        }}
-      >
-        {accounts.map((account, index) => (
-          _.isEmpty(account) ? (
-            <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }], borderRadius: 2, backgroundColor: '#FFFFFF11' }]}>
-              <TouchableOpacity
-                style={styles.addAccountSlide}
-                onPress={addAccount}
-                activeOpacity={1}
-              >
-                <FastImage
-                  style={{ width: deviceHeight * 0.1, height: deviceHeight * 0.1, }}
-                  source={require('@images/plus_icon.png')}
-                />
-              </TouchableOpacity>
-            </Animated.View>
-          ) : (
-              <Fragment key={index}>
-                <Animated.View style={[styles.slider, { height: deviceHeight, transform: [{ scale: animatedScale }] }]}>
-                  {accountWrapperVisibile && (
-                    <Fragment>
-                      <View style={{ position: 'absolute', top: -60 }}>
-                        <Text style={styles.accountHeading}>{account.business_name}</Text>
-                      </View>
-                    </Fragment>
-                  )}
+      <View style={[styles.slider, { height: deviceHeight, }]}>
+        {accountWrapperVisibile && (
+          <Fragment>
+            <View style={{ position: 'absolute', top: -60 }}>
+              <Text style={styles.accountHeading}>{currentAccount.business_name}</Text>
+            </View>
+          </Fragment>
+        )}
 
-                  <RetailScreen
-                    toastRef={toastRef}
-                    updateLayout={updateLayout}
-                    layout={layout}
-                    navigation={navigation}
-                    openChangeAccountOverview={openChangeAccountOverview}
-                    account={account} updateLayout={updateLayout}
-                    setModalStatus={() => { }}
-                  />
+        <RetailScreen
+          toastRef={toastRef}
+          updateLayout={updateLayout}
+          layout={layout}
+          navigation={navigation}
+          openChangeAccountOverview={openChangeAccountOverview}
+          updateLayout={updateLayout}
+          setModalStatus={() => { }}
+        />
 
-                  {accountWrapperVisibile && (
-                    <TouchableOpacity
-                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                      onPress={() => closeChangeAccountOverview(account, index, account.token)}
-                      activeOpacity={1}
-                    />
-                  )}
-                </Animated.View>
-              </Fragment>
-            )
-        ))}
-      </Swiper>
+        {accountWrapperVisibile && (
+          <TouchableOpacity
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+            onPress={() => closeChangeAccountOverview(currentAccount, index, currentAccount.id)}
+            activeOpacity={1}
+          />
+        )}
+      </View>
 
       <Toast
         ref={toastRef}
