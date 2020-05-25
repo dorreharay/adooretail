@@ -38,6 +38,7 @@ function RetailScreen(props) {
 
         throw new Error('Not valid request')
       }
+
       updateLayout(data, layout)
     } catch (error) {
       console.warn('Failed to fetch products', error)

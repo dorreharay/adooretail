@@ -101,7 +101,6 @@ function SalesLayout({ navigation, }) {
 
         <RetailScreen
           toastRef={toastRef}
-          updateLayout={updateLayout}
           layout={layout}
           navigation={navigation}
           openChangeAccountOverview={openChangeAccountOverview}

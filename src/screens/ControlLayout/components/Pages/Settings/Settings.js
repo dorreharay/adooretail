@@ -3,13 +3,18 @@ import { View, Text, ScrollView, } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './styles'
 
+import createStore from '../../../../../../store/store'
+
+const { persistor } = createStore();
+
 import { setSettings } from '@reducers/UserReducer'
 import { currentAccountSelector, } from '@selectors'
 
 import SwitchWithTitle from './SwitchWithTitle';
 import SwitchButtons from './SwitchButtons';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const Settings = () => {
+const Settings = ({ navigation }) => {
   const dispatch = useDispatch()
 
   const currentAccount = useSelector(state => state.user.currentAccount)
@@ -33,6 +38,11 @@ const Settings = () => {
     }
 
     dispatch(setSettings(payload))
+  }
+
+  const resetAccount = () => {
+    persistor.purge()
+    navigation.navigate('NoAccount')
   }
 
   return (
@@ -77,13 +87,21 @@ const Settings = () => {
             </View>
           </View>
 
-          <View style={{ alignSelf: 'flex-start', }}>
-            <Text style={styles.settingsTitle}>Стандартний спосіб оплати</Text>
+          <View style={{ flexDirection: 'column' }}>
+            <View style={{ alignSelf: 'flex-start', }}>
+              <Text style={styles.settingsTitle}>Стандартний спосіб оплати</Text>
 
-            <SwitchButtons
-              buttons={['Готівка', 'Картка', 'Немає']}
-              updateSettings={updateSettings}
-            />
+              <SwitchButtons
+                buttons={['Готівка', 'Картка', 'Немає']}
+                updateSettings={updateSettings}
+              />
+            </View>
+            <TouchableOpacity 
+              style={{ justifyContent: 'center', marginTop: 20, paddingVertical: 15, }}
+              onPress={resetAccount}
+            >
+              <Text style={styles.buttonTitle}>Вийти з аккаунту</Text>
+            </TouchableOpacity>
           </View>
         </View>
       )}

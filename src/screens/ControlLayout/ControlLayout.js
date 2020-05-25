@@ -52,7 +52,7 @@ function ControlLayout(props) {
 
           if (index == 3) return <DeliveryFeed />
 
-          if (index == 4) return <Settings />
+          if (index == 4) return <Settings navigation={navigation} />
         }}
         sliderWidth={deviceWidth}
         sliderHeight={deviceHeight * 0.93}

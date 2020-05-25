@@ -7,6 +7,8 @@ import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
 import AnimatedSplash from "react-native-animated-splash-screen";
 import BackgroundTimer from 'react-native-background-timer';
+import { useNavigation } from '@react-navigation/native';
+import { TabActions } from '@react-navigation/native';
 
 import { syncSessions, validateSessionRoutine, } from '@requests'
 
@@ -22,8 +24,15 @@ import SessionModal from '../screens/SalesLayout/components/SessionModal/Session
 
 function AppSessions(props) {
   const {
-    children, navigatorRef,
+    children, navigationRef,
   } = props
+
+  const jumpToAction = TabActions.jumpTo('NoAccount');
+
+  useEffect(() => {
+    console.log('---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->', navigationRef.current)
+    // navigationRef.current.dispatch(TabActions.jumpTo('NoAccount'))
+  }, [navigationRef])
 
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -66,19 +75,19 @@ function AppSessions(props) {
 
   useEffect(() => {
     if (currentAccount) {
-      if (!currentSession.endTime && currentSession.length !== 0) {
-        if (currentAccount.needToReenter) {
+      if (!currentSession.endTime && currentSession.length === 0) {
+        navigationRef.current.dispatch(TabActions.jumpTo('Login'));
+        dispatch(setCurrentRoute(1))
 
-          timerRef1.current = setTimeout(() => {
-            setInitialLoadingVisibility(true)
-          }, 1500)
+        timerRef1.current = setTimeout(() => {
+          setInitialLoadingVisibility(true)
+        }, 300)
 
-          return
-        }
-
-        NavigationService.navigate('SalesLayout')
-        dispatch(setCurrentRoute(4))
+        return
       }
+
+      navigationRef.current.dispatch(TabActions.jumpTo('SalesLayout'));
+      dispatch(setCurrentRoute(4))
 
       syncSessions()
 
@@ -86,13 +95,17 @@ function AppSessions(props) {
         setInitialLoadingVisibility(true)
       }, 1500)
     } else {
-      NavigationService.navigate('NoAccount')
+      // navigationRef.current.dispatch(TabActions.jumpTo('NoAccount'));
+
       dispatch(setCurrentRoute(0))
+      timerRef1.current = setTimeout(() => {
+        setInitialLoadingVisibility(true)
+      }, 200)
     }
   }, [])
 
   const gotoScreen = async (screen) => {
-    NavigationService.navigate(screen)
+    TabActions.jumpTo(screen)
   }
 
   useEffect(() => {

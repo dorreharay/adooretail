@@ -18,6 +18,11 @@ const base = {
     fontSize: 25,
     fontFamily: GILROY_MEDIUM,
   },
+  buttonTitle: {
+    color: 'red',
+    fontSize: 25,
+    fontFamily: GILROY_MEDIUM,
+  },
   buttonsContainer: {
     flexDirection: 'row'
   },

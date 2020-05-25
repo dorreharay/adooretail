@@ -55,12 +55,6 @@ function RightSide(props) {
     }
   }
 
-  useEffect(() => {
-    if (currentAccount) {
-      loadProducts(currentAccount.id)
-    }
-  }, [currentAccount])
-
   const changeLayout = () => {
     var newLayout = 4
 

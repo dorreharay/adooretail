@@ -11,11 +11,9 @@ function MainApp(props) {
 
 
   return (
-    // <AppLoading>
-      <AppSessions>
-        <AppContainer />
-      </AppSessions>
-    // </AppLoading>
+    // <AppSessions>
+      <AppContainer />
+    // </AppSessions>
   )
 }
 
