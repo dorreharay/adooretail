@@ -62,6 +62,8 @@ function Transaction(props) {
       setComment('')
 
       toastRef.current.show("Транзакцію збережено", 1000);
+
+      setTransactionModalVisiblity(false)
     }
   }
 

@@ -38,7 +38,7 @@ function Menu(props) {
       }
     },
     {
-      name: 'Bluetooth девайси', onPress: () => {
+      name: 'Підключення', onPress: () => {
         navigation.jumpTo('ControlLayout', {
           screen: 2,
         })

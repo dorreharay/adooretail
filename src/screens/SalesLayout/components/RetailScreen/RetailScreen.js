@@ -22,6 +22,8 @@ function RetailScreen(props) {
   const timerRef3 = useRef(null)
   const timerRef4 = useRef(null)
 
+  const currentAccount = useSelector(state => state.user.currentAccount)
+
   const [menuVisible, setMenuVisibility] = useState(false)
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
   const [transactionModalVisible, setTransactionModalVisiblity] = useState(false)
@@ -29,10 +31,11 @@ function RetailScreen(props) {
   const [oldReceiptState, setOldReceipt] = useState([null, null, null, null])
 
   const setPaymentModalState = (state) => setPaymentModalVisibility(state)
-  const loadProducts = async (token) => {
+  const loadProducts = async () => {
     try {
       toastRef.current.show("Синхронізація", DURATION.FOREVER);
-      const data = await API.getProducts({}, token)
+      const data = await API.getProducts({}, currentAccount._id)
+      
       if (!data) {
         toastRef.current.close()
 
@@ -50,6 +53,12 @@ function RetailScreen(props) {
 
   const openMenu = () => setMenuVisibility(true)
   const closeMenu = () => setMenuVisibility(false)
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      loadProducts()
+    })
+  }, [])
 
   useEffect(() => {
     return () => {

@@ -28,6 +28,19 @@ const initialState = {
   activeBackgroundIndex: 0,
   currentEmployee: 0,
   currentService: 0,
+  settings: {
+    printer_enabled: false,
+    printer_autoconnection_enabled: false,
+    printer_bluetooth: false,
+    printer_net: false,
+    desk_enabled: false,
+    kitchen_enabled: false,
+    payment_type_cash: false,
+    payment_type_cash_default: false,
+    payment_type_debit: false,
+    payment_type_debit_default: false,
+    payment_type_unchecked: false
+  }
 };
 
 export function addAccount(payload) {
@@ -261,7 +274,7 @@ const ACTION_HANDLERS = {
         items_per_page: 30,
         active_filter: 'day',
         active_sort: 'time-desc',
-      }
+      },
     }
 
     return {
@@ -270,14 +283,14 @@ const ACTION_HANDLERS = {
     }
   },
   [SET_SETTINGS]: (state, action) => {
-    const { currentAccount } = state
+    const { settings } = state
     const data = action.payload
 
     return {
       ...state,
-      currentAccount: {
-        ...currentAccount,
-        settings: data,
+      settings: {
+        ...settings,
+        ...data
       },
     }
   },

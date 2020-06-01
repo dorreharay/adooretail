@@ -73,35 +73,44 @@ function AppSessions(props) {
     };
   }, [currentAccount])
 
+  const delay = (time) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, time)
+    })
+  }
+  
+
   useEffect(() => {
-    if (currentAccount) {
-      if (!currentSession.endTime && currentSession.length === 0) {
-        navigationRef.current.dispatch(TabActions.jumpTo('Login'));
-        dispatch(setCurrentRoute(1))
+    delay(500).then(() => {
+      if (currentAccount) {
+        if (!currentSession.endTime && currentSession.length === 0) {
+          navigationRef.current.dispatch(TabActions.jumpTo('Login'));
+          dispatch(setCurrentRoute(1))
+
+          timerRef1.current = setTimeout(() => {
+            setInitialLoadingVisibility(true)
+          }, 300)
+
+          return
+        }
+
+        navigationRef.current.dispatch(TabActions.jumpTo('SalesLayout'));
+        dispatch(setCurrentRoute(4))
+
+        syncSessions()
 
         timerRef1.current = setTimeout(() => {
           setInitialLoadingVisibility(true)
-        }, 300)
+        }, 1000)
+      } else {
+        // navigationRef.current.dispatch(TabActions.jumpTo('NoAccount'));
 
-        return
+        dispatch(setCurrentRoute(0))
+        timerRef1.current = setTimeout(() => {
+          setInitialLoadingVisibility(true)
+        }, 200)
       }
-
-      navigationRef.current.dispatch(TabActions.jumpTo('SalesLayout'));
-      dispatch(setCurrentRoute(4))
-
-      syncSessions()
-
-      timerRef1.current = setTimeout(() => {
-        setInitialLoadingVisibility(true)
-      }, 1500)
-    } else {
-      // navigationRef.current.dispatch(TabActions.jumpTo('NoAccount'));
-
-      dispatch(setCurrentRoute(0))
-      timerRef1.current = setTimeout(() => {
-        setInitialLoadingVisibility(true)
-      }, 200)
-    }
+    })
   }, [])
 
   const gotoScreen = async (screen) => {
