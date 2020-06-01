@@ -90,6 +90,7 @@ function AppSessions(props) {
           timerRef1.current = setTimeout(() => {
             setInitialLoadingVisibility(true)
           }, 300)
+          
 
           return
         }
