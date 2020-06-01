@@ -8,6 +8,8 @@ const SwitchWithTitle = (props) => {
   const { title, type, value, updateSettings, disabled = false, subsetting = false, unique = false, relatives = [], } = props
 
   const handleValue = () => {
+    if (disabled) return
+
     updateSettings(type, !value)
   }
 
@@ -18,6 +20,10 @@ const SwitchWithTitle = (props) => {
           updateSettings(relativeType, false)
         })
       }
+    }
+
+    if (!value && type === 'printer_enabled') {
+      updateSettings('printer_autoconnection_enabled', false)
     }
   }, [unique, value,])
 

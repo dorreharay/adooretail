@@ -1,7 +1,8 @@
 import React, { useState, } from 'react'
 import { Text, View, TouchableOpacity, } from 'react-native'
 import { useDispatch } from 'react-redux'
-import Modal from "react-native-simple-modal";
+import { default as EModal } from "react-native-simple-modal";
+import Modal, { SlideAnimation, ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
 import styles from './styles'
 
 import { deviceHeight } from '@dimensions';
@@ -17,6 +18,7 @@ function Menu(props) {
 
   const dispatch = useDispatch()
 
+  const [endPromptVisible, setEndPromptVisible] = useState(false)
   const [menuButtons] = useState([
     {
       name: 'Історія замовлень',
@@ -62,6 +64,7 @@ function Menu(props) {
   ])
 
   const endSession = () => {
+    setEndPromptVisible(false)
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
@@ -72,7 +75,7 @@ function Menu(props) {
 
   return (
     <>
-      <Modal
+      <EModal
         open={isVisible}
         modalStyle={styles.modalComponent}
         overlayStyle={styles.overlayStyles}
@@ -119,13 +122,13 @@ function Menu(props) {
 
           <TouchableOpacity
             style={[styles.modalItemRed, styles.withBottomBorderRadius]}
-            onPress={endSession}
+            onPress={() => setEndPromptVisible(true)}
             activeOpacity={1}
           >
             <Text style={[styles.modalItemText, styles.redText]}>Закінчити зміну</Text>
           </TouchableOpacity>
         </View>
-      </Modal>
+      </EModal>
 
       {isVisible && (
         <SharedButton
@@ -136,6 +139,27 @@ function Menu(props) {
         />
       )}
 
+      <Modal
+        visible={endPromptVisible}
+        footer={
+          <ModalFooter>
+            <ModalButton
+              text='Скасувати'
+              textStyle={[styles.promptText, { color: '#DB3E5A' }]}
+              onPress={() => setEndPromptVisible(false)}
+            />
+            <ModalButton
+              text='Так'
+              textStyle={[styles.promptText, { color: '#343434' }]}
+              onPress={endSession}
+            />
+          </ModalFooter>
+        }
+      >
+        <ModalContent>
+          <Text style={styles.promptText}>Ви точно хочете закінчити зміну?</Text>
+        </ModalContent>
+      </Modal>
     </>
 
   )

@@ -84,6 +84,11 @@ const base = {
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
   },
+  promptText: {
+    color: '#000000',
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
+  },
 };
 
 const styles = createStyles(
