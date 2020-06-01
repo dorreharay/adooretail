@@ -34,7 +34,7 @@ function LeftSide(props) {
 
   const dispatch = useDispatch()
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const settings = useSelector(state => state.user.settings)
   const receipts = useSelector(state => state.orders.receipts)
   const selectedReceiptIndex = useSelector(state => state.orders.selectedReceiptIndex)
 
@@ -321,7 +321,7 @@ function LeftSide(props) {
         <Receipt />
       </ScrollView>
 
-      {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled ? (
+      {settings.printer_enabled ? (
         <View style={{ width: '100%', paddingHorizontal: '7%', paddingTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity
             onPress={() => changePaymentModalState(true)}

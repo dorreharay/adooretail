@@ -50,7 +50,7 @@ function Heading(props) {
             Транзакції
           </Text>
         </TouchableOpacity> */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={[styles.menuButton, activeTab === 2 && styles.activeMenuButton]}
           onPress={() => setActiveTab(2)}
           activeOpacity={1}
@@ -58,7 +58,7 @@ function Heading(props) {
           <Text style={styles.menuItemActiveText}>
             Девайси
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {/* <TouchableOpacity
           style={[styles.menuButton, activeTab === 3 && styles.activeMenuButton]}
           onPress={() => setActiveTab(3)}
@@ -69,8 +69,8 @@ function Heading(props) {
           </Text>
         </TouchableOpacity> */}
         <TouchableOpacity
-          style={[styles.menuButton, activeTab === 4 && styles.activeMenuButton]}
-          onPress={() => setActiveTab(4)}
+          style={[styles.menuButton, activeTab === 1 && styles.activeMenuButton]}
+          onPress={() => setActiveTab(1)}
           activeOpacity={1}
         >
           <Text style={styles.menuItemActiveText}>

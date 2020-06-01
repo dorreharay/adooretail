@@ -59,7 +59,7 @@ export async function printNewBuffer(receipt) {
   try {
     const currentStore = store.getState()
 
-    const { accounts, currentAccount, } = currentStore.user
+    const { accounts, currentAccount, settings, } = currentStore.user
     const { currentRoute, } = currentStore.temp
 
     const kitchenReceipts = receipt.receipt.filter(item => item.department === 'kitchen')
@@ -68,7 +68,7 @@ export async function printNewBuffer(receipt) {
     await BluetoothEscposPrinter.printerLineSpace(75)
     await BluetoothEscposPrinter.setWidth(400)
 
-    if(kitchenReceipts.length !== 0 && currentAccount && currentAccount.settings && currentAccount.settings.available_teams && currentAccount.settings.available_teams.kitchen) {
+    if (kitchenReceipts.length !== 0 && settings.kitchen_enabled) {
       await printHeading(parceCyrrilicText('Кухня'), { spaces: 2, })
 
       await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
@@ -96,7 +96,7 @@ export async function printNewBuffer(receipt) {
       await cutLine()
     }
 
-    if(paydeskReceipts.length !== 0 && currentAccount && currentAccount.settings && currentAccount.settings.available_teams && currentAccount.settings.available_teams.paydesk) {
+    if (paydeskReceipts.length !== 0 && settings.desk_enabled) {
       await printHeading(parceCyrrilicText('Бар'), { spaces: 2, })
 
       await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })

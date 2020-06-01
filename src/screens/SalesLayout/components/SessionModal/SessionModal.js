@@ -108,7 +108,7 @@ function SessionModal(props) {
             </TouchableOpacity>
           </Fragment>
 
-          {currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled && (
+          {/* {settings.shifts.enabled && (
             <Text style={styles.modalShiftText}>Робочі години:
               {currentAccount && currentAccount.shift_start && (
                 getFormattedDate(' HH:mm', { hours: currentAccount.shift_start.hours, minutes: currentAccount.shift_start.minutes, seconds: 0, })
@@ -120,7 +120,7 @@ function SessionModal(props) {
                 getFormattedDate('HH:mm', { hours: currentAccount.shift_end.hours, minutes: currentAccount.shift_end.minutes, seconds: 0, })
               )}
             </Text>
-          )}
+          )} */}
         </View>
       </ModalContent>
     </Modal>

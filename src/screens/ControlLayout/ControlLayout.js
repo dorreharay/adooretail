@@ -48,11 +48,11 @@ function ControlLayout(props) {
         renderItem={({ index }) => {
           if (index == 0) return <History />
 
-          if (index == 2) return <Devices activeCategory={activeTab} />
+          // if (index == 2) return <Devices activeCategory={activeTab} />
 
-          if (index == 3) return <DeliveryFeed />
+          // if (index == 3) return <DeliveryFeed />
 
-          if (index == 4) return <Settings navigation={navigation} />
+          if (index == 1) return <Settings navigation={navigation} />
         }}
         sliderWidth={deviceWidth}
         sliderHeight={deviceHeight * 0.93}

@@ -105,11 +105,11 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
     if (currentAccount.localSessions.length === 0) {
       dispatch(setModalStatus(START))
     } else {
-      if(currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled) {
-        dispatch(setModalStatus(NOT_ON_SHIFT))
-      } else {
-        dispatch(setModalStatus(END))
-      }
+      // if(currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled) {
+      //   dispatch(setModalStatus(NOT_ON_SHIFT))
+      // } else {
+      //   dispatch(setModalStatus(END))
+      // }
     }
   }
 

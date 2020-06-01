@@ -23,6 +23,7 @@ function PaymentLeftSide(props) {
   const currentService = useSelector(state => state.user.currentService) || 0
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0
   const currentAccount = useSelector(state => state.user.currentAccount)
+  const settings = useSelector(state => state.user.settings)
 
   const renderServiceIcon = () => {
     if (currentService === 0) {
@@ -97,7 +98,7 @@ function PaymentLeftSide(props) {
       </View>
 
 
-      {currentAccount && currentAccount.settings && !currentAccount.settings.printer_enabled && (
+      {!settings.printer_enabled && (
         <View>
           <View style={{ position: 'relative', alignItems: 'center', flexDirection: 'row', marginTop: '5%', marginBottom: 0, }}>
             <Text style={styles.heading}>Доставка</Text>

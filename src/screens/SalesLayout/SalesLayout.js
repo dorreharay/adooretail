@@ -25,6 +25,7 @@ function SalesLayout({ navigation, }) {
 
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
+  const settings = useSelector(state => state.user.currentAccount)
   const accounts = useSelector(state => state.user.accounts)
   const products = useSelector(state => state.user.products)
 
@@ -32,10 +33,10 @@ function SalesLayout({ navigation, }) {
   const [accountWrapperVisibile, setAccountWrapperVisibility] = useState(false)
 
   useEffect(() => {
-    if (currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled) {
+    if (settings && settings.printer_enabled) {
       performPrinterScanAndConnect()
     }
-  }, [currentAccount])
+  }, [settings])
 
   const animate = () => {
     Animated.parallel([

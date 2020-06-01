@@ -25,7 +25,7 @@ function PaymentType(props) {
     selectedService,
   } = props
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const settings = useSelector(state => state.user.settings)
   const currentService = useSelector(state => state.user.currentService) || 0
 
   const [spinComment, setSpinComment] = useState(new Animated.Value(1))
@@ -254,7 +254,7 @@ function PaymentType(props) {
         )}
       </View>
 
-      {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled && (
+      {settings.printer_enabled && (
         <View style={styles.optionContainer}>
           <TouchableOpacity
             style={styles.optionHeadingContainer}

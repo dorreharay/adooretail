@@ -37,19 +37,19 @@ function Menu(props) {
         closeMenu()
       }
     },
-    {
-      name: 'Підключення', onPress: () => {
-        navigation.jumpTo('ControlLayout', {
-          screen: 2,
-        })
-        closeMenu()
-      }
-    },
+    // {
+    //   name: 'Підключення', onPress: () => {
+    //     navigation.jumpTo('ControlLayout', {
+    //       screen: 2,
+    //     })
+    //     closeMenu()
+    //   }
+    // },
     {
       name: 'Налаштування',
       onPress: () => {
         navigation.jumpTo('ControlLayout', {
-          screen: 4,
+          screen: 1,
         })
         closeMenu()
       }
@@ -106,12 +106,12 @@ function Menu(props) {
                 />
               )}
 
-              {index === 2 && (
+              {/* {index === 2 && (
                 <FastImage
                   style={{ width: 16, height: 16, marginRight: 13 }}
                   source={require('@images/tprinter.png')}
                 />
-              )}
+              )} */}
 
               <Text style={styles.modalItemText}>{button.name}</Text>
             </TouchableOpacity>

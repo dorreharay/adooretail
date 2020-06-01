@@ -195,65 +195,6 @@ const Settings = ({ navigation }) => {
         </View>
       </View>
 
-      {/* {currentAccount && (
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ marginRight: '10%' }}>
-            <View style={{ alignSelf: 'flex-start', }}>
-              <Text style={styles.settingsTitle}>Активні цехи</Text>
-              <SwitchWithTitle
-                title={'Каса'}
-                value={settings['printer_net']}
-                updateSettings={updateSettings}
-              />
-
-              <SwitchWithTitle
-                title={'Кухня'}
-                value={currentAccount.settings.available_teams.kitchen}
-                updateSettings={(value) => updateSettings({ kitchen: value }, 'available_teams')}
-              />
-            </View>
-
-
-            <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
-              <Text style={styles.settingsTitle}>Використовувати принтер чеків</Text>
-
-              <SwitchWithTitle
-                title={'Увімкнути'}
-                value={currentAccount.settings.printer_enabled}
-                updateSettings={(value) => updateSettings(value, 'printer_enabled')}
-              />
-            </View>
-
-            <View style={{ alignSelf: 'flex-start', marginTop: 30, }}>
-              <Text style={styles.settingsTitle}>Перевірка робочих годин</Text>
-
-              <SwitchWithTitle
-                title={'Увімкнути'}
-                value={currentAccount.settings.shifts.enabled}
-                updateSettings={(value) => updateSettings({ enabled: value }, 'shifts')}
-              />
-            </View>
-          </View>
-
-          <View style={{ flexDirection: 'column' }}>
-            <View style={{ alignSelf: 'flex-start', }}>
-              <Text style={styles.settingsTitle}>Стандартний спосіб оплати</Text>
-
-              <SwitchButtons
-                buttons={['Готівка', 'Картка', 'Немає']}
-                updateSettings={updateSettings}
-              />
-            </View>
-            <TouchableOpacity
-              style={styles.exitButton}
-              onPress={() => setExitPromptState(true)}
-            >
-              <Text style={styles.buttonTitle}>Вийти з аккаунту</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )} */}
-
       <TouchableOpacity
         style={styles.exitButton}
         onPress={() => setExitPromptState(true)}

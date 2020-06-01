@@ -38,6 +38,8 @@ function RightSide(props) {
   
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
+  const settings = useSelector(state => state.user.settings)
+  
   const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -75,7 +77,7 @@ function RightSide(props) {
   
   const updatePairedDevices = async () => {
     navigation.jumpTo('ControlLayout', {
-      screen: 2,
+      screen: 1,
     })
   }
 
@@ -109,7 +111,7 @@ function RightSide(props) {
           </View>
         </SharedButton>
 
-        {currentAccount && currentAccount.settings && currentAccount.settings.printer_enabled && (
+        {settings.printer_enabled && (
           <SharedButton onPress={updatePairedDevices} scale={0.85}>
             <View style={styles.printer}>
               <FastImage style={{ width: 17, height: 17, }} source={require('@images/tprinter.png')} />
