@@ -156,6 +156,7 @@ function Menu(props) {
           </ModalFooter>
         }
       >
+      
         <ModalContent>
           <Text style={styles.promptText}>Ви точно хочете закінчити зміну?</Text>
         </ModalContent>
