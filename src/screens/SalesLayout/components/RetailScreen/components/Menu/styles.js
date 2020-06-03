@@ -1,8 +1,10 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
 import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
-import { Platform } from 'react-native';
+
+import { deviceWidth, deviceHeight } from '@dimensions'
 
 const toolsBarHeight = 45
+const modalWidth = 320
 
 const base = {
   menu: {
@@ -27,14 +29,17 @@ const base = {
     flex: 1
   },
   modalComponent: {
-    width: 320,
+    width: modalWidth,
     position: 'absolute',
-    top: Platform.OS === 'android' ? 202 : 220,
-    right: 12,
+    top: -(deviceHeight * 0.5) + 50,
+    right: -(deviceWidth * 0.5),
     borderRadius: 2,
     margin: 20,
     borderRadius: 5,
     backgroundColor: "transparent",
+  },
+  promptStyle: {
+    
   },
   modal: {
     position: 'relative',
@@ -43,7 +48,7 @@ const base = {
   modalItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: 320,
+    width: modalWidth,
     height: 70,
     paddingLeft: 25,
     backgroundColor: '#FFFFFF'
@@ -71,7 +76,7 @@ const base = {
   },
   modalItemRed: {
     justifyContent: 'center',
-    width: 320,
+    width: modalWidth,
     height: 70,
     paddingLeft: 20,    
     backgroundColor: '#FFFFFF'
@@ -87,7 +92,7 @@ const base = {
   promptText: {
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: GILROY_REGULAR,
   },
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, } from 'react'
-import { View, Text, TouchableOpacity, TextInput, } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, TouchableOpacityBase, } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSelector, useDispatch } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient';
@@ -92,69 +92,14 @@ function Transaction(props) {
         enableOnAndroid={true}
       >
         <View style={styles.container}>
-          <View style={styles.leftSide}>
-            <View style={{ flexDirection: 'row', width: '100%', height: 50, alignItems: 'center', justifyContent: 'space-between',  }}>
-              <Text style={styles.headingText}>
-                Транзакція
-              </Text>
-
-              <TouchableOpacity 
-                style={styles.closeButton}
-                onPress={() => setTransactionModalVisiblity(false)}
-              >
-                <Text style={styles.closeText}>
-                  Закрити
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.amountContainer}>
-              <TextInput
-                value={amount}
-                onFocus={() => {
-                  setAmount('')
-                  setAmountFocused(true)
-                }}
-                onBlur={() => setAmountFocused(false)}
-                onChange={handleAmountChange}
-                style={styles.amountInput}
-                textAlign={'center'}
-                keyboardType='decimal-pad'
-                placeholder='0'
-                clearTextOnFocus
-                maxLength={5}
-              />
-              <Text style={styles.headingText}>
-                грн
-            </Text>
-              <Text style={[styles.headingText, { marginLeft: 5, textDecorationLine: 'underline' }]}>
-                {selectedTransactionType === 'delivery' && 'взято'}
-                {selectedTransactionType === 'incasation' && 'інкасовано'}
-                {selectedTransactionType === 'income' && 'покладено'}
-              </Text>
-            </View>
-
-            <Text style={[styles.headingText, { marginTop: '8%', }]}>
-              Коментар
-          </Text>
-
-            <TextInput
-              value={comment}
-              onChange={handleCommentChange}
-              style={styles.commentInput}
-              keyboardType='default'
-              placeholder='Введіть коментар до транзакції'
-              multiline={true}
-              numberOfLines={5}
-            />
-
-          </View>
           <View style={styles.rightSide}>
-            <Text style={[styles.headingText, { color: '#FFFFFF', marginLeft: '14%' }]}>
-              Тип
-            </Text>
+            <View style={{ flexDirection: 'row', width: '100%', height: 50, paddingLeft: '14%', alignItems: 'center', justifyContent: 'space-between', }}>
+              <Text style={[styles.headingText, { color: '#FFFFFF' }]}>
+                Тип
+              </Text>
+            </View>
 
-            <View style={{ height: 30, }} />
+            <View style={{ height: 20, }} />
 
             <TouchableOpacity
               style={[styles.typeItem, selectedTransactionType === 'delivery' && styles.typeItemActive]}
@@ -192,7 +137,7 @@ function Transaction(props) {
               <Text style={[styles.typeItemText, selectedTransactionType === 'income' && styles.typeItemTextActive]}>Прибуток</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.submitButton}
               onPress={handleSubmit}
               activeOpacity={0.8}
@@ -204,6 +149,77 @@ function Transaction(props) {
                 style={styles.submitButtonGradient}
               >
                 <Text style={[styles.submitButtonText, canProceed && { color: '#FFFFFF', }]}>Готово</Text>
+              </LinearGradient>
+            </TouchableOpacity> */}
+          </View>
+          <View style={styles.leftSide}>
+            <View style={{ flexDirection: 'row', width: '100%', height: 50, alignItems: 'center', justifyContent: 'space-between', }}>
+              <Text style={styles.headingText}>
+                Транзакція
+              </Text>
+
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setTransactionModalVisiblity(false)}
+              >
+                <Text style={styles.closeText}>
+                  Закрити
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.amountContainer}>
+              <TextInput
+                value={amount}
+                onFocus={() => {
+                  setAmount('')
+                  setAmountFocused(true)
+                }}
+                onBlur={() => setAmountFocused(false)}
+                onChange={handleAmountChange}
+                style={styles.amountInput}
+                textAlign={'center'}
+                keyboardType='decimal-pad'
+                placeholder='0'
+                clearTextOnFocus
+                maxLength={5}
+              />
+              <Text style={styles.headingText}>
+                грн
+            </Text>
+              <Text style={[styles.headingText, { marginLeft: 5, textDecorationLine: 'underline' }]}>
+                {selectedTransactionType === 'delivery' && 'взято'}
+                {selectedTransactionType === 'incasation' && 'інкасовано'}
+                {selectedTransactionType === 'income' && 'покладено'}
+              </Text>
+            </View>
+
+            <Text style={[styles.headingText, { marginTop: '8%', }]}>
+              Коментар
+            </Text>
+
+            <TextInput
+              value={comment}
+              onChange={handleCommentChange}
+              style={styles.commentInput}
+              keyboardType='default'
+              placeholder='Введіть коментар до транзакції'
+              multiline={true}
+              numberOfLines={5}
+            />
+
+            <TouchableOpacity 
+              style={{ width: '100%', height: '14%', marginTop: '8%', }}
+              onPress={handleSubmit}
+              activeOpacity={0.85}
+            >
+              <LinearGradient
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 0 }}
+                colors={['#DB3E69', '#EF9058']}
+                style={[styles.paymentSubmitButtonGradient, !canProceed && { opacity: 0.6 }]}
+              >
+                <Text style={styles.paymentSubmitButtonText}>Зберегти</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>

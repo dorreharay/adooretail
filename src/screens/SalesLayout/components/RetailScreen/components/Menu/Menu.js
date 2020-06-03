@@ -1,5 +1,5 @@
 import React, { useState, } from 'react'
-import { Text, View, TouchableOpacity, } from 'react-native'
+import { Text, View, TouchableOpacity, TouchableHighlight, } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { default as EModal } from "react-native-simple-modal";
 import Modal, { SlideAnimation, ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
@@ -32,21 +32,9 @@ function Menu(props) {
     {
       name: 'Створити транзакцію',
       onPress: () => {
-        // navigation.jumpTo('ControlLayout', {
-        //   screen: 1,
-        // })
-
         closeMenu()
       }
     },
-    // {
-    //   name: 'Підключення', onPress: () => {
-    //     navigation.jumpTo('ControlLayout', {
-    //       screen: 2,
-    //     })
-    //     closeMenu()
-    //   }
-    // },
     {
       name: 'Налаштування',
       onPress: () => {
@@ -56,11 +44,6 @@ function Menu(props) {
         closeMenu()
       }
     },
-    // {
-    //   name: 'Редагувати аккаунт', onPress: () => {
-    //     openChangeAccountOverview()
-    //   }
-    // },
   ])
 
   const endSession = () => {
@@ -75,23 +58,29 @@ function Menu(props) {
 
   return (
     <>
-      <EModal
-        open={isVisible}
+      {/* {isVisible && (
+        <SharedButton
+          onPress={closeMenu}
+          style={styles.menuPlaceholder}
+          iconStyle={styles.menuPlaceholderIcon}
+          source={require('@images/menu.png')} scale={0.9}
+        />
+      )} */}
+
+      <Modal
+        visible={isVisible}
         modalStyle={styles.modalComponent}
-        overlayStyle={styles.overlayStyles}
-        animationDuration={100}
-        animationTension={100}
-        closeOnTouchOutside={true}
-        closeModal={closeMenu}
-        containerProps={undefined}
-        containerStyle={{ justifyContent: "center" }}
+        overlayBackgroundColor={'rgba(0, 0, 0, 0.85)'}
+        onTouchOutside={closeMenu}
         disableOnBackPress={false}
-        modalDidClose={closeMenu}
-        offset={deviceHeight < 500 ? -(deviceHeight * 0.46) : -(deviceHeight * 0.23)}
+        swipeDirection={['up', 'down']}
+        onHardwareBackPress={closeMenu}
+        onSwipeOut={closeMenu}
+        // offset={deviceHeight < 500 ? -(deviceHeight * 0.46) : -(deviceHeight * 0.23)}
       >
         <View style={styles.modal}>
           {menuButtons.map((button, index) => (
-            <TouchableOpacity
+            <TouchableHighlight
               style={[styles.modalItem, index === 0 && styles.withTopBorderRadius]}
               onPress={() => {
                 if (index === 1) {
@@ -99,48 +88,48 @@ function Menu(props) {
                 }
                 button.onPress()
               }}
+              underlayColor={'#F3F3F3'}
               activeOpacity={1}
               key={index}
             >
-              {index === 1 && (
-                <FastImage
-                  style={{ width: 16, height: 16, marginRight: 12 }}
-                  source={require('@images/right-arrow.png')}
-                />
-              )}
+              <>
+                {index === 1 && (
+                  <FastImage
+                    style={{ width: 16, height: 16, marginRight: 12 }}
+                    source={require('@images/right-arrow.png')}
+                  />
+                )}
 
-              {/* {index === 2 && (
+                {/* {index === 2 && (
                 <FastImage
                   style={{ width: 16, height: 16, marginRight: 13 }}
                   source={require('@images/tprinter.png')}
                 />
               )} */}
 
-              <Text style={styles.modalItemText}>{button.name}</Text>
-            </TouchableOpacity>
+                <Text style={styles.modalItemText}>{button.name}</Text>
+              </>
+            </TouchableHighlight>
           ))}
 
-          <TouchableOpacity
+          <TouchableHighlight
             style={[styles.modalItemRed, styles.withBottomBorderRadius]}
-            onPress={() => setEndPromptVisible(true)}
+            onPress={() => {
+              setEndPromptVisible(true)
+              closeMenu()
+            }}
+            underlayColor={'#F3F3F3'}
             activeOpacity={1}
           >
             <Text style={[styles.modalItemText, styles.redText]}>Закінчити зміну</Text>
-          </TouchableOpacity>
+          </TouchableHighlight>
         </View>
-      </EModal>
-
-      {isVisible && (
-        <SharedButton
-          onPress={closeMenu}
-          style={styles.menuPlaceholder}
-          iconStyle={styles.menuPlaceholderIcon}
-          source={require('@images/menu.png')} scale={0.9}
-        />
-      )}
+      </Modal>
 
       <Modal
         visible={endPromptVisible}
+        modalStyle={styles.promptStyle}
+        overlayBackgroundColor={'rgba(0, 0, 0, 0.85)'}
         footer={
           <ModalFooter>
             <ModalButton

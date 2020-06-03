@@ -3,93 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_react_react_native_0_61_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_react_react_native_0_61_1_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_1_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_clearcut_16_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_clearcut_16_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_phenotype_16_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_phenotype_16_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_vision_common_17_0_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_vision_common_17_0_2_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/assets/index.android.bundle" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/index.android.bundle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/incasation.png" beforeDir="false" afterPath="$PROJECT_DIR$/../assets/images/incasation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/income.png" beforeDir="false" afterPath="$PROJECT_DIR$/../assets/images/income.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/outcome.png" beforeDir="false" afterPath="$PROJECT_DIR$/../assets/images/outcome.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../helpers/printer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../helpers/printer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../helpers/requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/../helpers/requests.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Podfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Local Podspecs/react-native-splash-screen.podspec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Manifest.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Pods/Manifest.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/BVLinearGradient/BVLinearGradient.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/DoubleConversion/DoubleConversion.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/FBLazyVector/FBLazyVector.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/FBReactNativeSpec/FBReactNativeSpec.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/Folly/Folly.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RCTRequired/RCTRequired.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RCTTypeSafety/RCTTypeSafety.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RNBluetoothEscposPrinter/RNBluetoothEscposPrinter.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RNCAsyncStorage/RNCAsyncStorage.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RNCViewpager/RNCViewpager.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RNDeviceInfo/RNDeviceInfo.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RNFastImage/RNFastImage.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RNGestureHandler/RNGestureHandler.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RNReanimated/RNReanimated.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/RNSVG/RNSVG.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-ART/React-ART.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-Core/React-Core.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-CoreModules/React-CoreModules.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTActionSheet/React-RCTActionSheet.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTAnimation/React-RCTAnimation.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTBlob/React-RCTBlob.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTImage/React-RCTImage.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTLinking/React-RCTLinking.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTNetwork/React-RCTNetwork.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTSettings/React-RCTSettings.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTText/React-RCTText.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-RCTVibration/React-RCTVibration.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-cxxreact/React-cxxreact.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-jsi/React-jsi.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-jsiexecutor/React-jsiexecutor.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React-jsinspector/React-jsinspector.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/React/React.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/ReactCommon/ReactCommon.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/SDWebImage/SDWebImage.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/SDWebImageWebPCoder/SDWebImageWebPCoder.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/Yoga/Yoga.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/boost-for-react-native/boost-for-react-native.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/glog/glog.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/libwebp/libwebp.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/react-native-background-timer/react-native-background-timer.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/react-native-blur/react-native-blur.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/react-native-camera/react-native-camera.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/react-native-fetch-blob/react-native-fetch-blob.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/react-native-netinfo/react-native-netinfo.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/Target Support Files/react-native-orientation/react-native-orientation.xcconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/boost-for-react-native/boost/spirit/home/karma/directive.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Pods/boost-for-react-native/boost/spirit/home/karma/directive.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/Pods/boost-for-react-native/boost/spirit/home/karma/directive/maxwidth.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Pods/boost-for-react-native/boost/spirit/home/karma/directive/maxwidth.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/adooretail.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/adooretail.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../reducers/UserReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../reducers/UserReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Heading/Heading.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Heading/Heading.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/Details/Details.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/Details/Details.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/History.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/History.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/Settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/SwitchWithTitle.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/SwitchWithTitle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/InputEmployees.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/InputEmployees.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/components/EmployeesList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/InputEmployees/components/EmployeesList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/SalesLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/SalesLayout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/RetailScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/RetailScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/LeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/LeftSide.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/PaymentModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/PaymentModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/DeliveryPicker/DeliveryPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/DeliveryPicker/DeliveryPicker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/DeliveryPickerOld/DeliveryPickerOld.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/DeliveryPickerOld/DeliveryPickerOld.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/EmployeePicker/EmployeePicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/EmployeePicker/EmployeePicker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentRightSide/PaymentType.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentRightSide/PaymentType.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/Receipt.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/Receipt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/Products/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/Products/Products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/RightSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/RightSide/RightSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentRightSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentRightSide/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Menu/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Menu/Menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Menu/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Menu/styles.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Transaction/Transaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Transaction/Transaction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/SessionModal/SessionModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/SessionModal/SessionModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/wrappers/AppSessions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/wrappers/AppSessions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../store/selectors.js" beforeDir="false" afterPath="$PROJECT_DIR$/../store/selectors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../xnavigation/materialNavigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/../xnavigation/materialNavigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Transaction/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Transaction/styles.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +23,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_7_API_29" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="10.1_WXGA_Tablet_API_29" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -149,7 +75,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="android-app" type="AndroidRunConfigurationType" factoryName="Android App">
+    <configuration name="android-app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="android-app" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />

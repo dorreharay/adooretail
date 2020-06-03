@@ -40,13 +40,13 @@ const base = {
     width: '70%',
     height: '100%',
     padding: '5%',
-    paddingTop: '3%',
+    paddingTop: 25,
     backgroundColor: '#FFFFFF00',
   },
   rightSide: {
     width: '30%',
     height: '100%',
-    paddingTop: '5%',
+    paddingTop: 25,
     backgroundColor: '#181619',
   },
   typeItem: {
@@ -93,14 +93,14 @@ const base = {
     justifyContent: 'center',
     alignSelf: 'flex-start',
     width: '97%',
-    height: '40%',
+    height: '30%',
     marginTop: '10%',
     marginRight: 15,
     paddingTop: '5%',
     paddingBottom: '5%',
     padding: '5%',
     borderWidth: 1.5,
-    borderColor: '#343434',
+    borderColor: '#DFDFDF',
     borderRadius: 3,
 
     color: '#343434',
@@ -134,7 +134,19 @@ const base = {
     color: '#343434',
     fontSize: 20,
     fontFamily: GILROY_REGULAR,
-  }
+  },
+  paymentSubmitButtonGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    borderRadius: 5,
+  },
+  paymentSubmitButtonText: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontFamily: PROBA_MEDIUM,
+  },
 };
 
 const styles = createStyles(

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useMemo, } from 'react'
 import { View, } from 'react-native'
-import { useDispatch, useSelector, } from 'react-redux'
-import {DURATION} from 'react-native-easy-toast'
+import { useDispatch, useSelector, useStore, } from 'react-redux'
+import { DURATION } from 'react-native-easy-toast'
 import _ from 'lodash'
 import styles from './styles'
 import API from '@api'
@@ -31,11 +31,12 @@ function RetailScreen(props) {
   const [oldReceiptState, setOldReceipt] = useState([null, null, null, null])
 
   const setPaymentModalState = (state) => setPaymentModalVisibility(state)
-  const loadProducts = async () => {
+
+  const loadProducts = async (id) => {
     try {
       toastRef.current.show("Синхронізація", DURATION.FOREVER);
-      const data = await API.getProducts({}, currentAccount._id)
-      
+      const data = await API.getProducts({}, id ? id : currentAccount.id)
+
       if (!data) {
         toastRef.current.close()
 
@@ -54,7 +55,13 @@ function RetailScreen(props) {
   const openMenu = () => setMenuVisibility(true)
   const closeMenu = () => setMenuVisibility(false)
 
+  // const store = useStore()
+
+  // const initialId = store.getState().user.currentAccount ? store.getState().user.currentAccount.id : null
+
   useEffect(() => {
+    loadProducts()
+
     navigation.addListener('focus', () => {
       loadProducts()
     })
@@ -99,7 +106,7 @@ function RetailScreen(props) {
         oldReceiptState={oldReceiptState}
         setOldReceipt={setOldReceipt}
       />
-      <Transaction 
+      <Transaction
         isVisible={transactionModalVisible}
         setTransactionModalVisiblity={setTransactionModalVisiblity}
       />

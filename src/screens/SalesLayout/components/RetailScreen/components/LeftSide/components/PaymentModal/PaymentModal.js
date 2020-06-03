@@ -256,7 +256,7 @@ const PaymentModal = (props) => {
 
         <View style={styles.paymentModal}>
           <PaymentLeftSide
-            pTypes={pTypes}
+            pTypes={pTypes.slice(settings.payment_type_debit ? 0 : 1)}
             selectedType={selectedType}
             selectPType={selectPType}
             setEmployeesListVisibility={setEmployeesListVisibility}

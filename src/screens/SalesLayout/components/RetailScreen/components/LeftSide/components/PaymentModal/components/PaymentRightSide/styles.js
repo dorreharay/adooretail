@@ -95,13 +95,13 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
-    marginTop: 7,
+    marginTop: 12,
     marginRight: '3.5%',
     paddingHorizontal: 20,
   },
   cancelButtonText: {
     color: '#343434',
-    fontSize: 15,
+    fontSize: 17,
     fontFamily: GILROY_REGULAR,
   },
   discountContainer: {
