@@ -1,12 +1,17 @@
 import React, { useState, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
+import { useDispatch } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles'
 
 import Logo from '@images/round-logo.svg'
 import FastImage from 'react-native-fast-image';
 
+import { setInitialFlowStatus } from '@reducers/UserReducer'
+
 function Initial2({ navigation }) {
+  const dispatch = useDispatch()
+
   const [list] = useState([
     { content: 'Керуйте одним із каталогів товарів із зазначенням запасів, доступних у локаціях POS або в Інтернеті.', },
     { content: 'Відсилання чеків електронною поштою або SMS.', },
@@ -14,6 +19,11 @@ function Initial2({ navigation }) {
     { content: 'Керування ролями та дозволами персоналу.', },
     { content: 'Отримання детальної статистики та відслідковування дій персоналу.', },
   ])
+
+  const finishInitialFlow = () => {
+    navigation.jumpTo('NoAccount')
+    dispatch(setInitialFlowStatus(false))
+  }
 
   return (
     <View style={styles.container}>
@@ -41,9 +51,9 @@ function Initial2({ navigation }) {
         ))}
       </View>
 
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', }}>
         <TouchableOpacity
-          style={[styles.proceedButton, { width: 70, }]}
+          style={styles.proceedButton}
           onPress={() => navigation.jumpTo('Initial1')}
           activeOpacity={0.8}
         >
@@ -57,8 +67,8 @@ function Initial2({ navigation }) {
           </LinearGradient>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.proceedButton, { marginLeft: 30, }]}
-          onPress={() => navigation.jumpTo('NoAccount')}
+          style={[styles.proceedButton, { marginLeft: 15, }]}
+          onPress={finishInitialFlow}
           activeOpacity={0.8}
         >
           <LinearGradient

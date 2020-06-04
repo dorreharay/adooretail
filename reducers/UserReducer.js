@@ -21,6 +21,7 @@ const RESET_SESSION = 'RESET_SESSION'
 const SET_PRODUCTS = 'SET_PRODUCTS';
 const SET_CURRENT_EMPLOYEE = 'SET_CURRENT_EMPLOYEE';
 const SET_CURRENT_SERVICE = 'SET_CURRENT_SERVICE';
+const SET_INITIAL_FLOW = 'SET_INITIAL_FLOW'
 
 const initialState = {
   startCash: 0,
@@ -28,6 +29,7 @@ const initialState = {
   activeBackgroundIndex: 0,
   currentEmployee: 0,
   currentService: 0,
+  initialFlow: true,
   settings: {
     printer_enabled: false,
     printer_autoconnection_enabled: false,
@@ -46,6 +48,13 @@ const initialState = {
 export function addAccount(payload) {
   return {
     type: ADD_ACCOUNT,
+    payload
+  }
+}
+
+export function setInitialFlowStatus(payload) {
+  return {
+    type: SET_INITIAL_FLOW,
     payload
   }
 }
@@ -416,6 +425,9 @@ const ACTION_HANDLERS = {
   },
   [SET_CURRENT_SERVICE]: (state, action) => {
     return { ...state, currentService: action.payload }
+  },
+  [SET_INITIAL_FLOW]: (state, action) => {
+    return { ...state, initialFlow: action.payload }
   },
 };
 

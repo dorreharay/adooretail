@@ -24,6 +24,7 @@ const Tab = createMaterialTopTabNavigator();
 function AppContainer() {
   const dispatch = useDispatch()
   const currentRoute = useSelector(state => state.temp.currentRoute)
+  const initialFlow = useSelector(state => state.user.initialFlow)
 
   const navigationRef = useRef()
 
@@ -38,7 +39,7 @@ function AppContainer() {
     >
       <AppSessions navigationRef={navigationRef}>
         <Tab.Navigator
-          // initialRouteName='Login'
+          initialRouteName={initialFlow ? 'Initial1' : 'NoAccount'}
           backBehavior='none'
           swipeEnabled={false}
           tabBar={() => null}

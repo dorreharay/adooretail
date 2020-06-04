@@ -19,7 +19,7 @@ function Initial1({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.heading}>Пришвидшіть обробку замовлень. Безкоштовно</Text>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.helpButton}
           activeOpacity={0.75}
         >
@@ -41,20 +41,22 @@ function Initial1({ navigation }) {
         ))}
       </View>
 
-      <TouchableOpacity
-        style={styles.proceedButton}
-        onPress={() => navigation.jumpTo('Initial2')}
-        activeOpacity={0.8}
-      >
-        <LinearGradient
-          start={{ x: 0, y: 1 }}
-          end={{ x: 1, y: 0 }}
-          colors={['#DB3E69', '#EF9058']}
-          style={styles.proceedButtonGradient}
+      <View style={{ flexDirection: 'row', }}>
+        <TouchableOpacity
+          style={styles.proceedButton}
+          onPress={() => navigation.jumpTo('Initial2')}
+          activeOpacity={0.8}
         >
-          <Text style={styles.proceedButtonText}>Далі</Text>
-        </LinearGradient>
-      </TouchableOpacity>
+          <LinearGradient
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 0 }}
+            colors={['#DB3E69', '#EF9058']}
+            style={styles.proceedButtonGradient}
+          >
+            <Text style={styles.proceedButtonText}>Далі</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
 
       <FastImage
         style={styles.tabletImage}

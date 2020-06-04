@@ -40,7 +40,7 @@ const base = {
   },
   list: {
     width: '32%',
-    height: '59%',
+    height: '60%',
     marginTop: '4%',
   },
   listItem: {
