@@ -28,6 +28,11 @@ const base = {
     fontFamily: GILROY_REGULAR,
     lineHeight: 25,
   },
+  helpButton: {
+    marginTop: -20,
+    marginRight: -20,
+    padding: 20,
+  },
   helpText: {
     color: '#343434',
     fontSize: 15,

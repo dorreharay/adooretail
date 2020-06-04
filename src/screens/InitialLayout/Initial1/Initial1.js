@@ -1,5 +1,5 @@
 import React, { useState, } from 'react'
-import { View, Text, TouchableOpacity, } from 'react-native'
+import { View, Text, TouchableOpacity, TouchableOpacityBase, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles'
 
@@ -19,7 +19,12 @@ function Initial1({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.heading}>Пришвидшіть обробку замовлень. Безкоштовно</Text>
-        <Text style={styles.helpText}>Потрібна допомога?</Text>
+        <TouchableOpacity 
+          style={styles.helpButton}
+          activeOpacity={0.75}
+        >
+          <Text style={styles.helpText}>Потрібна допомога?</Text>
+        </TouchableOpacity>
       </View>
 
       <Text style={styles.caption}>Інтегровані можливості Adoo Retail дозволять вам збільшити швидкість обробки ваших замовлень в декілька разів.</Text>
