@@ -8,6 +8,7 @@
         ],
         "alias": {
           "@images": "./assets/images",
+          "@lottie": "./assets/lottie",
           "@rest": "./rest",
           "@api": "./rest/api",
           "@fonts": "./config/fonts",

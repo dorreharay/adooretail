@@ -36,10 +36,12 @@ function SharedBackground({ image, children, }) {
     dispatch(setActiveBackgroundIndex(index))
   }
 
+  const logoExceptions = [0, 1, 6, 7]
+
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        {currentRoute !== 4 && currentRoute !== 5 && (
+        {!logoExceptions.includes(currentRoute) && (
           <SharedButton
             style={styles.logoContainer}
             onPress={changeBackgroudIndex}

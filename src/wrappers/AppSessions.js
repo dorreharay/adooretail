@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TabActions } from '@react-navigation/native';
 
 import { syncSessions, validateSessionRoutine, } from '@requests'
+import { deviceWidth, deviceHeight, } from '@dimensions';
 
 import * as NavigationService from '../../xnavigation/NavigationService';
 
@@ -21,6 +22,7 @@ import { setOrientationDimensions, setCurrentRoute, } from '@reducers/TempReduce
 
 import SharedBackground from '@shared/SharedBackground';
 import SessionModal from '../screens/SalesLayout/components/SessionModal/SessionModal';
+import FastImage from 'react-native-fast-image';
 
 function AppSessions(props) {
   const {
@@ -78,7 +80,7 @@ function AppSessions(props) {
   useEffect(() => {
     delay(500).then(() => {
       if (currentAccount) {
-        if (!currentSession.endTime && currentSession.length === 0) {
+        if (currentSession.endTime || currentAccount.localSessions.length === 0) {
           navigationRef.current.dispatch(TabActions.jumpTo('Login'));
           dispatch(setCurrentRoute(1))
 
@@ -172,6 +174,7 @@ function AppSessions(props) {
         logoHeight={250}
         logoWidth={250}
       >
+        {/* <FastImage style={{ width: deviceWidth, height: deviceHeight, top: 25, left: 45, zIndex: 10 }} source={require('@images/ex1.png')} /> */}
         <SharedBackground
           image={0}
           navigation={null}

@@ -92,7 +92,7 @@ function ConfigureAccount(props) {
     <>
       {cameraVisible ? (
         <>
-          <Text style={styles.loginHeading}>Проскануйте QR-код аккаунту</Text>
+          <Text style={[styles.loginHeading, { marginTop: 15, }]}>Проскануйте QR-код аккаунту</Text>
 
           <View style={styles.cameraContainer}>
             {loading && (

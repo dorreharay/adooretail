@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+import Initial1 from '../src/screens/InitialLayout/Initial1/Initial1'
+import Initial2 from '../src/screens/InitialLayout/Initial2/Initial2'
 import NoAccount from '../src/screens/InitialLayout/NoAccount/NoAccount'
 import Login from '../src/screens/InitialLayout/Login/Login'
 import InputCash from '../src/screens/InitialLayout/InputCash/InputCash';
@@ -48,6 +50,8 @@ function AppContainer() {
             backgroundColor: '#FFFFFF00'
           }}
         >
+          <Tab.Screen name="Initial1" component={Initial1} />
+          <Tab.Screen name="Initial2" component={Initial2} />
           <Tab.Screen name="NoAccount" component={NoAccount} />
           <Tab.Screen name="Login" component={Login} />
           <Tab.Screen name="InputCash" component={InputCash} />

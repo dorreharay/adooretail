@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, } from "react";
 import { View, Text, Image, Animated, } from "react-native";
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
+import LottieView from 'lottie-react-native';
 import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles';
 
@@ -17,6 +18,7 @@ function NoAccount(props) {
   const { navigation, } = props
 
   const toast = useRef(null)
+  const lottieRef = useRef(null)
 
   const accounts = useSelector(state => state.user.accounts)
   const currentAccount = useSelector(state => state.user.currentAccount)
@@ -113,6 +115,18 @@ function NoAccount(props) {
       }, 1000)
     }, 600)
   }
+
+  useEffect(() => {
+    if (lottieRef.current) {
+      setTimeout(() => {
+        lottieRef.current.play(0, 40)
+
+        setTimeout(() => {
+          lottieRef.current.pause()
+        }, 1200)
+      }, 3000)
+    }
+  }, [lottieRef])
 
   return (
     <View style={styles.container}>
