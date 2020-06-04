@@ -31,13 +31,13 @@ const initialState = {
   settings: {
     printer_enabled: false,
     printer_autoconnection_enabled: false,
-    printer_bluetooth: false,
+    printer_bluetooth: true,
     printer_net: false,
     desk_enabled: false,
     kitchen_enabled: false,
-    payment_type_cash: false,
-    payment_type_cash_default: false,
-    payment_type_debit: false,
+    payment_type_cash: true,
+    payment_type_cash_default: true,
+    payment_type_debit: true,
     payment_type_debit_default: false,
     payment_type_unchecked: false
   }

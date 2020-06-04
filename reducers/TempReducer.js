@@ -6,9 +6,11 @@ const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
 const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
 const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
 const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES'
+const SET_RESET_STATUS = 'SET_RESET_STATUS'
 
 const initialState = {
   endOfSession: false,
+  resetAccount: false,
   dimensions: {
     deviceWidth: 0,
     deviceHeight: 0,
@@ -32,6 +34,13 @@ export function setModalStatus(payload) {
 export function setEndOfSessionStatus(payload) {
   return {
     type: SET_END_OF_SESSION_STATUS,
+    payload
+  }
+}
+
+export function setResetStatus(payload) {
+  return {
+    type: SET_RESET_STATUS,
     payload
   }
 }
@@ -164,6 +173,9 @@ export function clearCurrentReceipt() {
 const ACTION_HANDLERS = {
   [SET_END_OF_SESSION_STATUS]: (state, action) => {
     return { ...state, endOfSession: action.payload }
+  },
+  [SET_RESET_STATUS]: (state, action) => {
+    return { ...state, resetAccount: action.payload }
   },
   [SET_ORIENTATION_DIMENSIONS]: (state, action) => {
     return { ...state, dimensions: action.payload }

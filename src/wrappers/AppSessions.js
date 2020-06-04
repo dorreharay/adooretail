@@ -28,12 +28,7 @@ function AppSessions(props) {
   } = props
 
   const jumpToAction = TabActions.jumpTo('NoAccount');
-
-  useEffect(() => {
-    console.log('---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->', navigationRef.current)
-    // navigationRef.current.dispatch(TabActions.jumpTo('NoAccount'))
-  }, [navigationRef])
-
+  
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
 
@@ -102,7 +97,7 @@ function AppSessions(props) {
 
         timerRef1.current = setTimeout(() => {
           setInitialLoadingVisibility(true)
-        }, 1000)
+        }, 300)
       } else {
         // navigationRef.current.dispatch(TabActions.jumpTo('NoAccount'));
 
@@ -189,13 +184,13 @@ function AppSessions(props) {
           </View>
         </SharedBackground>
 
-        {/* {accounts.length !== 0 && (
+        {currentAccount && (
           <SessionModal
             isVisible={modalStatus !== ''}
             intervalRef={intervalRef}
             NavigationService={NavigationService}
           />
-        )} */}
+        )}
       </AnimatedSplash>
       {/* </UserInactivity> */}
     </>

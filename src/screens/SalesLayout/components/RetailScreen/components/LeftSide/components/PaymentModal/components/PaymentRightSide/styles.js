@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { createStyles, maxHeight, } from 'react-native-media-queries';
 import { PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
 
@@ -64,7 +65,8 @@ const base = {
     borderRadius: 100,
   },
   paidInput: {
-    width: 80,
+    width: 90,
+    paddingVertical: Platform.OS === 'android' ? 0 : 13,
     marginRight: 15,
     borderWidth: 1.5,
     borderColor: '#343434',

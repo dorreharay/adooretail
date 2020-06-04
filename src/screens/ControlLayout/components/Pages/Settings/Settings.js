@@ -1,19 +1,16 @@
 import React, { useEffect, useState, } from 'react'
-import { View, Text, ScrollView, } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import Modal, { SlideAnimation, ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
+import Modal, { ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
+import FastImage from 'react-native-fast-image';
 import styles from './styles'
 
-import createStore from '../../../../../../store/store'
+import { deviceWidth } from '@dimensions'
 
-const { persistor } = createStore();
-
-import { setSettings } from '@reducers/UserReducer'
+import { setSettings, setEmployees, setStartCash, } from '@reducers/UserReducer'
+import { setEndOfSessionStatus, setResetStatus, } from '@reducers/TempReducer';
 
 import SwitchWithTitle from './SwitchWithTitle/SwitchWithTitle';
-import SwitchButtons from './SwitchButtons';
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import FastImage from 'react-native-fast-image';
 
 const Settings = ({ navigation }) => {
   const dispatch = useDispatch()
@@ -29,14 +26,18 @@ const Settings = ({ navigation }) => {
     }))
   }
 
-  const resetAccount = () => {
-    persistor.purge()
+  const endSession = () => {
+    dispatch(setEmployees([]))
+    dispatch(setStartCash(0))
+    dispatch(setEndOfSessionStatus(true))
+    dispatch(setResetStatus(true))
     setExitPromptState(false)
-    navigation.navigate('NoAccount')
+
+    navigation.jumpTo('InputCash')
   }
 
   return (
-    <ScrollView style={styles.container} horizontal contentContainerStyle={{ paddingRight: 100, }}>
+    <ScrollView style={styles.container} horizontal contentContainerStyle={{ paddingRight: 100, }} bounces={false}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <View>
           <View style={[styles.settingCard, { width: 350, }]}>
@@ -133,6 +134,7 @@ const Settings = ({ navigation }) => {
             type={'desk_enabled'}
             value={settings['desk_enabled']}
             updateSettings={updateSettings}
+            disabled
           />
           <SwitchWithTitle
             title={'Кухня'}
@@ -186,7 +188,8 @@ const Settings = ({ navigation }) => {
               value={settings['payment_type_debit_default']}
               updateSettings={updateSettings}
               disabled={!settings['payment_type_debit']}
-              unique relatives={['payment_type_cash_default']}
+              unique
+              relatives={['payment_type_cash_default']}
               subsetting
             />
           </View>
@@ -212,15 +215,16 @@ const Settings = ({ navigation }) => {
               onPress={() => setExitPromptState(false)}
             />
             <ModalButton
-              text='Так'
+              text='Закінчити та вийти'
               textStyle={[styles.promptText, { color: '#343434' }]}
-              onPress={resetAccount}
+              onPress={endSession}
             />
           </ModalFooter>
         }
       >
-        <ModalContent>
-          <Text style={styles.promptText}>Ви точно хочете вийти з аккаунту?</Text>
+        <ModalContent style={{ width: deviceWidth * 0.40, }}>
+          <Text style={[styles.promptText, { fontSize: 22, }]}>Ви точно хочете вийти з аккаунту?</Text>
+          <Text style={[styles.promptText, { marginTop: 20, }]}>Теперішня зміна буде закінчена. Необхідно ввести кінцеву касу</Text>
         </ModalContent>
       </Modal>
     </ScrollView>

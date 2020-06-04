@@ -8,12 +8,11 @@ import styles from './styles'
 
 import { addProductQuantity } from '@reducers/TempReducer'
 
-import { currentAccountSelector } from '@selectors'
-
 import { deviceWidth, deviceHeight } from '@dimensions'
+import { updateLayout as updateProductsLayout } from '@helpers'
 
 function Products(props) {
-  const { searchTerm, paymentModalVisible, updateProductsLayout, } = props;
+  const { searchTerm, paymentModalVisible, } = props;
 
   const scrollView = useRef(null)
 
@@ -70,8 +69,6 @@ function Products(props) {
 
   useEffect(() => {
     if (activeCategory && products) {
-      console.log('savedActiveCategoryPath', savedActiveCategoryPath)
-
       const { index, key } = savedActiveCategoryPath
 
       changeActiveCategory(index, key)

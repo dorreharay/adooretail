@@ -30,8 +30,6 @@ function ConfigureAccount(props) {
         inputRef.current && inputRef.current.blur()
         Keyboard.dismiss()
 
-        console.log('text', text.length)
-
         const deviceId = await DeviceInfo.getUniqueId();
 
         const data = await API.requestAccount({

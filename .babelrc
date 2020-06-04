@@ -17,11 +17,12 @@
           "@dateFormatter": "./helpers/dateFormatter",
           "@requests": "./helpers/requests",
           "@printer": "./helpers/printer",
+          "@helpers": "./helpers/all",
           "@shared": "./src/shared",
           "@selectors": "./store/selectors",
           "@statuses": "./config/statuses",
           "@reducers": "./reducers",
-          "@store": "./index",
+          "@store": "./index"
         }
       }
     ]

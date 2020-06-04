@@ -5,7 +5,7 @@ import styles from './styles';
 import FastImage from 'react-native-fast-image';
 
 const SwitchWithTitle = (props) => {
-  const { title, type, value, updateSettings, disabled = false, subsetting = false, unique = false, relatives = [], } = props
+  const { title, type, value, updateSettings, disabled = false, subsetting = false, unique = false, relatives = [], exceptions = [], } = props
 
   const handleValue = () => {
     if (disabled) return
@@ -24,6 +24,14 @@ const SwitchWithTitle = (props) => {
 
     if (!value && type === 'printer_enabled') {
       updateSettings('printer_autoconnection_enabled', false)
+    }
+
+    if (!value && type === 'payment_type_debit') {
+      updateSettings('payment_type_debit_default', false)
+    }
+
+    if (!value && type === 'payment_type_cash') {
+      updateSettings('payment_type_cash_default', false)
     }
   }, [unique, value,])
 
@@ -46,7 +54,7 @@ const SwitchWithTitle = (props) => {
               value ? (
                 <FastImage
                   style={{ width: 16, height: 16 }}
-                  source={require('@images/tick.png')}
+                  source={disabled ? require('@images/tick-disabled.png') : require('@images/tick.png')}
                 />
               ) : null
             )}

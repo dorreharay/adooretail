@@ -223,7 +223,7 @@ function PaymentType(props) {
                 value={`${enteredSum}`}
                 onChangeText={handleChangeSum}
                 keyboardType='number-pad'
-                maxLength={4}
+                maxLength={6}
                 textAlign={'center'}
                 onFocus={() => {
                   handleChangeSum('')

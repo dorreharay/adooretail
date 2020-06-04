@@ -6,13 +6,15 @@ import FastImage from 'react-native-fast-image'
 import { syncSessions, } from '@requests'
 import styles from './styles'
 
+import createStore from '../../../../store/store'
+
+const { persistor } = createStore();
+
 import { cashKeyboardLayout } from '@keyboards'
 
-import { currentAccountSelector } from '@selectors'
 import { setStartCash, updateCurrentSession, restoreDefaultShift, resetSessions, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus } from '@reducers/TempReducer'
+import { setEndOfSessionStatus, setResetStatus, } from '@reducers/TempReducer'
 
-import LoginLoader from '@shared/LoginLoader';
 import SharedButton from '@shared/SharedButton';
 
 function InputCash(props) {
@@ -21,10 +23,16 @@ function InputCash(props) {
   const dispatch = useDispatch();
 
   const endOfSession = useSelector(state => state.temp.endOfSession)
+  const resetAccount = useSelector(state => state.temp.resetAccount)
 
   const [currentInput, setCurrentInput] = useState('0')
   const [loading, setLoadingStatus] = useState(false)
 
+  const resetAndRedirect = () => {
+    persistor.purge()
+    dispatch(setResetStatus(false))
+    navigation.jumpTo('NoAccount')
+  }
 
   const handleKeyPress = (input) => {
     let newInput = currentInput;
@@ -67,6 +75,12 @@ function InputCash(props) {
   }
 
   const handleProceed = async () => {
+    if (resetAccount) {
+      resetAndRedirect()
+
+      return
+    }
+
     if (endOfSession) {
       try {
         setLoadingStatus(true)
@@ -77,7 +91,7 @@ function InputCash(props) {
 
         navigation.jumpTo('Login')
 
-        await syncSessions(() => {}, null, 1)
+        await syncSessions(() => { }, null, 1)
 
         dispatch(resetSessions())
       } catch (e) {
@@ -135,15 +149,15 @@ function InputCash(props) {
 
 
       {/* {!loading && ( */}
-        <SharedButton
-          style={styles.backButton}
-          onPress={handleBackPress}
-          scale={0.9}
-        >
-          <View style={{ paddingHorizontal: 30, paddingVertical: 20, }}>
-            <Text style={styles.backButtonText}>Назад</Text>
-          </View>
-        </SharedButton>
+      <SharedButton
+        style={styles.backButton}
+        onPress={handleBackPress}
+        scale={0.9}
+      >
+        <View style={{ paddingHorizontal: 30, paddingVertical: 20, }}>
+          <Text style={styles.backButtonText}>Назад</Text>
+        </View>
+      </SharedButton>
       {/* )} */}
     </View>
   )

@@ -69,6 +69,7 @@ const base = {
     borderRadius: 10,
   },
   exitButton: {
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'center',
     paddingHorizontal: 20,

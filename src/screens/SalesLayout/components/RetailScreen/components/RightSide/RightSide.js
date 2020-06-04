@@ -25,7 +25,7 @@ const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
   const {
-    openMenu, loadProducts, updateProductsLayout,
+    openMenu, loadProducts,
     paymentModalVisible, navigation,
   } = props;
 
@@ -145,7 +145,6 @@ function RightSide(props) {
       <Products
         searchTerm={searchTerm}
         paymentModalVisible={paymentModalVisible}
-        updateProductsLayout={updateProductsLayout}
       />
     </View>
   )

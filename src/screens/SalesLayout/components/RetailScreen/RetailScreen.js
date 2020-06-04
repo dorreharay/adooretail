@@ -1,21 +1,24 @@
-import React, { useRef, useState, useEffect, useMemo, } from 'react'
+import React, { useRef, useState, useEffect, } from 'react'
 import { View, } from 'react-native'
-import { useDispatch, useSelector, useStore, } from 'react-redux'
+import { useDispatch, useSelector, } from 'react-redux'
 import { DURATION } from 'react-native-easy-toast'
 import _ from 'lodash'
 import styles from './styles'
+
+import store from '@store'
 import API from '@api'
+import { updateLayout } from '@helpers'
+
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
 import Menu from './components/Menu/Menu';
-
 import PaymentModal from './components/LeftSide/components/PaymentModal/PaymentModal';
 import Transaction from './components/Transaction/Transaction'
 
 function RetailScreen(props) {
   const {
     products, navigation, openChangeAccountOverview,
-    updateLayout, toastRef, layout,
+    toastRef, layout,
   } = props;
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -32,10 +35,18 @@ function RetailScreen(props) {
 
   const setPaymentModalState = (state) => setPaymentModalVisibility(state)
 
-  const loadProducts = async (id) => {
+  function getState(reducer) {
+    return store.getState()[reducer]
+  }
+
+  const loadProducts = async () => {
+    const user = getState('user')
+
+    const forceAccount = user.currentAccount 
+
     try {
       toastRef.current.show("Синхронізація", DURATION.FOREVER);
-      const data = await API.getProducts({}, id ? id : currentAccount.id)
+      const data = await API.getProducts({}, forceAccount ? forceAccount.id : currentAccount.id)
 
       if (!data) {
         toastRef.current.close()
@@ -54,10 +65,6 @@ function RetailScreen(props) {
 
   const openMenu = () => setMenuVisibility(true)
   const closeMenu = () => setMenuVisibility(false)
-
-  // const store = useStore()
-
-  // const initialId = store.getState().user.currentAccount ? store.getState().user.currentAccount.id : null
 
   useEffect(() => {
     loadProducts()
