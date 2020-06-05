@@ -36,7 +36,7 @@ function SharedBackground({ image, children, }) {
     dispatch(setActiveBackgroundIndex(index))
   }
 
-  const logoExceptions = [0, 1, 6, 7]
+  const logoExceptions = [0, 1, 2, 6, 7]
 
   return (
     <View style={styles.container}>

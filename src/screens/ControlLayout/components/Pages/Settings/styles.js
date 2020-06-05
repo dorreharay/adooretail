@@ -16,6 +16,7 @@ const base = {
     paddingVertical: 25,
     paddingBottom: 20,
     marginRight: 20,
+    marginBottom: 20,
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
   },

@@ -152,7 +152,7 @@ function Login(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.loginHeading}>Вхід за допомогою Device ID</Text>
+      <Text style={styles.loginHeading}>Вхід за допомогою пін коду</Text>
       <Animated.View style={[styles.idDots, { left: animatedValue }]}>
         {passwordArray.map((item, index) => (
           <Svg width={styles.dot.width} height={styles.dot.height} key={index}>

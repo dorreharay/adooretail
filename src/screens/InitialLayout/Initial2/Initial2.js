@@ -7,6 +7,7 @@ import styles from './styles'
 import Logo from '@images/round-logo.svg'
 import FastImage from 'react-native-fast-image';
 
+import { setCurrentRoute, } from '@reducers/TempReducer'
 import { setInitialFlowStatus } from '@reducers/UserReducer'
 
 function Initial2({ navigation }) {
@@ -23,6 +24,7 @@ function Initial2({ navigation }) {
   const finishInitialFlow = () => {
     navigation.jumpTo('NoAccount')
     dispatch(setInitialFlowStatus(false))
+    dispatch(setCurrentRoute(2))
   }
 
   return (

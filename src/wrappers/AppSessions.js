@@ -42,6 +42,7 @@ function AppSessions(props) {
   const currentSession = useSelector(currentSessionSelector)
   const modalStatus = useSelector(state => state.temp.modalStatus)
   const currentRoute = useSelector(state => state.temp.currentRoute)
+  const initialFlow = useSelector(state => state.user.initialFlow)
 
   const dispatch = useDispatch()
 
@@ -103,7 +104,7 @@ function AppSessions(props) {
       } else {
         // navigationRef.current.dispatch(TabActions.jumpTo('NoAccount'));
 
-        dispatch(setCurrentRoute(0))
+        dispatch(setCurrentRoute(initialFlow ? 2 : 0))
         timerRef1.current = setTimeout(() => {
           setInitialLoadingVisibility(true)
         }, 200)

@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     top: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: '#F1F1F1',
+    backgroundColor: '#F3F4F6'
   },
 })
 

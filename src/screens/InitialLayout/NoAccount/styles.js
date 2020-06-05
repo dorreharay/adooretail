@@ -1,6 +1,6 @@
 import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_LIGHT, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
-import { deviceWidth } from '@dimensions';
+import { GILROY_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { deviceWidth, deviceHeight, } from '@dimensions';
 
 const base = {
   container: {
@@ -8,149 +8,99 @@ const base = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
   },
-  loginHeading: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontFamily: GILROY_REGULAR,
-    letterSpacing: 1,
+  logoContainer: {
+    position: 'absolute',
+    top: deviceWidth * 0.03,
+    left: deviceWidth * 0.03,
   },
-  loginHeadingSuper: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontFamily: GILROY_REGULAR,
-    letterSpacing: 2,
+  helpContainer: {
+    position: 'absolute',
+    top: deviceWidth * 0.03,
+    right: deviceWidth * 0.03,
+    padding: 10,
   },
-  loginHeadingCaption: {
-    marginTop: 14,
-    color: '#FFFFFF',
+  helpText: {
+    color: '#343434',
     fontSize: 14,
     fontFamily: GILROY_REGULAR,
-    letterSpacing: 1,
   },
-  loginCaption: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 50,
+  heading: {
+    color: '#000000',
+    fontSize: 26,
+    fontFamily: GILROY_SEMIBOLD,
   },
-  loginCaptionText: {
-    width: 220,
-    color: '#DADADA',
+  caption: {
+    width: '40%',
+    marginTop: 15,
+    color: '#000000',
     fontSize: 16,
-    fontFamily: GILROY_LIGHT,
-    lineHeight: 27,
+    fontFamily: GILROY_REGULAR,
     textAlign: 'center',
-    textDecorationLine: 'underline'
   },
-  accountsContainer: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    width: deviceWidth * 0.6,
-    height: '30%',
-    // marginLeft: '1.5%',
-    marginVertical: 70,
+  changeText: {
+    color: '#000000',
+    fontSize: 16,
+    fontFamily: GILROY_REGULAR,
+    textDecorationLine: 'underline',
   },
-  account: {
+  midContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: deviceWidth * 0.2,
-    height: deviceWidth * 0.2,
-  },
-  accountItem: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 10,
-    zIndex: 100,
-  },
-  imageContainer: {
-    position: 'absolute',
-    top: '6%',
-    left: '6%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '88%',
-    height: '88%',
-    borderRadius: 10,
-  },
-  imageCover: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 10,
-    backgroundColor: '#12294666',
-    zIndex: 2,
-  },
-  accountItemContent: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  accountItemBusinessName: {
-    textAlign: 'center',
-    color: '#FFFFFF',
-    fontSize: 27,
-    fontFamily: PROBA_MEDIUM,
-    lineHeight: 40,
-  },
-  emptyAccountText: {
-    textAlign: 'center',
-    color: '#FFFFFF',
-    fontSize: 70,
-    fontFamily: PROBA_LIGHT,
-  },
-  cameraContainer: {
-    width: 400,
-    height: 300,
-    marginVertical: 55,
-    backgroundColor: '#000000'
-  },
-  inputContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 400,
-    height: 300,
-    marginTop: 30,
-    marginVertical: 55,
+    width: deviceWidth * 0.65,
+    height: deviceHeight * 0.55,
+    marginVertical: 40,
   },
   input: {
     textAlign: 'center',
-    width: '100%',
-    height: 60,
+    width: deviceWidth * 0.45,
+    height: deviceWidth * 0.07,
     paddingHorizontal: 20,
+    marginBottom: deviceWidth * 0.04,
     borderRadius: 5,
-    backgroundColor: '#FFFFFF1A',
+    backgroundColor: '#F2F2F2',
 
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 25,
     fontFamily: PROBA_REGULAR
   },
-  success: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 300,
-    height: 300,
-  },
-  successImage: {
-    width: 130,
-    height: 130,
-  },
-  loadingWrapper: {
+  clearButton: {
     position: 'absolute',
+    right: 0,
     top: 0,
-    left: 0,
-    zIndex: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#FFFFFF44',
+    width: deviceWidth * 0.07,
+    height: deviceWidth * 0.07,
   },
-  loadingWrapperText: {
-    color: '#FFFFFF',
-    fontSize: 15,
-    fontFamily: GILROY_REGULAR
-  }
+  submitButton: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    backgroundColor: '#F2F2F2',
+  },
+  retryButton: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    marginTop: 40,
+    borderRadius: 100,
+    backgroundColor: '#F2F2F2',
+  },
+  errorContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  llamaError: {
+    width: deviceWidth * 0.2,
+    height: deviceWidth * 0.2,
+  },
 };
 
 const styles = createStyles(
