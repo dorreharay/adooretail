@@ -43,6 +43,7 @@ function AppSessions(props) {
   const modalStatus = useSelector(state => state.temp.modalStatus)
   const currentRoute = useSelector(state => state.temp.currentRoute)
   const initialFlow = useSelector(state => state.user.initialFlow)
+  const settings = useSelector(state => state.user.settings)
 
   const dispatch = useDispatch()
 
@@ -54,9 +55,13 @@ function AppSessions(props) {
       BackgroundTimer.clearInterval(syncRef.current);
       BackgroundTimer.clearInterval(validationRef.current);
 
-      validationRef.current = BackgroundTimer.setInterval(() => {
-        validateSessionRoutine()
-      }, currentAccount && currentAccount.client_data && currentAccount.client_data.shift_validation_period || (30 * 1000));
+      validateSessionRoutine()
+
+      if (settings.shifts_enabled) {
+        validationRef.current = BackgroundTimer.setInterval(() => {
+          validateSessionRoutine()
+        }, currentAccount && currentAccount.client_data && currentAccount.client_data.shift_validation_period || (30 * 1000));
+      }
 
       BackgroundTimer.clearInterval(syncRef.current);
 
@@ -193,6 +198,7 @@ function AppSessions(props) {
             isVisible={modalStatus !== ''}
             intervalRef={intervalRef}
             NavigationService={NavigationService}
+            gotoInputCash={() => navigationRef.current.dispatch(TabActions.jumpTo('InputCash'))}
           />
         )}
       </AnimatedSplash>

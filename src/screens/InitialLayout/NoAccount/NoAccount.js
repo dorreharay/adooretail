@@ -101,7 +101,7 @@ function NoAccount(props) {
   }
 
   const reset = () => {
-    setCode('')
+    // setCode('')
     setErrorVisible(false)
 
     setTimeout(() => {

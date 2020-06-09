@@ -9,8 +9,8 @@
         "alias": {
           "@images": "./assets/images",
           "@lottie": "./assets/lottie",
-          "@rest": "./rest",
-          "@api": "./rest/api",
+          "@rest": "./httpClient",
+          "@api": "./httpClient/api",
           "@fonts": "./config/fonts",
           "@blockSizes": "./config/blockSizes",
           "@dimensions": "./helpers/dimensions",

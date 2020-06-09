@@ -296,12 +296,11 @@ function PaymentType(props) {
             showsHorizontalScrollIndicator={false}
           >
             {discounts && discounts.map((item, index) => (
-              <View style={[styles.discountItem, index === activeDiscount && styles.activeDiscountItem]}>
+              <View style={[styles.discountItem, index === activeDiscount && styles.activeDiscountItem]} key={index}>
                 <SharedButton
                   style={{ flex: 1, width: '100%', }}
                   onPress={() => setActiveDiscount(index)}
                   scale={0.8}
-                  key={index}
                 >
                   <Text style={[styles.discountItemText, index === activeDiscount && styles.activeDiscountItemText]}>{item.percent}%</Text>
                 </SharedButton>

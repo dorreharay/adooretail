@@ -1,7 +1,7 @@
 import { getFormattedDate, } from '@dateFormatter'
 import { syncSessions, } from '@requests'
 import _ from 'lodash'
-import API from '../rest/api'
+import API from '../httpClient/api'
 
 const CHANGE_ACCOUNT = 'CHANGE_ACCOUNT';
 const UPDATE_CURRENT_SESSIONS = 'UPDATE_CURRENT_SESSIONS';
@@ -31,6 +31,7 @@ const initialState = {
   currentService: 0,
   initialFlow: true,
   settings: {
+    shifts_enabled: false,
     printer_enabled: false,
     printer_autoconnection_enabled: false,
     printer_bluetooth: true,

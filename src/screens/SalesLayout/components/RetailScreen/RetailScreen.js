@@ -35,23 +35,16 @@ function RetailScreen(props) {
 
   const setPaymentModalState = (state) => setPaymentModalVisibility(state)
 
-  function getState(reducer) {
-    return store.getState()[reducer]
-  }
 
   const loadProducts = async () => {
-    const user = getState('user')
-
-    const forceAccount = user.currentAccount 
-
     try {
       toastRef.current.show("Синхронізація", DURATION.FOREVER);
-      const data = await API.getProducts({}, forceAccount ? forceAccount.id : currentAccount.id)
+      const data = await API.getProducts()
 
       if (!data) {
         toastRef.current.close()
 
-        throw new Error('Not valid request')
+        // throw new Error('Not valid request')
       }
 
       updateLayout(data, layout)

@@ -43,7 +43,7 @@ function Initial2({ navigation }) {
 
       <View style={styles.list}>
         {list.map((item, index) => (
-          <View style={styles.listItem}>
+          <View style={styles.listItem} key={index}>
             <View style={{ marginTop: 5, }}>
               <Logo width={25} height={25} />
             </View>

@@ -28,6 +28,8 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
       newSettings: settings,
     }, currentAccount.id)
 
+    if (!data) return null
+
     const { shift_start, shift_end, client_data, } = data
     const { passcode: clientPasscode } = client_data
 
@@ -66,7 +68,7 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
   const { currentAccount } = currentStore.user
   const { modalStatus } = currentStore.temp
 
-  if (currentAccount) return 
+  if (!currentAccount) return 
 
   const { localSessions, settings } = currentAccount
 
@@ -89,7 +91,8 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
     endOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shift_end.hours, minutes: shift_end.minutes, seconds: 0, })
   } else {
     startOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
-    endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day')
+    // endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day')
+    endOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
   }
 
   console.log('Shift validation', '- check enabled?', settings.shifts.enabled)
@@ -105,11 +108,11 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
     if (currentAccount.localSessions.length === 0) {
       dispatch(setModalStatus(START))
     } else {
-      // if(currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled) {
-      //   dispatch(setModalStatus(NOT_ON_SHIFT))
-      // } else {
-      //   dispatch(setModalStatus(END))
-      // }
+      if(currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled) {
+        dispatch(setModalStatus(NOT_ON_SHIFT))
+      } else {
+        dispatch(setModalStatus(END))
+      }
     }
   }
 
