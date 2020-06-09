@@ -7,7 +7,7 @@ import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
 import AnimatedSplash from "react-native-animated-splash-screen";
 import BackgroundTimer from 'react-native-background-timer';
-import { useNavigation } from '@react-navigation/native';
+import UserInactivity from 'react-native-user-inactivity';
 import { TabActions } from '@react-navigation/native';
 
 import { syncSessions, validateSessionRoutine, } from '@requests'
@@ -22,7 +22,7 @@ import { setOrientationDimensions, setCurrentRoute, } from '@reducers/TempReduce
 
 import SharedBackground from '@shared/SharedBackground';
 import SessionModal from '../screens/SalesLayout/components/SessionModal/SessionModal';
-import FastImage from 'react-native-fast-image';
+import PinModal from '../screens/SalesLayout/components/PinModal/PinModal';
 
 function AppSessions(props) {
   const {
@@ -30,7 +30,7 @@ function AppSessions(props) {
   } = props
 
   const jumpToAction = TabActions.jumpTo('NoAccount');
-  
+
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
 
@@ -49,6 +49,7 @@ function AppSessions(props) {
 
   const [buildInfo, setBuildInfo] = useState({ version: '', buildNumber: '', })
   const [initialLoadingVisibility, setInitialLoadingVisibility] = useState(false)
+  const [pinVisible, setPinVisible] = useState(false)
 
   useEffect(() => {
     if (currentAccount) {
@@ -81,7 +82,7 @@ function AppSessions(props) {
       setTimeout(resolve, time)
     })
   }
-  
+
 
   useEffect(() => {
     delay(500).then(() => {
@@ -93,13 +94,15 @@ function AppSessions(props) {
           timerRef1.current = setTimeout(() => {
             setInitialLoadingVisibility(true)
           }, 300)
-          
 
           return
         }
 
         navigationRef.current.dispatch(TabActions.jumpTo('SalesLayout'));
         dispatch(setCurrentRoute(4))
+        setTimeout(() => {
+          setPinVisible(true)
+        }, 500)
 
         syncSessions()
 
@@ -158,20 +161,6 @@ function AppSessions(props) {
 
   return (
     <>
-      {/* <UserInactivity
-        timeForInactivity={currentAccount && currentAccount.client_data && currentAccount.client_data.allowed_inactivity_period || (30 * 1000)}
-        timeoutHandler={BackgroundTimer}
-        onAction={active => {
-          if (!active) {
-            if (accounts.length !== 0) {
-              dispatch(setNeedToReenter(true))
-              NavigationService.setTopLevelNavigator(navigatorRef.current)
-              NavigationService.jumpTo('Login')
-            }
-          }
-        }}
-        style={{ flex: 1, }}
-      > */}
 
       <AnimatedSplash
         isLoaded={initialLoadingVisibility}
@@ -180,29 +169,42 @@ function AppSessions(props) {
         logoHeight={250}
         logoWidth={250}
       >
-        {/* <FastImage style={{ width: deviceWidth, height: deviceHeight, top: 25, left: 45, zIndex: 10 }} source={require('@images/ex1.png')} /> */}
         <SharedBackground
           image={0}
           navigation={null}
         >
-          <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
-            <View style={styles.versionContainer}>
-              <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
-            </View>
-            {withProps}
-          </View>
+          <UserInactivity
+            timeForInactivity={120 * 1000}
+            timeoutHandler={BackgroundTimer}
+            isActive={!pinVisible}
+            onAction={active => {
+              if (!active) {
+                setPinVisible(true)
+              }
+            }}
+            style={{ width: '100%', height: '100%', }}
+          >
+            <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
+              <View style={styles.versionContainer}>
+                <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
+              </View>
+              {withProps}
+
+            </View></UserInactivity>
         </SharedBackground>
 
         {currentAccount && (
-          <SessionModal
-            isVisible={modalStatus !== ''}
-            intervalRef={intervalRef}
-            NavigationService={NavigationService}
-            gotoInputCash={() => navigationRef.current.dispatch(TabActions.jumpTo('InputCash'))}
-          />
+          <>
+            <SessionModal
+              isVisible={modalStatus !== ''}
+              intervalRef={intervalRef}
+              NavigationService={NavigationService}
+              gotoInputCash={() => navigationRef.current.dispatch(TabActions.jumpTo('InputCash'))}
+            />
+            <PinModal isVisible={pinVisible} setVisible={setPinVisible} />
+          </>
         )}
       </AnimatedSplash>
-      {/* </UserInactivity> */}
     </>
   )
 }

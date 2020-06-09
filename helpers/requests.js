@@ -91,8 +91,8 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
     endOfShift = getFormattedDate('YYYY-MM-DD HH:mm', { hours: shift_end.hours, minutes: shift_end.minutes, seconds: 0, })
   } else {
     startOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
-    // endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day')
-    endOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
+    endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day')
+    // endOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
   }
 
   console.log('Shift validation', '- check enabled?', settings.shifts.enabled)
