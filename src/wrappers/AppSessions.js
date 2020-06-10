@@ -201,7 +201,7 @@ function AppSessions(props) {
               NavigationService={NavigationService}
               gotoInputCash={() => navigationRef.current.dispatch(TabActions.jumpTo('InputCash'))}
             />
-            <PinModal isVisible={pinVisible} setVisible={setPinVisible} />
+            <PinModal isVisible={pinVisible && (currentRoute === 6 || currentRoute === 7)} setVisible={setPinVisible} />
           </>
         )}
       </AnimatedSplash>
