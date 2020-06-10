@@ -3,10 +3,10 @@ import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MED
 
 const base = {
   container: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    width: '100%',
-    height: '9%',
+    width: '25%',
+    height: '100%',
     backgroundColor: '#343434'
   },
   backButton: {
@@ -32,11 +32,11 @@ const base = {
     flexDirection: 'row',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: '10%',
+    height: 70,
   },
   menuButtonInner: {
     flex: 1,
-    // width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -44,31 +44,24 @@ const base = {
   activeMenuButton: {
     backgroundColor: '#3E3E3E',
   },
-  accountButton: {
-    flexDirection: 'row',
-    width: 200,
-  },
-  accountButtonInner: {
-    flex: 1,
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingRight: 40,
-  },
   accountName: {
     color: '#FFFFFF',
     fontSize: 15,
     fontFamily: GILROY_REGULAR,
   },
   accountIcon: {
-    width: 15,
-    height: 15,
-    marginRight: 10,
+    width: 18,
+    height: 18,
+    marginRight: 15,
+  },
+  menuItemText: {
+    color: '#6D6D6D',
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
   },
   menuItemActiveText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: GILROY_MEDIUM,
   },
   menuItemActiveIcon: {

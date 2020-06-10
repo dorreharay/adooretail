@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, } from 'react'
-import { View, Text, StyleSheet, } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, } from 'react-native'
 import Carousel from 'react-native-snap-carousel';
 
 import Heading from './components/Heading/Heading'
@@ -9,6 +9,7 @@ import Settings from './components/Pages/Settings/Settings'
 import DeliveryFeed from './components/Pages/DeliveryFeed/DeliveryFeed'
 
 import { deviceWidth, deviceHeight, } from '@dimensions'
+import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, PROBA_BOLD, } from '@fonts'
 
 function ControlLayout(props) {
   const { navigation, route } = props
@@ -40,9 +41,32 @@ function ControlLayout(props) {
         setActiveTab={setActiveTab}
       />
 
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '75%', height: 70, paddingHorizontal: '3%', backgroundColor: 'white' }}>
+        <TouchableOpacity
+          style={styles.menuButton}
+          onPress={() => {}}
+          activeOpacity={1}
+        >
+          <View style={styles.accountIcon} />
+          <Text style={styles.menuItemText}>
+
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.menuButton}
+          onPress={() => {}}
+          activeOpacity={0.8}
+        >
+          <View style={styles.accountIcon} />
+          <Text style={styles.menuItemText}>
+            Назад до меню
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       {/* <Menu menuOpened={menuOpened} /> */}
 
-      <Carousel
+      {/* <Carousel
         ref={carouselRef}
         data={[{}, {}, {}, {}, {}]}
         renderItem={({ index }) => {
@@ -62,7 +86,7 @@ function ControlLayout(props) {
         onSnapToItem={() => null}
         inactiveSlideScale={1}
         removeClippedSubviews={false}
-      />
+      /> */}
 
     </View>
   )
@@ -74,7 +98,13 @@ const styles = StyleSheet.create({
     top: 0,
     width: '100%',
     height: '100%',
+    flexDirection: 'row',
     backgroundColor: '#F3F4F6'
+  },
+  menuItemText: {
+    color: '#6D6D6D',
+    fontSize: 16,
+    fontFamily: GILROY_MEDIUM,
   },
 })
 
