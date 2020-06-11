@@ -1,14 +1,10 @@
 import React, { useEffect, useState, } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import Modal, { ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
 import FastImage from 'react-native-fast-image';
 import styles from './styles'
 
-import { deviceWidth } from '@dimensions'
-
-import { setSettings, setEmployees, setStartCash, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus, setResetStatus, } from '@reducers/TempReducer';
+import { setSettings, } from '@reducers/UserReducer'
 
 import SwitchWithTitle from './SwitchWithTitle/SwitchWithTitle';
 
@@ -18,22 +14,10 @@ const Settings = ({ navigation }) => {
   const settings = useSelector(state => state.user.settings)
   const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
 
-  const [exitPromptVisible, setExitPromptState] = useState(false)
-
   const updateSettings = (key, newValue) => {
     dispatch(setSettings({
       [key]: newValue,
     }))
-  }
-
-  const endSession = () => {
-    dispatch(setEmployees([]))
-    dispatch(setStartCash(0))
-    dispatch(setEndOfSessionStatus(true))
-    dispatch(setResetStatus(true))
-    setExitPromptState(false)
-
-    navigation.jumpTo('InputCash')
   }
 
   return (
@@ -197,36 +181,6 @@ const Settings = ({ navigation }) => {
           <View style={[styles.bottomLine,]} />
         </View>
       </View>
-
-      <TouchableOpacity
-        style={styles.exitButton}
-        onPress={() => setExitPromptState(true)}
-      >
-        <Text style={styles.buttonTitle}>Вийти з аккаунту</Text>
-      </TouchableOpacity>
-
-      <Modal
-        visible={exitPromptVisible}
-        footer={
-          <ModalFooter>
-            <ModalButton
-              text='Скасувати'
-              textStyle={[styles.promptText, { color: '#DB3E5A' }]}
-              onPress={() => setExitPromptState(false)}
-            />
-            <ModalButton
-              text='Закінчити та вийти'
-              textStyle={[styles.promptText, { color: '#343434' }]}
-              onPress={endSession}
-            />
-          </ModalFooter>
-        }
-      >
-        <ModalContent style={{ width: deviceWidth * 0.40, }}>
-          <Text style={[styles.promptText, { fontSize: 22, }]}>Ви точно хочете вийти з аккаунту?</Text>
-          <Text style={[styles.promptText, { marginTop: 20, }]}>Теперішня зміна буде закінчена. Необхідно ввести кінцеву касу</Text>
-        </ModalContent>
-      </Modal>
     </ScrollView>
   )
 }

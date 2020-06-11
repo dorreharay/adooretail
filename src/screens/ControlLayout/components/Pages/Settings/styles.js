@@ -106,11 +106,6 @@ const base = {
     color: '#FFFFFF',
     fontFamily: GILROY_MEDIUM,
   },
-  promptText: {
-    color: '#000000',
-    fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
-  },
 };
 
 const styles = createStyles(

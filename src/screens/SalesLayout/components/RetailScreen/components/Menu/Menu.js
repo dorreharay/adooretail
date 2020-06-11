@@ -39,7 +39,7 @@ function Menu(props) {
       name: 'Налаштування',
       onPress: () => {
         navigation.jumpTo('ControlLayout', {
-          screen: 1,
+          screen: 2,
         })
         closeMenu()
       }

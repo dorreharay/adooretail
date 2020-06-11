@@ -20,6 +20,9 @@ const API = {
   async sendReceiptByEmail(payload) {
     return await asyncAxiosCall(`/user/receipt`, payload)
   },
+  async getDayReceipts(payload) {
+    return await asyncAxiosCall(`/owner/getDayReceipts`, payload)
+  },
 }
 
 export default API

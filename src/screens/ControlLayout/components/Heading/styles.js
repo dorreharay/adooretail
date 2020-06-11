@@ -7,7 +7,7 @@ const base = {
     justifyContent: 'space-between',
     width: '25%',
     height: '100%',
-    backgroundColor: '#343434'
+    backgroundColor: '#262626'
   },
   backButton: {
     flexDirection: 'row',
@@ -42,7 +42,7 @@ const base = {
     paddingHorizontal: 20,
   },
   activeMenuButton: {
-    backgroundColor: '#3E3E3E',
+    backgroundColor: '#2E2E2E',
   },
   accountName: {
     color: '#FFFFFF',
@@ -56,19 +56,24 @@ const base = {
   },
   menuItemText: {
     color: '#6D6D6D',
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: GILROY_MEDIUM,
   },
   menuItemActiveText: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: GILROY_MEDIUM,
   },
   menuItemActiveIcon: {
     width: 13,
     height: 13,
     marginLeft: 10,
-  }
+  },
+  promptText: {
+    color: '#000000',
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
+  },
 };
 
 const styles = createStyles(

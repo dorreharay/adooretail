@@ -3,11 +3,13 @@ import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles'
 
 const SharedToast = forwardRef((props, ref) => {
+  const { style = {} } = props
+
   return (
     <Toast
       ref={ref}
       opacity={1}
-      style={{ paddingHorizontal: 40, backgroundColor: '#00000090' }}
+      style={[{ paddingHorizontal: 40, backgroundColor: '#00000090' }, style]}
       position='bottom'
       positionValue={100}
       textStyle={styles.toastText}

@@ -1,17 +1,33 @@
-import React from 'react'
+import React, { useState, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { useDispatch, useSelector, } from 'react-redux'
+import FastImage from 'react-native-fast-image'
+import Modal, { ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
 import styles from './styles'
 
-import { currentAccountSelector, } from '@selectors'
+import { deviceWidth } from '@dimensions'
 
-import SharedButton from '@shared/SharedButton'
+import { setEmployees, setStartCash, } from '@reducers/UserReducer'
+import { setEndOfSessionStatus, setResetStatus, } from '@reducers/TempReducer';
 
 function Heading(props) {
   const { navigation, activeTab, setActiveTab, } = props
 
+  const dispatch = useDispatch()
+
   const currentAccount = useSelector(state => state.user.currentAccount)
+
+  const [exitPromptVisible, setExitPromptState] = useState(false)
+
+  const endSession = () => {
+    // dispatch(setEmployees([]))
+    dispatch(setStartCash(0))
+    // dispatch(setEndOfSessionStatus(true))
+    dispatch(setResetStatus(true))
+    setExitPromptState(false)
+
+    navigation.jumpTo('InputCash')
+  }
 
   return (
     <View style={styles.container}>
@@ -42,7 +58,7 @@ function Heading(props) {
             source={require('@images/session_process.png')}
           />
 
-          <Text style={styles.menuItemActiveText}>
+          <Text style={[styles.menuItemActiveText, { fontSize: 18, }]}>
             {currentAccount ? currentAccount.business_name : ''}
           </Text>
         </TouchableOpacity>
@@ -80,7 +96,7 @@ function Heading(props) {
 
       <TouchableOpacity
         style={[styles.menuButton, { height: styles.menuButton.height + 15 }]}
-        onPress={() => { }}
+        onPress={() => setExitPromptState(true)}
         activeOpacity={0.9}
       >
         <FastImage
@@ -88,10 +104,33 @@ function Heading(props) {
           source={require('@images/logout.png')}
         />
 
-        <Text style={[styles.menuItemActiveText, { color: '#6D6D6D' }]}>
+        <Text style={[styles.menuItemActiveText, { color: '#6D6D6D', fontSize: 18, }]}>
           Вийти з аккаунту
         </Text>
       </TouchableOpacity>
+
+      <Modal
+        visible={exitPromptVisible}
+        footer={
+          <ModalFooter>
+            <ModalButton
+              text='Скасувати'
+              textStyle={[styles.promptText, { color: '#DB3E5A' }]}
+              onPress={() => setExitPromptState(false)}
+            />
+            <ModalButton
+              text='Закінчити та вийти'
+              textStyle={[styles.promptText, { color: '#343434' }]}
+              onPress={endSession}
+            />
+          </ModalFooter>
+        }
+      >
+        <ModalContent style={{ width: deviceWidth * 0.40, }}>
+          <Text style={[styles.promptText, { fontSize: 22, }]}>Ви точно хочете вийти з аккаунту?</Text>
+          <Text style={[styles.promptText, { marginTop: 20, }]}>Теперішня зміна буде закінчена. Необхідно ввести кінцеву касу</Text>
+        </ModalContent>
+      </Modal>
     </View>
   )
 }

@@ -3,13 +3,13 @@ import { View, Text, } from 'react-native'
 import { useSelector, } from 'react-redux'
 import _ from 'lodash'
 import styles from './styles'
-import { currentAccountSelector, } from '@selectors'
 
 import Details from './Details/Details'
+import Filters from './Filters/Filters'
 import HistoryList from './HistoryList/HistoryList'
 
 function History(props) {
-  const { navigation } = props
+  const { navigation, toastRef, loadReceipts, } = props
 
   const currentAccount = useSelector(state => state.user.currentAccount)
 
@@ -36,7 +36,7 @@ function History(props) {
 
   return (
     <View style={styles.container}>
-      <Details
+      {/* <Details
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
         activeSort={activeSort}
@@ -44,7 +44,9 @@ function History(props) {
         toggleEmptySessions={toggleEmptySessions}
         withoutEmptySessions={withoutEmptySessions}
         loading={loading} setLoadingStatus={setLoadingStatus}
-      />
+      /> */}
+
+      <Filters toastRef={toastRef} loadReceipts={loadReceipts} />
 
       <HistoryList data={historyList} loading={loading} setLoadingStatus={setLoadingStatus} />
     </View>

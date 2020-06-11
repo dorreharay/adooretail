@@ -1,12 +1,17 @@
 
+import { getFormattedDate, } from '@dateFormatter'
+import API from '../httpClient/api'
+
 const SET_SELECTED_RECEIPT = 'SET_SELECTED_RECEIPT'
 const SET_RECEIPTS = 'SET_RECEIPTS'
 const SET_LAYOUT = 'SET_LAYOUT'
+const SET_HISTORY = 'SET_HISTORY'
 
 const initialState = {
   layout: 4,
   selectedReceiptIndex: 0,
   receipts: [[], [], [], []],
+  history: [],
 };
 
 export function setLayout(payload) {
@@ -30,6 +35,27 @@ export function setReceipts(payload) {
   }
 }
 
+export function loadReceipts() {
+  return async function (dispatch, getState) {
+    try {
+      const data = await API.getDayReceipts({
+        date: '2020-06-11'
+      })
+
+      dispatch(setHistory(data.reverse()))
+    } catch (error) {
+      console.log(error)
+    }
+  };
+}
+
+export function setHistory(payload) {
+  return {
+    type: SET_HISTORY,
+    payload
+  }
+}
+
 const ACTION_HANDLERS = {
   [SET_LAYOUT]: (state, action) => {
     return {...state, layout: action.payload}
@@ -39,6 +65,9 @@ const ACTION_HANDLERS = {
   },
   [SET_RECEIPTS]: (state, action) => {
     return { ...state, receipts: action.payload }
+  },
+  [SET_HISTORY]: (state, action) => {
+    return { ...state, history: action.payload }
   },
 };
 

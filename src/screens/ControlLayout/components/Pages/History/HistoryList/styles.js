@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 import { deviceHeight } from '@dimensions';
 
@@ -11,7 +11,7 @@ const base = {
     position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 25,
+    paddingRight: 25,
     width: '100%',
     height: 60,
     marginTop: 10,
@@ -22,21 +22,21 @@ const base = {
     width: '30%',
     marginRight: 30,
     color: '#343434',
-    fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
   },
   dayHeaderTotal: {
-    minWidth: '20%',
+    // minWidth: '20%',
     marginRight: 30,
     color: '#343434',
-    fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
   },
   dayHeaderEmployees: {
     marginRight: 30,
     color: '#343434',
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: GILROY_MEDIUM,
   },
   dayHeaderIcon: {
     alignItems: 'center',
@@ -231,13 +231,36 @@ const base = {
     color: '#BBBBBB',
     fontSize: 20,
     fontFamily: PROBA_REGULAR,
-  }
+  },
+  receiptLeftButtons: {
+    alignItems: 'center',
+    width: 70,
+    height: '100%',
+    paddingVertical: 0,
+  },
+  receiptLeftButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 70,
+    height: 60,
+  },
+  receiptRightContainer: {
+    flexDirection: 'row',
+    flexGrow: 1,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+  },
+  receiptSummaryText: {
+    marginBottom: 15,
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
+  },
 };
 
 const styles = createStyles(
   base,
 
- maxWidth(500, {
+  maxWidth(500, {
 
   })
 );

@@ -5,7 +5,6 @@ const base = {
   container: {
     flex: 1,
     height: '100%',
-    paddingVertical: 20,
   },
 };
 
