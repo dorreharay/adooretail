@@ -3,7 +3,7 @@ import { GILROY_BOLD, GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM
 
 import { deviceWidth } from '@dimensions'
 
-const listWidth = deviceWidth * 0.35
+const listWidth = deviceWidth * 0.55
 const listHeight = deviceWidth * 0.35
 
 const base = {
@@ -13,6 +13,8 @@ const base = {
     justifyContent: 'center',
     width: listWidth,
     marginTop: 30,
+    borderRadius: 10,
+    backgroundColor: '#FFFFFF',
   },
   listHeading: {
     width: listWidth,
@@ -31,21 +33,22 @@ const base = {
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    height: 60,
-    marginBottom: 1,
+    height: 80,
+    marginBottom: 2,
     paddingHorizontal: 20,
-    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#F2F2F2',
   },
   pairedText: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: GILROY_MEDIUM,
   },
   pairedButton: {
     minWidth: 90,
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingVertical: 7,
+    paddingVertical: 5,
     borderWidth: 1,
     borderColor: '#E46162',
     borderRadius: 100,
@@ -78,7 +81,7 @@ const base = {
     minWidth: 90,
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingVertical: 7,
+    paddingVertical: 12,
     backgroundColor: '#E46162',
     borderRadius: 100,
   },

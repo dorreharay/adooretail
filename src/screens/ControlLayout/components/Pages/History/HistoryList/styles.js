@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 import { deviceHeight } from '@dimensions';
 
@@ -254,6 +254,11 @@ const base = {
     marginBottom: 15,
     fontSize: 18,
     fontFamily: GILROY_MEDIUM,
+  },
+  receiptSummaryReceiptText: {
+    marginBottom: 15,
+    fontSize: 15,
+    fontFamily: GILROY_REGULAR,
   },
 };
 

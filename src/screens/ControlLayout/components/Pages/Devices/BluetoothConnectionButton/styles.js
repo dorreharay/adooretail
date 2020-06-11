@@ -5,7 +5,9 @@ const base = {
   container: {
     alignSelf: 'flex-start',
     flexDirection: 'row',
+    alignSelf: 'flex-start',
     height: 50,
+    marginTop: 20,
     marginBottom: 50,
   },
   actionButton: {

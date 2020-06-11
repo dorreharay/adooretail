@@ -49,20 +49,16 @@ function Devices({ activeCategory, }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.screenHeading}>
-        Девайси
-      </Text>
+      <View style={styles.buttonsContainer}>
+        <View style={[styles.button, styles.activeButton]}>
+          <Text style={[styles.buttonText, styles.activeButtonText]}>Bluetooth</Text>
+        </View>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>WIFI</Text>
+        </View>
+      </View>
 
-      <BluetoothConnectionButton
-        status={status}
-        setStatus={setStatus}
-        scanLoading={scanLoading}
-        setScanLoading={setScanLoading}
-        checkBluetoothConnection={checkBluetoothConnection}
-        scan={scan}
-      />
-
-      <View stle={{ height: '30%' }}>
+      <View>
         <ScannedBluetoothDevices
           status={status}
           scanLoading={scanLoading}

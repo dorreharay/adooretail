@@ -168,6 +168,7 @@ function HistoryList(props) {
                     <Text style={styles.receiptSummaryText}>Знижка: {receipt.discount}</Text>
                     <Text style={styles.receiptSummaryText}>Решта: 0 грн</Text>
                     <Text style={styles.receiptSummaryText}>Час оплати: {getUpperCaseDate('HH:mm:ss', receipt.transaction_time_end)}</Text>
+                    <Text style={styles.receiptSummaryText}>Працівник: {receipt.employee}</Text>
                   </View>
                   <View style={{ width: '55%', marginLeft: deviceWidth * 0.06, }}>
                     <Text style={styles.receiptSummaryText}>Зміст чеку:</Text>
@@ -177,8 +178,8 @@ function HistoryList(props) {
                     >
                       {receipt.receipt.map(item => (
                         <View style={{ width: '100%', borderBottomWidth: 2, borderBottomColor: '#F2F2F2', marginBottom: 10, }}>
-                          <Text style={[styles.receiptSummaryText, { marginBottom: 5, }]}>{item.title}{item.size ? ', ' + item.size : ''}</Text>
-                          <Text style={styles.receiptSummaryText}>- {item.quantity} шт - {item.price * item.quantity} грн</Text>
+                          <Text style={[styles.receiptSummaryReceiptText, { marginBottom: 5, }]}>{item.title}{item.size ? ', ' + item.size : ''}</Text>
+                          <Text style={styles.receiptSummaryReceiptText}>- {item.quantity} шт - {item.price * item.quantity} грн</Text>
                         </View>
                       ))}
                     </ScrollView>

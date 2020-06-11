@@ -37,77 +37,21 @@ function BluetoothConnectionButton(props) {
     }
   }
 
-  if (status === null) {
-    return (
+  return (
+    <View style={styles.container}>
       <SharedButton
-        style={styles.container}
-        onPress={() => { }}
+        style={styles.actionButton}
+        onPress={tryToDisableBluetooth}
         scale={0.9}
       >
         <View style={styles.innerContainer}>
           <Text style={styles.text}>
-            Очікування статусу
-          </Text>
+            Вимкнути Bluetooth
+        </Text>
         </View>
       </SharedButton>
-    )
-  }
-
-  if (!status) {
-    return (
-      <View style={{ flexDirection: 'row', }}>
-        <SharedButton
-          style={styles.actionButton}
-          onPress={tryToEnableBluetooth}
-          scale={0.9}
-        >
-          <View style={styles.innerContainer}>
-            <Text style={styles.text}>
-              Увімкнути Bluetooth
-          </Text>
-          </View>
-        </SharedButton>
-      </View>
-    )
-  }
-
-  if (status) {
-    return (
-      <View style={{ flexDirection: 'row', }}>
-        <SharedButton
-          style={styles.actionButton}
-          onPress={tryToDisableBluetooth}
-          scale={0.9}
-        >
-          <View style={styles.innerContainer}>
-            <Text style={styles.text}>
-              Вимкнути Bluetooth
-          </Text>
-          </View>
-        </SharedButton>
-        <View style={{ width: 10, }}></View>
-        <SharedButton
-          style={styles.actionButton}
-          onPress={scan}
-          scale={0.9}
-        >
-          <View style={styles.innerContainer}>
-            {scanLoading ? (
-              <Progress.Circle
-                endAngle={0.7}
-                size={15} color={'#E46162'}
-                borderWidth={1.5} indeterminate={true}
-              />
-            ) : (
-                <Text style={styles.text}>
-                  Сканувати
-              </Text>
-              )}
-          </View>
-        </SharedButton>
-      </View>
-    )
-  }
+    </View>
+  )
 }
 
 export default BluetoothConnectionButton
