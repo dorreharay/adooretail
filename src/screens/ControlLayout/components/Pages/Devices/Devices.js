@@ -1,12 +1,15 @@
 import React, { useState, useEffect, } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity, } from 'react-native'
 import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
 import BluetoothConnectionButton from './BluetoothConnectionButton/BluetoothConnectionButton'
 import ScannedBluetoothDevices from './ScannedBluetoothDevices/ScannedBluetoothDevices'
+import FastImage from 'react-native-fast-image';
 import { performPrinterScanAndConnect, scanDevices, } from '@printer'
 import styles from './styles'
 
-function Devices({ activeCategory, }) {
+import SharedButton from '@shared/SharedButton'
+
+function Devices({ activeCategory, toastRef, }) {
   const [status, setStatus] = useState(null)
   const [devices, setDevices] = useState({
     paired: [],
@@ -14,6 +17,7 @@ function Devices({ activeCategory, }) {
   })
 
   const [scanLoading, setScanLoading] = useState(false)
+  const [activeConnectionType, setActiveConnectionType] = useState(0)
 
   const checkBluetoothConnection = async () => {
     try {
@@ -33,6 +37,8 @@ function Devices({ activeCategory, }) {
 
   const scan = async () => {
     try {
+      toastRef.current.show('Сканування')
+
       setScanLoading(true)
       await scanDevices()
     } catch (error) {
@@ -41,20 +47,41 @@ function Devices({ activeCategory, }) {
       setScanLoading(false)
     }
   }
-
   useEffect(() => {
-    checkBluetoothConnection()
-    scan()
+    if(activeCategory === 1) {
+      checkBluetoothConnection()
+      scan()
+    }
   }, [activeCategory])
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttonsContainer}>
-        <View style={[styles.button, styles.activeButton]}>
-          <Text style={[styles.buttonText, styles.activeButtonText]}>Bluetooth</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+        <View style={[styles.refreshButton, { backgroundColor: '#FFFFFF00' }]} />
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity 
+            style={[styles.button, activeConnectionType === 0 && styles.activeButton]}
+            onPress={() => setActiveConnectionType(0)}
+            activeOpacity={1}
+          >
+            <Text style={[styles.buttonText, activeConnectionType === 0 && styles.activeButtonText]}>Bluetooth</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={[styles.button, activeConnectionType === 1 && styles.activeButton]}
+            onPress={() => setActiveConnectionType(1)}
+            activeOpacity={1}
+          >
+            <Text style={[styles.buttonText, activeConnectionType === 1 && styles.activeButtonText]}>WIFI</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>WIFI</Text>
+        <View style={styles.refreshButton}>
+          <SharedButton
+            onPress={scan}
+            style={{ width: 25, height: 25, backgroundColor: '#FFFFFF00' }}
+            iconStyle={{ width: 22, height: 22, }}
+            source={require('@images/reload.png')} scale={0.6}
+            rotateOnPress loadAgain={scan}
+          />
         </View>
       </View>
 

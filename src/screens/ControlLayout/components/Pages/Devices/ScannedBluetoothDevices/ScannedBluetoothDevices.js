@@ -6,7 +6,6 @@ import FastImage from 'react-native-fast-image';
 import * as Progress from 'react-native-progress';
 import styles from './styles'
 
-import SharedButton from '@shared/SharedButton'
 import { printReceipt, connectToDevice, unpairDevice, } from '@printer'
 
 function ScannedBluetoothDevices(props) {
@@ -16,11 +15,14 @@ function ScannedBluetoothDevices(props) {
   const [pairedloadingItemIndex, setPairedLoadingForItem] = useState(null)
   const [foundloadingItemIndex, setFoundLoadingForItem] = useState(null)
 
-  const paired = [{
-    name: 'Adoo POS Printer'
-  }, {
+  const paired = [
+    {
+      name: 'Adoo POS Printer'
+    }, 
+    {
       name: 'Sony WH-1000n'
-    }]
+    },
+  ]
 
   const connect = async (address, index) => {
     setFoundLoadingForItem(index)
@@ -47,55 +49,44 @@ function ScannedBluetoothDevices(props) {
   }
 
   return (
-    status !== 2 ? (
-      <View
-        style={styles.container}
-      >
-        <Fragment>
-          <ScrollView style={styles.pairedList} scrollEnabled={false}>
-            {paired.length > 0 ? paired.map((p, index) => (
-              <TouchableOpacity 
-                style={[styles.pairedItem, index === 0 && { borderTopWidth: 0, }]}
-                onPress={() => printReceipt(null, p.address)}
-                activeOpacity={1}
+      <View style={styles.container}>
+        <ScrollView style={styles.pairedList}>
+          {paired.length > 0 ? paired.map((p, index) => (
+            <TouchableOpacity 
+              style={[styles.pairedItem, index === 0 && { borderTopWidth: 0, }]}
+              onPress={() => printReceipt(null, p.address)}
+              activeOpacity={1}
+            >
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <FastImage
+                  style={{ width: 30, height: 30, marginRight: 20, }}
+                  source={index === 0 ? require('@images/tprinter.png') : require('@images/headphones.png')}
+                />
+
+                <Text style={styles.pairedText}>{p.name}</Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.foundButton}
+                onPress={() => unpair(p.address, index)}
+                activeOpacity={0.8}
               >
-                <View style={{ flexDirection: 'row' }}>
-                  <FastImage
-                    style={{ width: 30, height: 30, marginRight: 20, }}
-                    source={require('@images/tprinter.png')}
+                {pairedloadingItemIndex === index ? (
+                  <Progress.Circle
+                    endAngle={0.7}
+                    size={15} color={'#FFFFFF'}
+                    borderWidth={1.5} indeterminate={true}
                   />
-
-                  <Text style={styles.pairedText}>{p.name}</Text>
-                </View>
-
-                <TouchableOpacity
-                  style={styles.foundButton}
-                  onPress={() => unpair(p.address, index)}
-                  activeOpacity={0.8}
-                >
-                  {pairedloadingItemIndex === index ? (
-                    <Progress.Circle
-                      endAngle={0.7}
-                      size={15} color={'#FFFFFF'}
-                      borderWidth={1.5} indeterminate={true}
-                    />
-                  ) : (
-                    <Text style={styles.foundButtonText}>Від'єднати</Text>
-                  )}
-                </TouchableOpacity>
+                ) : (
+                  <Text style={styles.foundButtonText}>Від'єднати</Text>
+                )}
               </TouchableOpacity>
-            )) : (
-                <Text style={styles.emptyText}>Пусто</Text>
-              )}
-          </ScrollView>
-        </Fragment>
-
+            </TouchableOpacity>
+          )) : (
+              <Text style={styles.emptyText}>Пусто</Text>
+            )}
+        </ScrollView>
       </View>
-    ) : (
-        <View style={styles.unavailableWrapper}>
-          <Text style={styles.unavailableWrapperText}>Недоступно без Bluetooth підключення</Text>
-        </View>
-      )
   )
 }
 

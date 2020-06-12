@@ -38,6 +38,15 @@ const base = {
   },
   activeButtonText: {
     color: '#FFFFFF',
+  },
+  refreshButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    height: 50,
+    marginHorizontal: 20,
+    borderRadius: 100,
+    backgroundColor: '#FFF',
   }
 };
 

@@ -1,7 +1,7 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries'
 import { GILROY_BOLD, GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
-import { deviceWidth } from '@dimensions'
+import { deviceWidth, deviceHeight, } from '@dimensions'
 
 const listWidth = deviceWidth * 0.55
 const listHeight = deviceWidth * 0.35
@@ -27,6 +27,7 @@ const base = {
   },
   pairedList: {
     width: listWidth,
+    maxHeight: deviceHeight * 0.7,
   },
   pairedItem: {
     flexDirection: 'row',
@@ -34,7 +35,6 @@ const base = {
     justifyContent: 'space-between',
     width: '100%',
     height: 80,
-    marginBottom: 2,
     paddingHorizontal: 20,
     borderTopWidth: 1,
     borderTopColor: '#F2F2F2',
@@ -80,14 +80,14 @@ const base = {
   foundButton: {
     minWidth: 90,
     alignItems: 'center',
-    paddingHorizontal: 14,
+    paddingHorizontal: 25,
     paddingVertical: 12,
     backgroundColor: '#E46162',
     borderRadius: 100,
   },
   foundButtonText: {
     color: '#FFFFFF',
-    fontSize: 10,
+    fontSize: 14,
     fontFamily: GILROY_MEDIUM,
   },
   unavailableWrapper: {

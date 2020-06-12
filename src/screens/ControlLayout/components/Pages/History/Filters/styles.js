@@ -4,6 +4,7 @@ import { GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
 const base = {
   container: {
     flexDirection: 'row',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     width: '100%',
     paddingHorizontal: 20,
@@ -24,7 +25,36 @@ const base = {
   rightContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  }
+  },
+  paymentDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginBottom: 20,
+    paddingBottom: 7,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#CCC',
+    borderBottomStyle: "dashed",
+    borderBottomRadius: 1,
+  },
+  paymentDetailsButton: {
+    height: 40,
+  },
+  paymentDetailsButtonText: {
+    color: '#343434',
+    fontSize: 19,
+    fontFamily: GILROY_REGULAR,
+  },
+  paymentDetailsHeadingText: {
+    color: '#343434',
+    fontSize: 18,
+    fontFamily: GILROY_REGULAR,
+  },
+  paymentDetailsText: {
+    color: '#343434',
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
+  },
 };
 
 const styles = createStyles(

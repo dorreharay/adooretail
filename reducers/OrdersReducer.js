@@ -6,12 +6,14 @@ const SET_SELECTED_RECEIPT = 'SET_SELECTED_RECEIPT'
 const SET_RECEIPTS = 'SET_RECEIPTS'
 const SET_LAYOUT = 'SET_LAYOUT'
 const SET_HISTORY = 'SET_HISTORY'
+const SET_DETAILS = 'SET_DETAILS'
 
 const initialState = {
   layout: 4,
   selectedReceiptIndex: 0,
   receipts: [[], [], [], []],
   history: [],
+  details: null,
 };
 
 export function setLayout(payload) {
@@ -39,7 +41,7 @@ export function loadReceipts() {
   return async function (dispatch, getState) {
     try {
       const data = await API.getDayReceipts({
-        date: '2020-06-11'
+        date: getFormattedDate('YYYY-MM-DD')
       })
 
       dispatch(setHistory(data.reverse()))
@@ -56,6 +58,27 @@ export function setHistory(payload) {
   }
 }
 
+export function loadDetails() {
+  return async function (dispatch, getState) {
+    try {
+      const data = await API.getDayDetails({
+        date: getFormattedDate('YYYY-MM-DD')
+      })
+
+      dispatch(setDetails(data))
+    } catch (error) {
+      console.log(error)
+    }
+  };
+}
+
+export function setDetails(payload) {
+  return {
+    type: SET_DETAILS,
+    payload
+  }
+}
+
 const ACTION_HANDLERS = {
   [SET_LAYOUT]: (state, action) => {
     return {...state, layout: action.payload}
@@ -68,6 +91,9 @@ const ACTION_HANDLERS = {
   },
   [SET_HISTORY]: (state, action) => {
     return { ...state, history: action.payload }
+  },
+  [SET_DETAILS]: (state, action) => {
+    return { ...state, details: action.payload }
   },
 };
 

@@ -23,6 +23,9 @@ const API = {
   async getDayReceipts(payload) {
     return await asyncAxiosCall(`/owner/getDayReceipts`, payload)
   },
+  async getDayDetails(payload) {
+    return await asyncAxiosCall(`/owner/getDayDetails`, payload)
+  },
 }
 
 export default API

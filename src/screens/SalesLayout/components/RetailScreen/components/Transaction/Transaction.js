@@ -7,6 +7,7 @@ import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles'
 import FastImage from 'react-native-fast-image'
 
+import { syncSessions, } from '@requests'
 import { currentSessionSelector, } from '@selectors'
 import { saveTransaction } from '@reducers/UserReducer'
 
@@ -60,6 +61,8 @@ function Transaction(props) {
 
       setAmount('0')
       setComment('')
+
+      syncSessions()
 
       toastRef.current.show("Транзакцію збережено", 1000);
 

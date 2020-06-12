@@ -36,16 +36,6 @@ function History(props) {
 
   return (
     <View style={styles.container}>
-      {/* <Details
-        activeFilter={activeFilter}
-        setActiveFilter={setActiveFilter}
-        activeSort={activeSort}
-        setActiveSort={setActiveSort}
-        toggleEmptySessions={toggleEmptySessions}
-        withoutEmptySessions={withoutEmptySessions}
-        loading={loading} setLoadingStatus={setLoadingStatus}
-      /> */}
-
       <Filters toastRef={toastRef} loadReceipts={loadReceipts} />
 
       <HistoryList data={historyList} loading={loading} setLoadingStatus={setLoadingStatus} />

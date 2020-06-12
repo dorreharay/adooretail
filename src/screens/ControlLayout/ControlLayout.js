@@ -9,7 +9,7 @@ import Devices from './components/Pages/Devices/Devices'
 import Settings from './components/Pages/Settings/Settings'
 import SharedToast from '@shared/SharedToast/SharedToast';
 
-import { loadReceipts } from '@reducers/OrdersReducer'
+import { loadReceipts, loadDetails, } from '@reducers/OrdersReducer'
 
 import { deviceWidth, deviceHeight, } from '@dimensions'
 import { GILROY_MEDIUM, } from '@fonts'
@@ -42,6 +42,7 @@ function ControlLayout(props) {
   useEffect(() => {
     navigation.addListener('focus', () => {
       dispatch(loadReceipts())
+      dispatch(loadDetails())
     })    
   }, [])
 
@@ -80,9 +81,12 @@ function ControlLayout(props) {
           ref={carouselRef}
           data={[{}, {}, {}, {}, {}]}
           renderItem={({ index }) => {
-            if (index == 0) return <History loadReceipts={async () => await dispatch(loadReceipts())} toastRef={toastRef} />
+            if (index == 0) return <History loadReceipts={async () => {
+              await dispatch(loadReceipts())
+              await dispatch(loadDetails())
+            }} toastRef={toastRef} />
 
-            if (index == 1) return <Devices activeCategory={activeTab} />
+            if (index == 1) return <Devices activeCategory={activeTab} toastRef={toastRef} />
 
             if (index == 2) return <Settings navigation={navigation} />
           }}

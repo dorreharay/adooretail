@@ -102,7 +102,7 @@ function HistoryList(props) {
       }}
       scrollEventThrottle={100}
     >
-      {data && data.map((receipt, index) => {
+      {data && data.length > 0 && data.map((receipt, index) => {
         const spin = spinValue.interpolate({
           inputRange: [0, 1],
           outputRange: ['0deg', '360deg']

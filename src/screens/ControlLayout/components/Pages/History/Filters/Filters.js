@@ -2,6 +2,7 @@ import React, { useState, useRef, Fragment, } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, Animated, Easing, } from 'react-native'
 import { useSelector, } from 'react-redux'
 import FastImage from 'react-native-fast-image';
+import Collapsible from 'react-native-collapsible';
 import { DURATION } from 'react-native-easy-toast'
 import styles from './styles'
 
@@ -9,6 +10,10 @@ import SharedButton from '@shared/SharedButton';
 
 function Filters(props) {
   const { loadReceipts, toastRef, } = props
+
+  const details = useSelector(state => state.orders.details)
+
+  const [detailsExpanded, setExpandedDetailsStatus] = useState(false)
 
   const loadAgain = async () => {
     try {
@@ -24,16 +29,61 @@ function Filters(props) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity 
-        style={styles.button}
-        activeOpacity={0.8}
-      >
-        <Text style={styles.buttonText}>Деталі</Text>
-        <FastImage
-          style={{ width: 12, height: 12, marginLeft: 10, }}
-          source={require('@images/down-arrow.png')}
-        />
-      </TouchableOpacity>
+      <View style={{ width: '70%', }}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setExpandedDetailsStatus(prev => !prev)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.buttonText}>Деталі</Text>
+          <FastImage
+            style={{ width: 12, height: 12, marginLeft: 10, }}
+            source={require('@images/down-arrow.png')}
+          />
+        </TouchableOpacity>
+
+        <Collapsible style={{ paddingVertical: 15, paddingHorizontal: 25, }} collapsed={!detailsExpanded}>
+          <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailsHeadingText}><Text>Безготівковий підсумок</Text>:</Text>
+            <Text style={styles.paymentDetailsText}>{details && details.payments.debit.total || 0} грн</Text>
+          </View>
+
+          <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailsHeadingText}><Text>Готівковий підсумок</Text>:</Text>
+            <Text style={styles.paymentDetailsText}>{details && details.payments.cash.total || 0} грн</Text>
+          </View>
+
+          <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailsHeadingText}><Text>Всього</Text>:</Text>
+            <Text style={styles.paymentDetailsText}>{(details && details.total || 0) + (0 || 0) || 0} грн</Text>
+          </View>
+
+          <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailsHeadingText}><Text>Витрати</Text>:</Text>
+            <Text style={styles.paymentDetailsText}>{details && details.transactions.outcome && `-${details.transactions.outcome}` || 0} грн</Text>
+          </View>
+
+          <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailsHeadingText}><Text>Інкасації</Text>:</Text>
+            <Text style={styles.paymentDetailsText}>{details && details.transactions.incasations && `-${details.transactions.incasations}` || 0} грн</Text>
+          </View>
+
+          <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailsHeadingText}><Text>Прибуток</Text>:</Text>
+            <Text style={styles.paymentDetailsText}>{details && details.transactions.outcome || 0} грн</Text>
+          </View>
+
+          {/* <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailsHeadingText}><Text>Підсумок доставки</Text>:</Text>
+            <Text style={styles.paymentDetailsText}>{details && details.services_total || 0} грн</Text>
+          </View> */}
+
+          <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailsHeadingText}><Text>Підсумок</Text>:</Text>
+            <Text style={styles.paymentDetailsText}>{details ? ((details.payments.cash.total || 0) + (details.payments.debit.total || 0) - (details.transactions.outcome || 0) - (details.transactions.incasations || 0) + (details.transactions.income || 0)) : 0} грн</Text>
+          </View>
+        </Collapsible>
+      </View>
 
       <View style={styles.rightContainer}>
         <TouchableOpacity
