@@ -2,11 +2,11 @@ import React, { useRef, useState, useEffect, useMemo, } from 'react'
 import { Text, View, Image, TextInput, Platform, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
-import { syncSessions, } from '@requests'
+import { syncSessions, } from '@helpers'
 import * as Progress from 'react-native-progress';
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
 import FastImage from 'react-native-fast-image'
-import { validateSessionRoutine, } from '@requests'
+import { validateSessionRoutine, } from '@helpers'
 import _ from 'lodash'
 import styles from './styles'
 

@@ -1,17 +1,22 @@
 import React, { useState, useRef, Fragment, } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, Animated, Easing, } from 'react-native'
-import { useSelector, } from 'react-redux'
+import { useSelector, useDispatch, } from 'react-redux'
 import FastImage from 'react-native-fast-image';
 import Collapsible from 'react-native-collapsible';
 import { DURATION } from 'react-native-easy-toast'
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton';
+import { getFormattedDate } from '@dateFormatter';
+import { loadReceipts, loadDetails, } from '@reducers/OrdersReducer'
 
 function Filters(props) {
-  const { loadReceipts, toastRef, } = props
+  const { toastRef, setSideMenuStatus, } = props
+
+  const dispatch = useDispatch()
 
   const details = useSelector(state => state.orders.details)
+  const historyParams = useSelector(state => state.temp.historyParams)
 
   const [detailsExpanded, setExpandedDetailsStatus] = useState(false)
 
@@ -19,23 +24,25 @@ function Filters(props) {
     try {
       toastRef.current.show("Оновлення чеків", DURATION.FOREVER);
 
-      await loadReceipts()
+      await dispatch(loadReceipts())
+      await dispatch(loadDetails())
     } catch (error) {
       console.log('error - Filters - loadAgain', error)
     } finally {
       toastRef.current.close()
     }
   }
+  
 
   return (
     <View style={styles.container}>
-      <View style={{ width: '70%', }}>
+      <View style={{ width: '60%', }}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setExpandedDetailsStatus(prev => !prev)}
           activeOpacity={0.8}
         >
-          <Text style={styles.buttonText}>Деталі</Text>
+          <Text style={styles.buttonText}>Деталі за {getFormattedDate('DD.MM.YY', historyParams.date)}</Text>
           <FastImage
             style={{ width: 12, height: 12, marginLeft: 10, }}
             source={require('@images/down-arrow.png')}
@@ -88,9 +95,14 @@ function Filters(props) {
       <View style={styles.rightContainer}>
         <TouchableOpacity
           style={styles.button}
+          onPress={() => setSideMenuStatus(prev => !prev)}
           activeOpacity={0.8}
         >
-          <Text style={styles.buttonText}>Фільтр</Text>
+          <FastImage
+            style={{ width: 16, height: 16, marginRight: 10, }}
+            source={require('@images/magic.png')}
+          />
+          <Text style={styles.buttonText}>Більше</Text>
         </TouchableOpacity>
         <View style={[styles.button, { paddingLeft: 10, paddingRight: 25 }]}>
           <SharedButton

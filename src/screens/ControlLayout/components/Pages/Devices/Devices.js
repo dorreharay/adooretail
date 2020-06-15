@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react'
+import React, { useState, useEffect, useRef, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
 import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
 import BluetoothConnectionButton from './BluetoothConnectionButton/BluetoothConnectionButton'
@@ -8,8 +8,11 @@ import { performPrinterScanAndConnect, scanDevices, } from '@printer'
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton'
+import SharedToast from '@shared/SharedToast/SharedToast';
 
-function Devices({ activeCategory, toastRef, }) {
+function Devices({ activeCategory, }) {
+  const toastRef = useRef(null)
+
   const [status, setStatus] = useState(null)
   const [devices, setDevices] = useState({
     paired: [],
@@ -84,6 +87,11 @@ function Devices({ activeCategory, toastRef, }) {
           />
         </View>
       </View>
+
+      <SharedToast
+        ref={toastRef}
+        style={{ position: 'absolute', bottom: 50 }}
+      />
 
       <View>
         <ScannedBluetoothDevices

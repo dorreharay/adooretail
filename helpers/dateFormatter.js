@@ -22,8 +22,12 @@ export function getFormattedDate(format, date) {
   return dayjs().format(format)
 }
 
+export function getSubstractDate(format, days) {
+  return dayjs().subtract(days, 'day').format(format)
+}
+
 export function getIsBetween(compared, start, end) {
-  if(compared) {
+  if (compared) {
     return dayjs(compared).isBetween(start, end)
   }
 
@@ -32,14 +36,14 @@ export function getIsBetween(compared, start, end) {
 
 export function getIsBetweenAdvanced(compared, start, end) {
   if (typeof start === 'object') {
-    if(compared) {
+    if (compared) {
       return dayjs(compared).isBetween(dayjs().startOf(start.start), dayjs().endOf(start.start))
     }
 
     return dayjs().isBetween(dayjs().startOf(start.start), dayjs().end(start.start))
   }
 
-  if(compared) {
+  if (compared) {
     return dayjs(compared).isBetween(start, end)
   }
 
@@ -55,7 +59,7 @@ export function getEndOfPeriod(format, period) {
 }
 
 export function getUpperCaseDate(format, date) {
-  if(date) {
+  if (date) {
     return dayjs(date).format(format).charAt(0).toUpperCase() + dayjs(date).format(format).slice(1)
   }
 

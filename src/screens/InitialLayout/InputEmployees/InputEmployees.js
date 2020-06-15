@@ -8,7 +8,7 @@ import styles from './styles'
 
 import LoginLoader from '@shared/LoginLoader';
 import SharedButton from '@shared/SharedButton';
-import { syncSessions, } from '@requests'
+import { syncSessions, } from '@helpers'
 
 import EmployeesList from "./components/EmployeesList";
 

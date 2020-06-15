@@ -7,7 +7,7 @@ import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles'
 import FastImage from 'react-native-fast-image'
 
-import { syncSessions, } from '@requests'
+import { syncSessions, } from '@helpers'
 import { currentSessionSelector, } from '@selectors'
 import { saveTransaction } from '@reducers/UserReducer'
 

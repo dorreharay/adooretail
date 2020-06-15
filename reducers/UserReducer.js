@@ -1,5 +1,5 @@
 import { getFormattedDate, } from '@dateFormatter'
-import { syncSessions, } from '@requests'
+import { syncSessions, } from '@helpers'
 import _ from 'lodash'
 import API from '../httpClient/api'
 

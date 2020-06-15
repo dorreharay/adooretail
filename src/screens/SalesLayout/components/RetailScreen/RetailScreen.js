@@ -5,9 +5,8 @@ import { DURATION } from 'react-native-easy-toast'
 import _ from 'lodash'
 import styles from './styles'
 
-import store from '@store'
 import API from '@api'
-import { updateLayout } from '@helpers'
+import { updateLayout, } from '@helpers'
 
 import LeftSide from './components/LeftSide/LeftSide';
 import RightSide from './components/RightSide/RightSide';
@@ -39,6 +38,7 @@ function RetailScreen(props) {
   const loadProducts = async () => {
     try {
       toastRef.current.show("Синхронізація", DURATION.FOREVER);
+
       const data = await API.getProducts()
 
       if (!data) {

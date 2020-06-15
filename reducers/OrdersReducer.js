@@ -39,9 +39,11 @@ export function setReceipts(payload) {
 
 export function loadReceipts() {
   return async function (dispatch, getState) {
+    const historyParams = getState().temp.historyParams
+
     try {
       const data = await API.getDayReceipts({
-        date: getFormattedDate('YYYY-MM-DD')
+        date: historyParams.date
       })
 
       dispatch(setHistory(data.reverse()))
@@ -60,9 +62,11 @@ export function setHistory(payload) {
 
 export function loadDetails() {
   return async function (dispatch, getState) {
+    const historyParams = getState().temp.historyParams
+
     try {
       const data = await API.getDayDetails({
-        date: getFormattedDate('YYYY-MM-DD')
+        date: historyParams.date
       })
 
       dispatch(setDetails(data))

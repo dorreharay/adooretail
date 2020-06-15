@@ -94,15 +94,12 @@ function HistoryList(props) {
     <ScrollView
       ref={scrollRef}
       style={styles.container}
-      contentContainerStyle={{ paddingHorizontal: 40, }}
+      contentContainerStyle={{ paddingHorizontal: 40, paddingBottom: 300 }}
       scrollToOverflowEnabled
       scrollEnabled={expandedIndex === null}
-      onScroll={(e) => {
-        setScrollTopButtonVisibility(e.nativeEvent.contentOffset.y > 50)
-      }}
       scrollEventThrottle={100}
     >
-      {data && data.length > 0 && data.map((receipt, index) => {
+      {(data && data.length > 0) ? data.map((receipt, index) => {
         const spin = spinValue.interpolate({
           inputRange: [0, 1],
           outputRange: ['0deg', '360deg']
@@ -138,8 +135,8 @@ function HistoryList(props) {
                 />
               </View>
             </TouchableOpacity>
-            <Collapsible collapsed={expandedIndex !== index}>
-              <View style={{ flexDirection: 'row', width: '100%', height: deviceHeight * 0.365, backgroundColor: '#FFFFFF' }}>
+            <Collapsible style={{ flexDirection: 'row', backgroundColor: '#FFFFFF', }} collapsed={expandedIndex !== index}>
+              <View style={{ width: '60%', paddingHorizontal: 25, height: deviceHeight * 0.345, borderRightWidth: 1, borderRightColor: '#F2F2F2' }}>
                 <View style={styles.receiptLeftButtons}>
                   <TouchableOpacity
                     style={styles.receiptLeftButton}
@@ -159,72 +156,59 @@ function HistoryList(props) {
                       source={require('@images/qr-code.png')}
                     />
                   </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.receiptLeftButton}
+                    activeOpacity={0.7}
+                  >
+                    <FastImage
+                      style={{ width: 18, height: 18, }}
+                      source={require('@images/edit_filled.png')}
+                    />
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.receiptRightContainer}>
-                  <View>
-                    <Text style={styles.receiptSummaryText}>Тип оплати: {receipt.payment_type === 'cash' ? 'Готівка' : 'Картка'}</Text>
-                    <Text style={styles.receiptSummaryText}>До сплати: {receipt.initial} грн</Text>
-                    <Text style={styles.receiptSummaryText}>Внесено: {receipt.input} грн</Text>
-                    <Text style={styles.receiptSummaryText}>Знижка: {receipt.discount}</Text>
-                    <Text style={styles.receiptSummaryText}>Решта: 0 грн</Text>
-                    <Text style={styles.receiptSummaryText}>Час оплати: {getUpperCaseDate('HH:mm:ss', receipt.transaction_time_end)}</Text>
-                    <Text style={styles.receiptSummaryText}>Працівник: {receipt.employee}</Text>
-                  </View>
-                  <View style={{ width: '55%', marginLeft: deviceWidth * 0.06, }}>
-                    <Text style={styles.receiptSummaryText}>Зміст чеку:</Text>
-                    <ScrollView
-                      style={{ height: '60%', width: '100%', }}
-                      persistentScrollbar
-                    >
-                      {receipt.receipt.map(item => (
-                        <View style={{ width: '100%', borderBottomWidth: 2, borderBottomColor: '#F2F2F2', marginBottom: 10, }}>
-                          <Text style={[styles.receiptSummaryReceiptText, { marginBottom: 5, }]}>{item.title}{item.size ? ', ' + item.size : ''}</Text>
-                          <Text style={styles.receiptSummaryReceiptText}>- {item.quantity} шт - {item.price * item.quantity} грн</Text>
-                        </View>
-                      ))}
-                    </ScrollView>
+                  <View style={{ flexDirection: 'row' }}>
+                    <View style={{ marginRight: 30, }}>
+                      <Text style={[styles.receiptSummaryText, { maxWidth: deviceWidth * 0.15, }]} numberOfLines={1} ellipsizeMode='tail'>#{receipt.hash_id}</Text>
+                      <Text style={styles.receiptSummaryText}>Тип оплати: {receipt.payment_type === 'cash' ? 'Готівка' : 'Картка'}</Text>
+                      <Text style={styles.receiptSummaryText}>Час оплати: {getUpperCaseDate('HH:mm:ss', receipt.transaction_time_end)}</Text>
+                    </View>
+                    <View>
+                      <Text style={styles.receiptSummaryText}>До сплати: {receipt.initial} грн</Text>
+                      <Text style={styles.receiptSummaryText}>Внесено: {receipt.input} грн</Text>
+                      <Text style={styles.receiptSummaryText}>Знижка: {receipt.discount}</Text>
+                      <Text style={styles.receiptSummaryText}>Решта: 0 грн</Text>
+                    </View>
+
+                    {/* <Text style={styles.receiptSummaryText}>Працівник: {receipt.employee}</Text> */}
                   </View>
                 </View>
+              </View>
+              <View style={{ width: '40%', }}>
+                <ScrollView
+                  style={{ height: deviceHeight * 0.25, width: '100%', }}
+                  contentContainerStyle={{ padding: 20, }}
+                  persistentScrollbar
+                >
+                  <Text style={styles.receiptSummaryText}>Зміст чеку:</Text>
+
+                  {receipt.receipt.map(item => (
+                    <View style={{ width: '100%', borderBottomWidth: 1.5, borderBottomColor: '#F2F2F2', marginBottom: 10, }}>
+                      <Text style={[styles.receiptSummaryReceiptText, { marginBottom: 5, }]}>{item.title}{item.size ? ', ' + item.size : ''}</Text>
+                      <Text style={styles.receiptSummaryReceiptText}>@{item.price}, - {item.quantity} шт - {item.price * item.quantity} грн</Text>
+                    </View>
+                  ))}
+                </ScrollView>
               </View>
             </Collapsible>
           </Fragment>
         )
-      })}
-
-      {/* {data && data.length > 0 && !loading && (
-        <View style={styles.loadMoreButton}>
-          <SharedButton
-            style={{ flex: 1, }}
-            onPress={() => {
-              setLoadingStatus(true)
-
-              dispatch(getSessions({
-                offset: 'onemore',
-              }, () => setLoadingStatus(false)))
-            }}
-            scale={0.8}
-          >
-            <Text style={styles.loadMoreButtonText}>Завантажити ще</Text>
-          </SharedButton>
-        </View>
-      )}
-
-      {data && data.length > 2 && showScrollTopButton && (
-        <View style={styles.scrollTopButton}>
-          <SharedButton
-            style={{ flex: 1, }}
-            onPress={() => scrollRef.current.scrollTo({ x: 0, y: 0 })}
-            scale={0.8}
-          >
-            <View style={styles.scrollTopButtonInner}>
-              <FastImage
-                style={{ width: '50%', height: '50%', }}
-                source={require('@images/to_top.png')}
-              />
-            </View>
-          </SharedButton>
-        </View>
-      )} */}
+      }) : (
+          <View style={{ position: 'absolute', top: deviceHeight * 0.3, alignSelf: 'center', alignItems: 'center', }}>
+            <Text style={styles.emptyHeadingText}>Чеки не знайдено</Text>
+            <Text style={styles.emptyText}>Перевірте інтернет з'єднання або наявність змін у вибрану дату</Text>
+          </View>
+        )}
 
       <ReceiptModal
         isVisible={receiptModalOpened}

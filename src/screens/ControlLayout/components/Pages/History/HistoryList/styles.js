@@ -16,6 +16,8 @@ const base = {
     height: 60,
     marginTop: 10,
     borderRadius: 5,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#DAD8D8',
     backgroundColor: '#FFFFFF'
   },
   dayHeaderDate: {
@@ -76,7 +78,7 @@ const base = {
     width: 40,
     height: 40,
     borderRadius: 1000,
-    backgroundColor: 'red'
+    backgroundColor: '#F2F2F2'
   },
   employeeName: {
     marginLeft: 15,
@@ -234,21 +236,25 @@ const base = {
   },
   receiptLeftButtons: {
     alignItems: 'center',
-    width: 70,
-    height: '100%',
-    paddingVertical: 0,
+    flexDirection: 'row',
+    width: '50%',
+    height: 70,
+    marginTop: 15,
   },
   receiptLeftButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 70,
-    height: 60,
+    width: 50,
+    height: 50,
+    marginRight: 10,
+    borderWidth: 0.6,
+    borderColor: '#DAD8D8',
+    borderRadius: 100,
   },
   receiptRightContainer: {
     flexDirection: 'row',
     flexGrow: 1,
     paddingVertical: 15,
-    paddingHorizontal: 20,
   },
   receiptSummaryText: {
     marginBottom: 15,
@@ -259,6 +265,17 @@ const base = {
     marginBottom: 15,
     fontSize: 15,
     fontFamily: GILROY_REGULAR,
+  },
+  emptyHeadingText: {
+    fontSize: 20,
+    fontFamily: GILROY_REGULAR,
+  },
+  emptyText: {
+    width: '70%',
+    marginTop: 10,
+    fontSize: 17,
+    fontFamily: GILROY_REGULAR,
+    textAlign: 'center',
   },
 };
 

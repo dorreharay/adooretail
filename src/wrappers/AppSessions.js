@@ -10,7 +10,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import UserInactivity from 'react-native-user-inactivity';
 import { TabActions } from '@react-navigation/native';
 
-import { syncSessions, validateSessionRoutine, } from '@requests'
+import { syncSessions, validateSessionRoutine, } from '@helpers'
 import { deviceWidth, deviceHeight, } from '@dimensions';
 
 import * as NavigationService from '../../xnavigation/NavigationService';
@@ -201,7 +201,7 @@ function AppSessions(props) {
               NavigationService={NavigationService}
               gotoInputCash={() => navigationRef.current.dispatch(TabActions.jumpTo('InputCash'))}
             />
-            <PinModal isVisible={pinVisible && (currentRoute === 6 || currentRoute === 7)} setVisible={setPinVisible} />
+            {/* <PinModal isVisible={pinVisible && (currentRoute === 6 || currentRoute === 7)} setVisible={setPinVisible} /> */}
           </>
         )}
       </AnimatedSplash>

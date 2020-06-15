@@ -7,6 +7,7 @@ const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
 const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
 const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES'
 const SET_RESET_STATUS = 'SET_RESET_STATUS'
+const SET_HISTORY_PARAMS = 'SET_HISTORY_PARAMS'
 
 const initialState = {
   endOfSession: false,
@@ -22,6 +23,10 @@ const initialState = {
     paired: [],
   },
   products: [],
+  historyParams: {
+    date: getFormattedDate('YYYY-MM-DD'),
+    sort: 'asc',
+  }
 };
 
 export function setModalStatus(payload) {
@@ -69,6 +74,13 @@ export function setProducts(payload) {
 export function setBluetoothDevices(payload) {
   return {
     type: SET_BLUETOOTH_DEVICES,
+    payload
+  }
+}
+
+export function setHistoryParams(payload) {
+  return {
+    type: SET_HISTORY_PARAMS,
     payload
   }
 }
@@ -188,6 +200,9 @@ const ACTION_HANDLERS = {
   },
   [SET_BLUETOOTH_DEVICES]: (state, action) => {
     return { ...state, bluetoothDevices: action.payload }
+  },
+  [SET_HISTORY_PARAMS]: (state, action) => {
+    return { ...state, historyParams: action.payload }
   },
 };
 

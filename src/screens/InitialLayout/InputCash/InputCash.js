@@ -3,7 +3,7 @@ import { View, Text, } from "react-native";
 import { useSelector, useDispatch } from 'react-redux';
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image'
-import { syncSessions, } from '@requests'
+import { syncSessions, } from '@helpers'
 import styles from './styles'
 
 import createStore from '../../../../store/store'

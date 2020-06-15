@@ -7,7 +7,6 @@ import Heading from './components/Heading/Heading'
 import History from './components/Pages/History/History'
 import Devices from './components/Pages/Devices/Devices'
 import Settings from './components/Pages/Settings/Settings'
-import SharedToast from '@shared/SharedToast/SharedToast';
 
 import { loadReceipts, loadDetails, } from '@reducers/OrdersReducer'
 
@@ -81,7 +80,7 @@ function ControlLayout(props) {
           ref={carouselRef}
           data={[{}, {}, {}, {}, {}]}
           renderItem={({ index }) => {
-            if (index == 0) return <History loadReceipts={async () => {
+            if (index == 0) return <History activeCategory={activeTab} loadReceipts={async () => {
               await dispatch(loadReceipts())
               await dispatch(loadDetails())
             }} toastRef={toastRef} />
@@ -101,11 +100,6 @@ function ControlLayout(props) {
           removeClippedSubviews={false}
         />
       </View>
-
-      <SharedToast
-        ref={toastRef}
-        style={{  }}
-      />
 
       {/* <Menu menuOpened={menuOpened} /> */}
     </View>
