@@ -83,8 +83,11 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(500, {
-    
+  maxHeight(800, {
+    tabletImage: {
+      width: deviceWidth * 0.67,
+      height: deviceWidth * 0.57,
+    },
   })
 );
 

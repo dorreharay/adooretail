@@ -145,7 +145,7 @@ function Details(props) {
   return (
     <View>
       <View style={styles.container}>
-        <View style={{ width: '50%', }}>
+        <View style={{ width: '45%', }}>
           <SharedButton
             style={{ alignSelf: 'flex-start', height: 40, marginBottom: 5, }}
             onPress={() => setExpandedDetailsStatus(!detailsExpanded)}
@@ -161,7 +161,7 @@ function Details(props) {
             </View>
           </SharedButton>
         </View>
-        <View style={{ width: '50%', justifyContent: 'flex-end', flexDirection: 'row' }}>
+        <View style={{ width: '45%', justifyContent: 'flex-end', flexDirection: 'row' }}>
           <Menu
             ref={menuRef1}
             button={

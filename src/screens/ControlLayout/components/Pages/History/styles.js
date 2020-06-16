@@ -18,14 +18,14 @@ const base = {
     zIndex: 11,
   },
   sideMenuWrapper: {
-    width: deviceWidth * 0.7,
+    width: deviceWidth * 0.67,
     height: '100%',
   },
   sideMenu: {
-    width: deviceWidth * 0.3,
+    width: deviceWidth * 0.32,
     height: '100%',
     padding: 20,
-    paddingHorizontal: 30,
+    paddingHorizontal: '3.5%',
     borderLeftWidth: 0.5,
     borderTopWidth: 0.5,
     borderLeftColor: '#EAECF0',

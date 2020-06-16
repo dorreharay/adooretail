@@ -27,7 +27,7 @@ const Settings = ({ navigation }) => {
           <View style={styles.settingsTitleContainer}>
             <FastImage
               style={styles.settingsTitleIcon}
-              source={require('@images/mode.png')}
+              source={require('@images/adjust.png')}
             />
             <Text style={styles.settingsTitle}>Активні цехи</Text>
           </View>

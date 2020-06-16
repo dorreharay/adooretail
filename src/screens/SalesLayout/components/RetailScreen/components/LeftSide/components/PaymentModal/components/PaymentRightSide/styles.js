@@ -254,6 +254,12 @@ const styles = createStyles(
     }
   }),
 
+  maxHeight(800, {
+    paidInput: {
+      paddingVertical: 10,
+    },
+  }),
+
   maxHeight(600, {
     optionHeadingContainer: {
       marginBottom: 10,

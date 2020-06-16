@@ -1,5 +1,5 @@
 import React, { useState, } from 'react'
-import { Text, View, TouchableOpacity, TouchableHighlight, } from 'react-native'
+import { Text, View, TouchableOpacity, TouchableHighlight, Alert, } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { default as EModal } from "react-native-simple-modal";
 import Modal, { SlideAnimation, ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
@@ -80,7 +80,7 @@ function Menu(props) {
       >
         <View style={styles.modal}>
           {menuButtons.map((button, index) => (
-            <TouchableHighlight
+            <TouchableOpacity
               style={[styles.modalItem, index === 0 && styles.withTopBorderRadius]}
               onPress={() => {
                 if (index === 1) {
@@ -88,7 +88,6 @@ function Menu(props) {
                 }
                 button.onPress()
               }}
-              underlayColor={'#F3F3F3'}
               activeOpacity={1}
               key={index}
             >
@@ -100,29 +99,21 @@ function Menu(props) {
                   />
                 )}
 
-                {/* {index === 2 && (
-                <FastImage
-                  style={{ width: 16, height: 16, marginRight: 13 }}
-                  source={require('@images/tprinter.png')}
-                />
-              )} */}
-
                 <Text style={styles.modalItemText}>{button.name}</Text>
               </>
-            </TouchableHighlight>
+            </TouchableOpacity>
           ))}
 
-          <TouchableHighlight
+          <TouchableOpacity
             style={[styles.modalItemRed, styles.withBottomBorderRadius]}
             onPress={() => {
               setEndPromptVisible(true)
               closeMenu()
             }}
-            underlayColor={'#F3F3F3'}
             activeOpacity={1}
           >
             <Text style={[styles.modalItemText, styles.redText]}>Закінчити зміну</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </Modal>
 

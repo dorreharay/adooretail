@@ -21,6 +21,8 @@ function HistoryList(props) {
 
   const dispatch = useDispatch()
 
+  const historyParams = useSelector(state => state.temp.historyParams)
+
   const [expandedIndex, setExpandedIndex] = useState(null)
   const [receiptModalItem, setReceiptModalItem] = useState(false)
   const [receiptModalOpened, setReceiptModalVisibility] = useState(false)
@@ -89,6 +91,10 @@ function HistoryList(props) {
   const reprintReceipt = async (receipt) => {
     await printReceipt(receipt)
   }
+
+  useEffect(() => {
+    setExpandedIndex(null)
+  }, [historyParams])
 
   return (
     <ScrollView

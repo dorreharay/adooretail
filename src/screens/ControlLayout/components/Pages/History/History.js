@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useEffect, } from 'react'
 import { View, Text, Animated, Easing, TouchableOpacity, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
 import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
 import _ from 'lodash'
 import styles from './styles'
 
@@ -31,7 +32,7 @@ function History(props) {
   const [loading, setLoadingStatus] = useState(false)
   const [animatedSideValue] = useState(new Animated.Value(-deviceWidth))
   const [dates] = useState([
-    'Сьогодні',
+    `Сьогодні ${getUpperCaseDate('DD.MM')}`,
     getUpperCaseDate(getSubstractDate('dddd DD.MM', 1)),
     getUpperCaseDate(getSubstractDate('dddd DD.MM', 2)),
     getUpperCaseDate(getSubstractDate('dddd DD.MM', 3)),
@@ -44,7 +45,7 @@ function History(props) {
     'desc',
   ])
 
-  const [selectedSort, setSelectedSort] = useState(0)
+  const [loadingIndex, setLoadingIndex] = useState(null)
 
   const historyList = useMemo(() => {
     if (!currentAccount) return []
@@ -71,11 +72,20 @@ function History(props) {
   }, [activeCategory])
 
   useEffect(() => {
-    if (historyParams) {
+    async function updateList() {
       toastRef.current.show('Оновлення чеків')
+      try {
+        await dispatch(loadReceipts())
+        await dispatch(loadDetails()) 
+      } catch (error) {
+        
+      } finally {
+        setLoadingIndex(null)
+      }
+    }
 
-      dispatch(loadReceipts())
-      dispatch(loadDetails())
+    if (historyParams) {
+      updateList()
     }
   }, [historyParams])
 
@@ -105,6 +115,12 @@ function History(props) {
       <Animated.View style={[styles.sideMenuContainer, { right: animatedSideValue }]}>
         <TouchableOpacity style={styles.sideMenuWrapper} onPress={() => setSideMenuStatus(false)} />
         <View style={styles.sideMenu}>
+          <LinearGradient 
+            start={{ x: 1, y: 1 }}
+            end={{ x: 0, y: 1 }}
+            colors={['#C4C4C411', '#00000000']}
+            style={{ position: 'absolute', left: -120, width: 120, height: '100%', }}
+          />
           <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <View style={{ alignItems: 'center', justifyContent: 'center', }}>
               <Text style={styles.sidebarHeading}>День</Text>
@@ -126,11 +142,14 @@ function History(props) {
           {dates.map((item, index) => (
             <TouchableOpacity
               style={[styles.button, historyParams.date === getSubstractDate('YYYY-MM-DD', index) && styles.activeButton]}
-              onPress={() => dispatch(setHistoryParams({ ...historyParams, date: getSubstractDate('YYYY-MM-DD', index), }))}
+              onPress={() => {
+                setLoadingIndex(index)
+                dispatch(setHistoryParams({ ...historyParams, date: getSubstractDate('YYYY-MM-DD', index), }))
+              }}
               activeOpacity={0.8}
               key={index}
             >
-              <Text style={[styles.buttonText, historyParams.date === getSubstractDate('YYYY-MM-DD', index) && styles.activeButtonText]}>{item}</Text>
+              <Text style={[styles.buttonText, historyParams.date === getSubstractDate('YYYY-MM-DD', index) && styles.activeButtonText]}>{loadingIndex === index ? 'Оновлення...' : item}</Text>
             </TouchableOpacity>
           ))}
 
@@ -145,7 +164,9 @@ function History(props) {
           {sorts.map((sort, index) => (
             <TouchableOpacity
               style={[styles.button, historyParams.sort.type === sort && styles.activeButton]}
-              onPress={() => dispatch(setHistoryParams({ ...historyParams, sort: { type: sort, fields: ['transaction_time_end'] }, }))}
+              onPress={() => {
+                dispatch(setHistoryParams({ ...historyParams, sort: { type: sort, fields: ['transaction_time_end'] }, }))
+              }}
               activeOpacity={0.8}
               key={sort}
             >

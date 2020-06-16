@@ -2,12 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_airbnb_android_lottie_3_0_7_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_squareup_okio_okio_1_17_4_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_4_0_alpha01_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_5_0_alpha01_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_fresco_fbcore_2_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_fresco_fbcore_2_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_react_react_native_0_61_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_facebook_react_react_native_0_61_1_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_gifdecoder_4_9_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_gifdecoder_4_9_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_glide_4_9_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_glide_4_9_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_okhttp3_integration_4_9_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_bumptech_glide_okhttp3_integration_4_9_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_1_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_clearcut_16_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_clearcut_16_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_phenotype_16_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_phenotype_16_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_vision_common_17_0_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_vision_common_17_0_2_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../assets/images/mode.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/Filters/Filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/Filters/Filters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/History.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/History.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/HistoryList/HistoryList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/HistoryList/HistoryList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/Initial1/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/Initial1/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/Initial2/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/Initial2/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/SalesLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/SalesLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentRightSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentRightSide/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Menu/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Menu/Menu.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

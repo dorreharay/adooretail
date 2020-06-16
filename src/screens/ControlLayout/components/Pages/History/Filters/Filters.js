@@ -36,7 +36,7 @@ function Filters(props) {
 
   return (
     <View style={styles.container}>
-      <View style={{ width: '60%', }}>
+      <View style={{ width: '55%', }}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setExpandedDetailsStatus(prev => !prev)}
@@ -100,7 +100,7 @@ function Filters(props) {
         >
           <FastImage
             style={{ width: 16, height: 16, marginRight: 10, }}
-            source={require('@images/magic.png')}
+            source={require('@images/adjust.png')}
           />
           <Text style={styles.buttonText}>Більше</Text>
         </TouchableOpacity>
