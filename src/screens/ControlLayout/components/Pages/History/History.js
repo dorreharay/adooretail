@@ -40,8 +40,8 @@ function History(props) {
     getUpperCaseDate(getSubstractDate('dddd DD.MM', 6)),
   ])
   const [sorts] = useState([
-    'Спадання за часом',
-    'Зростання за часом',
+    'asc',
+    'desc',
   ])
 
   const [selectedSort, setSelectedSort] = useState(0)
@@ -126,7 +126,7 @@ function History(props) {
           {dates.map((item, index) => (
             <TouchableOpacity
               style={[styles.button, historyParams.date === getSubstractDate('YYYY-MM-DD', index) && styles.activeButton]}
-              onPress={() => dispatch(setHistoryParams({ date: getSubstractDate('YYYY-MM-DD', index), }))}
+              onPress={() => dispatch(setHistoryParams({ ...historyParams, date: getSubstractDate('YYYY-MM-DD', index), }))}
               activeOpacity={0.8}
               key={index}
             >
@@ -142,14 +142,14 @@ function History(props) {
 
           <View style={{ height: 15, }} />
 
-          {sorts.map((item, index) => (
+          {sorts.map((sort, index) => (
             <TouchableOpacity
-              style={[styles.button, selectedSort === index && styles.activeButton]}
-              // onPress={() => dispatch(setHistoryParams({ date: getSubstractDate('YYYY-MM-DD', index), }))}
+              style={[styles.button, historyParams.sort.type === sort && styles.activeButton]}
+              onPress={() => dispatch(setHistoryParams({ ...historyParams, sort: { type: sort, fields: ['transaction_time_end'] }, }))}
               activeOpacity={0.8}
-              key={index}
+              key={sort}
             >
-              <Text style={[styles.buttonText, selectedSort === index && styles.activeButtonText]}>{item}</Text>
+              <Text style={[styles.buttonText, historyParams.sort.type === sort && styles.activeButtonText]}>{sort === 'asc' ? 'Спадання за часом' : 'Зростання за часом'}</Text>
             </TouchableOpacity>
           ))}
         </View>

@@ -43,7 +43,8 @@ export function loadReceipts() {
 
     try {
       const data = await API.getDayReceipts({
-        date: historyParams.date
+        date: historyParams.date,
+        sort: historyParams.sort,
       })
 
       dispatch(setHistory(data.reverse()))

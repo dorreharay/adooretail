@@ -25,7 +25,7 @@ const initialState = {
   products: [],
   historyParams: {
     date: getFormattedDate('YYYY-MM-DD'),
-    sort: 'asc',
+    sort: { type: 'asc', fields: ['transaction_time_end'] },
   }
 };
 
