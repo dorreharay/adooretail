@@ -123,7 +123,7 @@ function History(props) {
           />
           <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-              <Text style={styles.sidebarHeading}>День</Text>
+              <Text style={styles.sidebarHeading}>Дата</Text>
             </View>
             <TouchableOpacity
               style={{ alignItems: 'center', justifyContent: 'center', width: 40, height: 40, }}
@@ -153,7 +153,7 @@ function History(props) {
             </TouchableOpacity>
           ))}
 
-          <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15, }}>
+          {/* <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15, }}>
             <View style={{ alignItems: 'center', justifyContent: 'center', }}>
               <Text style={styles.sidebarHeading}>Сортування</Text>
             </View>
@@ -172,7 +172,7 @@ function History(props) {
             >
               <Text style={[styles.buttonText, historyParams.sort.type === sort && styles.activeButtonText]}>{sort === 'asc' ? 'Спадання за часом' : 'Зростання за часом'}</Text>
             </TouchableOpacity>
-          ))}
+          ))} */}
         </View>
       </Animated.View>
 

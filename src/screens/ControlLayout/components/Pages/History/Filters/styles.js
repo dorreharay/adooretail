@@ -3,7 +3,7 @@ import { GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     width: '100%',
@@ -25,6 +25,7 @@ const base = {
   rightContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: '50%',
   },
   paymentDetails: {
     flexDirection: 'row',
