@@ -67,7 +67,7 @@ function InputCash(props) {
   }
 
   const handleBackPress = () => {
-    if (endOfSession) {
+    if (endOfSession || resetAccount) {
       navigation.jumpTo('SalesLayout')
     } else {
       navigation.jumpTo('Login')

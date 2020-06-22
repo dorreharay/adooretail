@@ -438,13 +438,13 @@ function LeftSide(props) {
                 end={{ x: 1, y: 0 }}
                 colors={paymentColorSchema.gradient}
               >
-                <Text style={[styles.lsproceedButtonText, { fontSize: 20, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
+                <Text style={[styles.lsproceedButtonText, { fontSize: 18, }, updateModeData && { fontSize: 22, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
               </LinearGradient>
             </TouchableOpacity>
 
             {!updateModeData && (
               <>
-                <TouchableHighlight
+                {/* <TouchableHighlight
                   onPress={() => { }}
                   style={[
                     styles.proceedContainer,
@@ -461,7 +461,7 @@ function LeftSide(props) {
                   ]}>
                     <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>ПРЕЧ.</Text>
                   </View>
-                </TouchableHighlight>
+                </TouchableHighlight> */}
 
                 <TouchableHighlight
                   onPress={() => saveBuffer()}
@@ -502,7 +502,7 @@ function LeftSide(props) {
               end={{ x: 1, y: 0 }}
               colors={paymentColorSchema.gradient}
             >
-              <Text style={styles.lsproceedButtonText}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : `ЗМІНИТИ > ${receiptSum ? receiptSum : 0}₴`}</Text>
+              <Text style={[styles.lsproceedButtonText, { fontSize: 22, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : `ЗМІНИТИ > ${receiptSum ? receiptSum : 0}₴`}</Text>
             </LinearGradient>
           </TouchableOpacity>
         )}
