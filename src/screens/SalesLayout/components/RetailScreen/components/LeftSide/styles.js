@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -33,28 +33,34 @@ const base = {
   zProceed: {
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingRight: 5,
-    width: '66%',
+    paddingRight: 0,
+    // width: '50%',
+    flex: 1,
     height: 70,
     paddingLeft: 0,
-    marginLeft: '0%',
     marginBottom: 40,
   },
   zProceedEx: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '33%',
+    width: '24%',
     height: 70,
     padding: 0,
+    marginLeft: '2%',
     marginBottom: 40,
     borderRadius: 3,
     borderWidth: 1.8,
     borderColor: '#E46162',
   },
+  lspreText: {
+    color: '#E46162',
+    fontSize: 20,
+    fontFamily: GILROY_SEMIBOLD,
+  },
   proceedContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    // width: '100%',
     height: '15%',
     paddingHorizontal: '7%',
     marginBottom: '2%',
@@ -68,8 +74,14 @@ const base = {
     borderRadius: 4,
   },
   lsproceedButtonText: {
-    color: 'white',
-    fontSize: 24,
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: GILROY_MEDIUM,
+    letterSpacing: 0.7,
+  },
+  lsprecheckButtonText: {
+    color: '#000000',
+    fontSize: 20,
     fontFamily: PROBA_MEDIUM,
     letterSpacing: 0.7,
   },
@@ -304,7 +316,6 @@ const styles = createStyles(
       marginBottom: 40,
       borderRadius: 3,
       borderWidth: 2,
-      borderColor: '#E46162',
     },
     proceedContainer: {
       marginBottom: '4%',

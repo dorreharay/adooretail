@@ -78,7 +78,7 @@ function ScannedBluetoothDevices(props) {
                     borderWidth={1.5} indeterminate={true}
                   />
                 ) : (
-                  <Text style={styles.foundButtonText}>Від'єднати</Text>
+                  <Text style={styles.foundButtonText}>Під'єднати</Text>
                 )}
               </TouchableOpacity>
             </TouchableOpacity>

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo, Fragment, } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, Animated, Easing, FlatList, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
+import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 import Collapsible from 'react-native-collapsible'
@@ -10,7 +11,7 @@ import SharedButton from '@shared/SharedButton'
 
 import { deviceWidth, deviceHeight } from '@dimensions';
 import { getDiff, getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
-import { getSessions } from '@reducers/UserReducer'
+import { setReceiptEditState, setSelectedReceipt, setEditedReceiptId, setEditedReceiptPayload, } from '@reducers/OrdersReducer'
 
 import ReceiptModal from './ReceiptModal'
 
@@ -20,6 +21,7 @@ function HistoryList(props) {
   const timerRef = useRef(null)
 
   const dispatch = useDispatch()
+  const navigation = useNavigation()
 
   const historyParams = useSelector(state => state.temp.historyParams)
 
@@ -62,12 +64,6 @@ function HistoryList(props) {
 
   const AnimatedImage = Animated.createAnimatedComponent(FastImage)
 
-  const showReceiptModal = (type, receipt) => {
-    setReceiptModalState(type)
-    setReceiptModalItem(receipt.hash_id)
-    setReceiptModalVisibility(true)
-  }
-
   const hideReceiptModal = () => {
     setReceiptModalVisibility(false)
 
@@ -78,18 +74,16 @@ function HistoryList(props) {
     }, 300)
   }
 
-  const renderTimeSpent = (startTime, endTime) => {
-    let timeSpent = getDiff(endTime, startTime, 'seconds')
-
-    if (timeSpent < 60) {
-      return timeSpent + ' сек'
-    } else {
-      return getDiff(endTime, startTime, 'minutes') + ' хв'
-    }
-  }
-
   const reprintReceipt = async (receipt) => {
     await printReceipt(receipt)
+  }
+
+  const handleEditReceipt = (receipt) => {
+    dispatch(setSelectedReceipt(0))
+    dispatch(setReceiptEditState(receipt.receipt))
+    dispatch(setEditedReceiptId(receipt.hash_id))
+    dispatch(setEditedReceiptPayload(receipt))
+    navigation.jumpTo('SalesLayout')
   }
 
   useEffect(() => {
@@ -164,6 +158,7 @@ function HistoryList(props) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.receiptLeftButton}
+                    onPress={() => handleEditReceipt(receipt)}
                     activeOpacity={0.7}
                   >
                     <FastImage
@@ -212,7 +207,7 @@ function HistoryList(props) {
       }) : (
           <View style={{ position: 'absolute', top: deviceHeight * 0.3, alignSelf: 'center', alignItems: 'center', }}>
             <Text style={styles.emptyHeadingText}>Чеки не знайдено</Text>
-            <Text style={styles.emptyText}>Перевірте інтернет з'єднання або наявність змін у вибрану дату</Text>
+            <Text style={styles.emptyText}>Перевірте інтернет з'єднання або наявність змін за {getUpperCaseDate('DD.MM') === getUpperCaseDate('DD.MM', historyParams.date) ? 'сьогодні' : getUpperCaseDate('DD.MM', historyParams.date)}</Text>
           </View>
         )}
 

@@ -35,8 +35,7 @@ function Filters(props) {
       toastRef.current.close()
     }
   }
-
-
+  
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: 'row' }}>

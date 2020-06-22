@@ -25,6 +25,7 @@ const base = {
   rightContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
     width: '50%',
   },
   paymentDetails: {

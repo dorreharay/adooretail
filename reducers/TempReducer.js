@@ -1,5 +1,5 @@
 import { getFormattedDate, } from '@dateFormatter'
-import { setReceipts } from './OrdersReducer'
+import { setReceipts, setReceiptEditState, } from './OrdersReducer'
 
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
 const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
@@ -89,8 +89,13 @@ export function addProductQuantity(payload) {
   return function (dispatch, getState) {
     const state = getState()
 
-    const { selectedReceiptIndex, receipts, } = state.orders
+    let { selectedReceiptIndex, receipts, updateModeData, } = state.orders
+    
     const product = payload
+
+    if (updateModeData) {
+      receipts = [updateModeData, [], [], []]
+    }
 
     let receipt = receipts[selectedReceiptIndex]
 
@@ -122,7 +127,11 @@ export function addProductQuantity(payload) {
   
     const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? newReceiptsInstance : item)
   
-    dispatch(setReceipts(newReceipts))
+    if (updateModeData) {
+      dispatch(setReceiptEditState(newReceipts[0]))
+    } else {
+      dispatch(setReceipts(newReceipts))
+    }
   }
 }
 
@@ -130,11 +139,15 @@ export function substractProductQuantity(payload) {
   return function (dispatch, getState) {
     const state = getState()
 
-    const { selectedReceiptIndex, receipts, } = state.orders
+    let { selectedReceiptIndex, receipts, updateModeData, } = state.orders
     const product = payload
 
     let receipt = receipts[selectedReceiptIndex]
-  
+
+    if (updateModeData) {
+      receipts = [updateModeData, [], [], []]
+    }
+
     let newReceiptsInstance = []
   
     if (product.quantity === 1) {
@@ -151,7 +164,11 @@ export function substractProductQuantity(payload) {
   
     const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? newReceiptsInstance : item)
   
-    dispatch(setReceipts(newReceipts))
+    if (updateModeData) {
+      dispatch(setReceiptEditState(newReceipts[0]))
+    } else {
+      dispatch(setReceipts(newReceipts))
+    }
   }
 }
 
@@ -160,13 +177,21 @@ export function deleteCurrentReceiptItem(payload) {
     const state = getState()
     const receiptIndex = payload
 
-    const { selectedReceiptIndex, receipts, } = state.orders
+    let { selectedReceiptIndex, receipts, updateModeData, } = state.orders
+
+    if (updateModeData) {
+      receipts = [updateModeData, [], [], []]
+    }
 
     const updatedReceipt = receipts[selectedReceiptIndex].filter((item, index) => index !== receiptIndex)
   
     const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? updatedReceipt : item)
   
-    dispatch(setReceipts(newReceipts))
+    if (updateModeData) {
+      dispatch(setReceiptEditState(newReceipts[0]))
+    } else {
+      dispatch(setReceipts(newReceipts))
+    }
   }
 }
 
