@@ -228,7 +228,7 @@ function LeftSide(props) {
   }
 
   const handlePayment = () => {
-    if(!updateModeData) {
+    if (!updateModeData) {
       changePaymentModalState(true)
     } else {
       findReceiptAndUpdate()
@@ -249,9 +249,9 @@ function LeftSide(props) {
         clearEditState()
       } else {
         // clearEditState()
-      } 
+      }
     } catch (error) {
-      
+
     } finally {
       setUpdateLoading(false)
     }
@@ -280,10 +280,10 @@ function LeftSide(props) {
   }, [])
 
   const receiptSum = useMemo(() => {
-    if(!updateModeData) {
-      return receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)
+    if (!updateModeData) {
+      return receipts[selectedReceiptIndex].reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0)
     } else {
-      return updateModeData.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), false)
+      return updateModeData.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0)
     }
   }, [receipts, selectedReceiptIndex, updateModeData,])
 
@@ -298,7 +298,7 @@ function LeftSide(props) {
   }, [receiptSum, buffer[selectedReceiptIndex]])
 
   const paymentColorSchema = useMemo(() => {
-    if(updateModeData) {
+    if (updateModeData) {
       setReceiptInstancesVisibility(false)
     }
     return ({
@@ -389,6 +389,25 @@ function LeftSide(props) {
           </View>
         )}
 
+      {/* {updateModeData && (
+        <View style={{ flexDirection: 'row', width: '100%', }}>
+          <TouchableOpacity
+            onPress={() => { }}
+            style={{ flexDirection: 'row', justifyContent: 'center', width: '50%', paddingVertical: 15, backgroundColor: paymentColorSchema.color }}
+            activeOpacity={0.6}
+          >
+            <Text style={[styles.lspreText, { color: '#FFFFFF', },]}>Готівка</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { }}
+            style={{ flexDirection: 'row', justifyContent: 'center', width: '50%', paddingVertical: 15, }}
+            activeOpacity={0.6}
+          >
+            <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>Картка</Text>
+          </TouchableOpacity>
+        </View>
+      )} */}
+
       <ScrollView
         style={styles.receipts}
         contentContainerStyle={{ paddingBottom: 10, }}
@@ -440,7 +459,7 @@ function LeftSide(props) {
                     styles.lsproceedButton,
                     bufferButtonDisabled && { opacity: 0.4 }
                   ]}>
-                    <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>PRE</Text>
+                    <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>ПРЕЧ.</Text>
                   </View>
                 </TouchableHighlight>
 
