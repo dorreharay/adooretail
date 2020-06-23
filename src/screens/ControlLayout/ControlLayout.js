@@ -6,6 +6,7 @@ import Carousel from 'react-native-snap-carousel';
 import Heading from './components/Heading/Heading'
 import History from './components/Pages/History/History'
 import Devices from './components/Pages/Devices/Devices'
+import EditReceipt from './components/Pages/EditReceipt/EditReceipt'
 import Settings from './components/Pages/Settings/Settings'
 
 import { loadReceipts, loadDetails, } from '@reducers/OrdersReducer'
@@ -54,7 +55,7 @@ function ControlLayout(props) {
       />
 
       <View style={{ width: '75%', }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 70, paddingHorizontal: '5%', backgroundColor: 'white' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 70, paddingHorizontal: '5%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#F2F2F2' }}>
           <TouchableOpacity
             style={styles.menuButton}
             onPress={() => { }}
@@ -87,7 +88,9 @@ function ControlLayout(props) {
 
             if (index == 1) return <Devices activeCategory={activeTab} toastRef={toastRef} />
 
-            if (index == 2) return <Settings navigation={navigation} />
+            if (index == 2) return <EditReceipt navigation={navigation} />
+
+            if (index == 3) return <Settings navigation={navigation} />
           }}
           vertical
           sliderWidth={deviceWidth}

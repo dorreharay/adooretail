@@ -47,6 +47,7 @@ function LeftSide(props) {
   const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))
   const [bufferButtonDisabled, setBufferButtonState] = useState(true)
   const [updateLoading, setUpdateLoading] = useState(false)
+  const [editedPaymentType, setEditedPaymentType] = useState('card')
 
   const validateTime = () => {
     const fullDate = getUpperCaseDate('dddd  |  HH:mm')
@@ -228,6 +229,8 @@ function LeftSide(props) {
   }
 
   const handlePayment = () => {
+    if (receiptSum <= 0) return
+
     if (!updateModeData) {
       changePaymentModalState(true)
     } else {
@@ -311,81 +314,96 @@ function LeftSide(props) {
 
   return (
     <View style={styles.container}>
-      {isReceiptInstancesVisible ? (
-        <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
-          <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '75%', flexDirection: 'row' }}>
-            {receipts.map((receiptInstance, index) => (
-              <View style={[styles.lsInstanceContainer, { width: deviceHeight < 500 ? headerHeight - 30 : headerHeight - 20, height: deviceHeight < 500 ? headerHeight - 30 : headerHeight - 20, }]} key={index}>
-                <SharedButton
-                  onPress={() => dispatch(setSelectedReceipt(index))}
-                  style={{ flex: 1, }}
-                  borderRadius={headerHeight}
-                  scale={0.8}
-                >
-                  <LinearGradient
-                    start={{ x: 2, y: 1 }}
-                    end={{ x: 0, y: 2 }}
-                    colors={selectedReceiptIndex === index ? paymentColorSchema.gradient : ['#FF767500', '#FD9C6C00']}
-                    style={{ alignItems: 'center', justifyContent: 'center', width: headerHeight - 20, height: '100%', paddingBottom: 3, borderRadius: headerHeight }}
+      {!updateModeData ? (
+        isReceiptInstancesVisible ? (
+          <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
+            <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '75%', flexDirection: 'row' }}>
+              {receipts.map((receiptInstance, index) => (
+                <View style={[styles.lsInstanceContainer, { width: deviceHeight < 500 ? headerHeight - 30 : headerHeight - 20, height: deviceHeight < 500 ? headerHeight - 30 : headerHeight - 20, }]} key={index}>
+                  <SharedButton
+                    onPress={() => dispatch(setSelectedReceipt(index))}
+                    style={{ flex: 1, }}
+                    borderRadius={headerHeight}
+                    scale={0.8}
                   >
-                    <Text style={[styles.receiptButtonText, selectedReceiptIndex === index && { color: '#FFFFFF' }]}>{index + 1}</Text>
-                  </LinearGradient>
-                </SharedButton>
-              </View>
-            ))}
-          </View>
-          <View style={{ width: '25%', marginLeft: 0.5, flexDirection: 'row', justifyContent: 'flex-end' }}>
-            <SharedButton
-              onPress={() => {
-                setReceiptInstancesVisibility(!isReceiptInstancesVisible)
-              }}
-              style={headerButtonSizes}
-              iconStyle={{ width: headerIcon.width - 1, height: headerIcon.height - 1, }}
-              source={require('@images/prev.png')}
-            />
-          </View>
-        </View>
-      ) : (
-          <View
-            style={[styles.header, { height: headerHeight, }]}
-            onLayout={(e) => startTimer(e)}
-          >
-            <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '80%', flexDirection: 'row' }}>
-              <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginLeft: deviceHeight < 500 ? 10 : 0, }}>
-                <SharedButton
-                  onPress={() => { }}
-                  style={{ width: headerButtonSizes.width - 15, height: headerButtonSizes.height - 10, }}
-                  scale={0.85}
-                >
-                  <ClockIcon width={deviceHeight < 500 ? 13 : 20} height={deviceHeight < 500 ? 13 : 20} />
-                </SharedButton>
-                <Text
-                  style={styles.timeText}
-                  numberOfLines={1}
-                  ellipsizeMode={'head'}
-                >{currentTime}</Text>
-              </View>
-
-
+                    <LinearGradient
+                      start={{ x: 2, y: 1 }}
+                      end={{ x: 0, y: 2 }}
+                      colors={selectedReceiptIndex === index ? paymentColorSchema.gradient : ['#FF767500', '#FD9C6C00']}
+                      style={{ alignItems: 'center', justifyContent: 'center', width: headerHeight - 20, height: '100%', paddingBottom: 3, borderRadius: headerHeight }}
+                    >
+                      <Text style={[styles.receiptButtonText, selectedReceiptIndex === index && { color: '#FFFFFF' }]}>{index + 1}</Text>
+                    </LinearGradient>
+                  </SharedButton>
+                </View>
+              ))}
+            </View>
+            <View style={{ width: '25%', marginLeft: 0.5, flexDirection: 'row', justifyContent: 'flex-end' }}>
               <SharedButton
-                style={headerButtonSizes}
-                iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
                 onPress={() => {
-                  if (updateModeData) return
                   setReceiptInstancesVisibility(!isReceiptInstancesVisible)
                 }}
-                source={require('@images/split_orders.png')}
-              />
-            </View>
-
-            <View style={{ width: '20%', flexDirection: 'row', justifyContent: 'flex-end' }}>
-              <SharedButton
-                onPress={clearReceipt}
                 style={headerButtonSizes}
-                iconStyle={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
-                source={require('@images/x_icon.png')}
+                iconStyle={{ width: headerIcon.width - 1, height: headerIcon.height - 1, }}
+                source={require('@images/prev.png')}
               />
             </View>
+          </View>
+        ) : (
+            <View style={[styles.header, { height: headerHeight, }]} onLayout={(e) => startTimer(e)}>
+              <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '80%', flexDirection: 'row' }}>
+                <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginLeft: deviceHeight < 500 ? 10 : 0, }}>
+                  <SharedButton
+                    onPress={() => { }}
+                    style={{ width: headerButtonSizes.width - 15, height: headerButtonSizes.height - 10, }}
+                    scale={0.85}
+                  >
+                    <ClockIcon width={deviceHeight < 500 ? 13 : 20} height={deviceHeight < 500 ? 13 : 20} />
+                  </SharedButton>
+                  <Text
+                    style={styles.timeText}
+                    numberOfLines={1}
+                    ellipsizeMode={'head'}
+                  >{currentTime}</Text>
+                </View>
+
+
+                <SharedButton
+                  style={headerButtonSizes}
+                  iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
+                  onPress={() => {
+                    if (updateModeData) return
+                    setReceiptInstancesVisibility(!isReceiptInstancesVisible)
+                  }}
+                  source={require('@images/split_orders.png')}
+                />
+              </View>
+
+              <View style={{ width: '20%', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <SharedButton
+                  onPress={clearReceipt}
+                  style={headerButtonSizes}
+                  iconStyle={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
+                  source={require('@images/x_icon.png')}
+                />
+              </View>
+            </View>
+          )) : (
+          <View style={[styles.header, { paddingLeft: 0, paddingRight: 0, height: headerHeight, }]}>
+            <TouchableOpacity
+              onPress={() => setEditedPaymentType('cash')}
+              style={[styles.editedPayment, editedPaymentType === 'cash' && { backgroundColor: paymentColorSchema.color }]}
+              activeOpacity={1}
+            >
+              <Text style={[styles.lspreText, { color: '#FFFFFF', }, editedPaymentType !== 'cash' && { color: paymentColorSchema.color, },]}>Готівка</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setEditedPaymentType('debit')}
+              style={[styles.editedPayment, editedPaymentType === 'debit' && { backgroundColor: paymentColorSchema.color }]}
+              activeOpacity={1}
+            >
+              <Text style={[styles.lspreText, { color: '#FFFFFF', }, editedPaymentType !== 'debit' && { color: paymentColorSchema.color, },]}>Картка</Text>
+            </TouchableOpacity>
           </View>
         )}
 
@@ -415,7 +433,7 @@ function LeftSide(props) {
         <Receipt />
       </ScrollView>
 
-      {!settings.printer_enabled ? (
+      {settings.printer_enabled ? (
         <View style={{ width: '100%', paddingHorizontal: '7%', }}>
           {updateModeData && (
             <TouchableOpacity
@@ -438,73 +456,85 @@ function LeftSide(props) {
                 end={{ x: 1, y: 0 }}
                 colors={paymentColorSchema.gradient}
               >
-                <Text style={[styles.lsproceedButtonText, { fontSize: 18, }, updateModeData && { fontSize: 22, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
+                <Text style={[styles.lsproceedButtonText, { fontSize: 24, }, updateModeData && { fontSize: 22, }, settings.printer_precheck && settings.printer_preorder && { fontSize: 18, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
               </LinearGradient>
             </TouchableOpacity>
 
             {!updateModeData && (
               <>
-                {/* <TouchableHighlight
-                  onPress={() => { }}
-                  style={[
-                    styles.proceedContainer,
-                    styles.zProceedEx,
-                    { borderColor: paymentColorSchema.color, },
-                    { paddingHorizontal: 0, paddingVertical: 0, },
-                    bufferButtonDisabled && { borderColor: paymentColorSchema.disabled },
-                  ]}
-                  underlayColor={paymentColorSchema.disabled}
-                >
-                  <View style={[
-                    styles.lsproceedButton,
-                    bufferButtonDisabled && { opacity: 0.4 }
-                  ]}>
-                    <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>ПРЕЧ.</Text>
-                  </View>
-                </TouchableHighlight> */}
+                {settings.printer_precheck && (
+                  <TouchableHighlight
+                    onPress={() => { }}
+                    style={[
+                      styles.proceedContainer,
+                      styles.zProceedEx,
+                      { borderColor: paymentColorSchema.color, },
+                      { paddingHorizontal: 0, paddingVertical: 0, },
+                      bufferButtonDisabled && { borderColor: paymentColorSchema.disabled },
+                    ]}
+                    underlayColor={paymentColorSchema.disabled}
+                  >
+                    <View style={[
+                      styles.lsproceedButton,
+                      bufferButtonDisabled && { opacity: 0.4 }
+                    ]}>
+                      <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>ПРЕЧ.</Text>
+                    </View>
+                  </TouchableHighlight>
+                )}
 
-                <TouchableHighlight
-                  onPress={() => saveBuffer()}
-                  style={[
-                    styles.proceedContainer,
-                    styles.zProceedEx,
-                    { borderColor: paymentColorSchema.color, },
-                    bufferButtonDisabled && { borderColor: paymentColorSchema.disabled },
-                  ]}
-                  underlayColor={paymentColorSchema.disabled}
-                >
-                  <View style={[
-                    styles.lsproceedButton,
-                    bufferButtonDisabled && { opacity: 0.4 }
-                  ]}>
-                    <FastImage
-                      style={{ width: 30, height: 30, }}
-                      source={paymentColorSchema.icon}
-                    />
-                  </View>
-                </TouchableHighlight>
+                {settings.printer_preorder && (
+                  <TouchableHighlight
+                    onPress={() => saveBuffer()}
+                    style={[
+                      styles.proceedContainer,
+                      styles.zProceedEx,
+                      { borderColor: paymentColorSchema.color, },
+                      bufferButtonDisabled && { borderColor: paymentColorSchema.disabled },
+                    ]}
+                    underlayColor={paymentColorSchema.disabled}
+                  >
+                    <View style={[
+                      styles.lsproceedButton,
+                      bufferButtonDisabled && { opacity: 0.4 }
+                    ]}>
+                      <FastImage
+                        style={{ width: 30, height: 30, }}
+                        source={paymentColorSchema.icon}
+                      />
+                    </View>
+                  </TouchableHighlight>
+                )}
               </>
             )}
           </View>
         </View>
       ) : (
-          <TouchableOpacity
-            onPress={() => {
-              if (receiptSum <= 0) return
-              changePaymentModalState(true)
-            }}
-            style={styles.proceedContainer}
-            activeOpacity={1}
-          >
-            <LinearGradient
-              style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
-              start={{ x: 0, y: 1 }}
-              end={{ x: 1, y: 0 }}
-              colors={paymentColorSchema.gradient}
+          <>
+            {updateModeData && (
+              <TouchableOpacity
+                onPress={handleCancelEdit}
+                style={{ flexDirection: 'row', justifyContent: 'center', width: '100%', paddingVertical: 10, paddingTop: 20, }}
+                activeOpacity={0.6}
+              >
+                <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>Скасувати</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              onPress={handlePayment}
+              style={styles.proceedContainer}
+              activeOpacity={1}
             >
-              <Text style={[styles.lsproceedButtonText, { fontSize: 22, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : `ЗМІНИТИ > ${receiptSum ? receiptSum : 0}₴`}</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+              <LinearGradient
+                style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
+                start={{ x: 0, y: 1 }}
+                end={{ x: 1, y: 0 }}
+                colors={paymentColorSchema.gradient}
+              >
+                <Text style={[styles.lsproceedButtonText, { fontSize: 22, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </>
         )}
     </View>
   )

@@ -98,7 +98,7 @@ function PaymentLeftSide(props) {
       </View>
 
 
-      {!settings.printer_enabled && (
+      {settings.printer_enabled && settings.delivery_use && settings.delivery_position_side && (
         <View>
           <View style={{ position: 'relative', alignItems: 'center', flexDirection: 'row', marginTop: '5%', marginBottom: 0, }}>
             <Text style={styles.heading}>Доставка</Text>

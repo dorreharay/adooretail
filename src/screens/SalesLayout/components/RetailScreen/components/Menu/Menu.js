@@ -39,7 +39,7 @@ function Menu(props) {
       name: 'Налаштування',
       onPress: () => {
         navigation.jumpTo('ControlLayout', {
-          screen: 2,
+          screen: 3,
         })
         closeMenu()
       }
@@ -75,6 +75,7 @@ function Menu(props) {
         disableOnBackPress={false}
         swipeDirection={['up', 'down']}
         onHardwareBackPress={closeMenu}
+        dismissOnTouchOutside
         onSwipeOut={closeMenu}
         // offset={deviceHeight < 500 ? -(deviceHeight * 0.46) : -(deviceHeight * 0.23)}
       >

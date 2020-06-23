@@ -35,15 +35,24 @@ const initialState = {
     shifts_enabled: false,
     printer_enabled: false,
     printer_autoconnection_enabled: false,
-    printer_bluetooth: true,
+    printer_bluetooth: false,
     printer_net: false,
+    printer_precheck: false,
+    printer_preorder: false,
     desk_enabled: false,
     kitchen_enabled: false,
-    payment_type_cash: true,
-    payment_type_cash_default: true,
-    payment_type_debit: true,
+    payment_type_cash: false,
+    payment_type_cash_default: false,
+    payment_type_debit: false,
     payment_type_debit_default: false,
-    payment_type_unchecked: false
+    payment_type_unchecked: false,
+    delivery_use: false,
+    delivery_position_side: false,
+    delivery_position_quick: false,
+    receipt_show_logo: false,
+    receipt_show_address: true,
+    receipt_show_qr: false,
+    receipt_show_description: false,
   }
 };
 
@@ -257,6 +266,7 @@ export function updateLocalReceipt(receiptSum) {
               initial: receiptSum,
               input: receiptSum,
               total: receiptSum,
+              edited: true,
             }) : item
           })
         }) : elem

@@ -4,6 +4,17 @@
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../reducers/UserReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../reducers/UserReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/ControlLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/ControlLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Heading/Heading.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Heading/Heading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/LeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/LeftSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/PaymentModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/PaymentModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentRightSide/PaymentType.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/components/PaymentModal/components/PaymentRightSide/PaymentType.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/LeftSide/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Menu/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/RetailScreen/components/Menu/Menu.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

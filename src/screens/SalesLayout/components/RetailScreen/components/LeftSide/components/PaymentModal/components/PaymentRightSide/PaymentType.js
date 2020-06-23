@@ -254,7 +254,7 @@ function PaymentType(props) {
         )}
       </View>
 
-      {settings.printer_enabled && (
+      {settings.printer_enabled && settings.delivery_use && settings.delivery_position_quick && (
         <View style={styles.optionContainer}>
           <TouchableOpacity
             style={styles.optionHeadingContainer}

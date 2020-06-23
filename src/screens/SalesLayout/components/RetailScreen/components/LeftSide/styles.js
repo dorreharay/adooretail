@@ -287,6 +287,14 @@ const base = {
     fontSize: 25,
     fontFamily: PROBA_REGULAR,
   },
+  editedPayment: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50%',
+    height: '100%',
+    paddingVertical: 15,
+  }
 };
 
 const styles = createStyles(

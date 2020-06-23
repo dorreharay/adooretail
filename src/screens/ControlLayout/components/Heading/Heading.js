@@ -89,6 +89,16 @@ function Heading(props) {
         >
           <View style={styles.accountIcon} />
           <Text style={[styles.menuItemText, activeTab === 2 && styles.menuItemActiveText]}>
+            Вигляд чеку
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.menuButton, activeTab === 3 && styles.activeMenuButton]}
+          onPress={() => setActiveTab(3)}
+          activeOpacity={1}
+        >
+          <View style={styles.accountIcon} />
+          <Text style={[styles.menuItemText, activeTab === 3 && styles.menuItemActiveText]}>
             Налаштування
           </Text>
         </TouchableOpacity>

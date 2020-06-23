@@ -162,14 +162,19 @@ const PaymentModal = (props) => {
   useMemo(() => {
     setStatus(initialStatuses.waiting)
 
-    if (settings.payment_type_cash_default || settings.payment_type_debit_default) {
+    if (settings.payment_type_cash || settings.payment_type_debit) {
       if (settings.payment_type_cash_default) {
         selectPType(pTypes[0])
       } else {
+        if (settings.payment_type_debit_default && !settings.payment_type_debit) {
+          selectPType(pTypes[0])
+          return
+        }
+
         selectPType(pTypes[1])
       }
     }
-  }, [isVisible])
+  }, [isVisible, settings,])
 
   const handleCardPayment = () => {
     setStatus(initialStatuses.success)
@@ -256,7 +261,7 @@ const PaymentModal = (props) => {
 
         <View style={styles.paymentModal}>
           <PaymentLeftSide
-            pTypes={pTypes.slice(settings.payment_type_debit ? 0 : 1)}
+            pTypes={(settings.payment_type_debit && !settings.payment_type_cash) ? pTypes.slice(1) : (!settings.payment_type_debit && settings.payment_type_cash) ? pTypes.slice(0, 1) : pTypes}
             selectedType={selectedType}
             selectPType={selectPType}
             setEmployeesListVisibility={setEmployeesListVisibility}
