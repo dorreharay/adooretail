@@ -42,12 +42,13 @@ function LeftSide(props) {
   const selectedReceiptIndex = useSelector(state => state.orders.selectedReceiptIndex)
   const updateModeData = useSelector(state => state.orders.updateModeData)
   const editedReceiptId = useSelector(state => state.orders.editedReceiptId)
+  const editedReceiptPayload = useSelector(state => state.orders.editedReceiptPayload)
 
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
   const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))
   const [bufferButtonDisabled, setBufferButtonState] = useState(true)
   const [updateLoading, setUpdateLoading] = useState(false)
-  const [editedPaymentType, setEditedPaymentType] = useState('card')
+  const [editedPaymentType, setEditedPaymentType] = useState('debit')
 
   const validateTime = () => {
     const fullDate = getUpperCaseDate('dddd  |  HH:mm')
@@ -247,7 +248,7 @@ function LeftSide(props) {
 
     try {
       if (isLocalReceipt) {
-        await dispatch(updateLocalReceipt(receiptSum))
+        await dispatch(updateLocalReceipt(receiptSum, editedPaymentType))
         navigation.jumpTo('ControlLayout')
         clearEditState()
       } else {
@@ -271,6 +272,12 @@ function LeftSide(props) {
       dispatch(setReceiptEditState([]))
     }
   }
+
+  useEffect(() => {
+    if (updateModeData && editedReceiptPayload) {
+      setEditedPaymentType(editedReceiptPayload.payment_type === 'card' ? 'debit' : 'cash')
+    }
+  }, [updateModeData, editedReceiptPayload])
 
   useEffect(() => {
     const ref = BackgroundTimer.setInterval(() => {

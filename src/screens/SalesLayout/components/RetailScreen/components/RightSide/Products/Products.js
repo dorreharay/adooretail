@@ -69,6 +69,7 @@ function Products(props) {
 
   useEffect(() => {
     if (activeCategory && products) {
+      if (!savedActiveCategoryPath) return
       const { index, key } = savedActiveCategoryPath
 
       changeActiveCategory(index, key)

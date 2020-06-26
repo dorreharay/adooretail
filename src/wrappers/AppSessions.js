@@ -13,8 +13,6 @@ import { TabActions } from '@react-navigation/native';
 import { syncSessions, validateSessionRoutine, } from '@helpers'
 import { deviceWidth, deviceHeight, } from '@dimensions';
 
-import * as NavigationService from '../../xnavigation/NavigationService';
-
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 import { PROBA_LIGHT } from '@fonts'
 import { setNeedToReenter, } from '@reducers/UserReducer'
@@ -198,7 +196,6 @@ function AppSessions(props) {
             <SessionModal
               isVisible={modalStatus !== ''}
               intervalRef={intervalRef}
-              NavigationService={NavigationService}
               gotoInputCash={() => navigationRef.current.dispatch(TabActions.jumpTo('InputCash'))}
             />
             {/* <PinModal isVisible={pinVisible && (currentRoute === 6 || currentRoute === 7)} setVisible={setPinVisible} /> */}

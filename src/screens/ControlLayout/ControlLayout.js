@@ -22,6 +22,8 @@ function ControlLayout(props) {
   const toastRef = useRef(null)
   const carouselRef = useRef(null)
 
+  const settings = useSelector(state => state.user.settings)
+
   const [activeTab, setActiveTabIndex] = useState(0)
 
   const setActiveTab = (index, animated = true) => {
@@ -86,9 +88,9 @@ function ControlLayout(props) {
               await dispatch(loadDetails())
             }} toastRef={toastRef} />
 
-            if (index == 1) return <Devices activeCategory={activeTab} toastRef={toastRef} />
+            if (index == 1 && settings.printer_enabled) return <Devices activeCategory={activeTab} toastRef={toastRef} />
 
-            if (index == 2) return <EditReceipt navigation={navigation} />
+            if (index == 2 && settings.printer_enabled) return <EditReceipt navigation={navigation} />
 
             if (index == 3) return <Settings navigation={navigation} />
           }}

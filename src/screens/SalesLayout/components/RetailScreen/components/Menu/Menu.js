@@ -48,7 +48,6 @@ function Menu(props) {
 
   const endSession = () => {
     setEndPromptVisible(false)
-    dispatch(setEmployees([]))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
     closeMenu()
@@ -71,6 +70,7 @@ function Menu(props) {
         visible={isVisible}
         modalStyle={styles.modalComponent}
         overlayBackgroundColor={'rgba(0, 0, 0, 0.85)'}
+        containerStyle={{ zIndex: 10, elevation: 10 }}
         onTouchOutside={closeMenu}
         disableOnBackPress={false}
         swipeDirection={['up', 'down']}

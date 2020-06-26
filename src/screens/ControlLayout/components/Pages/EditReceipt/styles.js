@@ -90,6 +90,18 @@ const base = {
     fontFamily: GILROY_BOLD,
     lineHeight: 30,
   },
+  sideMenuTestButton: {
+    position: 'absolute',
+    bottom: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: 60,
+    borderWidth: 1,
+    borderRadius: 3,
+  }
 };
 
 const styles = createStyles(

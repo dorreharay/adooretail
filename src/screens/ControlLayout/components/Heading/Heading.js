@@ -16,6 +16,7 @@ function Heading(props) {
   const dispatch = useDispatch()
 
   const currentAccount = useSelector(state => state.user.currentAccount)
+  const settings = useSelector(state => state.user.settings)
 
   const [exitPromptVisible, setExitPromptState] = useState(false)
 
@@ -72,26 +73,30 @@ function Heading(props) {
             Операції
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.menuButton, activeTab === 1 && styles.activeMenuButton]}
-          onPress={() => setActiveTab(1)}
-          activeOpacity={1}
-        >
-          <View style={styles.accountIcon} />
-          <Text style={[styles.menuItemText, activeTab === 1 && styles.menuItemActiveText]}>
-            Девайси
+        {settings.printer_enabled && (
+          <TouchableOpacity
+            style={[styles.menuButton, activeTab === 1 && styles.activeMenuButton]}
+            onPress={() => setActiveTab(1)}
+            activeOpacity={1}
+          >
+            <View style={styles.accountIcon} />
+            <Text style={[styles.menuItemText, activeTab === 1 && styles.menuItemActiveText]}>
+              Девайси
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.menuButton, activeTab === 2 && styles.activeMenuButton]}
-          onPress={() => setActiveTab(2)}
-          activeOpacity={1}
-        >
-          <View style={styles.accountIcon} />
-          <Text style={[styles.menuItemText, activeTab === 2 && styles.menuItemActiveText]}>
-            Вигляд чеку
+          </TouchableOpacity>
+        )}
+        {settings.printer_enabled && (
+          <TouchableOpacity
+            style={[styles.menuButton, activeTab === 2 && styles.activeMenuButton]}
+            onPress={() => setActiveTab(2)}
+            activeOpacity={1}
+          >
+            <View style={styles.accountIcon} />
+            <Text style={[styles.menuItemText, activeTab === 2 && styles.menuItemActiveText]}>
+              Вигляд чеку
           </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={[styles.menuButton, activeTab === 3 && styles.activeMenuButton]}
           onPress={() => setActiveTab(3)}
@@ -138,7 +143,7 @@ function Heading(props) {
       >
         <ModalContent style={{ width: deviceWidth * 0.40, }}>
           <Text style={[styles.promptText, { fontSize: 22, }]}>Ви точно хочете вийти з аккаунту?</Text>
-          <Text style={[styles.promptText, { marginTop: 20, }]}>Теперішня зміна буде закінчена. Необхідно ввести кінцеву касу</Text>
+          <Text style={[styles.promptText, { marginTop: 20, }]}>Актуальна зміна буде закінчена. Необхідно ввести кінцеву касу.</Text>
         </ModalContent>
       </Modal>
     </View>
