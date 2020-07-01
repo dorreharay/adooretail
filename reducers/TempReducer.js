@@ -18,10 +18,7 @@ const initialState = {
   },
   currentRoute: 0,
   modalStatus: '',
-  bluetoothDevices: {
-    found: [],
-    paired: [],
-  },
+  bluetoothDevices: [],
   products: [],
   historyParams: {
     date: getFormattedDate('YYYY-MM-DD'),

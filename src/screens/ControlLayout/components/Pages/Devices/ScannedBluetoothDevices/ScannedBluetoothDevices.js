@@ -11,20 +11,11 @@ import { printReceipt, connectToDevice, unpairDevice, } from '@printer'
 function ScannedBluetoothDevices(props) {
   const { status, setScanLoading, } = props
 
-  // const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
+  const bluetoothDevices = useSelector(state => state.temp.bluetoothDevices)
   const [pairedloadingItemIndex, setPairedLoadingForItem] = useState(null)
   const [foundloadingItemIndex, setFoundLoadingForItem] = useState(null)
 
-  const paired = [
-    {
-      name: 'Adoo POS Printer'
-    }, 
-    {
-      name: 'Sony WH-1000n'
-    },
-  ]
-
-  const connect = async (address, index) => {
+  const pair = async (address, index) => {
     setFoundLoadingForItem(index)
 
     try {
@@ -51,38 +42,36 @@ function ScannedBluetoothDevices(props) {
   return (
       <View style={styles.container}>
         <ScrollView style={styles.pairedList}>
-          {paired.length > 0 ? paired.map((p, index) => (
-            <TouchableOpacity 
-              style={[styles.pairedItem, index === 0 && { borderTopWidth: 0, }]}
-              onPress={() => printReceipt(null, p.address)}
-              activeOpacity={1}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <FastImage
-                  style={{ width: 30, height: 30, marginRight: 20, }}
-                  source={index === 0 ? require('@images/tprinter.png') : require('@images/headphones.png')}
-                />
-
-                <Text style={styles.pairedText}>{p.name}</Text>
-              </View>
-
-              <TouchableOpacity
-                style={styles.foundButton}
-                onPress={() => unpair(p.address, index)}
-                activeOpacity={0.8}
-              >
-                {pairedloadingItemIndex === index ? (
-                  <Progress.Circle
-                    endAngle={0.7}
-                    size={15} color={'#FFFFFF'}
-                    borderWidth={1.5} indeterminate={true}
+          {bluetoothDevices.length > 0 ? bluetoothDevices.map((p, index) => {
+            return (
+              <View style={[styles.pairedItem, index === 0 && { borderTopWidth: 0, }]}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <FastImage
+                    style={{ width: 30, height: 30, marginRight: 20, }}
+                    source={p.name && p.name.includes('Printer') ? require('@images/tprinter.png') : require('@images/bluetooth.png')}
                   />
-                ) : (
-                  <Text style={styles.foundButtonText}>Під'єднати</Text>
-                )}
-              </TouchableOpacity>
-            </TouchableOpacity>
-          )) : (
+
+                  <Text style={styles.pairedText}>{p.name || 'Невідомий пристрій'}</Text>
+                </View>
+
+                <TouchableOpacity
+                  style={[styles.foundButton, p.connected && { backgroundColor: '#CCC' }]}
+                  onPress={() => p.connected ? unpair(p.id, index) : pair(p.id, index)}
+                  activeOpacity={0.8}
+                >
+                  {pairedloadingItemIndex === index ? (
+                    <Progress.Circle
+                      endAngle={0.7}
+                      size={15} color={'#FFFFFF'}
+                      borderWidth={1.5} indeterminate={true}
+                    />
+                  ) : (
+                    <Text style={styles.foundButtonText}>{p.connected ? "Від'єднати" : "Під'єднати"}</Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+            )
+          }) : (
               <Text style={styles.emptyText}>Пусто</Text>
             )}
         </ScrollView>
