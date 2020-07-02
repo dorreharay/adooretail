@@ -1,7 +1,10 @@
 import { Alert, } from 'react-native'
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
+import { BleManager } from "react-native-ble-plx"
 import { setBluetoothDevices } from '@reducers/TempReducer'
 import store from '@store'
+
+const manager = new BleManager()
 
 import { getFormattedDate, } from '@dateFormatter'
 
@@ -130,6 +133,12 @@ export async function printNewBuffer(receipt) {
   }
 }
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
+
 export async function printReceipt(receipt, address) {
   try {
     if (address) {
@@ -183,12 +192,6 @@ export async function printReceipt(receipt, address) {
     await BluetoothEscposPrinter.printerLineSpace(75)
     
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
-
-    async function asyncForEach(array, callback) {
-      for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array);
-      }
-    }
 
     if (receipt) {
       await asyncForEach(receipt.receipt, async (item, index) => { 
@@ -390,11 +393,32 @@ export async function performPrinterScanAndConnect() {
   }
 }
 
+export async function performScan() {
+  manager.startDeviceScan(null, null, async (error, device) => {
+    if(error) {
+      Alert.alert(error.message)
+    }
+    const dispatch = store.dispatch
+    const currentStore = store.getState()
+    const { bluetoothDevices, } = currentStore.temp
+
+    const connected = await manager.isDeviceConnected(device.id)
+
+    let newDevicesList = [...new Map([...bluetoothDevices, { ...device, connected, }].map(item => [item['id'], item])).values()]
+
+    dispatch(setBluetoothDevices(newDevicesList))
+
+    setTimeout(() => {
+      manager.stopDeviceScan()
+    }, 20000)
+  })
+}
+
 export async function connectToDevice(address) {
   try {
-    await BluetoothManager.connect(address)
+    await manager.connectToDevice(address)
 
-    await scanDevices()
+    performScan()
   } catch (error) {
     Alert.alert(error.message)
     console.log(error.message)
@@ -403,9 +427,9 @@ export async function connectToDevice(address) {
 
 export async function unpairDevice(address) {
   try {
-    await BluetoothManager.unpaire(address)
+    await manager.cancelDeviceConnection(address)
 
-    await scanDevices()
+    await performScan()
   } catch (error) {
     Alert.alert(error.message)
     console.log(error.message)

@@ -4,16 +4,16 @@ import _ from 'lodash'
 
 import AppContainer from './xnavigation/materialNavigation'
 import AppSessions from './src/wrappers/AppSessions'
-import AppLoading from './src/wrappers/AppLoading'
+import AppDevices from './src/wrappers/AppDevices'
 
 function MainApp(props) {
   const { screenProps, } = props
 
 
   return (
-    // <AppSessions>
+    <AppDevices>
       <AppContainer />
-    // </AppSessions>
+    </AppDevices>
   )
 }
 
