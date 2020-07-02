@@ -94,7 +94,6 @@ function NoAccount(props) {
           setLoadingStatus(false)
         }
       } else {
-        console.log('invalid')
         setLoadingStatus(false)
       }
     }
