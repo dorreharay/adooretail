@@ -14,7 +14,6 @@ const base = {
     width: listWidth,
     marginTop: 30,
     borderRadius: 10,
-    backgroundColor: '#FFFFFF',
   },
   listHeading: {
     width: listWidth,
@@ -27,7 +26,7 @@ const base = {
   },
   pairedList: {
     width: listWidth,
-    maxHeight: deviceHeight * 0.7,
+    height: deviceHeight * 0.7,
   },
   pairedItem: {
     flexDirection: 'row',
@@ -105,10 +104,16 @@ const base = {
     fontSize: 15,
     fontFamily: GILROY_REGULAR,
   },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: deviceHeight * 0.65,
+  },
   emptyText: {
     marginVertical: 15,
     color: '#343434',
-    fontSize: 13,
+    fontSize: 18,
     fontFamily: GILROY_REGULAR,
   }
 };

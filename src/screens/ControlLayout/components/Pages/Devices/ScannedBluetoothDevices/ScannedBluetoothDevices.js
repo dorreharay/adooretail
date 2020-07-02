@@ -19,7 +19,7 @@ function ScannedBluetoothDevices(props) {
     setFoundLoadingForItem(index)
 
     try {
-      await connectToDevice(address) 
+      await connectToDevice(address)
     } catch (error) {
       console.log(error)
     } finally {
@@ -31,7 +31,7 @@ function ScannedBluetoothDevices(props) {
     setPairedLoadingForItem(index)
 
     try {
-      await unpairDevice(address) 
+      await unpairDevice(address)
     } catch (error) {
       console.log(error)
     } finally {
@@ -40,42 +40,44 @@ function ScannedBluetoothDevices(props) {
   }
 
   return (
-      <View style={styles.container}>
-        <ScrollView style={styles.pairedList}>
-          {bluetoothDevices.length > 0 ? bluetoothDevices.map((p, index) => {
-            return (
-              <View style={[styles.pairedItem, index === 0 && { borderTopWidth: 0, }]}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <FastImage
-                    style={{ width: 30, height: 30, marginRight: 20, }}
-                    source={p.name && p.name.includes('Printer') ? require('@images/tprinter.png') : require('@images/bluetooth.png')}
+    <View style={[styles.container, bluetoothDevices.length > 0 && { backgroundColor: '#FFFFFF', }]}>
+      <ScrollView style={styles.pairedList}>
+        {bluetoothDevices.length > 0 ? bluetoothDevices.map((p, index) => {
+          return (
+            <View style={[styles.pairedItem, index === 0 && { borderTopWidth: 0, }]}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <FastImage
+                  style={{ width: 30, height: 30, marginRight: 20, }}
+                  source={p.name && p.name.includes('Printer') ? require('@images/tprinter.png') : require('@images/bluetooth.png')}
+                />
+
+                <Text style={styles.pairedText}>{p.name || 'Невідомий пристрій'}</Text>
+              </View>
+
+              <TouchableOpacity
+                style={[styles.foundButton, p.connected && { backgroundColor: '#CCC' }]}
+                onPress={() => p.connected ? unpair(p.id, index) : pair(p.id, index)}
+                activeOpacity={0.8}
+              >
+                {pairedloadingItemIndex === index ? (
+                  <Progress.Circle
+                    endAngle={0.7}
+                    size={15} color={'#FFFFFF'}
+                    borderWidth={1.5} indeterminate={true}
                   />
-
-                  <Text style={styles.pairedText}>{p.name || 'Невідомий пристрій'}</Text>
-                </View>
-
-                <TouchableOpacity
-                  style={[styles.foundButton, p.connected && { backgroundColor: '#CCC' }]}
-                  onPress={() => p.connected ? unpair(p.id, index) : pair(p.id, index)}
-                  activeOpacity={0.8}
-                >
-                  {pairedloadingItemIndex === index ? (
-                    <Progress.Circle
-                      endAngle={0.7}
-                      size={15} color={'#FFFFFF'}
-                      borderWidth={1.5} indeterminate={true}
-                    />
-                  ) : (
+                ) : (
                     <Text style={styles.foundButtonText}>{p.connected ? "Від'єднати" : "Під'єднати"}</Text>
                   )}
-                </TouchableOpacity>
-              </View>
-            )
-          }) : (
-              <Text style={styles.emptyText}>Пусто</Text>
-            )}
-        </ScrollView>
-      </View>
+              </TouchableOpacity>
+            </View>
+          )
+        }) : (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>Не знайдено жодного пристрою</Text>
+            </View>
+          )}
+      </ScrollView>
+    </View>
   )
 }
 
