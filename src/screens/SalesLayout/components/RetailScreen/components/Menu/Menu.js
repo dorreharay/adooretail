@@ -5,7 +5,7 @@ import { default as EModal } from "react-native-simple-modal";
 import Modal, { SlideAnimation, ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
 import styles from './styles'
 
-import { deviceHeight } from '@dimensions';
+import { deviceWidth, deviceHeight } from '@dimensions'
 
 import { setEmployees, setStartCash, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus } from '@reducers/TempReducer';
@@ -57,28 +57,12 @@ function Menu(props) {
 
   return (
     <>
-      {/* {isVisible && (
-        <SharedButton
-          onPress={closeMenu}
-          style={styles.menuPlaceholder}
-          iconStyle={styles.menuPlaceholderIcon}
-          source={require('@images/menu.png')} scale={0.9}
+      {isVisible && (
+        <>
+        <TouchableOpacity 
+          style={{ position: 'absolute', top: 0, left: 0, width: deviceWidth, height: deviceHeight, backgroundColor: '#00000066' }}
+          onPress={() => closeMenu()}
         />
-      )} */}
-
-      <Modal
-        visible={isVisible}
-        modalStyle={styles.modalComponent}
-        overlayBackgroundColor={'rgba(0, 0, 0, 0.85)'}
-        containerStyle={{ zIndex: 10, elevation: 10 }}
-        onTouchOutside={closeMenu}
-        disableOnBackPress={false}
-        swipeDirection={['up', 'down']}
-        onHardwareBackPress={closeMenu}
-        dismissOnTouchOutside
-        onSwipeOut={closeMenu}
-        // offset={deviceHeight < 500 ? -(deviceHeight * 0.46) : -(deviceHeight * 0.23)}
-      >
         <View style={styles.modal}>
           {menuButtons.map((button, index) => (
             <TouchableOpacity
@@ -116,7 +100,8 @@ function Menu(props) {
             <Text style={[styles.modalItemText, styles.redText]}>Закінчити зміну</Text>
           </TouchableOpacity>
         </View>
-      </Modal>
+        </>
+      )}
 
       <Modal
         visible={endPromptVisible}

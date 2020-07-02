@@ -497,6 +497,7 @@ function LeftSide(props) {
                       styles.proceedContainer,
                       styles.zProceedEx,
                       { borderColor: paymentColorSchema.color, },
+                      { paddingHorizontal: 0, paddingVertical: 0, },
                       bufferButtonDisabled && { borderColor: paymentColorSchema.disabled },
                     ]}
                     underlayColor={paymentColorSchema.disabled}
@@ -505,10 +506,7 @@ function LeftSide(props) {
                       styles.lsproceedButton,
                       bufferButtonDisabled && { opacity: 0.4 }
                     ]}>
-                      <FastImage
-                        style={{ width: 30, height: 30, }}
-                        source={paymentColorSchema.icon}
-                      />
+                      <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>ЗУСТ.</Text>
                     </View>
                   </TouchableHighlight>
                 )}

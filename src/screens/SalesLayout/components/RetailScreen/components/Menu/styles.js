@@ -42,7 +42,9 @@ const base = {
     
   },
   modal: {
-    position: 'relative',
+    position: 'absolute',
+    top: deviceHeight * 0.09,
+    right: deviceHeight * 0.025,
     borderRadius: 5,
   },
   modalItem: {
