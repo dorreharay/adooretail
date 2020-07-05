@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch, } from 'react-redux';
 import { useNetInfo } from "@react-native-community/netinfo";
 import Toast, { DURATION } from 'react-native-easy-toast'
+import BackgroundTimer from 'react-native-background-timer';
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
@@ -79,7 +80,7 @@ function InputEmployees({ navigation }) {
 
       syncSessions(() => {}, null, 1)
 
-      setTimeout(() => {
+      BackgroundTimer.setTimeout(() => {
         setLoadingStatus(false)
         setCheckedEmployees([])
       }, 400)

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, ScrollView, Keyboard, Animated, KeyboardAvoidingView, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import BackgroundTimer from 'react-native-background-timer';
 import styles from './styles'
 
 import { syncReceipt, setCurrentService, } from '@reducers/UserReducer'
@@ -122,7 +123,7 @@ const PaymentModal = (props) => {
         await printReceipt(payload)
       }
 
-      timerRef2.current = setTimeout(() => {
+      BackgroundTimer.setTimeout(() => {
         dispatch(syncReceipt(payload))
         dispatch(setCurrentService(0))
       }, 300)
@@ -179,7 +180,7 @@ const PaymentModal = (props) => {
   const handleCardPayment = () => {
     setStatus(initialStatuses.success)
 
-    timerRef1.current = setTimeout(() => {
+    BackgroundTimer.setTimeout(() => {
       setPaymentModalVisibility(false)
       setButtonAccessibility(true)
     }, 500)

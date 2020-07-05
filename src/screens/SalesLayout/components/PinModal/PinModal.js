@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect, } from 'react';
 import { useSelector, useDispatch, } from 'react-redux';
 import { View, Text, Animated, Easing, TouchableOpacity, } from 'react-native';
 import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
+import BackgroundTimer from 'react-native-background-timer';
 import styles from './styles'
 
 import { getFormattedDate, } from '@dateFormatter'
@@ -28,15 +29,15 @@ function PinModal(props) {
 
     if (final.length === 4) {
       if (currentAccount && currentAccount.pins.includes(final)) {
-        setTimeout(() => {
+        BackgroundTimer.setTimeout(() => {
           setVisible(false)
 
-          setTimeout(() => {
+          BackgroundTimer.setTimeout(() => {
             resetPin()
           }, 400)
         }, 200)
       } else {
-        setTimeout(() => {
+        BackgroundTimer.setTimeout(() => {
           handleAnimation()
           resetPin()
         }, 200)

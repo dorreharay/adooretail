@@ -1,10 +1,10 @@
 import React, { useState, useEffect, } from 'react'
 import _ from 'lodash'
-import { performScan, } from '@printer'
+import { scanDevices, } from '@printer'
 
 function AppDevices({ children, }) {
   useEffect(() => {
-    performScan()
+    // scanDevices()
   }, [])
 
   return children

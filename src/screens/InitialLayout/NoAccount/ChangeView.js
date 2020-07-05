@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, } from 'react'
-import { View, Text } from 'react-native'
+import BackgroundTimer from 'react-native-background-timer';
 import SharedFade from '@shared/SharedFade'
 
 function ChangeView(props) {
@@ -16,11 +16,11 @@ function ChangeView(props) {
     }
 
     if (visible) {
-      setTimeout(() => {
+      BackgroundTimer.setTimeout(() => {
         setFadeChange(true)
       }, duration)
     } else {
-      setTimeout(() => {
+      BackgroundTimer.setTimeout(() => {
         setFadeChange(false)
       }, duration)
     }

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, } from 'react'
 import { View, Text, Dimensions, StyleSheet, Alert } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
 import _ from 'lodash'
+import store from '@store'
 import Orientation from 'react-native-orientation'
 import DeviceInfo from 'react-native-device-info';
 import { useNetInfo } from '@react-native-community/netinfo';
@@ -83,39 +84,9 @@ function AppSessions(props) {
 
 
   useEffect(() => {
-    delay(500).then(() => {
-      if (currentAccount) {
-        if (currentSession.endTime || currentAccount.localSessions.length === 0) {
-          navigationRef.current.dispatch(TabActions.jumpTo('Login'));
-          dispatch(setCurrentRoute(1))
-
-          timerRef1.current = setTimeout(() => {
-            setInitialLoadingVisibility(true)
-          }, 300)
-
-          return
-        }
-
-        navigationRef.current.dispatch(TabActions.jumpTo('SalesLayout'));
-        dispatch(setCurrentRoute(4))
-        setTimeout(() => {
-          setPinVisible(true)
-        }, 500)
-
-        syncSessions()
-
-        timerRef1.current = setTimeout(() => {
-          setInitialLoadingVisibility(true)
-        }, 300)
-      } else {
-        // navigationRef.current.dispatch(TabActions.jumpTo('NoAccount'));
-
-        dispatch(setCurrentRoute(initialFlow ? 2 : 0))
-        timerRef1.current = setTimeout(() => {
-          setInitialLoadingVisibility(true)
-        }, 200)
-      }
-    })
+    BackgroundTimer.setTimeout(() => {
+      setInitialLoadingVisibility(true)
+    }, 500)
   }, [])
 
   const gotoScreen = async (screen) => {
@@ -159,7 +130,6 @@ function AppSessions(props) {
 
   return (
     <>
-
       <AnimatedSplash
         isLoaded={initialLoadingVisibility}
         logoImage={require("@images/splash_logo.png")}
@@ -171,7 +141,7 @@ function AppSessions(props) {
           image={0}
           navigation={null}
         >
-          <UserInactivity
+          {/* <UserInactivity
             timeForInactivity={120 * 1000}
             timeoutHandler={BackgroundTimer}
             isActive={!pinVisible}
@@ -181,14 +151,15 @@ function AppSessions(props) {
               }
             }}
             style={{ width: '100%', height: '100%', }}
-          >
+          > */}
             <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
               <View style={styles.versionContainer}>
                 <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
               </View>
               {withProps}
 
-            </View></UserInactivity>
+            </View>
+          {/* </UserInactivity> */}
         </SharedBackground>
 
         {currentAccount && (

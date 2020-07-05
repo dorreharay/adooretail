@@ -7,6 +7,7 @@ import * as Progress from 'react-native-progress';
 import styles from './styles'
 
 import { printReceipt, connectToDevice, unpairDevice, } from '@printer'
+import { performScan } from '../../../../../../../helpers/printer';
 
 function ScannedBluetoothDevices(props) {
   const { status, setScanLoading, } = props
@@ -19,19 +20,13 @@ function ScannedBluetoothDevices(props) {
     setFoundLoadingForItem(index)
 
     try {
+      setPairedLoadingForItem(index)
+
       await connectToDevice(address)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setFoundLoadingForItem(null)
-    }
-  }
 
-  const unpair = async (address, index) => {
-    setPairedLoadingForItem(index)
+      // await performScan()
 
-    try {
-      await unpairDevice(address)
+      setPairedLoadingForItem(null)
     } catch (error) {
       console.log(error)
     } finally {
@@ -39,8 +34,26 @@ function ScannedBluetoothDevices(props) {
     }
   }
 
+  const unpair = async (address, index) => {
+    // setPairedLoadingForItem(index)
+
+    try {
+      await unpairDevice(address)
+
+      // setPairedLoadingForItem(null)
+
+      // await performScan()
+
+      // setPairedLoadingForItem(null)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      // setPairedLoadingForItem(null)
+    }
+  }
+
   return (
-    <View style={[styles.container, bluetoothDevices.length > 0 && { backgroundColor: '#FFFFFF', }]}>
+    <View style={[styles.container, bluetoothDevices.length > 0 && { backgroundColor: '#FFFFFF', borderRadius: 10 }]}>
       <ScrollView style={styles.pairedList}>
         {bluetoothDevices.length > 0 ? bluetoothDevices.map((p, index) => {
           return (
@@ -56,7 +69,7 @@ function ScannedBluetoothDevices(props) {
 
               <TouchableOpacity
                 style={[styles.foundButton, p.connected && { backgroundColor: '#CCC' }]}
-                onPress={() => p.connected ? unpair(p.id, index) : pair(p.id, index)}
+                onPress={() => p.connected ? unpair(p.address, index) : pair(p.address, index)}
                 activeOpacity={0.8}
               >
                 {pairedloadingItemIndex === index ? (

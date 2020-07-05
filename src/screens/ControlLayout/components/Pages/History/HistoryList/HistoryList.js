@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 import Collapsible from 'react-native-collapsible'
+import BackgroundTimer from 'react-native-background-timer';
 import { printReceipt, } from '@printer'
 
 import SharedButton from '@shared/SharedButton'
@@ -67,7 +68,7 @@ function HistoryList(props) {
   const hideReceiptModal = () => {
     setReceiptModalVisibility(false)
 
-    timerRef.current = setTimeout(() => {
+    BackgroundTimer.setTimeout(() => {
       setReceiptModalState(null)
 
       clearTimeout(timerRef.current)

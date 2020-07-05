@@ -1,6 +1,7 @@
 import React, { useRef, useState, useMemo, useEffect, } from 'react';
 import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import BackgroundTimer from 'react-native-background-timer';
 import { useDispatch, useSelector, } from 'react-redux'
 import styles from '../styles'
 
@@ -24,7 +25,7 @@ function Receipt(props) {
     setActivatedIndex(index)
 
     if (activatedIndex === false) {
-      activatedRef.current = setTimeout(() => {
+      activatedRef.current = BackgroundTimer.setTimeout(() => {
         setActivatedIndex(false)
       }, 1500)
     }
@@ -39,7 +40,7 @@ function Receipt(props) {
 
     clearTimeout(activatedRef.current)
 
-    activatedRef.current = setTimeout(() => setActivatedIndex(false), 1000)
+    activatedRef.current = BackgroundTimer.setTimeout(() => setActivatedIndex(false), 1000)
   }
 
   const receiptsInstances = useMemo(() => {

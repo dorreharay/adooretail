@@ -15,6 +15,12 @@ const base = {
     fontFamily: COMFORTAA_LIGHT,
     letterSpacing: 1,
   },
+  loginHeadingSuper: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontFamily: COMFORTAA_LIGHT,
+    letterSpacing: 2,
+  },
   dot: {
     width: '45',
     height: '45',

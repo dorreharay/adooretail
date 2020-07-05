@@ -53,7 +53,7 @@ const base = {
     color: '#000000',
     fontSize: 16,
     fontFamily: GILROY_REGULAR,
-    lineHeight: 22,
+    lineHeight: 18,
   },
   proceedButton: {
     width: 120,

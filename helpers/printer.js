@@ -1,12 +1,20 @@
 import { Alert, } from 'react-native'
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
-import { BleManager } from "react-native-ble-plx"
+import { BleManager as BluManager } from "react-native-ble-plx"
+import BleManager from 'react-native-ble-manager';
+import BackgroundTimer from 'react-native-background-timer';
 import { setBluetoothDevices } from '@reducers/TempReducer'
 import store from '@store'
 
-const manager = new BleManager()
+const manager = new BluManager()
+
+BleManager.start({ showAlert: false }).then(() => {
+  // Success code
+  console.log("Module initialized");
+});
 
 import { getFormattedDate, } from '@dateFormatter'
+import { reject } from 'lodash';
 
 const printOptions = {
   encoding: 'CP866',
@@ -44,16 +52,16 @@ const cutLine = async () => {
 }
 
 export const handleSize = (size) => {
-  if(size === 'S') {
+  if (size === 'S') {
     return 'мал.'
   }
-  if(size === 'M') {
+  if (size === 'M') {
     return 'сер.'
   }
-  if(size === 'L') {
+  if (size === 'L') {
     return 'вел.'
   }
-  if(size === 'XL') {
+  if (size === 'XL') {
     return 'XL'
   }
 }
@@ -64,6 +72,20 @@ export async function printNewBuffer(receipt) {
 
     const { accounts, currentAccount, settings, } = currentStore.user
     const { currentRoute, } = currentStore.temp
+
+    await BleManager.scan([], 5, true)
+
+    const devices = await BleManager.getBondedPeripherals([]);
+
+    const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
+
+    const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
+
+    console.log('alreadyConnected', alreadyConnected, printer)
+
+    if (printer && !alreadyConnected) {
+      await BluetoothManager.connect(printer.id)
+    }
 
     const kitchenReceipts = receipt.receipt.filter(item => item.department === 'kitchen')
     const paydeskReceipts = receipt.receipt.filter(item => item.department === 'paydesk')
@@ -76,26 +98,26 @@ export async function printNewBuffer(receipt) {
 
       await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
-  
+
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
-  
+
       async function asyncForEach(array, callback) {
         for (let index = 0; index < array.length; index++) {
           await callback(array[index], index, array);
         }
       }
-  
+
       if (kitchenReceipts) {
         await asyncForEach(kitchenReceipts, async (item) => {
           await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), ``, ``, `${item.diff ? item.diff : item.quantity} шт`], { paddingLeft: 2 }, 'buffer')
           await printRegularLine('', { spaces: 1, paddingLeft: 2 })
         })
       }
-  
+
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
-  
+
       await printRegularLine('', { spaces: 4, })
-  
+
       await cutLine()
     }
 
@@ -104,26 +126,26 @@ export async function printNewBuffer(receipt) {
 
       await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
-  
+
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
-  
+
       async function asyncForEach(array, callback) {
         for (let index = 0; index < array.length; index++) {
           await callback(array[index], index, array);
         }
       }
-  
+
       if (paydeskReceipts) {
         await asyncForEach(paydeskReceipts, async (item) => {
           await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), ``, ``, `${item.diff ? item.diff : item.quantity} шт`], { paddingLeft: 2 }, 'buffer')
           await printRegularLine('', { spaces: 1, paddingLeft: 2 })
         })
       }
-  
+
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
-  
+
       await printRegularLine('', { spaces: 4, })
-  
+
       await cutLine()
     }
   } catch (error) {
@@ -141,16 +163,24 @@ async function asyncForEach(array, callback) {
 
 export async function printReceipt(receipt, address) {
   try {
-    if (address) {
-      await BluetoothManager.connect(address)
-    }
-
     const currentStore = store.getState()
 
     const { currentAccount, } = currentStore.user
-    const { currentRoute, } = currentStore.temp
+    // const { bluetoothDevices, } = currentStore.temp
 
     const { receipt_name, receipt_description } = currentAccount
+
+    await BleManager.scan([], 5, true)
+
+    const devices = await BleManager.getBondedPeripherals([]);
+
+    const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
+
+    const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
+
+    if (printer && !alreadyConnected) {
+      await BluetoothManager.connect(printer.id)
+    }
 
     await BluetoothEscposPrinter.printerInit()
 
@@ -190,11 +220,11 @@ export async function printReceipt(receipt, address) {
     await BluetoothEscposPrinter.setBlob(0)
 
     await BluetoothEscposPrinter.printerLineSpace(75)
-    
+
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
     if (receipt) {
-      await asyncForEach(receipt.receipt, async (item, index) => { 
+      await asyncForEach(receipt.receipt, async (item, index) => {
         await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
 
         await printRegularLine('', { spaces: 1, paddingLeft: 2 })
@@ -239,8 +269,8 @@ export async function printReceipt(receipt, address) {
     await cutLine()
   } catch (error) {
     Alert.alert('Принтер не підключено')
-    throw new Error()
     console.log(error.message)
+    throw new Error()
   }
 }
 
@@ -358,67 +388,31 @@ const performBufferColumnPrint = async (values) => {
 }
 
 export async function scanDevices() {
-  const dispatch = store.dispatch
+  // const dispatch = store.dispatch
+  
+  // try {
+  //   const scanResult = await BluetoothManager.scanDevices()
 
-  try {
-    const scanResult = await BluetoothManager.scanDevices()
+  //   const parsed = JSON.parse(scanResult)
 
-    const devices = JSON.parse(scanResult)
+  //   const paired = parsed.paired
+  //   const found = parsed.found
 
-    const found = devices.found
-    const paired = devices.paired
+  //   console.log('-----------<>', paired, found)
 
-    dispatch(setBluetoothDevices(devices))
-
-    return { found, paired }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function performPrinterScanAndConnect() {
-  const scanResult = await BluetoothManager.scanDevices()
-
-  const devices = JSON.parse(scanResult)
-
-  const { found, paired } = devices
-
-
-  if (paired.length > 0) {
-    await BluetoothManager.connect(paired[0].address)
-  } else {
-    // if(found.length > 0) {
-    //   await BluetoothManager.connect(found[0].address)
-    // }
-  }
-}
-
-export async function performScan() {
-  manager.startDeviceScan(null, null, async (error, device) => {
-    if(error) {
-      Alert.alert(error.message)
-    }
-    const dispatch = store.dispatch
-    const currentStore = store.getState()
-    const { bluetoothDevices, } = currentStore.temp
-
-    const connected = await manager.isDeviceConnected(device.id)
-
-    let newDevicesList = [...new Map([...bluetoothDevices, { ...device, connected, }].map(item => [item['id'], item])).values()]
-
-    dispatch(setBluetoothDevices(newDevicesList))
-
-    setTimeout(() => {
-      manager.stopDeviceScan()
-    }, 20000)
-  })
+  //   dispatch(setBluetoothDevices([...paired.map(item => ({ ...item, connected: true })), ...found.map(item => ({ ...item, connected: false }))]))
+  // } catch (error) {
+  //   console.log(error)
+  // }
 }
 
 export async function connectToDevice(address) {
   try {
-    await manager.connectToDevice(address)
+    await BleManager.connect(address)
 
-    performScan()
+    console.log('CONNECTED ----->')
+
+    // await scanDevices()
   } catch (error) {
     Alert.alert(error.message)
     console.log(error.message)
@@ -427,9 +421,12 @@ export async function connectToDevice(address) {
 
 export async function unpairDevice(address) {
   try {
-    await manager.cancelDeviceConnection(address)
+    // await BleManager.removeBond(address)
+    await BluetoothManager.unpaire(address)
 
-    await performScan()
+    console.log('DISCONNECTED ----->')
+
+    // await scanDevices()
   } catch (error) {
     Alert.alert(error.message)
     console.log(error.message)

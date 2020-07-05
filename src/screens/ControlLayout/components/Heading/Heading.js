@@ -73,7 +73,7 @@ function Heading(props) {
             Операції
           </Text>
         </TouchableOpacity>
-        {settings.printer_enabled && (
+        {/* {settings.printer_enabled && (
           <TouchableOpacity
             style={[styles.menuButton, activeTab === 1 && styles.activeMenuButton]}
             onPress={() => setActiveTab(1)}
@@ -84,7 +84,7 @@ function Heading(props) {
               Девайси
           </Text>
           </TouchableOpacity>
-        )}
+        )} */}
         {settings.printer_enabled && (
           <TouchableOpacity
             style={[styles.menuButton, activeTab === 2 && styles.activeMenuButton]}

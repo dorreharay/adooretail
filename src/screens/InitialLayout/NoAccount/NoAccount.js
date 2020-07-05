@@ -7,6 +7,7 @@ import DeviceInfo from 'react-native-device-info';
 import FastImage from "react-native-fast-image";
 import * as Progress from 'react-native-progress';
 import LottieView from 'lottie-react-native';
+import BackgroundTimer from 'react-native-background-timer';
 import styles from './styles';
 
 import Logo from '@images/logo-default.svg'
@@ -69,7 +70,7 @@ function NoAccount(props) {
       setErrorVisible(true)
       setError('Аккаунт не знайдено')
 
-      setTimeout(() => {
+      BackgroundTimer.setTimeout(() => {
         setLoadingStatus(false)
       }, 500)
     }
@@ -87,7 +88,7 @@ function NoAccount(props) {
         try {
           await handleCode(deviceId)
 
-          setTimeout(() => {
+          BackgroundTimer.setTimeout(() => {
             setLoadingStatus(false)
           }, 2000)
         } catch (error) {
@@ -103,7 +104,7 @@ function NoAccount(props) {
     // setCode('')
     setErrorVisible(false)
 
-    setTimeout(() => {
+    BackgroundTimer.setTimeout(() => {
       setError('')
     }, 500)
   }

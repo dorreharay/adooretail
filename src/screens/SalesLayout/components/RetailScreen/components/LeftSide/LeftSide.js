@@ -492,7 +492,7 @@ function LeftSide(props) {
 
                 {settings.printer_preorder && (
                   <TouchableHighlight
-                    onPress={() => saveBuffer()}
+                    onPress={saveBuffer}
                     style={[
                       styles.proceedContainer,
                       styles.zProceedEx,

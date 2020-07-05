@@ -45,7 +45,7 @@ function ControlLayout(props) {
     navigation.addListener('focus', () => {
       dispatch(loadReceipts())
       dispatch(loadDetails())
-    })    
+    })
   }, [])
 
   return (
@@ -57,7 +57,7 @@ function ControlLayout(props) {
       />
 
       <View style={{ width: '75%', }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 70, paddingHorizontal: '5%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#F2F2F2' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 70, paddingHorizontal: '2%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#F2F2F2' }}>
           <TouchableOpacity
             style={styles.menuButton}
             onPress={() => { }}
@@ -68,16 +68,18 @@ function ControlLayout(props) {
 
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.menuButton}
-            onPress={() => navigation.jumpTo('SalesLayout')}
-            activeOpacity={0.8}
-          >
+          <View style={styles.menuButton}>
             <View style={styles.accountIcon} />
-            <Text style={styles.menuItemText}>
-              Назад до меню
-            </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.jumpTo('SalesLayout')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.menuItemText}>
+                Назад до меню
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <Carousel
           ref={carouselRef}
@@ -119,6 +121,12 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'row',
     backgroundColor: '#F3F4F6'
+  },
+  backButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    height: '100%',
   },
   menuItemText: {
     color: '#343434',

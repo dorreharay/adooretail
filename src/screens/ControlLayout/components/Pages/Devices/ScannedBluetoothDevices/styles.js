@@ -8,10 +8,11 @@ const listHeight = deviceWidth * 0.35
 
 const base = {
   container: {
-    alignSelf: 'flex-start',
+    // alignSelf: 'flex-start',
     alignItems: 'center',
     justifyContent: 'center',
     width: listWidth,
+    maxHeight: deviceHeight * 0.7,
     marginTop: 30,
     borderRadius: 10,
   },
@@ -26,7 +27,7 @@ const base = {
   },
   pairedList: {
     width: listWidth,
-    height: deviceHeight * 0.7,
+    maxHeight: deviceHeight * 0.7,
   },
   pairedItem: {
     flexDirection: 'row',
@@ -77,7 +78,7 @@ const base = {
     fontFamily: GILROY_REGULAR,
   },
   foundButton: {
-    minWidth: 90,
+    minWidth: 130,
     alignItems: 'center',
     paddingHorizontal: 25,
     paddingVertical: 12,

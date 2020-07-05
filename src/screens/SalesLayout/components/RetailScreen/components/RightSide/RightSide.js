@@ -4,6 +4,7 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
 import { syncSessions, } from '@helpers'
 import * as Progress from 'react-native-progress';
+import DeviceSettings from 'react-native-device-settings';
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
 import FastImage from 'react-native-fast-image'
 import { validateSessionRoutine, } from '@helpers'
@@ -112,7 +113,7 @@ function RightSide(props) {
         </SharedButton>
 
         {settings.printer_enabled && (
-          <SharedButton onPress={updatePairedDevices} scale={0.85}>
+          <SharedButton onPress={() => DeviceSettings.bluetooth()} scale={0.85}>
             <View style={styles.printer}>
               <FastImage style={{ width: 17, height: 17, }} source={require('@images/tprinter.png')} />
             </View>

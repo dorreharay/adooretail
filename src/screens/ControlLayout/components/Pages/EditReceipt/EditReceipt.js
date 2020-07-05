@@ -6,6 +6,7 @@ import styles from './styles'
 
 import { getFormattedDate, } from '@dateFormatter'
 import { setSettings, } from '@reducers/UserReducer'
+import { printReceipt } from '../../../../../../helpers/printer';
 
 function EditReceipt(props) {
   const { activeCategory, } = props
@@ -184,7 +185,7 @@ function EditReceipt(props) {
 
           <TouchableHighlight
             style={[styles.sideMenuTestButton]}
-            onPress={() => {}}
+            onPress={() => printReceipt()}
             onPressIn={() => setActive(true)}
             onPressOut={() => setActive(false)}
             underlayColor='#000000'

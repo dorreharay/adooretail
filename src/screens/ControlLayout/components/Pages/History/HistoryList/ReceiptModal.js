@@ -5,6 +5,7 @@ import Modal, { SlideAnimation, ModalContent, } from 'react-native-modals';
 import QRCode from 'react-native-qrcode-svg';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient'
+import BackgroundTimer from 'react-native-background-timer';
 import styles from './styles'
 
 import API from '@api'
@@ -40,7 +41,7 @@ function ReceiptModal(props) {
         duration: 200,
       },
     ).start()
-    setTimeout(() => {
+    BackgroundTimer.setTimeout(() => {
       setContentVisibility(false)
       Animated.timing(
         successOpacity,
@@ -50,8 +51,8 @@ function ReceiptModal(props) {
         },
       ).start()
       setSuccessVisibility(true)
-      setTimeout(() => {
-        setTimeout(() => {
+      BackgroundTimer.setTimeout(() => {
+        BackgroundTimer.setTimeout(() => {
           Animated.timing(
             successOpacity,
             {
@@ -63,7 +64,7 @@ function ReceiptModal(props) {
 
           hideReceiptModal()
 
-          setTimeout(() => {
+          BackgroundTimer.setTimeout(() => {
             setContentVisibility(true)
           }, 300)
 
@@ -94,10 +95,10 @@ function ReceiptModal(props) {
 
       // await API.sendReceiptByEmail({ recipient: customerEmail, receipt_hash_id: receiptModalItem })
 
-      setTimeout(() => {
+      BackgroundTimer.setTimeout(() => {
         invokeSuccessAnimation()
   
-        setTimeout(() => {
+        BackgroundTimer.setTimeout(() => {
           setLoadingStatus(false)
           setCustomerEmail('')
         }, 500)
