@@ -67,7 +67,7 @@ function Session(props) {
   }
 
   const handleSubmit = () => {
-    if(!endOfSession) {
+    if (!endOfSession) {
       startSession()
     } else {
       endSession()
@@ -128,7 +128,7 @@ function Session(props) {
 
   const renderMainContent = () => {
     return (
-      <>
+      <View>
         <Text style={styles.heading}>{endOfSession ? modalStatus ? 'Закінчіть попередню касову зміну' : 'Закінчіть касову зміну' : 'Розпочніть касову зміну'}</Text>
 
         <View>
@@ -200,17 +200,24 @@ function Session(props) {
             end={{ x: 1, y: 0 }}
             colors={canProceed ? ['#DB3E69', '#EF9058'] : ['#DB3E6955', '#EF905855']}
           >
-            <Text style={styles.linearButtonText}>{submitStatus ? 'Касова зміна завершена' : 'Готово'}</Text>
+            {submitStatus ? (
+              <FastImage
+                style={{ width: 30, height: 30, }}
+                source={require('@images/tick_white.png')}
+              />
+            ) : (
+                <Text style={styles.linearButtonText}>Готово</Text>
+              )}
           </LinearGradient>
         </TouchableOpacity>
-      </>
+      </View>
     )
   }
 
   const renderEmployeesList = () => {
     return (
-      <>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 15, }}>
+      <View style={{ width: '100%', padding: '8%', }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 15, marginBottom: 10, }}>
           <Text style={[styles.heading, { marginTop: 0, marginBottom: 0, }]}>Працівники</Text>
           <TouchableOpacity style={styles.backButton} onPress={() => setEmployeesPicker(false)}>
             <FastImage
@@ -219,9 +226,9 @@ function Session(props) {
             />
           </TouchableOpacity>
         </View>
-        <ScrollView style={{ height: deviceHeight * 0.5, marginBottom: 15, }}>
+        <ScrollView style={{ maxHeight: deviceHeight * 0.6, }} contentContainerStyle={{ paddingBottom: 25, }}>
           {employees.map((employee, index) => (
-            <TouchableOpacity 
+            <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderTopWidth: 1, borderTopColor: '#F2F2F2', }}
               onPress={() => setSelected(prev => prev.includes(index) ? prev.filter(item => item !== index) : ([...prev, index]))}
               activeOpacity={1}
@@ -245,7 +252,7 @@ function Session(props) {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      </>
+      </View>
     )
   }
 
@@ -260,7 +267,7 @@ function Session(props) {
 
   const canProceed = useMemo(() => {
     return endOfSession ? +endSum > 0 && endSum !== '' : +startSum > 0 && startSum !== '' && selected.length > 0
-  }, [startSum, endSum, selected])
+  }, [startSum, endSum, selected, endOfSession])
 
   return (
     <View style={[styles.wrapper, isVisible && { top: 0, }]}>
@@ -280,7 +287,7 @@ function Session(props) {
         keyboardOpeningTime={0}
         enableOnAndroid={true}
       >
-        <View style={styles.container}>
+        <View style={[styles.container, employeesPickerOpened && { height: 600, }, endOfSession && { height: 640, }]}>
           {employeesPickerOpened ? renderEmployeesList() : renderMainContent()}
         </View>
       </KeyboardAwareScrollView>

@@ -185,7 +185,7 @@ function EditReceipt(props) {
 
           <TouchableHighlight
             style={[styles.sideMenuTestButton]}
-            onPress={() => printReceipt()}
+            onPress={printReceipt}
             onPressIn={() => setActive(true)}
             onPressOut={() => setActive(false)}
             underlayColor='#000000'
