@@ -8,10 +8,12 @@ const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
 const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES'
 const SET_RESET_STATUS = 'SET_RESET_STATUS'
 const SET_HISTORY_PARAMS = 'SET_HISTORY_PARAMS'
+const SET_SESSION_MODAL_STATE = 'SET_SESSION_MODAL_STATE'
 
 const initialState = {
   endOfSession: false,
   resetAccount: false,
+  sessionModalVisible: false,
   dimensions: {
     deviceWidth: 0,
     deviceHeight: 0,
@@ -29,6 +31,13 @@ const initialState = {
 export function setModalStatus(payload) {
   return {
     type: SET_MODAL_STATUS,
+    payload
+  }
+}
+
+export function setSessionModalState(payload) {
+  return {
+    type: SET_SESSION_MODAL_STATE,
     payload
   }
 }
@@ -207,6 +216,9 @@ export function clearCurrentReceipt() {
 const ACTION_HANDLERS = {
   [SET_END_OF_SESSION_STATUS]: (state, action) => {
     return { ...state, endOfSession: action.payload }
+  },
+  [SET_SESSION_MODAL_STATE]: (state, action) => {
+    return { ...state, sessionModalVisible: action.payload }
   },
   [SET_RESET_STATUS]: (state, action) => {
     return { ...state, resetAccount: action.payload }

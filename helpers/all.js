@@ -4,6 +4,7 @@ import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } fro
 import { START, END, NOT_ON_SHIFT } from '@statuses'
 import { syncDataWithStore, setNeedToReenter, setProducts, } from '@reducers/UserReducer'
 import { setModalStatus } from '@reducers/TempReducer'
+import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
 
 function getState(reducer) {
   return store.getState()[reducer]
@@ -135,7 +136,6 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
   } else {
     startOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
     endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day')
-    // endOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day')
   }
 
   console.log('Shift validation', '- check enabled?', settings.shifts.enabled)
@@ -143,20 +143,16 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
 
   const isValid = getIsBetween(currentAccountSession.startTime, startOfShift, endOfShift) && getIsBetween(null, startOfShift, endOfShift)
 
-  if (isValid && modalStatus !== '') {
-    dispatch(setModalStatus(''))
+  if (isValid) {
+    dispatch(setModalStatus(false))
+    dispatch(setSessionModalState(false))
+    dispatch(setEndOfSessionStatus(false))
   }
 
   if (!isValid) {
-    if (currentAccount.localSessions.length === 0) {
-      dispatch(setModalStatus(START))
-    } else {
-      if (currentAccount && currentAccount.settings && currentAccount.settings.shifts.enabled) {
-        dispatch(setModalStatus(NOT_ON_SHIFT))
-      } else {
-        dispatch(setModalStatus(END))
-      }
-    }
+    dispatch(setModalStatus(true))
+    dispatch(setSessionModalState(true))
+    dispatch(setEndOfSessionStatus(true))
   }
 
   callback && callback()

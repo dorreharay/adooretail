@@ -161,17 +161,6 @@ function AppSessions(props) {
             </View>
           {/* </UserInactivity> */}
         </SharedBackground>
-
-        {currentAccount && (
-          <>
-            <SessionModal
-              isVisible={modalStatus !== ''}
-              intervalRef={intervalRef}
-              gotoInputCash={() => navigationRef.current.dispatch(TabActions.jumpTo('InputCash'))}
-            />
-            {/* <PinModal isVisible={pinVisible && (currentRoute === 6 || currentRoute === 7)} setVisible={setPinVisible} /> */}
-          </>
-        )}
       </AnimatedSplash>
     </>
   )

@@ -14,7 +14,7 @@ import { loginKeyboardLayout } from '@keyboards'
 import LoginLoader from '@shared/LoginLoader'
 
 import { setNeedToReenter, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus } from '@reducers/TempReducer'
+import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
 
 function Login(props) {
   const { navigation, } = props;
@@ -94,11 +94,13 @@ function Login(props) {
 
       dispatch(setNeedToReenter(false))
 
-      if (currentSession.length !== 0 && !currentSession.endTime) {
-        navigation.jumpTo('SalesLayout')
-      } else {
-        navigation.jumpTo('InputCash')
+      dispatch(setEndOfSessionStatus(false))
+
+      if (currentSession.endTime || currentAccount.localSessions.length === 0) {
+        dispatch(setSessionModalState(true))
       }
+
+      navigation.jumpTo('SalesLayout')
 
       resetState()
     } catch (e) {
@@ -107,7 +109,6 @@ function Login(props) {
       resetState()
     } finally {
       setLoadingStatus(false)
-      dispatch(setEndOfSessionStatus(false))
     }
   }
 

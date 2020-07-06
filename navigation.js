@@ -15,7 +15,7 @@ import InputEmployees from './src/screens/InitialLayout/InputEmployees/InputEmpl
 import SalesLayout from './src/screens/SalesLayout/SalesLayout'
 import ControlLayout from './src/screens/ControlLayout/ControlLayout'
 
-import { setCurrentRoute } from '@reducers/TempReducer'
+import { setCurrentRoute, setSessionModalState, } from '@reducers/TempReducer'
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
 // import { navigationRef } from './NavigationService'
@@ -35,10 +35,10 @@ function AppContainer() {
 
   let initialRoute = 'SalesLayout'
 
-  if(initialFlow) {
+  if (initialFlow) {
     initialRoute = 'Initial1'
   } else if (currentAccount) {
-    if(currentSession.endTime || currentAccount.localSessions.length === 0) {
+    if (currentSession.endTime || currentAccount.localSessions.length === 0) {
       initialRoute = 'Login'
     } else {
       initialRoute = 'SalesLayout'
@@ -46,6 +46,12 @@ function AppContainer() {
   } else {
     initialRoute = 'NoAccount'
   }
+
+  useEffect(() => {
+    if (initialRoute === 'SalesLayout' && currentSession.endTime || currentAccount.localSessions.length === 0) {
+      dispatch(setSessionModalState(true))
+    }
+  }, [])
 
   return (
     <NavigationContainer
@@ -75,8 +81,8 @@ function AppContainer() {
           <Tab.Screen name="NoAccount" component={NoAccount} />
 
           <Tab.Screen name="Login" component={Login} />
-          <Tab.Screen name="InputCash" component={InputCash} />
-          <Tab.Screen name="InputEmployee" component={InputEmployees} />
+          {/* <Tab.Screen name="InputCash" component={InputCash} />
+          <Tab.Screen name="InputEmployee" component={InputEmployees} /> */}
           <Tab.Screen name="SalesLayout" component={SalesLayout} />
           <Tab.Screen name="ControlLayout" component={ControlLayout} />
         </Tab.Navigator>

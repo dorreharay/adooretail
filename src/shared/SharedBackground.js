@@ -41,7 +41,7 @@ function SharedBackground({ image, children, }) {
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        {!logoExceptions.includes(currentRoute) && (
+        {/* {!logoExceptions.includes(currentRoute) && (
           <SharedButton
             style={styles.logoContainer}
             onPress={changeBackgroudIndex}
@@ -49,7 +49,7 @@ function SharedBackground({ image, children, }) {
           >
             <Logo width={40} height={40} />
           </SharedButton>
-        )}
+        )} */}
 
 
         {children}

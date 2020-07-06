@@ -14,11 +14,10 @@ import SharedButton from '@shared/SharedButton'
 import FastImage from 'react-native-fast-image';
 
 function Menu(props) {
-  const { isVisible, closeMenu, navigation, setTransactionModalVisiblity, } = props
+  const { isVisible, closeMenu, navigation, setTransactionModalVisiblity, setSessionModalVisible, } = props
 
   const dispatch = useDispatch()
 
-  const [endPromptVisible, setEndPromptVisible] = useState(false)
   const [menuButtons] = useState([
     {
       name: 'Історія замовлень',
@@ -47,12 +46,12 @@ function Menu(props) {
   ])
 
   const endSession = () => {
-    setEndPromptVisible(false)
+    setSessionModalVisible(true)
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
     closeMenu()
 
-    navigation.jumpTo('InputCash')
+    // navigation.jumpTo('InputCash')
   }
 
   return (
@@ -91,10 +90,7 @@ function Menu(props) {
 
           <TouchableOpacity
             style={[styles.modalItemRed, styles.withBottomBorderRadius]}
-            onPress={() => {
-              setEndPromptVisible(true)
-              closeMenu()
-            }}
+            onPress={endSession}
             activeOpacity={1}
           >
             <Text style={[styles.modalItemText, styles.redText]}>Закінчити зміну</Text>
@@ -103,7 +99,7 @@ function Menu(props) {
         </>
       )}
 
-      <Modal
+      {/* <Modal
         visible={endPromptVisible}
         modalStyle={styles.promptStyle}
         overlayBackgroundColor={'rgba(0, 0, 0, 0.85)'}
@@ -125,8 +121,8 @@ function Menu(props) {
       
         <ModalContent>
           <Text style={styles.promptText}>Ви точно хочете закінчити зміну?</Text>
-        </ModalContent>
-      </Modal>
+        </ModalContent> */}
+      {/* </Modal> */}
     </>
 
   )

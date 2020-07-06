@@ -13,6 +13,9 @@ import RightSide from './components/RightSide/RightSide';
 import Menu from './components/Menu/Menu';
 import PaymentModal from './components/LeftSide/components/PaymentModal/PaymentModal';
 import Transaction from './components/Transaction/Transaction'
+import Session from './components/Session/Session'
+
+import { setSessionModalState } from '@reducers/TempReducer'
 
 function RetailScreen(props) {
   const {
@@ -24,7 +27,9 @@ function RetailScreen(props) {
   const timerRef3 = useRef(null)
   const timerRef4 = useRef(null)
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const dispatch = useDispatch()
+
+  const sessionModalVisible = useSelector(state => state.temp.sessionModalVisible)
 
   const [menuVisible, setMenuVisibility] = useState(false)
   const [paymentModalVisible, setPaymentModalVisibility] = useState(false)
@@ -58,6 +63,10 @@ function RetailScreen(props) {
 
   const openMenu = () => setMenuVisibility(true)
   const closeMenu = () => setMenuVisibility(false)
+
+  const handleSessionModal = (state) => {
+    dispatch(setSessionModalState(state))
+  }
 
   useEffect(() => {
     loadProducts()
@@ -96,6 +105,7 @@ function RetailScreen(props) {
         closeMenu={closeMenu}
         openChangeAccountOverview={openChangeAccountOverview}
         setTransactionModalVisiblity={setTransactionModalVisiblity}
+        setSessionModalVisible={handleSessionModal}
         navigation={navigation}
       />
       <PaymentModal
@@ -109,6 +119,10 @@ function RetailScreen(props) {
       <Transaction
         isVisible={transactionModalVisible}
         setTransactionModalVisiblity={setTransactionModalVisiblity}
+      />
+      <Session
+        isVisible={sessionModalVisible}
+        setSessionModalVisible={handleSessionModal}
       />
     </View>
   )

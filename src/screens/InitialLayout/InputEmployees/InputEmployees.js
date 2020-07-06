@@ -15,6 +15,7 @@ import EmployeesList from "./components/EmployeesList";
 
 import { currentAccountSelector } from '@selectors'
 import { updateCurrentSession, setEmployees, setStartCash, } from '@reducers/UserReducer';
+import { setSessionModalState, } from '@reducers/TempReducer'
 
 function InputEmployees({ navigation }) {
   const toast = useRef(null)
@@ -41,7 +42,7 @@ function InputEmployees({ navigation }) {
   }
 
   const handleBackPress = () => {
-    navigation.jumpTo('InputCash')
+    navigation.jumpTo('Login')
   }
 
   const handleProceed = async () => {
@@ -71,6 +72,9 @@ function InputEmployees({ navigation }) {
         localId: guidGenerator(),
         transactions: [],
       }
+
+      
+      dispatch(setSessionModalState(true))
 
       navigation.jumpTo('SalesLayout')
 
