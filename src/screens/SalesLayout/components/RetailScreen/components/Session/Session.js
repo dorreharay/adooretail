@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Toast, { DURATION } from 'react-native-easy-toast'
 import styles from './styles'
 import FastImage from 'react-native-fast-image'
+import ImagePicker from 'react-native-image-picker';
 
 import { syncSessions, } from '@helpers'
 import { currentSessionSelector, } from '@selectors'
@@ -31,9 +32,11 @@ function Session(props) {
 
   const [startSum, setStartSum] = useState('0')
   const [endSum, setEndSum] = useState('0')
+  const [reportPhoto, setReportPhoto] = useState(null)
   const [employeesPickerOpened, setEmployeesPicker] = useState(false)
   const [selected, setSelected] = useState([])
   const [submitStatus, setSubmitStatus] = useState(false)
+  const [pickerLoader, setPickerLoader] = useState(false)
 
   const handleChange = (e) => {
     let value = e.nativeEvent.text
@@ -125,6 +128,34 @@ function Session(props) {
     dispatch(resetSessions())
   }
 
+  const handlePicker = async () => {
+    setPickerLoader(true)
+
+    try {
+      await ImagePicker.showImagePicker({
+        title: 'Вибрати фото звіту',
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      }, (response) => {
+        if (response.didCancel) {
+          throw new Error('error - handlePicker')
+        }
+
+        const terminalReportPhoto = 'data:image/jpeg;base64,' + response.data
+
+        setReportPhoto({ uri: terminalReportPhoto, size: response.fileSize, })
+
+        setPickerLoader(false)
+      }) 
+    } catch (error) {
+      
+    } finally {
+      setPickerLoader(false)
+    }
+  }
+
 
   const renderMainContent = () => {
     return (
@@ -167,9 +198,10 @@ function Session(props) {
               <View style={styles.inputContainer}>
                 <TouchableOpacity
                   style={styles.debitReportButton}
+                  onPress={handlePicker}
                   activeOpacity={0.8}
                 >
-                  <Text style={styles.debitReportButtonText}>Завантажити фото</Text>
+                  <Text style={styles.debitReportButtonText}>{pickerLoader ? 'Обробка...' : reportPhoto && reportPhoto.uri ? `report.png / ${(reportPhoto.size / 1000000).toFixed(1)}MB` : 'Завантажити фото'}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -259,8 +291,8 @@ function Session(props) {
   }, [isVisible])
 
   const canProceed = useMemo(() => {
-    return endOfSession ? +endSum > 0 && endSum !== '' : +startSum > 0 && startSum !== '' && selected.length > 0
-  }, [startSum, endSum, selected])
+    return endOfSession ? +endSum > 0 && endSum !== '' && reportPhoto && reportPhoto.uri : +startSum > 0 && startSum !== '' && selected.length > 0
+  }, [startSum, endSum, selected, reportPhoto])
 
   return (
     <View style={[styles.wrapper, isVisible && { top: 0, }]}>
