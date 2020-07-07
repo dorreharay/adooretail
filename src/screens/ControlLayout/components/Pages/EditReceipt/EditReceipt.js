@@ -45,7 +45,7 @@ function EditReceipt(props) {
 
             <View style={{ width: '85%', marginTop: 20, }}>
               {settings.receipt_show_address && <Text style={styles.regular}>{currentAccount && currentAccount.address}</Text>}
-              <Text style={styles.regular}>Номер чека: #566FGHG-GGАО-АFG4</Text>
+              <Text style={styles.regular}>Номер чека: #XXXX-XXXXX-XXXX</Text>
               <Text style={styles.regular}>Касир: {currentAccount && currentAccount.localSessions.length > 0 && currentAccount.localSessions[currentAccount.localSessions.length - 1].employees[currentEmployee]}</Text>
               <Text style={styles.regular}>Друк: {getFormattedDate('YYYY-MM-DD HH:mm:ss')}</Text>
               <Text style={styles.regular}>Тип оплати: Готівка</Text>

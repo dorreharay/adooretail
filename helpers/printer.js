@@ -165,7 +165,7 @@ export async function printReceipt(receipt, address) {
   try {
     const currentStore = store.getState()
 
-    const { currentAccount, } = currentStore.user
+    const { currentAccount, settings, } = currentStore.user
     // const { bluetoothDevices, } = currentStore.temp
 
     const { receipt_name, receipt_description } = currentAccount
@@ -193,20 +193,28 @@ export async function printReceipt(receipt, address) {
 
     await BluetoothEscposPrinter.printerLineSpace(75)
 
-    await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
+    {
+      settings.receipt_show_subheader && (
+        await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
+      )
+    }
+
+    {
+      settings.receipt_show_subheader && (
+        await printRegularLine(currentAccount.address, { spaces: 1, paddingLeft: 2 })
+      )
+    }
 
     if (receipt) {
-      await printRegularLine('м. Вiнниця вул. Грушевського 15', { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Касир: ${parceCyrrilicText(receipt.employee)}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${receipt.transaction_time_end}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Тип оплати: ${parceCyrrilicText(receipt.payment_type === 'card' ? 'Картка' : 'Готівка')}`, { spaces: 1, paddingLeft: 2 })
     } else {
-      await printRegularLine('Тестова адреса', { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Номер чека: #тест`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Касир: Тест`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Друк: Тест`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Тип оплати: Тест`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Номер чека: #XXXX-XXXXX-XXXX`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Касир: ${currentAccount.localSessions.slice(-1).employees[currentEmployee]}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Тип оплати: Готівка`, { spaces: 1, paddingLeft: 2 })
     }
 
     await BluetoothEscposPrinter.printerLineSpace(20)
@@ -223,17 +231,47 @@ export async function printReceipt(receipt, address) {
 
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
-    if (receipt) {
-      await asyncForEach(receipt.receipt, async (item, index) => {
-        await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
-
-        await printRegularLine('', { spaces: 1, paddingLeft: 2 })
-
-        // if(item.size && item.size !== '') {
-        //   await printColumn([parceCyrrilicText(`${handleSize(item.size)}`), ``, ``, ``], { paddingLeft: 2 })
-        // }
-      })
+    if (!receipt) {
+      receipt.receipt = [
+        {
+          department: "kitchen",
+          hash_id: "32",
+          price: 75,
+          quantity: 1,
+          size: "M",
+          time: "2020-07-07 14:52:33",
+          title: 'Тестовий продукт',
+        },
+        {
+          department: "kitchen",
+          hash_id: "32",
+          price: 75,
+          quantity: 1,
+          size: "M",
+          time: "2020-07-07 14:52:33",
+          title: 'Тестовий продукт',
+        },
+        {
+          department: "kitchen",
+          hash_id: "32",
+          price: 75,
+          quantity: 1,
+          size: "M",
+          time: "2020-07-07 14:52:33",
+          title: 'Тестовий продукт',
+        }
+      ]
     }
+
+    await asyncForEach(receipt.receipt, async (item, index) => {
+      await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
+
+      await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+
+      // if(item.size && item.size !== '') {
+      //   await printColumn([parceCyrrilicText(`${handleSize(item.size)}`), ``, ``, ``], { paddingLeft: 2 })
+      // }
+    })
 
     if (receipt && receipt.discount !== '0%') {
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
