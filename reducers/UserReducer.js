@@ -418,7 +418,7 @@ const ACTION_HANDLERS = {
     return { ...state, currentAccount: { ...currentAccount, localSessions: [] }, }
   },
   [UPDATE_CURRENT_SESSIONS]: (state, action) => {
-    const { status, endCash, newSessionProp } = action.payload
+    const { status, endCash, reportPhoto, newSessionProp } = action.payload
     const { currentAccount } = state
 
     const localSessions = currentAccount.localSessions
@@ -443,6 +443,7 @@ const ACTION_HANDLERS = {
         ...currentSession,
         endTime: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
         endCash,
+        reportPhoto,
         total: currentSession.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false),
       }
 

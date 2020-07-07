@@ -110,7 +110,7 @@ function Session(props) {
   const endSession = async () => {
     if (!canProceed) return
 
-    dispatch(updateCurrentSession({ status: 'end', endCash: endSum }))
+    dispatch(updateCurrentSession({ status: 'end', endCash: endSum, reportPhoto: reportPhoto.uri, }))
     dispatch(restoreDefaultShift())
 
     setSubmitStatus(true)
@@ -140,7 +140,7 @@ function Session(props) {
         },
       }, (response) => {
         if (response.didCancel) {
-          throw new Error('error - handlePicker')
+          return
         }
 
         const terminalReportPhoto = 'data:image/jpeg;base64,' + response.data
