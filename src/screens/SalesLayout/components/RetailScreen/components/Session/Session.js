@@ -26,7 +26,10 @@ function Session(props) {
   const navigation = useNavigation()
 
   const currentSession = useSelector(currentSessionSelector)
-  const { employees, img_url, shift_start, shift_end, } = useSelector(state => state.user.currentAccount)
+  const employees = useSelector(state => state.user.currentAccount && state.user.currentAccount.employees)
+  const img_url = useSelector(state => state.user.currentAccount && state.user.currentAccount.img_url)
+  const shift_start = useSelector(state => state.user.currentAccount && state.user.currentAccount.shift_start)
+  const shift_end = useSelector(state => state.user.currentAccount && state.user.currentAccount.shift_end)
   const endOfSession = useSelector(state => state.temp.endOfSession)
   const modalStatus = useSelector(state => state.temp.modalStatus)
 
@@ -159,8 +162,8 @@ function Session(props) {
 
   const renderMainContent = () => {
     return (
-      <View>
-        <Text style={styles.heading}>{endOfSession ? modalStatus ? 'Закінчіть попередню касову зміну' : 'Закінчіть касову зміну' : 'Розпочніть касову зміну'}</Text>
+      <View style={{ width: '86%', paddingTop: 35, paddingBottom: 30, }}>
+        <Text style={styles.heading}>{endOfSession ? 'Закінчіть касову зміну' : 'Розпочніть касову зміну'}</Text>
 
         <View>
           <Text style={styles.label}>Готівкова каса на початку зміни</Text>
@@ -168,6 +171,7 @@ function Session(props) {
             <TextInput
               style={[styles.input, endOfSession && styles.disabled]}
               value={startSum}
+              placeholder='0'
               onChange={handleChange}
               maxLength={7}
               onFocus={clearText}
@@ -185,6 +189,7 @@ function Session(props) {
                 <TextInput
                   style={styles.input}
                   value={endSum}
+                  placeholder='0'
                   onChange={handleChange}
                   maxLength={7}
                   onFocus={clearText}
@@ -248,8 +253,8 @@ function Session(props) {
 
   const renderEmployeesList = () => {
     return (
-      <View style={{ width: '100%', padding: '8%', }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 15, marginBottom: 10, }}>
+      <View style={{ width: '86%', maxHeight: deviceHeight * 0.7, paddingTop: 30, }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15, }}>
           <Text style={[styles.heading, { marginTop: 0, marginBottom: 0, }]}>Працівники</Text>
           <TouchableOpacity style={styles.backButton} onPress={() => setEmployeesPicker(false)}>
             <FastImage
@@ -258,7 +263,7 @@ function Session(props) {
             />
           </TouchableOpacity>
         </View>
-        <ScrollView style={{ maxHeight: deviceHeight * 0.6, }} contentContainerStyle={{ paddingBottom: 25, }}>
+        <ScrollView style={{ maxHeight: deviceHeight * 0.65, }} contentContainerStyle={{ paddingBottom: 25, paddingRight: 20, }}>
           {employees.map((employee, index) => (
             <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderTopWidth: 1, borderTopColor: '#F2F2F2', }}
@@ -319,7 +324,7 @@ function Session(props) {
         keyboardOpeningTime={0}
         enableOnAndroid={true}
       >
-        <View style={[styles.container, employeesPickerOpened && { height: 600, }, endOfSession && { height: 640, }]}>
+        <View style={styles.container}>
           {employeesPickerOpened ? renderEmployeesList() : renderMainContent()}
         </View>
       </KeyboardAwareScrollView>

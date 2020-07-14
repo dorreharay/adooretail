@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef, } from "react";
-import { View, Text, Keyboard, TouchableOpacity, KeyboardAvoidingView, TextInput, } from "react-native";
+import {
+  View, Text, Keyboard, TouchableOpacity,
+  KeyboardAvoidingView, TextInput, ScrollView,
+} from "react-native";
 import _ from 'lodash';
 import { useDispatch } from 'react-redux';
-import { RNCamera } from 'react-native-camera';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DeviceInfo from 'react-native-device-info';
 import FastImage from "react-native-fast-image";
 import * as Progress from 'react-native-progress';
@@ -110,7 +113,11 @@ function NoAccount(props) {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainerStyle}
+      keyboardShouldPersistTaps={'handled'}
+    >
       <View style={styles.logoContainer}>
         <Logo width={50} height={50} />
       </View>
@@ -123,160 +130,99 @@ function NoAccount(props) {
         <Text style={styles.helpText}>Де такий знайти?</Text>
       </TouchableOpacity>
 
-      {cameraVisible ? (
-        <>
-          <Text style={styles.heading}>Проскануйте QR-код аккаунту</Text>
-          <Text style={styles.caption}>Покажіть на камеру QR-код з ідентифікатором закладу Adoo, щоб розпочати роботу</Text>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.awareContentContainerStyles}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        extraScrollHeight={40}
+        keyboardOpeningTime={0}
+        enableOnAndroid
+        keyboardShouldPersistTaps={'handled'}
+      >
 
-          <View style={styles.midContainer}>
-            <ChangeView
-              visible={errorVisible}
-              duration={300}
-              first={
-                <View style={{ flex: 1, width: styles.midContainer.width, backgroundColor: '#000000' }}>
-                  <RNCamera
-                    style={{ height: '100%', }}
-                    type={RNCamera.Constants.Type.back}
-                    androidCameraPermissionOptions={{
-                      title: 'Доступ до камери',
-                      message: 'Програма потребує дозвіл використання камери для зчитування QR-кодів',
-                      buttonPositive: 'Дозволити',
-                      buttonNegative: 'Відхилити',
-                    }}
-                    onGoogleVisionBarcodesDetected={handleQRCode}
+        <Text style={styles.heading}>Код-ідентифікатор закладу</Text>
+        <Text style={styles.caption}>Введіть 10-значний код закладу Adoo для початку роботи.</Text>
+
+        <View style={styles.midContainer}>
+          <ChangeView
+            visible={errorVisible}
+            duration={300}
+            first={
+              <KeyboardAvoidingView behavior="height">
+                <View>
+                  <TextInput
+                    ref={inputRef}
+                    style={styles.input}
+                    value={accountCode}
+                    onChangeText={(text) => setCode(text)}
+                    maxLength={10}
+                    keyboardType='decimal-pad'
+                    autoCapitalize='characters'
                   />
-                </View>
-              }
-              second={
-                <View style={styles.errorContainer}>
-                  <LottieView
-                    style={styles.llamaError}
-                    source={require('@lottie/lama-error.json')}
-                    autoPlay
-                    loop
-                  />
-
-                  <Text style={[styles.caption, { width: '100%', fontSize: 20, }]}>{error}</Text>
-
                   <TouchableOpacity
-                    style={styles.retryButton}
-                    onPress={reset}
-                    activeOpacity={0.8}
+                    style={styles.clearButton}
+                    onPress={() => setCode('')}
+                    activeOpacity={0.6}
                   >
                     <FastImage
-                      style={{ width: '35%', height: '35%', }}
-                      source={require('@images/reload.png')}
+                      style={{ width: 16, height: 16, }}
+                      source={require('@images/x_icon.png')}
                     />
                   </TouchableOpacity>
                 </View>
-              }
-            />
-          </View>
 
-          <TouchableOpacity
-            style={styles.loginCaption}
-            onPress={() => setCameraVisibility(!cameraVisible)}
-            activeOpacity={1}
-          >
-            <Text style={styles.changeText}>Ввести код вручну</Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-          <>
-            <Text style={styles.heading}>Введіть код-ідентифікатор</Text>
-            <Text style={styles.caption}>Введіть ідентифікатор закладу Adoo, щоб розпочати роботу.</Text>
-
-            <View style={styles.midContainer}>
-              <ChangeView
-                visible={errorVisible}
-                duration={300}
-                first={
-                  <KeyboardAvoidingView behavior="height">
-                    <View>
-                      <TextInput
-                        ref={inputRef}
-                        style={styles.input}
-                        value={accountCode}
-                        onChangeText={(text) => setCode(text)}
-                        maxLength={10}
-                        keyboardType='decimal-pad'
-                        autoCapitalize='characters'
-                        autoFocus
-                      />
-                      <TouchableOpacity
-                        style={styles.clearButton}
-                        onPress={() => setCode('')}
-                        activeOpacity={0.6}
-                      >
-                        <FastImage
-                          style={{ width: 16, height: 16, }}
-                          source={require('@images/x_icon.png')}
-                        />
-                      </TouchableOpacity>
-                    </View>
-
-                    <TouchableOpacity
-                      style={styles.submitButton}
-                      onPress={() => handleCode()}
-                      activeOpacity={0.8}
-                    >
-                      {loading ? (
-                        error ? (
-                          <FastImage
-                            style={{ width: '30%', height: '30%', }}
-                            source={require('@images/x_icon.png')}
-                          />
-                        ) : (
-                            <Progress.Circle
-                              endAngle={0.7} size={20} color={'#000000'}
-                              borderWidth={1.5} indeterminate={true}
-                            />
-                          )
-                      ) : (
-                          <FastImage
-                            style={{ width: '30%', height: '30%', }}
-                            source={require('@images/tick.png')}
-                          />
-                        )}
-                    </TouchableOpacity>
-                  </KeyboardAvoidingView>
-                }
-                second={
-                  <View style={styles.errorContainer}>
-                    <LottieView
-                      style={styles.llamaError}
-                      source={require('@lottie/lama-error.json')}
-                      autoPlay
-                      loop
-                    />
-
-                    <Text style={[styles.caption, { width: '100%', fontSize: 20, }]}>{error}</Text>
-
-                    <TouchableOpacity
-                      style={styles.retryButton}
-                      onPress={reset}
-                      activeOpacity={0.8}
-                    >
+                <TouchableOpacity
+                  style={styles.submitButton}
+                  onPress={() => handleCode()}
+                  activeOpacity={0.8}
+                >
+                  {loading ? (
+                    error ? (
                       <FastImage
-                        style={{ width: '35%', height: '35%', }}
-                        source={require('@images/reload.png')}
+                        style={{ width: '30%', height: '30%', }}
+                        source={require('@images/x_icon.png')}
                       />
-                    </TouchableOpacity>
-                  </View>
-                }
-              />
-            </View>
+                    ) : (
+                        <Progress.Circle
+                          endAngle={0.7} size={20} color={'#000000'}
+                          borderWidth={1.5} indeterminate={true}
+                        />
+                      )
+                  ) : (
+                      <FastImage
+                        style={{ width: '30%', height: '30%', }}
+                        source={require('@images/tick.png')}
+                      />
+                    )}
+                </TouchableOpacity>
+              </KeyboardAvoidingView>
+            }
+            second={
+              <View style={styles.errorContainer}>
+                <LottieView
+                  style={styles.llamaError}
+                  source={require('@lottie/lama-error.json')}
+                  autoPlay
+                  loop
+                />
 
-            <TouchableOpacity
-              style={styles.loginCaption}
-              onPress={() => setCameraVisibility(!cameraVisible)}
-              activeOpacity={1}
-            >
-              <Text style={styles.changeText}>Просканувати QR-код</Text>
-            </TouchableOpacity>
-          </>
-        )}
-    </View>
+                <Text style={[styles.caption, { width: '100%', fontSize: 20, }]}>{error}</Text>
+
+                <TouchableOpacity
+                  style={styles.retryButton}
+                  onPress={reset}
+                  activeOpacity={0.8}
+                >
+                  <FastImage
+                    style={{ width: '35%', height: '35%', }}
+                    source={require('@images/reload.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+            }
+          />
+        </View>
+      </KeyboardAwareScrollView>
+    </ScrollView>
   )
 }
 

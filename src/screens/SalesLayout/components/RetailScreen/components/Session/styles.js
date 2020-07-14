@@ -28,8 +28,6 @@ const base = {
     justifyContent: 'center',
     flexDirection: 'row',
     width: deviceWidth * 0.43,
-    height: 520,
-    paddingBottom: 5,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     zIndex: 12,
@@ -37,7 +35,7 @@ const base = {
   heading: {
     marginBottom: 40,
     color: '#000000',
-    fontSize: 36,
+    fontSize: 34,
     fontFamily: GILROY_BOLD,
   },
   label: {

@@ -134,8 +134,8 @@ function AppSessions(props) {
         isLoaded={initialLoadingVisibility}
         logoImage={require("@images/splash_logo.png")}
         backgroundColor={"#FFFFFF"}
-        logoHeight={250}
-        logoWidth={250}
+        logoHeight={200}
+        logoWidth={200}
       >
         <SharedBackground
           image={0}

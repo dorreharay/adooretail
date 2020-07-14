@@ -1,17 +1,17 @@
 import { Alert, } from 'react-native'
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
 import { BleManager as BluManager } from "react-native-ble-plx"
-// import BleManager from 'react-native-ble-manager';
+import BleManager from 'react-native-ble-manager';
 import BackgroundTimer from 'react-native-background-timer';
 import { setBluetoothDevices } from '@reducers/TempReducer'
 import store from '@store'
 
 const manager = new BluManager()
 
-// BleManager.start({ showAlert: false }).then(() => {
-//   // Success code
-//   console.log("Module initialized");
-// });
+BleManager.start({ showAlert: false }).then(() => {
+  // Success code
+  console.log("Module initialized");
+});
 
 import { getFormattedDate, } from '@dateFormatter'
 import { reject } from 'lodash';
@@ -73,15 +73,15 @@ export async function printNewBuffer(receipt) {
     const { accounts, currentAccount, settings, } = currentStore.user
     const { currentRoute, } = currentStore.temp
 
-    // await BleManager.scan([], 5, true)
+    await BleManager.scan([], 5, true)
 
-    // const devices = await BleManager.getBondedPeripherals([]);
+    const devices = await BleManager.getBondedPeripherals([]);
 
-    // const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
+    const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
 
-    // const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
+    const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
 
-    // console.log('alreadyConnected', alreadyConnected, printer)
+    console.log('alreadyConnected', alreadyConnected, printer)
 
     if (printer && !alreadyConnected) {
       await BluetoothManager.connect(printer.id)
@@ -170,17 +170,17 @@ export async function printReceipt(receipt, address) {
 
     const { receipt_name, receipt_description } = currentAccount
 
-    // await BleManager.scan([], 5, true)
+    await BleManager.scan([], 5, true)
 
-    // const devices = await BleManager.getBondedPeripherals([]);
+    const devices = await BleManager.getBondedPeripherals([]);
 
-    // const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
+    const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
 
-    // const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
+    const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
 
-    // if (printer && !alreadyConnected) {
-    //   await BluetoothManager.connect(printer.id)
-    // }
+    if (printer && !alreadyConnected) {
+      await BluetoothManager.connect(printer.id)
+    }
 
     await BluetoothEscposPrinter.printerInit()
 

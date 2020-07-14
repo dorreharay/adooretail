@@ -83,10 +83,20 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(800, {
+  maxHeight(700, {
+    heading: {
+      fontSize: 10,
+    },
+    caption: {
+      fontSize: 10,
+      lineHeight: 14,
+    },
     tabletImage: {
       width: deviceWidth * 0.67,
       height: deviceWidth * 0.57,
+    },
+    listItemText: {
+      fontSize: 5,
     },
   })
 );

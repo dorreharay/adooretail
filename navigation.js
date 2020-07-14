@@ -48,7 +48,7 @@ function AppContainer() {
   }
 
   useEffect(() => {
-    if (initialRoute === 'SalesLayout' && currentSession.endTime || currentAccount.localSessions.length === 0) {
+    if (initialRoute === 'SalesLayout' && currentSession.endTime || (currentAccount && currentAccount.localSessions.length === 0)) {
       dispatch(setSessionModalState(true))
     }
   }, [])

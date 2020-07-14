@@ -4,11 +4,16 @@ import { deviceWidth, deviceHeight, } from '@dimensions';
 
 const base = {
   container: {
+    backgroundColor: '#FFFFFF',
+  },
+  contentContainerStyle: {
     flex: 1,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
+  },
+  awareContentContainerStyles: {
+    alignItems: 'center',
+    paddingTop: deviceHeight * 0.15,
   },
   logoContainer: {
     position: 'absolute',
@@ -49,8 +54,7 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     width: deviceWidth * 0.65,
-    height: deviceHeight * 0.55,
-    marginVertical: 40,
+    height: deviceHeight * 0.5,
   },
   input: {
     textAlign: 'center',
@@ -106,11 +110,25 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(800, {
+  maxHeight(700, {
+    heading: {
+      color: '#000000',
+      fontSize: 16,
+      fontFamily: GILROY_SEMIBOLD,
+    },
+    caption: {
+      fontSize: 10,
+    },
+    loginHeading: {
+      fontSize: 6,
+    },
+    loginHeadingSuper: {
+      fontSize: 6,
+    },
     midContainer: {
-      width: deviceWidth * 0.52,
-      height: deviceHeight * 0.40,
-      marginVertical: 120,
+      width: deviceWidth * 0.42,
+      height: deviceHeight * 0.25,
+      marginVertical: 70,
     },
   }),
 

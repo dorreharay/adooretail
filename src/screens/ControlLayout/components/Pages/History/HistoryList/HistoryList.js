@@ -160,7 +160,7 @@ function HistoryList(props) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.receiptLeftButton}
-                    onPress={() => handleEditReceipt(receipt)}
+                    onPress={() => { return; handleEditReceipt(receipt) }}
                     activeOpacity={0.7}
                   >
                     <FastImage
