@@ -29,7 +29,7 @@ function Transaction(props) {
   const [amountFocused, setAmountFocused] = useState(false)
 
   const handleAmountChange = (e) => {
-    const value = e.nativeEvent.text.replace(/[^0-9]/g, '')
+    const value = e.nativeEvent.text.replace(/[^0-9.]/g, '')
 
     setAmount(value)
   }
@@ -96,12 +96,6 @@ function Transaction(props) {
       >
         <View style={styles.container}>
           <View style={styles.rightSide}>
-            <View style={{ flexDirection: 'row', width: '100%', height: 50, paddingLeft: '14%', alignItems: 'center', justifyContent: 'space-between', }}>
-              <Text style={[styles.headingText, { color: '#FFFFFF' }]}>
-                Тип
-              </Text>
-            </View>
-
             <View style={{ height: 20, }} />
 
             <TouchableOpacity
@@ -139,21 +133,6 @@ function Transaction(props) {
               />
               <Text style={[styles.typeItemText, selectedTransactionType === 'income' && styles.typeItemTextActive]}>Прибуток</Text>
             </TouchableOpacity>
-
-            {/* <TouchableOpacity
-              style={styles.submitButton}
-              onPress={handleSubmit}
-              activeOpacity={0.8}
-            >
-              <LinearGradient
-                start={{ x: 0, y: 1 }}
-                end={{ x: 1, y: 0 }}
-                colors={canProceed ? ['#DB3E69', '#EF9058'] : ['#2E2C2E', '#2E2C2E']}
-                style={styles.submitButtonGradient}
-              >
-                <Text style={[styles.submitButtonText, canProceed && { color: '#FFFFFF', }]}>Готово</Text>
-              </LinearGradient>
-            </TouchableOpacity> */}
           </View>
           <View style={styles.leftSide}>
             <View style={{ flexDirection: 'row', width: '100%', height: 50, alignItems: 'center', justifyContent: 'space-between', }}>
@@ -171,6 +150,10 @@ function Transaction(props) {
               </TouchableOpacity>
             </View>
 
+            <Text style={styles.smallHeader}>
+              Сума
+            </Text>
+
             <View style={styles.amountContainer}>
               <TextInput
                 value={amount}
@@ -181,23 +164,22 @@ function Transaction(props) {
                 onBlur={() => setAmountFocused(false)}
                 onChange={handleAmountChange}
                 style={styles.amountInput}
-                textAlign={'center'}
                 keyboardType='decimal-pad'
                 placeholder='0'
                 clearTextOnFocus
-                maxLength={5}
+                maxLength={7}
               />
-              <Text style={styles.headingText}>
+              <Text style={styles.amountCurrency}>
                 грн
-            </Text>
-              <Text style={[styles.headingText, { marginLeft: 5, textDecorationLine: 'underline' }]}>
+              </Text>
+              <Text style={[styles.amountCurrency, { marginLeft: 5, }]}>
                 {selectedTransactionType === 'delivery' && 'взято'}
                 {selectedTransactionType === 'incasation' && 'інкасовано'}
                 {selectedTransactionType === 'income' && 'покладено'}
               </Text>
             </View>
 
-            <Text style={[styles.headingText, { marginTop: '8%', }]}>
+            <Text style={styles.smallHeader}>
               Коментар
             </Text>
 
@@ -212,7 +194,7 @@ function Transaction(props) {
             />
 
             <TouchableOpacity 
-              style={{ width: '100%', height: '14%', marginTop: '8%', }}
+              style={{ width: '100%', height: '16%', marginTop: '8%', }}
               onPress={handleSubmit}
               activeOpacity={0.85}
             >

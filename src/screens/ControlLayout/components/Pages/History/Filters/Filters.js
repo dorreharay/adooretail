@@ -107,18 +107,18 @@ function Filters(props) {
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text>Витрати</Text>:</Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text>Витрати (транзакції)</Text>:</Text>
           <Text style={styles.paymentDetailsText}>{details && details.transactions.outcome && `-${details.transactions.outcome}` || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text>Інкасації</Text>:</Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text>Інкасації (транзакції)</Text>:</Text>
           <Text style={styles.paymentDetailsText}>{details && details.transactions.incasations && `-${details.transactions.incasations}` || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
-          <Text style={styles.paymentDetailsHeadingText}><Text>Прибуток</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details.transactions.outcome || 0} грн</Text>
+          <Text style={styles.paymentDetailsHeadingText}><Text>Прибуток (транзакції)</Text>:</Text>
+          <Text style={styles.paymentDetailsText}>{details && details.transactions.income || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>

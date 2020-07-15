@@ -444,7 +444,7 @@ const ACTION_HANDLERS = {
         endTime: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
         endCash,
         reportPhoto,
-        total: currentSession.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), false),
+        total: currentSession.receipts.length > 0 ? currentSession.receipts.reduce((accumulator, currentValue) => accumulator + (currentValue.total), 0) : 0,
       }
 
       updatedSessions = localSessions.map((localSession, localIndex) => {

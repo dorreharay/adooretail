@@ -40,6 +40,7 @@ function Session(props) {
   const [selected, setSelected] = useState([])
   const [submitStatus, setSubmitStatus] = useState(false)
   const [pickerLoader, setPickerLoader] = useState(false)
+  const [resultLoading, setResultLoading] = useState(false)
 
   const handleChange = (e) => {
     let value = e.nativeEvent.text
@@ -112,23 +113,17 @@ function Session(props) {
 
   const endSession = async () => {
     if (!canProceed) return
-
-    dispatch(updateCurrentSession({ status: 'end', endCash: endSum, reportPhoto: reportPhoto.uri, }))
-    dispatch(restoreDefaultShift())
-
-    setSubmitStatus(true)
+    navigation.jumpTo('Login')
 
     setTimeout(() => {
-      navigation.jumpTo('Login')
-
-      setSubmitStatus(false)
-
       dispatch(setEndOfSessionStatus(false))
-    }, 1000)
+      dispatch(updateCurrentSession({ status: 'end', endCash: endSum, reportPhoto: reportPhoto.uri, }))
+      dispatch(restoreDefaultShift())
 
-    await syncSessions(() => { }, null, 1)
+      syncSessions(() => { }, null, 1)
 
-    dispatch(resetSessions())
+      dispatch(resetSessions())
+    }, 1)
   }
 
   const handlePicker = async () => {
@@ -151,9 +146,9 @@ function Session(props) {
         setReportPhoto({ uri: terminalReportPhoto, size: response.fileSize, })
 
         setPickerLoader(false)
-      }) 
+      })
     } catch (error) {
-      
+
     } finally {
       setPickerLoader(false)
     }
@@ -237,14 +232,7 @@ function Session(props) {
             end={{ x: 1, y: 0 }}
             colors={canProceed ? ['#DB3E69', '#EF9058'] : ['#DB3E6955', '#EF905855']}
           >
-            {submitStatus ? (
-              <FastImage
-                style={{ width: 30, height: 30, }}
-                source={require('@images/tick_white.png')}
-              />
-            ) : (
-                <Text style={styles.linearButtonText}>Готово</Text>
-              )}
+            <Text style={styles.linearButtonText}>{resultLoading ? 'Обробка...' : 'Готово'}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_BOLD, PROBA_MEDIUM, } from '@fonts'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
@@ -33,10 +33,11 @@ const base = {
   },
   headingText: {
     color: '#343434',
-    fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontSize: 35,
+    fontFamily: GILROY_BOLD,
   },
   leftSide: {
+    justifyContent: 'center',
     width: '70%',
     height: '100%',
     padding: '5%',
@@ -47,6 +48,8 @@ const base = {
     width: '30%',
     height: '100%',
     paddingTop: 25,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
     backgroundColor: '#181619',
   },
   typeItem: {
@@ -58,7 +61,7 @@ const base = {
     backgroundColor: '#00000000',
   },
   typeItemActive: {
-    backgroundColor: '#2E2C2E',
+    backgroundColor: '#2E2C2E66',
   },
   typeItemText: {
     color: '#575757',
@@ -68,22 +71,34 @@ const base = {
   typeItemTextActive: {
     color: '#FFFFFF',
   },
+  smallHeader: {
+    marginTop: '6%',
+    color: '#343434',
+    fontSize: 16,
+    fontFamily: GILROY_MEDIUM,
+  },
   amountContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: '7%',
+    marginTop: '3%',
   },
   amountInput: {
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-start',
-    width: 100,
+    width: '40%',
     height: 65,
+    paddingHorizontal: 25,
     marginRight: 15,
-    borderWidth: 1.5,
-    borderColor: '#343434',
-    borderRadius: 3,
+    borderWidth: 3,
+    borderColor: '#F3F4F6',
+    borderRadius: 5,
 
+    color: '#343434',
+    fontSize: 25,
+    fontFamily: GILROY_MEDIUM,
+  },
+  amountCurrency: {
     color: '#343434',
     fontSize: 25,
     fontFamily: GILROY_MEDIUM,
@@ -94,13 +109,13 @@ const base = {
     alignSelf: 'flex-start',
     width: '97%',
     height: '30%',
-    marginTop: '10%',
+    marginTop: '3%',
     marginRight: 15,
     paddingTop: '5%',
     paddingBottom: '5%',
     padding: '5%',
-    borderWidth: 1.5,
-    borderColor: '#DFDFDF',
+    borderWidth: 3,
+    borderColor: '#F3F4F6',
     borderRadius: 3,
 
     color: '#343434',
@@ -112,7 +127,6 @@ const base = {
     position: 'absolute',
     bottom: -1,
     width: '100%',
-    height: 70,
     backgroundColor: '#2E2C2E',
   },
   submitButtonGradient: {
