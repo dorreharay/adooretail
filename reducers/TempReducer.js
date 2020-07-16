@@ -34,7 +34,7 @@ const initialState = {
   buffer: [null, null, null, null],
   oldReceiptState: [null, null, null, null],
   paymentModalVisibility: false,
-  menuVisible: false,
+  menuVisibility: false,
   transactionModalVisibility: false,
 };
 

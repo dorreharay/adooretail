@@ -1,5 +1,6 @@
 import store from '@store'
 import API from '@api'
+import { DURATION } from 'react-native-easy-toast'
 import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } from '@dateFormatter'
 import { START, END, NOT_ON_SHIFT } from '@statuses'
 import { syncDataWithStore, setNeedToReenter, setProducts, } from '@reducers/UserReducer'
@@ -51,6 +52,10 @@ export function updateLayout(products) {
 
 export const loadProducts = async (toastRef) => {
   try {
+    const orders = getState('orders')
+
+    const { layout } = orders
+
     toastRef.current.show("Синхронізація", DURATION.FOREVER);
 
     const data = await API.getProducts()
