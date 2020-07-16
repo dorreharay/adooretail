@@ -2,18 +2,14 @@ import React, { useRef, useState, useEffect, useMemo, } from 'react'
 import { Text, View, Image, TextInput, Platform, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
-import { syncSessions, } from '@helpers'
-import * as Progress from 'react-native-progress';
+import { syncSessions, loadProducts, } from '@helpers'
 import DeviceSettings from 'react-native-device-settings';
-import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
 import FastImage from 'react-native-fast-image'
-import { validateSessionRoutine, } from '@helpers'
 import _ from 'lodash'
 import styles from './styles'
 
+import { setMenuVisibility } from '@reducers/TempReducer'
 import { setLayout } from '@reducers/OrdersReducer'
-import { currentAccountSelector, } from '@selectors'
-import { performPrinterScanAndConnect } from '@printer'
 
 import SharedButton from '@shared/SharedButton';
 import Products from './Products/Products'
@@ -25,10 +21,7 @@ const offlineIcon = require('@images/status_offline.png')
 const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
-  const {
-    openMenu, loadProducts,
-    paymentModalVisible, navigation,
-  } = props;
+  const {} = props;
 
   const dispatch = useDispatch()
 
@@ -36,12 +29,9 @@ function RightSide(props) {
   const inputRef = useRef(null)
   const netInfo = useNetInfo();
 
-  
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
   const settings = useSelector(state => state.user.settings)
-  
-  const { paired, found } = useSelector(state => state.temp.bluetoothDevices)
 
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -53,7 +43,7 @@ function RightSide(props) {
     }
 
     if (currentAccount) {
-      loadProducts(currentAccount.id)
+      loadProducts()
       await syncSessions(() => { })
     }
   }
@@ -74,12 +64,6 @@ function RightSide(props) {
     }
 
     dispatch(setLayout(newLayout))
-  }
-  
-  const updatePairedDevices = async () => {
-    navigation.jumpTo('ControlLayout', {
-      screen: 1,
-    })
   }
 
   return (
@@ -137,7 +121,7 @@ function RightSide(props) {
           rotateOnPress loadAgain={loadAgain}
         />
         <SharedButton
-          onPress={openMenu}
+          onPress={() => dispatch(setMenuVisibility(true))}
           style={{ width: styles.menu.width, height: styles.menu.height, backgroundColor: '#FFFFFF' }}
           iconStyle={{ width: styles.menu.width - 24, height: styles.menu.height - 30, }}
           source={require('@images/menu.png')} scale={0.9}
@@ -145,7 +129,6 @@ function RightSide(props) {
       </View>
       <Products
         searchTerm={searchTerm}
-        paymentModalVisible={paymentModalVisible}
       />
     </View>
   )

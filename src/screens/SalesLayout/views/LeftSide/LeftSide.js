@@ -13,7 +13,7 @@ import { deviceHeight } from '@dimensions'
 import { getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
 import { printNewBuffer } from '@printer'
 import { updateLocalReceipt, } from '@reducers/UserReducer'
-import { clearCurrentReceipt, } from '@reducers/TempReducer'
+import { clearCurrentReceipt, setBuffer, setPaymentModalVisibility, setOldReceipt } from '@reducers/TempReducer'
 import { setSelectedReceipt, setReceiptEditState, } from '@reducers/OrdersReducer'
 
 import ClockIcon from '@images/wall-clock.svg'
@@ -27,11 +27,7 @@ const headerButtonSizes = { justifyContent: 'center', width: deviceHeight < 500 
 const headerIcon = { width: deviceHeight < 500 ? headerHeight - 55 : headerHeight - 50, height: deviceHeight < 500 ? headerHeight - 55 : headerHeight - 50, }
 
 function LeftSide(props) {
-  const {
-    setPaymentModalState,
-    buffer, setBuffer,
-    oldReceiptState, setOldReceipt,
-  } = props;
+  const {} = props;
 
   const dispatch = useDispatch()
   const navigation = useNavigation()
@@ -43,6 +39,8 @@ function LeftSide(props) {
   const updateModeData = useSelector(state => state.orders.updateModeData)
   const editedReceiptId = useSelector(state => state.orders.editedReceiptId)
   const editedReceiptPayload = useSelector(state => state.orders.editedReceiptPayload)
+  const buffer = useSelector(state => state.temp.buffer)
+  const oldReceiptState = useSelector(state => state.temp.oldReceiptState)
 
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
   const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))
@@ -70,7 +68,7 @@ function LeftSide(props) {
   const changePaymentModalState = (status) => {
     if (status && receipts[selectedReceiptIndex].length === 0) return
 
-    setPaymentModalState(status)
+    dispatch(setPaymentModalVisibility(status))
   }
 
   const checkQuantityChange = (newReceipt, oldReceipt, newDiff) => {
@@ -160,7 +158,7 @@ function LeftSide(props) {
   const updateBuffer = (data) => {
     const newBuffer = buffer.map((item, index) => index === selectedReceiptIndex ? data : item)
 
-    setBuffer(newBuffer)
+    dispatch(setBuffer(newBuffer))
   }
 
   const saveBuffer = async () => {
@@ -180,7 +178,7 @@ function LeftSide(props) {
 
         const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? newReceipt : item)
 
-        setOldReceipt(newOldReceipt)
+        dispatch(setOldReceipt(newOldReceipt))
         updateBuffer(bufferInstance)
       }
     } catch (error) {
@@ -196,24 +194,14 @@ function LeftSide(props) {
     let newDiff = []
 
     if (oldBuffer === null) {
-      console.log('-------> 0 буфер пустий')
-
       newDiff = newReceipt
     } else {
       newDiff = checkQuantityChange(newReceipt, oldReceipt, newDiff)
-
-      console.log('1', newDiff)
-
       newDiff = checkNewItems(newReceipt, oldReceipt, newDiff)
-
-      console.log('2', newDiff)
-
       newDiff = checkDeletedItems(newReceipt, oldReceipt, newDiff)
-
-      console.log('3', newDiff)
     }
 
-    console.log('newDiff ===>', newDiff)
+    console.log('%c%s', 'color: #FFFFFF; background: #AD6D87; padding: 2px 15px; border-radius: 2px; font: 0.8rem Tahoma;', 'Buffer', newDiff)
 
     if (newDiff.every(item => item === undefined)) return null
 

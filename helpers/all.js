@@ -49,6 +49,27 @@ export function updateLayout(products) {
   return newProducts
 }
 
+export const loadProducts = async (toastRef) => {
+  try {
+    toastRef.current.show("Синхронізація", DURATION.FOREVER);
+
+    const data = await API.getProducts()
+
+    if (!data) {
+      toastRef.current.close()
+
+      return null
+    }
+
+    updateLayout(data, layout)
+  } catch (error) {
+    console.warn('Failed to fetch products', error)
+    toastRef.current.show("Помилка мережі", 1000);
+  } finally {
+    toastRef.current.close()
+  }
+}
+
 export async function syncSessions(callback, newLocalSessions, customOffset) {
   if (!store) return
 
@@ -138,8 +159,8 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
     endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day')
   }
 
-  console.log('Shift validation', '- check enabled?', settings.shifts.enabled)
-  console.log('%c%s', 'color: #E7715E; font: 0.8rem Tahoma;', `${getFormattedDate('HH:mm', startOfShift)}  ------>  ${getFormattedDate('HH:mm', endOfShift)}`)
+  // console.log('Shift validation', '- check enabled?', settings.shifts.enabled)
+  // console.log('%c%s', 'color: #E7715E; font: 0.8rem Tahoma;', `${getFormattedDate('HH:mm', startOfShift)}  ------>  ${getFormattedDate('HH:mm', endOfShift)}`)
 
   const isValid = getIsBetween(currentAccountSession.startTime, startOfShift, endOfShift) && getIsBetween(null, startOfShift, endOfShift)
 

@@ -21,8 +21,7 @@ function PaymentType(props) {
     selectedType, enteredSum, toBePaid, invalidColor, status, setStatus,
     initialStatuses, resetStatus, setPaymentModalVisibility, buttonAccessible,
     handleChangeSum, receipt, saveReceipt, setAmountFocused,
-    isVisible, discounts, setActiveDiscount, activeDiscount, comment, setComment,
-    selectedService,
+    isVisible, discounts, setActiveDiscount, activeDiscount, setComment,
   } = props
 
   const settings = useSelector(state => state.user.settings)

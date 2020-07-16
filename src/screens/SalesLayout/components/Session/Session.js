@@ -12,13 +12,13 @@ import ImagePicker from 'react-native-image-picker';
 import { syncSessions, } from '@helpers'
 import { currentSessionSelector, } from '@selectors'
 import { setStartCash, setEmployees, updateCurrentSession, restoreDefaultShift, resetSessions, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus, setResetStatus, } from '@reducers/TempReducer'
+import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
 
 import { getFormattedDate, } from '@dateFormatter'
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 function Session(props) {
-  const { isVisible, setSessionModalVisible } = props
+  const {} = props
 
   const toastRef = useRef(null)
 
@@ -32,6 +32,7 @@ function Session(props) {
   const shift_end = useSelector(state => state.user.currentAccount && state.user.currentAccount.shift_end)
   const endOfSession = useSelector(state => state.temp.endOfSession)
   const modalStatus = useSelector(state => state.temp.modalStatus)
+  const sessionModalVisible = useSelector(state => state.temp.sessionModalVisible)
 
   const [startSum, setStartSum] = useState('0')
   const [endSum, setEndSum] = useState('0')
@@ -108,7 +109,7 @@ function Session(props) {
     dispatch(setEmployees([]))
     dispatch(setStartCash(0))
 
-    setSessionModalVisible(false)
+    dispatch(setSessionModalState(false))
   }
 
   const endSession = async () => {
@@ -131,11 +132,11 @@ function Session(props) {
 
     try {
       await ImagePicker.showImagePicker({
-        title: 'Вибрати фото звіту',
-        storageOptions: {
-          skipBackup: true,
-          path: 'images',
-        },
+        // title: 'Вибрати фото звіту',
+        // storageOptions: {
+        //   skipBackup: true,
+        //   path: 'images',
+        // },
       }, (response) => {
         if (response.didCancel) {
           return
@@ -284,23 +285,23 @@ function Session(props) {
   useEffect(() => {
     if (endOfSession) {
       setStartSum(currentSession.startSum)
-      if (isVisible) {
+      if (sessionModalVisible) {
         setStartSum(currentSession.startSum)
       }
     }
-  }, [isVisible])
+  }, [sessionModalVisible])
 
   const canProceed = useMemo(() => {
     return endOfSession ? +endSum > 0 && endSum !== '' && reportPhoto && reportPhoto.uri : +startSum > 0 && startSum !== '' && selected.length > 0
   }, [startSum, endSum, selected, reportPhoto, endOfSession])
 
   return (
-    <View style={[styles.wrapper, isVisible && { top: 0, }]}>
+    <View style={[styles.wrapper, sessionModalVisible && { top: 0, }]}>
       <TouchableOpacity
         style={styles.touchWrapper}
         onPress={() => {
           if (!endOfSession || modalStatus) return
-          setSessionModalVisible(false)
+          dispatch(setSessionModalState(false))
         }}
         activeOpacity={1}
       />

@@ -1,23 +1,28 @@
 import React, { useState, useEffect, } from 'react'
+import { useDispatch } from 'react-redux'
 import { View, Text, } from 'react-native'
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton';
+
+import { setPaymentModalVisibility } from '@reducers/TempReducer'
 
 import PaymentType from './PaymentType'
 import CodePayment from './CodePayment'
 
 function PaymentRightSide(props) {
   const {
-    total = '', receipt, setPaymentModalVisibility,
+    total = '', receipt,
     selectedType, status, setStatus, initialStatuses,
     buttonAccessible, resetStatus, enteredSum, setEnteredSum,
     saveReceipt, setButtonAccessibility,
     isVisible, activeDiscount, setActiveDiscount, 
     discounts, setDiscounts, comment, setComment,
     toBePaid, setToByPaid, setAmountFocused,
-    selectedService, setSelectedService,
+    selectedService,
   } = props
+
+  const dispatch = useDispatch()
 
   const [invalidColor, setInvalidColor] = useState(false)
 
@@ -75,7 +80,7 @@ function PaymentRightSide(props) {
         <SharedButton
           style={{ flex: 1, }}
           onPress={() => {
-            setPaymentModalVisibility(false)
+            dispatch(setPaymentModalVisibility(false))
             resetStatus()
           }}
           scale={0.9}
@@ -94,7 +99,7 @@ function PaymentRightSide(props) {
           invalidColor={invalidColor}
           status={status} setStatus={setStatus}
           initialStatuses={initialStatuses} resetStatus={resetStatus}
-          setPaymentModalVisibility={setPaymentModalVisibility}
+          setPaymentModalVisibility={(state) => dispatch(setPaymentModalVisibility(state))}
           handleChangeSum={handleChangeSum} saveReceipt={saveReceipt}
           isVisible={isVisible} toBePaid={toBePaid}  setToByPaid={setToByPaid}
           activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}

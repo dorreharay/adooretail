@@ -9,6 +9,11 @@ const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES'
 const SET_RESET_STATUS = 'SET_RESET_STATUS'
 const SET_HISTORY_PARAMS = 'SET_HISTORY_PARAMS'
 const SET_SESSION_MODAL_STATE = 'SET_SESSION_MODAL_STATE'
+const SET_BUFFER = 'SET_BUFFER'
+const SET_PAYMENT_MODAL_VISIBILITY = 'SET_PAYMENT_MODAL_VISIBILITY'
+const SET_OLD_RECEIPT = 'SET_OLD_RECEIPT'
+const SET_MENU_VISIBILITY = 'SET_MENU_VISIBILITY'
+const SET_TRANSACTION_VISIBILITY = 'SET_TRANSACTION_VISIBILITY'
 
 const initialState = {
   endOfSession: false,
@@ -25,8 +30,48 @@ const initialState = {
   historyParams: {
     date: getFormattedDate('YYYY-MM-DD'),
     sort: { type: 'asc', fields: ['transaction_time_end'] },
-  }
+  },
+  buffer: [null, null, null, null],
+  oldReceiptState: [null, null, null, null],
+  paymentModalVisibility: false,
+  menuVisible: false,
+  transactionModalVisibility: false,
 };
+
+export function setTransactionModalVisibility(payload) {
+  return {
+    type: SET_TRANSACTION_VISIBILITY,
+    payload
+  }
+}
+
+export function setMenuVisibility(payload) {
+  return {
+    type: SET_MENU_VISIBILITY,
+    payload
+  }
+}
+
+export function setOldReceipt(payload) {
+  return {
+    type: SET_OLD_RECEIPT,
+    payload
+  }
+}
+
+export function setPaymentModalVisibility(payload) {
+  return {
+    type: SET_PAYMENT_MODAL_VISIBILITY,
+    payload
+  }
+}
+
+export function setBuffer(payload) {
+  return {
+    type: SET_BUFFER,
+    payload
+  }
+}
 
 export function setModalStatus(payload) {
   return {
@@ -214,6 +259,21 @@ export function clearCurrentReceipt() {
 }
 
 const ACTION_HANDLERS = {
+  [SET_TRANSACTION_VISIBILITY]: (state, action) => {
+    return { ...state, transactionModalVisibility: action.payload }
+  },
+  [SET_MENU_VISIBILITY]: (state, action) => {
+    return { ...state, menuVisibility: action.payload }
+  },
+  [SET_OLD_RECEIPT]: (state, action) => {
+    return { ...state, oldReceiptState: action.payload }
+  },
+  [SET_PAYMENT_MODAL_VISIBILITY]: (state, action) => {
+    return { ...state, paymentModalVisibility: action.payload }
+  },
+  [SET_BUFFER]: (state, action) => {
+    return { ...state, buffer: action.payload }
+  },
   [SET_END_OF_SESSION_STATUS]: (state, action) => {
     return { ...state, endOfSession: action.payload }
   },

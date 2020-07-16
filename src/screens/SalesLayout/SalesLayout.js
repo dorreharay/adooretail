@@ -1,40 +1,47 @@
-import React, { useRef, useEffect, } from 'react';
-import { Text, View, } from 'react-native';
-import { useSelector, } from 'react-redux';
+import React, { useRef, useState, useEffect, } from 'react'
+import { View, } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 import _ from 'lodash'
 import styles from './styles'
 
-import SharedToast from '@shared/SharedToast/SharedToast';
-import RetailScreen from './components/RetailScreen/RetailScreen';
+import { loadProducts, } from '@helpers'
 
-import { performPrinterScanAndConnect, } from '@printer'
+import SharedToast from '@shared/SharedToast/SharedToast'
+import LeftSide from './views/LeftSide/LeftSide';
+import RightSide from './views/RightSide/RightSide';
+import Menu from './components/Menu/Menu';
+import Transaction from './components/Transaction/Transaction';
+import PaymentModal from './components/PaymentModal/PaymentModal';
+import Session from './components/Session/Session'
 
-function SalesLayout({ navigation, }) {
+function RetailScreen(props) {
+  const {} = props;
+  
   const toastRef = useRef(null)
 
-  const layout = useSelector(state => state.orders.layout)
-  const settings = useSelector(state => state.user.currentAccount)
+  const navigation = useNavigation()
 
   useEffect(() => {
-    if (settings && settings.printer_enabled) {
-      performPrinterScanAndConnect()
-    }
-  }, [settings])
+    loadProducts(toastRef)
+
+    navigation.addListener('focus', () => {
+      loadProducts(toastRef)
+    })
+  }, [])
 
   return (
     <View style={styles.container}>
-      <View style={styles.slider}>
-        <RetailScreen
-          toastRef={toastRef}
-          layout={layout}
-          navigation={navigation}
-          setModalStatus={() => { }}
-        />
-      </View>
+      <LeftSide />
+      <RightSide />
+      
+      <Menu />
+      <PaymentModal />
+      <Transaction />
+      <Session />
 
       <SharedToast ref={toastRef} />
     </View>
   )
 }
 
-export default SalesLayout
+export default RetailScreen

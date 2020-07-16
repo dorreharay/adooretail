@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector, } from 'react-redux'
 import BackgroundTimer from 'react-native-background-timer';
-import styles from '../../../../../styles'
+import styles from '../styles'
 
 import { clearCurrentReceipt } from '@reducers/TempReducer'
 

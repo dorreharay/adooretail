@@ -9,19 +9,21 @@ import FastImage from 'react-native-fast-image'
 
 import { syncSessions, } from '@helpers'
 import { currentSessionSelector, } from '@selectors'
+import { setTransactionModalVisibility } from '@reducers/TempReducer'
 import { saveTransaction } from '@reducers/UserReducer'
 
 import { getFormattedDate, } from '@dateFormatter'
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 function Transaction(props) {
-  const { isVisible, setTransactionModalVisiblity } = props
+  const {} = props
 
   const toastRef = useRef(null)
 
   const dispatch = useDispatch()
 
   const currentSession = useSelector(currentSessionSelector)
+  const transactionModalVisibility = useSelector(state => state.temp.transactionModalVisibility)
 
   const [selectedTransactionType, setSelectedTransactionType] = useState('delivery')
   const [amount, setAmount] = useState('0')
@@ -66,7 +68,7 @@ function Transaction(props) {
 
       toastRef.current.show("Транзакцію збережено", 1000);
 
-      setTransactionModalVisiblity(false)
+      dispatch(setTransactionModalVisibility(false))
     }
   }
 
@@ -74,17 +76,17 @@ function Transaction(props) {
     setAmount('0')
     setComment('')
     setSelectedTransactionType('delivery')
-  }, [isVisible])
+  }, [transactionModalVisibility])
 
   const canProceed = useMemo(() => {
     return +amount > 0 && comment !== ''
   }, [amount, comment])
 
   return (
-    <View style={[styles.wrapper, isVisible && { top: 0, }]}>
+    <View style={[styles.wrapper, transactionModalVisibility && { top: 0, }]}>
       <TouchableOpacity
         style={styles.touchWrapper}
-        onPress={() => setTransactionModalVisiblity(false)}
+        onPress={() => dispatch(setTransactionModalVisibility(false))}
         activeOpacity={1}
       />
       <KeyboardAwareScrollView
@@ -142,7 +144,7 @@ function Transaction(props) {
 
               <TouchableOpacity
                 style={styles.closeButton}
-                onPress={() => setTransactionModalVisiblity(false)}
+                onPress={() => dispatch(setTransactionModalVisibility(false))}
               >
                 <Text style={styles.closeText}>
                   Закрити

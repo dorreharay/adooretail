@@ -1,22 +1,23 @@
 import React, { useState, } from 'react'
 import { Text, View, TouchableOpacity, TouchableHighlight, Alert, } from 'react-native'
-import { useDispatch } from 'react-redux'
-import { default as EModal } from "react-native-simple-modal";
-import Modal, { SlideAnimation, ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native';
 import styles from './styles'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
-import { setEmployees, setStartCash, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus } from '@reducers/TempReducer';
+import { setStartCash, } from '@reducers/UserReducer'
+import { setEndOfSessionStatus, setMenuVisibility, setTransactionModalVisibility, setSessionModalState, } from '@reducers/TempReducer';
 
-import SharedButton from '@shared/SharedButton'
 import FastImage from 'react-native-fast-image';
 
 function Menu(props) {
-  const { isVisible, closeMenu, navigation, setTransactionModalVisiblity, setSessionModalVisible, } = props
+  const {} = props
 
   const dispatch = useDispatch()
+  const navigation = useNavigation()
+
+  const menuVisibility = useSelector(state => state.temp.menuVisibility)
 
   const [menuButtons] = useState([
     {
@@ -25,13 +26,14 @@ function Menu(props) {
         navigation.jumpTo('ControlLayout', {
           screen: 0,
         })
-        closeMenu()
+        dispatch(setMenuVisibility(false))
       }
     },
     {
       name: 'Створити транзакцію',
       onPress: () => {
-        closeMenu()
+        dispatch(setTransactionModalVisibility(true))
+        dispatch(setMenuVisibility(false))
       }
     },
     {
@@ -40,27 +42,27 @@ function Menu(props) {
         navigation.jumpTo('ControlLayout', {
           screen: 3,
         })
-        closeMenu()
+        dispatch(setMenuVisibility(false))
       }
     },
   ])
 
   const endSession = () => {
-    setSessionModalVisible(true)
+    dispatch(setSessionModalState(true))
     dispatch(setStartCash(0))
     dispatch(setEndOfSessionStatus(true))
-    closeMenu()
+    dispatch(setMenuVisibility(false))
 
     // navigation.jumpTo('InputCash')
   }
 
   return (
     <>
-      {isVisible && (
+      {menuVisibility && (
         <>
         <TouchableOpacity 
           style={{ position: 'absolute', top: 0, left: 0, width: deviceWidth, height: deviceHeight, backgroundColor: '#00000066' }}
-          onPress={() => closeMenu()}
+          onPress={() => dispatch(setMenuVisibility(false))}
         />
         <View style={styles.modal}>
           {menuButtons.map((button, index) => (
@@ -68,7 +70,7 @@ function Menu(props) {
               style={[styles.modalItem, index === 0 && styles.withTopBorderRadius]}
               onPress={() => {
                 if (index === 1) {
-                  setTransactionModalVisiblity(true)
+                  dispatch(setTransactionModalVisibility(true))
                 }
                 button.onPress()
               }}

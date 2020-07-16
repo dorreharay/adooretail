@@ -12,7 +12,7 @@ import { deviceWidth, deviceHeight } from '@dimensions'
 import { updateLayout as updateProductsLayout } from '@helpers'
 
 function Products(props) {
-  const { searchTerm, paymentModalVisible, } = props;
+  const { searchTerm, } = props;
 
   const scrollView = useRef(null)
 
@@ -20,6 +20,7 @@ function Products(props) {
 
   const layout = useSelector(state => state.orders.layout)
   const currentAccount = useSelector(state => state.user.currentAccount)
+  const paymentModalVisibility  = useSelector(state => state.temp.paymentModalVisibility)
 
   const products = currentAccount && currentAccount.products || null
 
@@ -29,10 +30,10 @@ function Products(props) {
   const [savedActiveCategoryPath, setSavedActiveCategoryPath] = useState({ index: 0, key: 0 })
 
   useMemo(() => {
-    if (!paymentModalVisible) {
+    if (!paymentModalVisibility) {
       setCategoryVisibility(false)
     }
-  }, [paymentModalVisible])
+  }, [paymentModalVisibility])
 
   const updateLayout = (productsArg, cardsPerRow) => {
     function chunkArray(myArray, chunk_size) {

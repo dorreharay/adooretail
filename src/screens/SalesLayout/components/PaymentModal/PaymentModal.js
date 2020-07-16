@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import BackgroundTimer from 'react-native-background-timer';
 import styles from './styles'
 
+import { setBuffer, setPaymentModalVisibility, setOldReceipt, } from '@reducers/TempReducer'
 import { syncReceipt, setCurrentService, } from '@reducers/UserReducer'
 import { printReceipt } from '@printer'
 
@@ -20,7 +21,7 @@ import DeliveryPickerOld from './components/DeliveryPickerOld/DeliveryPickerOld'
 import { deviceWidth, deviceHeight } from '@dimensions'
 
 const PaymentModal = (props) => {
-  const { isVisible, setPaymentModalVisibility, buffer, setBuffer, oldReceiptState, setOldReceipt, } = props;
+  const {} = props;
 
   const timerRef1 = useRef(null)
   const timerRef2 = useRef(null)
@@ -36,6 +37,9 @@ const PaymentModal = (props) => {
   const currentAccount = useSelector(state => state.user.currentAccount)
   const receipts = useSelector(state => state.orders.receipts)
   const selectedReceiptIndex = useSelector(state => state.orders.selectedReceiptIndex)
+  const buffer = useSelector(state => state.temp.buffer)
+  const paymentModalVisibility  = useSelector(state => state.temp.paymentModalVisibility)
+  const oldReceiptState = useSelector(state => state.temp.oldReceiptState)
 
   const initialStatuses = {
     initial: {
@@ -108,15 +112,17 @@ const PaymentModal = (props) => {
       service: currentAccount && currentAccount.available_services ? currentAccount.available_services[currentService].id : '',
     }
 
-    if (!payload) return
+    if (!payload) {
+      return
+    }
 
     const newBuffer = buffer.map((item, index) => index === selectedReceiptIndex ? null : item)
 
-    setBuffer(newBuffer)
+    dispatch(setBuffer(newBuffer))
 
     const newOldReceipt = oldReceiptState.map((item, index) => index === selectedReceiptIndex ? null : item)
 
-    setOldReceipt(newOldReceipt)
+    dispatch(setOldReceipt(newOldReceipt))
 
     try {
       if (settings.printer_enabled) {
@@ -142,7 +148,7 @@ const PaymentModal = (props) => {
       imageSource: require('@images/cash.png'),
       onPress: (callBack) => {
         callBack()
-        setPaymentModalVisibility(false)
+        dispatch(setPaymentModalVisibility(false))
       },
       buttonText: 'Підтвердити',
     },
@@ -175,13 +181,13 @@ const PaymentModal = (props) => {
         selectPType(pTypes[1])
       }
     }
-  }, [isVisible, settings,])
+  }, [paymentModalVisibility, settings,])
 
   const handleCardPayment = () => {
     setStatus(initialStatuses.success)
 
     BackgroundTimer.setTimeout(() => {
-      setPaymentModalVisibility(false)
+      dispatch(setPaymentModalVisibility(false))
       setButtonAccessibility(true)
     }, 500)
   }
@@ -217,13 +223,13 @@ const PaymentModal = (props) => {
   }, [])
 
   // useEffect(() => {
-  //   if(isVisible) {
+  //   if(paymentModalVisibility) {
   //     setModalOffset(new Animated.Value(0))
   //   } else {
   //     setModalOffset(new Animated.Value(2000))
   //   }
   //   resetStatus()
-  // }, [isVisible])
+  // }, [paymentModalVisibility])
 
   useEffect(() => {
     const percent = discounts[activeDiscount].percent
@@ -246,10 +252,10 @@ const PaymentModal = (props) => {
   }, [receipts, selectedReceiptIndex])
 
   return (
-    <View style={[styles.paymentWrapperContainer, { top: 4000, }, isVisible && { top: modalOffset, },]}>
+    <View style={[styles.paymentWrapperContainer, { top: 4000, }, paymentModalVisibility && { top: modalOffset, },]}>
       <TouchableOpacity
         style={styles.paymentWrapper}
-        onPress={() => setPaymentModalVisibility(false)}
+        onPress={() => dispatch(setPaymentModalVisibility(false))}
         activeOpacity={1}
       />
       <KeyboardAwareScrollView
@@ -271,13 +277,12 @@ const PaymentModal = (props) => {
           />
           <PaymentRightSide
             selectedType={selectedType}
-            setPaymentModalVisibility={setPaymentModalVisibility}
             initialStatuses={initialStatuses}
             status={status} total={receiptSum}
             setStatus={setStatus} resetStatus={resetStatus}
             buttonAccessible={buttonAccessible}
             enteredSum={enteredSum} saveReceipt={saveReceipt}
-            setEnteredSum={setEnteredSum} isVisible={isVisible}
+            setEnteredSum={setEnteredSum} paymentModalVisibility={paymentModalVisibility}
             setButtonAccessibility={setButtonAccessibility}
             activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
             discounts={discounts} setDiscounts={setDiscounts}

@@ -9,7 +9,7 @@ function CodePayment(props) {
   return (
     <View style={styles.discountContainer}>
       <View style={styles.cameraContainer}>
-        <RNCamera
+        {/* <RNCamera
           style={{ width: '100%', height: '100%', }}
           type={RNCamera.Constants.Type.front}
           androidCameraPermissionOptions={{
@@ -21,7 +21,7 @@ function CodePayment(props) {
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
             // setTimeout(() => navigation.jumpTo('Login'), 250)
           }}
-        />
+        /> */}
       </View>
     </View>
 

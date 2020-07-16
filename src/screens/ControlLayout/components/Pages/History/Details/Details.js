@@ -104,10 +104,6 @@ function Details(props) {
     return { todayCardSum, todayCashSum, transactionsDelivery, transactionsIncasations, transactionsIncome }
   }, [currentAccount, activeFilter])
 
-  const openMenu = () => {
-    menuRef.current.show()
-  }
-
   const loadAgain = () => {
     setLoadingStatus(true)
 
