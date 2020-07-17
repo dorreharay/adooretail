@@ -22,17 +22,17 @@ function RetailScreen(props) {
   const navigation = useNavigation()
 
   useEffect(() => {
-    loadProducts(toastRef)
+    loadProducts(toastRef?.current)
 
     navigation.addListener('focus', () => {
-      loadProducts(toastRef)
+      loadProducts(toastRef?.current)
     })
   }, [])
 
   return (
     <View style={styles.container}>
       <LeftSide />
-      <RightSide />
+      <RightSide toastRef={toastRef} />
       
       <Menu />
       <PaymentModal />

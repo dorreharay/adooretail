@@ -6,15 +6,13 @@ import BackgroundTimer from 'react-native-background-timer';
 import { setBluetoothDevices } from '@reducers/TempReducer'
 import store from '@store'
 
+import { getFormattedDate, } from '@dateFormatter'
+
 const manager = new BluManager()
 
 BleManager.start({ showAlert: false }).then(() => {
-  // Success code
-  console.log("Module initialized");
+  console.log('%c%s', 'color: #FFFFFF; background: #016964; padding: 2px 15px; border-radius: 2px; font: 0.8rem Tahoma;', 'Bluetooth module initialized')
 });
-
-import { getFormattedDate, } from '@dateFormatter'
-import { reject } from 'lodash';
 
 const printOptions = {
   encoding: 'CP866',
@@ -161,16 +159,19 @@ async function asyncForEach(array, callback) {
   }
 }
 
-export async function printReceipt(receipt, address) {
+export async function printReceipt(receipt) {
   try {
     const currentStore = store.getState()
 
     const { currentAccount, settings, } = currentStore.user
-    // const { bluetoothDevices, } = currentStore.temp
 
     const { receipt_name, receipt_description } = currentAccount
 
-    await BleManager.scan([], 5, true)
+    const hasContact = await BluetoothManager.isBluetoothEnabled()
+
+    if(!hasContact) {
+      await BluetoothManager.enableBluetooth()
+    }
 
     const devices = await BleManager.getBondedPeripherals([]);
 

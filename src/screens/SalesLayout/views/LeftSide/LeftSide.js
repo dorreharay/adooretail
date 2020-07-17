@@ -1,30 +1,25 @@
 import React, { useRef, useState, useEffect, useMemo, } from 'react'
 import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight, } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector, } from 'react-redux'
+import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient'
 import BackgroundTimer from 'react-native-background-timer';
-import FastImage from 'react-native-fast-image'
 import _ from 'lodash'
 import styles from './styles'
 
 import { deviceHeight } from '@dimensions'
-
-import { getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
+import { getUpperCaseDate, } from '@dateFormatter'
 import { printNewBuffer } from '@printer'
+import { headerHeight, headerButtonSizes, headerIcon, lsInstance, } from '@constants'
+
 import { updateLocalReceipt, } from '@reducers/UserReducer'
-import { clearCurrentReceipt, setBuffer, setPaymentModalVisibility, setOldReceipt } from '@reducers/TempReducer'
+import {  clearCurrentReceipt, setBuffer, setPaymentModalVisibility, setOldReceipt, } from '@reducers/TempReducer'
 import { setSelectedReceipt, setReceiptEditState, } from '@reducers/OrdersReducer'
 
 import ClockIcon from '@images/wall-clock.svg'
 
 import SharedButton from '@shared/SharedButton';
 import Receipt from './components/Receipt';
-
-const headerHeight = 68
-
-const headerButtonSizes = { justifyContent: 'center', width: deviceHeight < 500 ? headerHeight - 30 : headerHeight, height: deviceHeight < 500 ? headerHeight - 30 : headerHeight, }
-const headerIcon = { width: deviceHeight < 500 ? headerHeight - 55 : headerHeight - 50, height: deviceHeight < 500 ? headerHeight - 55 : headerHeight - 50, }
 
 function LeftSide(props) {
   const {} = props;
@@ -314,7 +309,7 @@ function LeftSide(props) {
           <View style={[styles.header, { paddingLeft: 25, height: headerHeight, }]}>
             <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '75%', flexDirection: 'row' }}>
               {receipts.map((receiptInstance, index) => (
-                <View style={[styles.lsInstanceContainer, { width: deviceHeight < 500 ? headerHeight - 30 : headerHeight - 20, height: deviceHeight < 500 ? headerHeight - 30 : headerHeight - 20, }]} key={index}>
+                <View style={[styles.lsInstanceContainer, lsInstance]} key={index}>
                   <SharedButton
                     onPress={() => dispatch(setSelectedReceipt(index))}
                     style={{ flex: 1, }}
@@ -401,25 +396,6 @@ function LeftSide(props) {
             </TouchableOpacity>
           </View>
         )}
-
-      {/* {updateModeData && (
-        <View style={{ flexDirection: 'row', width: '100%', }}>
-          <TouchableOpacity
-            onPress={() => { }}
-            style={{ flexDirection: 'row', justifyContent: 'center', width: '50%', paddingVertical: 15, backgroundColor: paymentColorSchema.color }}
-            activeOpacity={0.6}
-          >
-            <Text style={[styles.lspreText, { color: '#FFFFFF', },]}>Готівка</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => { }}
-            style={{ flexDirection: 'row', justifyContent: 'center', width: '50%', paddingVertical: 15, }}
-            activeOpacity={0.6}
-          >
-            <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>Картка</Text>
-          </TouchableOpacity>
-        </View>
-      )} */}
 
       <ScrollView
         style={styles.receipts}

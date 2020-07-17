@@ -150,7 +150,6 @@ const PaymentModal = (props) => {
         callBack()
         dispatch(setPaymentModalVisibility(false))
       },
-      buttonText: 'Підтвердити',
     },
     {
       index: 1,
@@ -161,7 +160,6 @@ const PaymentModal = (props) => {
         callBack()
         handleCardPayment()
       },
-      buttonText: 'Підтвердити розрахунок',
     },
   ])
   const [selectedType, selectPType] = useState(pTypes[0])

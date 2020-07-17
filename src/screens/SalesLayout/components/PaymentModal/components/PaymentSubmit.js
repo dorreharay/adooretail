@@ -55,7 +55,7 @@ function PaymentSubmit(props) {
           colors={['#DB3E69', '#EF9058']}
           style={[styles.paymentSubmitButtonGradient, !buttonAccessible && { opacity: 0.6 }]}
         >
-          <Text style={styles.paymentSubmitButtonText}>{buttonText}</Text>
+          <Text style={styles.paymentSubmitButtonText}>Підтвердити</Text>
         </LinearGradient>
       </TouchableOpacity>
     </View>

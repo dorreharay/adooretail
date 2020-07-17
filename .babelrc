@@ -14,6 +14,7 @@
           "@fonts": "./config/fonts",
           "@blockSizes": "./config/blockSizes",
           "@dimensions": "./helpers/dimensions",
+          "@constants": "./constants",
           "@keyboards": "./helpers/keyboards",
           "@dateFormatter": "./helpers/dateFormatter",
           "@requests": "./helpers/requests",

@@ -56,12 +56,16 @@ export const loadProducts = async (toastRef) => {
 
     const { layout } = orders
 
-    toastRef.current.show("Синхронізація", DURATION.FOREVER);
+    if(toastRef) {
+      toastRef.show("Синхронізація", DURATION.FOREVER);
+    }
 
     const data = await API.getProducts()
 
     if (!data) {
-      toastRef.current.close()
+      if(toastRef) {
+        toastRef.close()
+      }
 
       return null
     }
@@ -69,9 +73,13 @@ export const loadProducts = async (toastRef) => {
     updateLayout(data, layout)
   } catch (error) {
     console.warn('Failed to fetch products', error)
-    toastRef.current.show("Помилка мережі", 1000);
+    if(toastRef) {
+      toastRef.show("Помилка мережі", 1000);
+    }
   } finally {
-    toastRef.current.close()
+    if(toastRef) {
+      toastRef.close()
+    }
   }
 }
 

@@ -108,7 +108,7 @@ const base = {
     justifyContent: 'center',
     alignSelf: 'flex-start',
     width: '97%',
-    height: '30%',
+    height: '31%',
     marginTop: '3%',
     marginRight: 15,
     paddingTop: '5%',
@@ -158,8 +158,8 @@ const base = {
   },
   paymentSubmitButtonText: {
     color: '#FFFFFF',
-    fontSize: 25,
-    fontFamily: PROBA_MEDIUM,
+    fontSize: 26,
+    fontFamily: GILROY_MEDIUM,
   },
 };
 

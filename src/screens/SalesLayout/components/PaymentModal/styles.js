@@ -54,8 +54,8 @@ const base = {
   },
   paymentSubmitButtonText: {
     color: '#FFFFFF',
-    fontSize: 25,
-    fontFamily: PROBA_MEDIUM,
+    fontSize: 26,
+    fontFamily: GILROY_MEDIUM,
   },
   paymentHeadingContainer: {
     flexDirection: 'row',

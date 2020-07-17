@@ -9,6 +9,7 @@ import { setPaymentModalVisibility } from '@reducers/TempReducer'
 
 import PaymentType from './PaymentType'
 import CodePayment from './CodePayment'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function PaymentRightSide(props) {
   const {
@@ -77,16 +78,16 @@ function PaymentRightSide(props) {
         <Text style={styles.headingText}>{selectedType.index !== 2 ? 'Деталі оплати' : 'Відскануйте QR-код'}</Text>
 
       <View style={styles.cancelButton}>
-        <SharedButton
-          style={{ flex: 1, }}
+        <TouchableOpacity
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
           onPress={() => {
             dispatch(setPaymentModalVisibility(false))
             resetStatus()
           }}
-          scale={0.9}
+          activeOpacity={0.7}
         >
           <Text style={styles.cancelButtonText}>Скасувати</Text>
-        </SharedButton>
+        </TouchableOpacity>
       </View>
         
       </View>

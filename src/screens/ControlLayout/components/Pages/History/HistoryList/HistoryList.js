@@ -195,8 +195,8 @@ function HistoryList(props) {
                 >
                   <Text style={styles.receiptSummaryText}>Зміст чеку:</Text>
 
-                  {receipt.receipt.map(item => (
-                    <View style={{ width: '100%', borderBottomWidth: 1.5, borderBottomColor: '#F2F2F2', marginBottom: 10, }}>
+                  {receipt.receipt.map((item, index) => (
+                    <View style={{ width: '100%', borderBottomWidth: 1.5, borderBottomColor: '#F2F2F2', marginBottom: 10, }} key={index}>
                       <Text style={[styles.receiptSummaryReceiptText, { marginBottom: 5, }]}>{item.title}{item.size ? ', ' + item.size : ''}</Text>
                       <Text style={styles.receiptSummaryReceiptText}>@{item.price}, - {item.quantity} шт - {item.price * item.quantity} грн</Text>
                     </View>

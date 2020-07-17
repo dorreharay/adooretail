@@ -84,7 +84,7 @@ const base = {
   },
   waitingText: {
     color: '#343434',
-    fontSize: 25,
+    fontSize: 24,
     fontFamily: GILROY_REGULAR,
   },
   changeText: {
@@ -103,7 +103,7 @@ const base = {
   },
   cancelButtonText: {
     color: '#343434',
-    fontSize: 17,
+    fontSize: 18,
     fontFamily: GILROY_REGULAR,
   },
   discountContainer: {

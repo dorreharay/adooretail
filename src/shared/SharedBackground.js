@@ -16,7 +16,7 @@ function SharedBackground({ image, children, }) {
   const activeBackgroundIndex = useSelector(state => state.user.activeBackgroundIndex)
 
   const [backgrounds] = useState([
-    require('@images/background-adv7.png'),
+    require('@images/background-adv1.png'),
     require('@images/background-adv8.png'),
     require('@images/background-adv9.png'),
     require('@images/background-adv10.png'),

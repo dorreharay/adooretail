@@ -177,7 +177,7 @@ function Transaction(props) {
               <Text style={[styles.amountCurrency, { marginLeft: 5, }]}>
                 {selectedTransactionType === 'delivery' && 'взято'}
                 {selectedTransactionType === 'incasation' && 'інкасовано'}
-                {selectedTransactionType === 'income' && 'покладено'}
+                {selectedTransactionType === 'income' && 'внесено'}
               </Text>
             </View>
 
@@ -196,7 +196,7 @@ function Transaction(props) {
             />
 
             <TouchableOpacity 
-              style={{ width: '100%', height: '16%', marginTop: '8%', }}
+              style={{ width: '100%', height: '17%', marginTop: '8%', }}
               onPress={handleSubmit}
               activeOpacity={0.85}
             >

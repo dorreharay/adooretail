@@ -164,6 +164,7 @@ function Products(props) {
         style={[styles.container, { top: categoryVisible ? -4000 : 0 }]}
         contentContainerStyle={{ paddingBottom: 50, }}
         showsVerticalScrollIndicator={false}
+        bounces={false}
       >
         <View style={{ flex: 1, }}>
           {actualList.map((row, index) => (

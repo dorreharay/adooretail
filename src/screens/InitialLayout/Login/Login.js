@@ -6,12 +6,14 @@ import Ripple from 'react-native-material-ripple';
 import DeviceInfo from 'react-native-device-info';
 import Toast, { DURATION } from 'react-native-easy-toast'
 import Svg, { Circle } from 'react-native-svg';
+import Logo from '@images/logo-big.svg'
 import styles from './styles';
 
-import { currentSessionSelector, currentAccountSelector, } from '@selectors'
+import { currentSessionSelector, } from '@selectors'
 import { loginKeyboardLayout } from '@keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
+import SharedButton from '@shared/SharedButton'
 
 import { setNeedToReenter, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
@@ -152,41 +154,50 @@ function Login(props) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>хід за допомогою пін коду</Text>
-      <Animated.View style={[styles.idDots, { left: animatedValue }]}>
-        {passwordArray.map((item, index) => (
-          <Svg width={styles.dot.width} height={styles.dot.height} key={index}>
-            <Circle
-              cx={styles.dot.cx}
-              cy={styles.dot.cy}
-              r={styles.dot.r}
-              strokeWidth="1.5"
-              stroke="white"
-              fill={item.entered ? 'white' : "#33333300"}
-            />
-          </Svg>
-        ))}
-      </Animated.View>
-
-      <Text style={styles.loginCaption}>Device ID можна змінити в налаштування Adoo Cloud Account</Text>
-      <View style={styles.lsNumpad}>
-        {loginKeyboardLayout.map((num, index) => (
-          <Ripple
-            style={styles.lsNum}
-            onPress={() => num.disabled ? null : handleKeyPress(num.value)}
-            rippleColor={`#858585${num.disabled ? '00' : ''}`}
-            rippleContainerBorderRadius={50} rippleFades rippleCentered key={index}
-          >
-            <Text style={styles.lsNumText}>{num.value}</Text>
-          </Ripple>
-        ))}
-        <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#858585'} rippleContainerBorderRadius={50} rippleCentered>
-          <Image style={styles.erase} source={require('@images/erase.png')} fadeDuration={0} />
-        </Ripple>
+    <View style={{ flex: 1, }}>
+      <View
+        style={styles.logoContainer}
+        onPress={() => { }}
+        scale={0.85}
+      >
+        <Logo width={40} height={40} />
       </View>
-      <LoginLoader active={loading} />
-      <Toast ref={toast} />
+      <View style={styles.container}>
+        <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>ведіть код доступу</Text>
+        <Animated.View style={[styles.idDots, { left: animatedValue }]}>
+          {passwordArray.map((item, index) => (
+            <Svg width={styles.dot.width} height={styles.dot.height} key={index}>
+              <Circle
+                cx={styles.dot.cx}
+                cy={styles.dot.cy}
+                r={styles.dot.r}
+                strokeWidth="1.5"
+                stroke="white"
+                fill={item.entered ? 'white' : "#33333300"}
+              />
+            </Svg>
+          ))}
+        </Animated.View>
+
+        <Text style={styles.loginCaption}>Код можна змінити в налаштування Adoo Cloud Account</Text>
+        <View style={styles.lsNumpad}>
+          {loginKeyboardLayout.map((num, index) => (
+            <Ripple
+              style={styles.lsNum}
+              onPress={() => num.disabled ? null : handleKeyPress(num.value)}
+              rippleColor={`#FFFFFF66${num.disabled ? '00' : ''}`}
+              rippleContainerBorderRadius={50} rippleFades rippleCentered key={index}
+            >
+              <Text style={styles.lsNumText}>{num.value}</Text>
+            </Ripple>
+          ))}
+          <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#FFFFFF'} rippleContainerBorderRadius={50} rippleCentered>
+            <Image style={styles.erase} source={require('@images/erase.png')} fadeDuration={0} />
+          </Ripple>
+        </View>
+        <LoginLoader active={loading} />
+        <Toast ref={toast} />
+      </View>
     </View>
   )
 }

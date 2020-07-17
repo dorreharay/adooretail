@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, } from 'react'
+import React, { useRef, useState, useEffect, useCallback, } from 'react'
 import { Text, View, Image, TextInput, Platform, } from 'react-native'
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useSelector, useDispatch } from 'react-redux'
@@ -14,14 +14,12 @@ import { setLayout } from '@reducers/OrdersReducer'
 import SharedButton from '@shared/SharedButton';
 import Products from './Products/Products'
 
-// import API from '../../../../../../../sockets/api'
-
 const onlineIcon = require('@images/status_online.png')
 const offlineIcon = require('@images/status_offline.png')
 const waitingIcon = require('@images/status_waiting.png')
 
 function RightSide(props) {
-  const {} = props;
+  const { toastRef, } = props;
 
   const dispatch = useDispatch()
 
@@ -35,6 +33,11 @@ function RightSide(props) {
 
   const [searchTerm, setSearchTerm] = useState('')
 
+  const delayedQuery = useCallback(_.debounce(ref => {
+    loadProducts(ref)
+    syncSessions(() => { })
+  }, 2000, { leading: true }), []);
+
   const loadAgain = async () => {
     if (!netInfo.isConnected || !netInfo.isInternetReachable) {
       toast.current && toast.current.show("Потрібне інтернет з'єднання", 1000);
@@ -43,13 +46,12 @@ function RightSide(props) {
     }
 
     if (currentAccount) {
-      loadProducts()
-      await syncSessions(() => { })
+      delayedQuery(toastRef?.current)
     }
   }
 
   const changeLayout = () => {
-    var newLayout = 4
+    let newLayout = 4
 
     if (layout === 3) {
       newLayout = 4
@@ -70,7 +72,11 @@ function RightSide(props) {
     <View style={styles.container}>
       <View style={styles.toolsBar}>
         <View style={styles.search}>
-          <Image style={{ width: 18, height: 18, marginRight: 15, }} source={require('@images/search.png')}></Image>
+          <FastImage 
+            style={{ width: 18, height: 18, marginRight: 15, }}
+            source={require('@images/search.png')}
+          />
+          
           <TextInput
             ref={inputRef}
             style={styles.inputText}
@@ -127,9 +133,7 @@ function RightSide(props) {
           source={require('@images/menu.png')} scale={0.9}
         />
       </View>
-      <Products
-        searchTerm={searchTerm}
-      />
+      <Products searchTerm={searchTerm} />
     </View>
   )
 }

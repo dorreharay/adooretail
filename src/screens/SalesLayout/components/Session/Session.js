@@ -115,6 +115,8 @@ function Session(props) {
   const endSession = async () => {
     if (!canProceed) return
     navigation.jumpTo('Login')
+    setEndSum('0')
+    setReportPhoto(null)
 
     setTimeout(() => {
       dispatch(setEndOfSessionStatus(false))
@@ -131,17 +133,19 @@ function Session(props) {
     setPickerLoader(true)
 
     try {
-      await ImagePicker.showImagePicker({
-        // title: 'Вибрати фото звіту',
-        // storageOptions: {
-        //   skipBackup: true,
-        //   path: 'images',
-        // },
-      }, (response) => {
+      const options = {
+        title: 'Select Avatar',
+        customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+      await ImagePicker.launchCamera(options, (response) => {
         if (response.didCancel) {
           return
         }
-
+        
         const terminalReportPhoto = 'data:image/jpeg;base64,' + response.data
 
         setReportPhoto({ uri: terminalReportPhoto, size: response.fileSize, })

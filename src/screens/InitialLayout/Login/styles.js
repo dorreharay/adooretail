@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, GILROY_LIGHT, GILROY_REGULAR, FUTURA_LIGHT, } from '@fonts'
+import { COMFORTAA_LIGHT, COMFORTAA_REGULAR, GILROY_LIGHT, GILROY_REGULAR, FUTURA_LIGHT, } from '@fonts'
 
 const base = {
   container: {
@@ -19,14 +19,14 @@ const base = {
     color: '#FFFFFF',
     fontSize: 17,
     fontFamily: COMFORTAA_LIGHT,
-    letterSpacing: 6,
+    letterSpacing: 8,
   },
   dot: {
-    width: '45',
-    height: '45',
-    cx: '25',
-    cy: '25',
-    r: '16',
+    width: '50',
+    height: '50',
+    cx: '28',
+    cy: '28',
+    r: '18',
   },
   idDots: {
     width: 380,
@@ -36,16 +36,16 @@ const base = {
   },
   loginCaption: {
     color: '#F7F7F7',
-    fontSize: 12,
-    fontFamily: GILROY_LIGHT,
-    marginTop: 45,
+    fontSize: 14,
+    fontFamily: GILROY_REGULAR,
+    marginTop: 35,
   },
   lsNumpad: {
     width: 480,
     justifyContent: 'space-between',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 20,
+    marginTop: 30,
   },
   lsNum: {
     alignItems: 'center',
@@ -58,8 +58,8 @@ const base = {
   },
   lsNumText: {
     color: '#F6F6F6',
-    fontSize: 40,
-    fontFamily: GILROY_LIGHT,
+    fontSize: 44,
+    fontFamily: GILROY_REGULAR,
     textAlign: 'center',
     textAlignVertical: 'center',
   },
@@ -67,7 +67,19 @@ const base = {
     width: 32,
     height: 27,
     marginRight: 5,
-  }
+  },
+  logoContainer: {
+    position: 'absolute',
+    top: 30,
+    left: 30,
+    width: 70,
+    height: 70,
+    zIndex: 50,
+  },
+  logo: {
+    width: 65,
+    height: 65,
+  },
 };
 
 const styles = createStyles(
@@ -123,7 +135,7 @@ const styles = createStyles(
       width: 32,
       height: 27,
       marginRight: 5,
-    }
+    },
   }),
 
   maxHeight(500, {
