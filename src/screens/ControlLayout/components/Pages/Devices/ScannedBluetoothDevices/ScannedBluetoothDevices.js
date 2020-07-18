@@ -6,9 +6,6 @@ import FastImage from 'react-native-fast-image';
 import * as Progress from 'react-native-progress';
 import styles from './styles'
 
-import { printReceipt, connectToDevice, unpairDevice, } from '@printer'
-import { performScan } from '../../../../../../../helpers/printer';
-
 function ScannedBluetoothDevices(props) {
   const { status, setScanLoading, } = props
 
@@ -21,10 +18,6 @@ function ScannedBluetoothDevices(props) {
 
     try {
       setPairedLoadingForItem(index)
-
-      await connectToDevice(address)
-
-      // await performScan()
 
       setPairedLoadingForItem(null)
     } catch (error) {
@@ -39,12 +32,6 @@ function ScannedBluetoothDevices(props) {
 
     try {
       await unpairDevice(address)
-
-      // setPairedLoadingForItem(null)
-
-      // await performScan()
-
-      // setPairedLoadingForItem(null)
     } catch (error) {
       console.log(error)
     } finally {

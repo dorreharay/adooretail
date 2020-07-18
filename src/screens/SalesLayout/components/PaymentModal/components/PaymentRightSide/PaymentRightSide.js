@@ -86,7 +86,7 @@ function PaymentRightSide(props) {
           }}
           activeOpacity={0.7}
         >
-          <Text style={styles.cancelButtonText}>Скасувати</Text>
+          <Text style={styles.cancelButtonText}>Закрити</Text>
         </TouchableOpacity>
       </View>
         

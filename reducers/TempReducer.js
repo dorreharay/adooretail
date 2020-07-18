@@ -14,6 +14,7 @@ const SET_PAYMENT_MODAL_VISIBILITY = 'SET_PAYMENT_MODAL_VISIBILITY'
 const SET_OLD_RECEIPT = 'SET_OLD_RECEIPT'
 const SET_MENU_VISIBILITY = 'SET_MENU_VISIBILITY'
 const SET_TRANSACTION_VISIBILITY = 'SET_TRANSACTION_VISIBILITY'
+const SET_PRINT_STATUS = 'SET_PRINT_STATUS'
 
 const initialState = {
   endOfSession: false,
@@ -36,7 +37,15 @@ const initialState = {
   paymentModalVisibility: false,
   menuVisibility: false,
   transactionModalVisibility: false,
+  printInProgress: false,
 };
+
+export function setPrintStatus(payload) {
+  return {
+    type: SET_PRINT_STATUS,
+    payload
+  }
+}
 
 export function setTransactionModalVisibility(payload) {
   return {
@@ -163,7 +172,7 @@ export function addProductQuantity(payload) {
         return item
       })
     } else {
-      let firstReceiptItem = {
+      const firstReceiptItem = {
         title: product.title,
         price: product.price,
         hash_id: product.hash_id,
@@ -297,6 +306,9 @@ const ACTION_HANDLERS = {
   },
   [SET_HISTORY_PARAMS]: (state, action) => {
     return { ...state, historyParams: action.payload }
+  },
+  [SET_PRINT_STATUS]: (state, action) => {
+    return { ...state, printInProgress: action.payload }
   },
 };
 

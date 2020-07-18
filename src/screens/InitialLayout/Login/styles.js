@@ -19,7 +19,7 @@ const base = {
     color: '#FFFFFF',
     fontSize: 17,
     fontFamily: COMFORTAA_LIGHT,
-    letterSpacing: 8,
+    letterSpacing: 2,
   },
   dot: {
     width: '50',

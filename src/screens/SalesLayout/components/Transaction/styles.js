@@ -26,7 +26,7 @@ const base = {
   container: {
     flexDirection: 'row',
     width: deviceWidth * 0.7,
-    height: deviceHeight * 0.75,
+    height: 630,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     zIndex: 12,
@@ -146,7 +146,7 @@ const base = {
   },
   closeText: {
     color: '#343434',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: GILROY_REGULAR,
   },
   paymentSubmitButtonGradient: {

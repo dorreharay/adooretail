@@ -42,7 +42,7 @@ async function asyncAxiosCall(event, payload, options = {}) {
   const token = currentAccount ? currentAccount.id : null
 
   if (!token && hasToken) {
-    console.log('%c No access token' + '%c - asyncAxiosCall()', 'background: #D8664D; color: #FFFFFF', '');
+    console.log('%c%s', 'color: #FFFFFF; background: #D8664D; padding: 2px 15px; border-radius: 2px; font: 0.8rem Tahoma;', 'No access token')
 
     return null;
   }

@@ -5,7 +5,7 @@ import { useDispatch, useSelector, } from 'react-redux'
 import BackgroundTimer from 'react-native-background-timer';
 import styles from '../styles'
 
-import { clearCurrentReceipt } from '@reducers/TempReducer'
+import { clearCurrentReceipt, setPrintStatus, } from '@reducers/TempReducer'
 
 function PaymentSubmit(props) {
   const { selectedType, buttonAccessible, saveReceipt, receipt, } = props
@@ -28,6 +28,7 @@ function PaymentSubmit(props) {
 
     return selectedType.onPress(async () => {
       try {
+        dispatch(setPrintStatus(true))
         await saveReceipt(selectedType.apiName, receipt)
         if (selectedType.index === 1) {
           BackgroundTimer.setTimeout(() => {
@@ -36,8 +37,9 @@ function PaymentSubmit(props) {
         } else {
           dispatch(clearCurrentReceipt())
         }
+        dispatch(setPrintStatus(false))
       } catch (error) {
-
+        dispatch(setPrintStatus(false))
       }
     })
   }

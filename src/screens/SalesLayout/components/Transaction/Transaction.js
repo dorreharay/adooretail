@@ -90,7 +90,7 @@ function Transaction(props) {
         activeOpacity={1}
       />
       <KeyboardAwareScrollView
-        style={{ paddingTop: (deviceHeight - (deviceHeight * 0.75)) / 2, zIndex: 13, }}
+        style={{ paddingTop: (deviceHeight - 630) / 2, zIndex: 13, }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         extraScrollHeight={amountFocused ? 100 : 270}
         keyboardOpeningTime={0}

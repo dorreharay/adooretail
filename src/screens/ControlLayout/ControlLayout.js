@@ -92,7 +92,7 @@ function ControlLayout(props) {
 
             if (index == 1 && settings.printer_enabled) return <Devices activeCategory={activeTab} toastRef={toastRef} />
 
-            if (index == 2 && settings.printer_enabled) return <EditReceipt navigation={navigation} />
+            // if (index == 2 && settings.printer_enabled) return <EditReceipt navigation={navigation} />
 
             if (index == 3) return <Settings navigation={navigation} />
           }}

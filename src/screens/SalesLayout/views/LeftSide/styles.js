@@ -54,8 +54,9 @@ const base = {
   },
   lspreText: {
     color: '#E46162',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: GILROY_SEMIBOLD,
+    textAlign: 'center',
   },
   proceedContainer: {
     alignItems: 'center',

@@ -257,7 +257,7 @@ const PaymentModal = (props) => {
         activeOpacity={1}
       />
       <KeyboardAwareScrollView
-        style={{ paddingTop: (deviceHeight - (deviceHeight * 0.85)) / 2, zIndex: 13, }}
+        style={{ paddingTop: (deviceHeight - 660) / 2, zIndex: 13, }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         extraScrollHeight={amountFocused ? 0 : 100}
         keyboardOpeningTime={0}

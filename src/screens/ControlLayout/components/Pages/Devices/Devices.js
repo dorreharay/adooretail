@@ -4,7 +4,6 @@ import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
 import BluetoothConnectionButton from './BluetoothConnectionButton/BluetoothConnectionButton'
 import ScannedBluetoothDevices from './ScannedBluetoothDevices/ScannedBluetoothDevices'
 import FastImage from 'react-native-fast-image';
-import { performPrinterScanAndConnect, scanDevices, } from '@printer'
 import styles from './styles'
 
 import SharedButton from '@shared/SharedButton'

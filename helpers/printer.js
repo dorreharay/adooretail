@@ -1,14 +1,9 @@
 import { Alert, } from 'react-native'
 import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
-import { BleManager as BluManager } from "react-native-ble-plx"
 import BleManager from 'react-native-ble-manager';
-import BackgroundTimer from 'react-native-background-timer';
-import { setBluetoothDevices } from '@reducers/TempReducer'
 import store from '@store'
 
 import { getFormattedDate, } from '@dateFormatter'
-
-const manager = new BluManager()
 
 BleManager.start({ showAlert: false }).then(() => {
   console.log('%c%s', 'color: #FFFFFF; background: #016964; padding: 2px 15px; border-radius: 2px; font: 0.8rem Tahoma;', 'Bluetooth module initialized')
@@ -68,22 +63,9 @@ export async function printNewBuffer(receipt) {
   try {
     const currentStore = store.getState()
 
-    const { accounts, currentAccount, settings, } = currentStore.user
-    const { currentRoute, } = currentStore.temp
+    await resolveDevice()
 
-    await BleManager.scan([], 5, true)
-
-    const devices = await BleManager.getBondedPeripherals([]);
-
-    const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
-
-    const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
-
-    console.log('alreadyConnected', alreadyConnected, printer)
-
-    if (printer && !alreadyConnected) {
-      await BluetoothManager.connect(printer.id)
-    }
+    await BluetoothEscposPrinter.printerInit()
 
     const kitchenReceipts = receipt.receipt.filter(item => item.department === 'kitchen')
     const paydeskReceipts = receipt.receipt.filter(item => item.department === 'paydesk')
@@ -91,12 +73,14 @@ export async function printNewBuffer(receipt) {
     await BluetoothEscposPrinter.printerLineSpace(75)
     await BluetoothEscposPrinter.setWidth(400)
 
+    if (!settings.kitchen_enabled && !settings.desk_enabled) {
+      throw new Error('Не обрано жодного активного цеху. Оберіть необхідний в розділі Налаштування -> Активні цехи')
+    }
+
     if (kitchenReceipts.length !== 0 && settings.kitchen_enabled) {
       await printHeading(parceCyrrilicText('Кухня'), { spaces: 2, })
-
-      await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
-
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
       async function asyncForEach(array, callback) {
@@ -122,7 +106,7 @@ export async function printNewBuffer(receipt) {
     if (paydeskReceipts.length !== 0 && settings.desk_enabled) {
       await printHeading(parceCyrrilicText('Бар'), { spaces: 2, })
 
-      await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
 
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
@@ -147,9 +131,12 @@ export async function printNewBuffer(receipt) {
       await cutLine()
     }
   } catch (error) {
-    Alert.alert('Принтер не підключено')
+    if(error.message.includes('null is not an object')) {
+      Alert.alert("Помилка друку", 'Друк чеків не працює в емуляторі')
+    } else {
+      Alert.alert("Помилка друку", error.message)
+    }
     throw new Error()
-    console.log(error.message)
   }
 }
 
@@ -159,35 +146,117 @@ async function asyncForEach(array, callback) {
   }
 }
 
+async function resolveDevice() {
+  const hasContact = await BluetoothManager.isBluetoothEnabled()
+
+  if (!hasContact) {
+    await BluetoothManager.enableBluetooth()
+  }
+
+  const devices = await BleManager.getBondedPeripherals([]);
+
+  const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
+
+  if (!printer) {
+    throw new Error('Не знайдено потрібного принтера. Перевірте список підключених пристроїв')
+  }
+
+  const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
+
+  if (printer && !alreadyConnected) {
+    await BluetoothManager.connect(printer.id)
+  }
+}
+
 export async function printReceipt(receipt) {
   try {
     const currentStore = store.getState()
-
     const { currentAccount, settings, } = currentStore.user
-
     const { receipt_name, receipt_description } = currentAccount
 
-    const hasContact = await BluetoothManager.isBluetoothEnabled()
-
-    if(!hasContact) {
-      await BluetoothManager.enableBluetooth()
-    }
-
-    const devices = await BleManager.getBondedPeripherals([]);
-
-    const printer = devices.find(item => item.name && item.name.split(' ').map(elem => elem.toLowerCase()).includes('printer'))
-
-    const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
-
-    if (printer && !alreadyConnected) {
-      await BluetoothManager.connect(printer.id)
-    }
+    await resolveDevice()
 
     await BluetoothEscposPrinter.printerInit()
 
     await BluetoothEscposPrinter.printerLineSpace(80)
     await BluetoothEscposPrinter.printerUnderLine(0)
+    await BluetoothEscposPrinter.setBlob(0)
 
+    await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
+
+    await BluetoothEscposPrinter.printerLineSpace(75)
+
+    {settings.receipt_show_subheader && (
+      await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
+    )}
+
+    {settings.receipt_show_address && (
+      await printRegularLine(parceCyrrilicText(currentAccount.address), { spaces: 1, paddingLeft: 2 })
+    )}
+
+    await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+    await printRegularLine(`Касир: ${parceCyrrilicText(receipt.employee)}`, { spaces: 1, paddingLeft: 2 })
+    await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss', receipt.transaction_time_end)}`, { spaces: 1, paddingLeft: 2 })
+    await printRegularLine(`Тип оплати: ${parceCyrrilicText(receipt.payment_type === 'card' ? 'Картка' : 'Готівка')}`, { spaces: 1, paddingLeft: 2 })
+
+    await BluetoothEscposPrinter.printerLineSpace(20)
+
+    await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+
+    await BluetoothEscposPrinter.setBlob(5)
+
+    await printColumn(['Продукт', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
+
+    await BluetoothEscposPrinter.setBlob(0)
+    await BluetoothEscposPrinter.printerLineSpace(75)
+
+    await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+
+    await asyncForEach(receipt.receipt, async (item, index) => {
+      await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
+      await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+    })
+
+    if (receipt && receipt.discount !== '0%') {
+      await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+
+      await printColumn(['', '', 'Всього:', `${receipt ? receipt.initial : '0'} грн`], { spaces: 1, paddingLeft: 2 }, 'total')
+      await printColumn(['', '', 'Знижка:', `-${parceCyrrilicText(receipt.discount)}`], { spaces: 1, paddingLeft: 2 }, 'total')
+    }
+
+    await BluetoothEscposPrinter.printerLineSpace(30)
+
+    await printRegularLine('---------------------------------------------', { spaces: 2, paddingLeft: 2 })
+    await printColumn(['', '', 'До сплати:', `${receipt ? receipt.total : '0'} грн`], { paddingLeft: 2 }, 'total')
+    await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
+
+    await BluetoothEscposPrinter.printerLineSpace(70)
+
+    await printRegularLine('', { spaces: 4, })
+
+    await cutLine()
+  } catch (error) {
+    if(error.message.includes('null is not an object')) {
+      Alert.alert("Помилка друку", 'Друк чеків не працює в емуляторі')
+    } else {
+      Alert.alert("Помилка друку", error.message)
+    }
+    throw new Error()
+  }
+}
+
+export async function printPreReceipt(receipt) {
+  try {
+    const currentStore = store.getState()
+    const { currentAccount, settings, } = currentStore.user
+    const { receipt_name, receipt_description } = currentAccount
+
+    await resolveDevice()
+
+    await BluetoothEscposPrinter.printerInit()
+
+    await BluetoothEscposPrinter.printerLineSpace(80)
+    await BluetoothEscposPrinter.printerUnderLine(0)
     await BluetoothEscposPrinter.setBlob(0)
 
     await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
@@ -201,22 +270,14 @@ export async function printReceipt(receipt) {
     }
 
     {
-      settings.receipt_show_subheader && (
-        await printRegularLine(currentAccount.address, { spaces: 1, paddingLeft: 2 })
+      settings.receipt_show_address && (
+        await printRegularLine(parceCyrrilicText(currentAccount.address), { spaces: 1, paddingLeft: 2 })
       )
     }
 
-    if (receipt) {
-      await printRegularLine(`Номер чека: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Касир: ${parceCyrrilicText(receipt.employee)}`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Друк: ${receipt.transaction_time_end}`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Тип оплати: ${parceCyrrilicText(receipt.payment_type === 'card' ? 'Картка' : 'Готівка')}`, { spaces: 1, paddingLeft: 2 })
-    } else {
-      await printRegularLine(`Номер чека: #XXXX-XXXXX-XXXX`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Касир: ${currentAccount.localSessions.slice(-1).employees[currentEmployee]}`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
-      await printRegularLine(`Тип оплати: Готівка`, { spaces: 1, paddingLeft: 2 })
-    }
+    await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+    await printRegularLine(`Касир: ${parceCyrrilicText(receipt.employee)}`, { spaces: 1, paddingLeft: 2 })
+    await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss', receipt.transaction_time_end)}`, { spaces: 1, paddingLeft: 2 })
 
     await BluetoothEscposPrinter.printerLineSpace(20)
 
@@ -227,79 +288,20 @@ export async function printReceipt(receipt) {
     await printColumn(['Продукт', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
 
     await BluetoothEscposPrinter.setBlob(0)
-
     await BluetoothEscposPrinter.printerLineSpace(75)
 
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
-    if (!receipt) {
-      receipt.receipt = [
-        {
-          department: "kitchen",
-          hash_id: "32",
-          price: 75,
-          quantity: 1,
-          size: "M",
-          time: "2020-07-07 14:52:33",
-          title: 'Тестовий продукт',
-        },
-        {
-          department: "kitchen",
-          hash_id: "32",
-          price: 75,
-          quantity: 1,
-          size: "M",
-          time: "2020-07-07 14:52:33",
-          title: 'Тестовий продукт',
-        },
-        {
-          department: "kitchen",
-          hash_id: "32",
-          price: 75,
-          quantity: 1,
-          size: "M",
-          time: "2020-07-07 14:52:33",
-          title: 'Тестовий продукт',
-        }
-      ]
-    }
-
     await asyncForEach(receipt.receipt, async (item, index) => {
       await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
-
       await printRegularLine('', { spaces: 1, paddingLeft: 2 })
-
-      // if(item.size && item.size !== '') {
-      //   await printColumn([parceCyrrilicText(`${handleSize(item.size)}`), ``, ``, ``], { paddingLeft: 2 })
-      // }
     })
-
-    if (receipt && receipt.discount !== '0%') {
-      await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
-
-      await printColumn(['', '', 'Всього:', `${receipt ? receipt.initial : '0'} грн`], { spaces: 1, paddingLeft: 2 }, 'total')
-
-      await printColumn(['', '', 'Знижка:', `-${parceCyrrilicText(receipt.discount)}`], { spaces: 1, paddingLeft: 2 }, 'total')
-    }
 
     await BluetoothEscposPrinter.printerLineSpace(30)
 
     await printRegularLine('---------------------------------------------', { spaces: 2, paddingLeft: 2 })
-
     await printColumn(['', '', 'До сплати:', `${receipt ? receipt.total : '0'} грн`], { paddingLeft: 2 }, 'total')
-
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
-
-    // await printRegularLine('Щоб лишити вiдгук проскануйте QR-код', { spaces: 1, paddingLeft: 2 }, BluetoothEscposPrinter.ALIGN.CENTER)
-    // await printRegularLine('або перейдiть за посиланням', { spaces: 1, paddingLeft: 2 }, BluetoothEscposPrinter.ALIGN.CENTER)
-    // await printRegularLine('https://adoo.com.ua/poilka/feedback', { spaces: 2, paddingLeft: 2 }, BluetoothEscposPrinter.ALIGN.CENTER)
-
-    // await printQRCode('Бажаємо вам всього найкращого від команди Poilka :)')
-
-    // await printRegularLine('', { spaces: 1, })
-
-    // await printRegularLine('Дякуємо', { spaces: 1, }, BluetoothEscposPrinter.ALIGN.CENTER)
-    // await printRegularLine('за ваше замовлення!', { spaces: 1, }, BluetoothEscposPrinter.ALIGN.CENTER)
 
     await BluetoothEscposPrinter.printerLineSpace(70)
 
@@ -307,8 +309,11 @@ export async function printReceipt(receipt) {
 
     await cutLine()
   } catch (error) {
-    Alert.alert('Принтер не підключено')
-    console.log(error.message)
+    if(error.message.includes('null is not an object')) {
+      Alert.alert("Помилка друку", 'Друк чеків не працює в емуляторі')
+    } else {
+      Alert.alert("Помилка друку", error.message)
+    }
     throw new Error()
   }
 }
@@ -424,93 +429,4 @@ const performBufferColumnPrint = async (values) => {
     values,
     printOptions
   );
-}
-
-export async function scanDevices() {
-  const dispatch = store.dispatch
-
-  try {
-    const scanResult = await BluetoothManager.scanDevices()
-
-    const devices = JSON.parse(scanResult)
-
-    const found = devices.found
-    const paired = devices.paired
-
-    dispatch(setBluetoothDevices(devices))
-
-    return { found, paired }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function performPrinterScanAndConnect() {
-  const scanResult = await BluetoothManager.scanDevices()
-
-  const devices = JSON.parse(scanResult)
-
-  const { found, paired } = devices
-
-
-  if (paired.length > 0) {
-    await BluetoothManager.connect(paired[0].address)
-  } else {
-    // if(found.length > 0) {
-    //   await BluetoothManager.connect(found[0].address)
-    // }
-  }
-}
-
-export async function performScan() {
-  // manager.startDeviceScan(null, null, async (error, device) => {
-  //   if (error) {
-  //     if (error.message !== 'BluetoothLE is unsupported on this device') {
-  //       Alert.alert(error.message)
-  //     }
-  //   }
-  //   const dispatch = store.dispatch
-  //   const currentStore = store.getState()
-  //   const { bluetoothDevices, } = currentStore.temp
-
-  //   const parsed = JSON.parse(scanResult)
-
-  //   const paired = parsed.paired
-  //   const found = parsed.found
-
-  //   console.log('-----------<>', paired, found)
-
-  //   dispatch(setBluetoothDevices([...paired.map(item => ({ ...item, connected: true })), ...found.map(item => ({ ...item, connected: false }))]))
-  // } catch (error) {
-  //   console.log(error)
-  // }
-}
-
-export async function connectToDevice(address) {
-  try {
-    await BleManager.connect(address)
-
-    console.log('CONNECTED ----->')
-
-    // await scanDevices()
-  } catch (error) {
-    if (error.message !== 'BluetoothLE is unsupported on this device') {
-      Alert.alert(error.message)
-    }
-    console.log(error.message)
-  }
-}
-
-export async function unpairDevice(address) {
-  try {
-    // await BleManager.removeBond(address)
-    await BluetoothManager.unpaire(address)
-
-    console.log('DISCONNECTED ----->')
-
-    // await scanDevices()
-  } catch (error) {
-    Alert.alert(error.message)
-    console.log(error.message)
-  }
 }

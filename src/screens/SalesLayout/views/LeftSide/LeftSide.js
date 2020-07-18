@@ -8,21 +8,23 @@ import _ from 'lodash'
 import styles from './styles'
 
 import { deviceHeight } from '@dimensions'
-import { getUpperCaseDate, } from '@dateFormatter'
-import { printNewBuffer } from '@printer'
+import { getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
+import { printNewBuffer, printPreReceipt, } from '@printer'
 import { headerHeight, headerButtonSizes, headerIcon, lsInstance, } from '@constants'
 
 import { updateLocalReceipt, } from '@reducers/UserReducer'
-import {  clearCurrentReceipt, setBuffer, setPaymentModalVisibility, setOldReceipt, } from '@reducers/TempReducer'
+import { clearCurrentReceipt, setBuffer, setPaymentModalVisibility, setOldReceipt, } from '@reducers/TempReducer'
 import { setSelectedReceipt, setReceiptEditState, } from '@reducers/OrdersReducer'
+import { currentSessionSelector, } from '@selectors'
 
 import ClockIcon from '@images/wall-clock.svg'
 
 import SharedButton from '@shared/SharedButton';
 import Receipt from './components/Receipt';
+import FastImage from 'react-native-fast-image';
 
 function LeftSide(props) {
-  const {} = props;
+  const { } = props;
 
   const dispatch = useDispatch()
   const navigation = useNavigation()
@@ -36,6 +38,9 @@ function LeftSide(props) {
   const editedReceiptPayload = useSelector(state => state.orders.editedReceiptPayload)
   const buffer = useSelector(state => state.temp.buffer)
   const oldReceiptState = useSelector(state => state.temp.oldReceiptState)
+  const currentSession = useSelector(currentSessionSelector)
+  const currentEmployee = useSelector(state => state.user.currentEmployee) || 0
+  const printInProgress = useSelector(state => state.temp.printInProgress)
 
   const [isReceiptInstancesVisible, setReceiptInstancesVisibility] = useState(false)
   const [currentTime, setCurrentTime] = useState(getUpperCaseDate('dddd DD.MM | HH:mm'))
@@ -157,7 +162,7 @@ function LeftSide(props) {
   }
 
   const saveBuffer = async () => {
-    if (bufferButtonDisabled) return
+    if (bufferButtonDisabled || printInProgress) return
 
     await performPrinterScript()
   }
@@ -213,13 +218,38 @@ function LeftSide(props) {
   }
 
   const handlePayment = () => {
-    if (receiptSum <= 0) return
+    if (receiptSum <= 0 || printInProgress) return
 
     if (!updateModeData) {
       changePaymentModalState(true)
     } else {
       findReceiptAndUpdate()
     }
+  }
+
+  const handlePreReceipt = async () => {
+    if (printInProgress) return
+
+    function guidGenerator() {
+      let S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      };
+      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    }
+
+    const currentReceipt = receipts[selectedReceiptIndex]
+
+    const receiptId = guidGenerator()
+
+    const payload = {
+      receipt: currentReceipt,
+      hash_id: receiptId,
+      total: currentReceipt.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0),
+      transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
+      employee: currentSession ? currentSession.employees[currentEmployee] : '',
+    }
+
+    await printPreReceipt(payload)
   }
 
   const findReceiptAndUpdate = async () => {
@@ -341,7 +371,7 @@ function LeftSide(props) {
           </View>
         ) : (
             <View style={[styles.header, { height: headerHeight, }]} onLayout={(e) => startTimer(e)}>
-              <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '80%', flexDirection: 'row' }}>
+              <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '77%', flexDirection: 'row' }}>
                 <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginLeft: deviceHeight < 500 ? 10 : 0, }}>
                   <SharedButton
                     onPress={() => { }}
@@ -357,7 +387,17 @@ function LeftSide(props) {
                   >{currentTime}</Text>
                 </View>
 
+                <SharedButton
+                  style={headerButtonSizes}
+                  iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
+                  onPress={() => {
+                    
+                  }}
+                  source={require('@images/kebab.png')}
+                />
+              </View>
 
+              <View style={{ width: '23%', flexDirection: 'row', justifyContent: 'flex-end' }}>
                 <SharedButton
                   style={headerButtonSizes}
                   iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
@@ -366,15 +406,6 @@ function LeftSide(props) {
                     setReceiptInstancesVisibility(!isReceiptInstancesVisible)
                   }}
                   source={require('@images/split_orders.png')}
-                />
-              </View>
-
-              <View style={{ width: '20%', flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <SharedButton
-                  onPress={clearReceipt}
-                  style={headerButtonSizes}
-                  iconStyle={{ width: headerIcon.width - 3, height: headerIcon.height - 3, }}
-                  source={require('@images/x_icon.png')}
                 />
               </View>
             </View>
@@ -422,12 +453,12 @@ function LeftSide(props) {
               activeOpacity={0.8}
             >
               <LinearGradient
-                style={[styles.lsproceedButton, receiptSum <= 0 && { opacity: 0.5 }]}
+                style={[styles.lsproceedButton, (receiptSum <= 0 || printInProgress) && { opacity: 0.5 }]}
                 start={{ x: 0, y: 1 }}
                 end={{ x: 1, y: 0 }}
                 colors={paymentColorSchema.gradient}
               >
-                <Text style={[styles.lsproceedButtonText, { fontSize: 24, }, updateModeData && { fontSize: 22, }, settings.printer_precheck && settings.printer_preorder && { fontSize: 18, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
+                <Text style={[styles.lsproceedButtonText, { fontSize: 24, }, updateModeData && { fontSize: 22, }, settings.printer_precheck && settings.printer_preorder && { fontSize: 18, }]}>{!updateModeData ? printInProgress ? 'Друк...' : `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -435,21 +466,21 @@ function LeftSide(props) {
               <>
                 {settings.printer_precheck && (
                   <TouchableHighlight
-                    onPress={() => { }}
+                    onPress={handlePreReceipt}
                     style={[
                       styles.proceedContainer,
                       styles.zProceedEx,
                       { borderColor: paymentColorSchema.color, },
                       { paddingHorizontal: 0, paddingVertical: 0, },
-                      bufferButtonDisabled && { borderColor: paymentColorSchema.disabled },
+                      printInProgress && { borderColor: paymentColorSchema.disabled },
                     ]}
                     underlayColor={paymentColorSchema.disabled}
                   >
                     <View style={[
                       styles.lsproceedButton,
-                      bufferButtonDisabled && { opacity: 0.4 }
+                      // { opacity: 0.4 }
                     ]}>
-                      <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>ПРЕЧ.</Text>
+                      <Text style={[styles.lspreText, { color: paymentColorSchema.color, }, printInProgress && { opacity: 0.4 }]}>ПРЕЧ.</Text>
                     </View>
                   </TouchableHighlight>
                 )}
@@ -462,13 +493,13 @@ function LeftSide(props) {
                       styles.zProceedEx,
                       { borderColor: paymentColorSchema.color, },
                       { paddingHorizontal: 0, paddingVertical: 0, },
-                      bufferButtonDisabled && { borderColor: paymentColorSchema.disabled },
+                      (printInProgress || bufferButtonDisabled) && { borderColor: paymentColorSchema.disabled },
                     ]}
                     underlayColor={paymentColorSchema.disabled}
                   >
                     <View style={[
                       styles.lsproceedButton,
-                      bufferButtonDisabled && { opacity: 0.4 }
+                      (printInProgress || bufferButtonDisabled) && { opacity: 0.4 }
                     ]}>
                       <Text style={[styles.lspreText, { color: paymentColorSchema.color, },]}>ЗУСТ.</Text>
                     </View>

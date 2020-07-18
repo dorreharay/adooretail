@@ -6,7 +6,7 @@ import styles from './styles'
 
 import { getFormattedDate, } from '@dateFormatter'
 import { setSettings, } from '@reducers/UserReducer'
-import { printReceipt } from '../../../../../../helpers/printer';
+import { printReceipt } from '@printer';
 
 function EditReceipt(props) {
   const { activeCategory, } = props

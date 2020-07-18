@@ -32,7 +32,7 @@ const base = {
   paymentModal: {
     flexDirection: 'row',
     width: deviceWidth * 0.7,
-    height: deviceHeight * 0.85,
+    height: 660,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     zIndex: 20,

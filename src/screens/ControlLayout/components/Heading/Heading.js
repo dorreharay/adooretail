@@ -85,7 +85,7 @@ function Heading(props) {
           </Text>
           </TouchableOpacity>
         )} */}
-        {settings.printer_enabled && (
+        {/* {settings.printer_enabled && (
           <TouchableOpacity
             style={[styles.menuButton, activeTab === 2 && styles.activeMenuButton]}
             onPress={() => setActiveTab(2)}
@@ -96,7 +96,7 @@ function Heading(props) {
               Вигляд чеку
           </Text>
           </TouchableOpacity>
-        )}
+        )} */}
         <TouchableOpacity
           style={[styles.menuButton, activeTab === 3 && styles.activeMenuButton]}
           onPress={() => setActiveTab(3)}
