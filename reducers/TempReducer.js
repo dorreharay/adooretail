@@ -1,5 +1,5 @@
 import { getFormattedDate, } from '@dateFormatter'
-import { setReceipts, setReceiptEditState, } from './OrdersReducer'
+import { setReceipts, setReceiptEditState, generateCurrentReceiptId, } from './OrdersReducer'
 
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
 const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
@@ -15,6 +15,7 @@ const SET_OLD_RECEIPT = 'SET_OLD_RECEIPT'
 const SET_MENU_VISIBILITY = 'SET_MENU_VISIBILITY'
 const SET_TRANSACTION_VISIBILITY = 'SET_TRANSACTION_VISIBILITY'
 const SET_PRINT_STATUS = 'SET_PRINT_STATUS'
+const SET_RECEIPT_OPTIONS_VISIBILITY = 'SET_RECEIPT_OPTIONS_VISIBILITY'
 
 const initialState = {
   endOfSession: false,
@@ -37,8 +38,16 @@ const initialState = {
   paymentModalVisibility: false,
   menuVisibility: false,
   transactionModalVisibility: false,
+  receiptOptionsVisibility: false,
   printInProgress: false,
 };
+
+export function setReceiptOptionsVisibility(payload) {
+  return {
+    type: SET_RECEIPT_OPTIONS_VISIBILITY,
+    payload
+  }
+}
 
 export function setPrintStatus(payload) {
   return {
@@ -149,7 +158,7 @@ export function addProductQuantity(payload) {
   return function (dispatch, getState) {
     const state = getState()
 
-    let { selectedReceiptIndex, receipts, updateModeData, } = state.orders
+    let { selectedReceiptIndex, receipts, receiptsIds, updateModeData, } = state.orders
     
     const product = payload
 
@@ -158,6 +167,11 @@ export function addProductQuantity(payload) {
     }
 
     let receipt = receipts[selectedReceiptIndex]
+    const currentId = receiptsIds[selectedReceiptIndex]
+
+    if(receipt.length === 0 && !currentId) {
+      dispatch(generateCurrentReceiptId())
+    }
 
     const productExists = !!receipt.find(item => item.hash_id === product.hash_id)
   
@@ -268,6 +282,9 @@ export function clearCurrentReceipt() {
 }
 
 const ACTION_HANDLERS = {
+  [SET_RECEIPT_OPTIONS_VISIBILITY]: (state, action) => {
+    return { ...state, receiptOptionsVisibility: action.payload }
+  },
   [SET_TRANSACTION_VISIBILITY]: (state, action) => {
     return { ...state, transactionModalVisibility: action.payload }
   },

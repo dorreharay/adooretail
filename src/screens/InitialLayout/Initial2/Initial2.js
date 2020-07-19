@@ -39,7 +39,7 @@ function Initial2({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.caption}>Інтегровані можливості Adoo Retail дозволять вам збільшити швидкість обробки ваших замовлень в декілька разів.</Text>
+      <Text style={styles.caption}>Все в одному. Мобільний додаток Adoo Commander дасть можливість контролювати статистикою, товарами, персоналом та складом.</Text>
 
       <View style={styles.list}>
         {list.map((item, index) => (

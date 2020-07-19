@@ -33,7 +33,7 @@ function PaymentSubmit(props) {
         if (selectedType.index === 1) {
           BackgroundTimer.setTimeout(() => {
             dispatch(clearCurrentReceipt())
-          }, 500)
+          }, 200)
         } else {
           dispatch(clearCurrentReceipt())
         }

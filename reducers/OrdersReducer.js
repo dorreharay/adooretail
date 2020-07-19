@@ -10,17 +10,80 @@ const SET_DETAILS = 'SET_DETAILS'
 const SET_RECEIPT_EDIT = 'SET_RECEIPT_EDIT'
 const SET_EDITED_RECEIPT_ID = 'SET_EDITED_RECEIPT_ID'
 const SET_EDITED_RECEIPT_PAYLOAD = 'SET_EDITED_RECEIPT_PAYLOAD'
+const SET_RECEIPT_IDS = 'SET_RECEIPT_IDS'
+const SET_PRE_RECEIPTS = 'SET_PRE_RECEIPTS'
 
 const initialState = {
   layout: 4,
   selectedReceiptIndex: 0,
   receipts: [[], [], [], []],
+  receiptsIds: [null, null, null, null],
+  receiptsPreStates: [],
   history: [],
   details: null,
   updateModeData: null,
   editedReceiptId: null,
   editedReceiptPayload: null,
 };
+
+export function savePreReceipt(status) {
+  return function (dispatch, getState) {
+    const state = getState()
+    const { receiptsPreStates, receiptsIds, selectedReceiptIndex, } = state.orders
+    const currentId = receiptsIds[selectedReceiptIndex]
+
+    const hasDuplicate = receiptsPreStates.find(item => item.hash_id === currentId.hash_id)
+
+    let newPreState = hasDuplicate ? receiptsPreStates.map(item => item.hash_id === currentId ? ({ ...item, status }) : item) : [...receiptsPreStates, { hash_id: currentId, status, }]
+        newPreState = newPreState.filter(item => !!item.hash_id)
+        newPreState = [...new Map(newPreState.map(item => [item['hash_id'], item])).values()]
+  
+    dispatch(setPreReceipts(newPreState))
+  }
+}
+
+export function setPreReceipts(payload) {
+  return {
+    type: SET_PRE_RECEIPTS,
+    payload,
+  }
+}
+
+export function generateCurrentReceiptId() {
+  return function (dispatch, getState) {
+    const state = getState()
+    const { selectedReceiptIndex, receiptsIds, } = state.orders
+
+    function guidGenerator() {
+      let S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      };
+      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    }
+    
+    const newIds = receiptsIds.map((item, index) => selectedReceiptIndex === index ? guidGenerator() : item)
+  
+    dispatch(setReceiptIds(newIds))
+  }
+}
+
+export function removeCurrentReceiptId() {
+  return function (dispatch, getState) {
+    const state = getState()
+    const { selectedReceiptIndex, receiptsIds, } = state.orders
+    
+    const newIds = receiptsIds.map((item, index) => selectedReceiptIndex === index ? null : item)
+  
+    dispatch(setReceiptIds(newIds))
+  }
+}
+
+export function setReceiptIds(payload) {
+  return {
+    type: SET_RECEIPT_IDS,
+    payload,
+  }
+}
 
 export function setLayout(payload) {
   return {
@@ -112,6 +175,12 @@ export function setDetails(payload) {
 }
 
 const ACTION_HANDLERS = {
+  [SET_PRE_RECEIPTS]: (state, action) => {
+    return {...state, receiptsPreStates: action.payload}
+  },
+  [SET_RECEIPT_IDS]: (state, action) => {
+    return {...state, receiptsIds: action.payload}
+  },
   [SET_LAYOUT]: (state, action) => {
     return {...state, layout: action.payload}
   },

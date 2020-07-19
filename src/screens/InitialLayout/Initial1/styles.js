@@ -24,9 +24,9 @@ const base = {
     width: '42%',
     marginTop: '2%',
     color: '#000000',
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: GILROY_REGULAR,
-    lineHeight: 25,
+    lineHeight: 20,
   },
   helpButton: {
     marginTop: -20,
@@ -75,15 +75,15 @@ const base = {
     position: 'absolute',
     bottom: -deviceWidth * 0.03,
     right: -deviceWidth * 0.07,
-    width: deviceWidth * 0.7,
-    height: deviceWidth * 0.6,
+    width: deviceWidth * 0.65,
+    height: deviceWidth * 0.55,
   },
 };
 
 const styles = createStyles(
   base,
 
-  maxHeight(700, {
+  maxHeight(600, {
     heading: {
       fontSize: 10,
     },

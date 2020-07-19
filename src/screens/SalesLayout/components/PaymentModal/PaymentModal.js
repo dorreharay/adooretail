@@ -6,6 +6,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import styles from './styles'
 
 import { setBuffer, setPaymentModalVisibility, setOldReceipt, } from '@reducers/TempReducer'
+import { removeCurrentReceiptId } from '@reducers/OrdersReducer'
 import { syncReceipt, setCurrentService, } from '@reducers/UserReducer'
 import { printReceipt } from '@printer'
 
@@ -37,6 +38,7 @@ const PaymentModal = (props) => {
   const currentAccount = useSelector(state => state.user.currentAccount)
   const receipts = useSelector(state => state.orders.receipts)
   const selectedReceiptIndex = useSelector(state => state.orders.selectedReceiptIndex)
+  const receiptsIds = useSelector(state => state.orders.receiptsIds)
   const buffer = useSelector(state => state.temp.buffer)
   const paymentModalVisibility  = useSelector(state => state.temp.paymentModalVisibility)
   const oldReceiptState = useSelector(state => state.temp.oldReceiptState)
@@ -75,13 +77,6 @@ const PaymentModal = (props) => {
   const [deliveryListVisible, setDeliveryListVisibility] = useState(false)
 
   const saveReceipt = async (paymentType) => {
-    function guidGenerator() {
-      let S4 = function () {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-      };
-      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-    }
-
     const currentReceipt = receipts[selectedReceiptIndex]
 
     const firstReceipt = currentReceipt[0]
@@ -89,11 +84,7 @@ const PaymentModal = (props) => {
     const timeStart = firstReceipt.time
     const timeEnd = lastReceipt.time
 
-    let receiptId = guidGenerator()
-
-    if (buffer[selectedReceiptIndex]) {
-      receiptId = buffer[selectedReceiptIndex].hash_id
-    }
+    const receiptId = receiptsIds[selectedReceiptIndex]
 
     const payload = {
       payment_type: paymentType,
@@ -128,6 +119,8 @@ const PaymentModal = (props) => {
       if (settings.printer_enabled) {
         await printReceipt(payload)
       }
+
+      dispatch(removeCurrentReceiptId())
 
       BackgroundTimer.setTimeout(() => {
         dispatch(syncReceipt(payload))

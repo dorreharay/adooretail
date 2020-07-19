@@ -24,9 +24,9 @@ const base = {
     width: '42%',
     marginTop: '2%',
     color: '#000000',
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: GILROY_REGULAR,
-    lineHeight: 25,
+    lineHeight: 20,
   },
   helpButton: {
     marginTop: -20,
@@ -74,16 +74,16 @@ const base = {
   phoneImage: {
     position: 'absolute',
     bottom: -deviceWidth * 0.02,
-    right: deviceWidth * 0.09,
-    width: deviceWidth * 0.4,
-    height: deviceWidth * 0.7,
+    right: deviceWidth * 0.15,
+    width: deviceWidth * 0.35,
+    height: deviceWidth * 0.6,
   },
 };
 
 const styles = createStyles(
   base,
 
-  maxHeight(700, {
+  maxHeight(600, {
     phoneImage: {
       right: deviceWidth * 0.16,
       width: deviceWidth * 0.32,

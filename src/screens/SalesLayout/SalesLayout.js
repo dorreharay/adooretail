@@ -13,6 +13,7 @@ import Menu from './components/Menu/Menu';
 import Transaction from './components/Transaction/Transaction';
 import PaymentModal from './components/PaymentModal/PaymentModal';
 import Session from './components/Session/Session'
+import ReceiptOptions from './components/ReceiptOptions/ReceiptOptions'
 
 function RetailScreen(props) {
   const {} = props;
@@ -38,6 +39,7 @@ function RetailScreen(props) {
       <PaymentModal />
       <Transaction />
       <Session />
+      <ReceiptOptions />
 
       <SharedToast ref={toastRef} />
     </View>

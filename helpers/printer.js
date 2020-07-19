@@ -5,6 +5,8 @@ import store from '@store'
 
 import { getFormattedDate, } from '@dateFormatter'
 
+import { savePreReceipt } from '@reducers/OrdersReducer'
+
 BleManager.start({ showAlert: false }).then(() => {
   console.log('%c%s', 'color: #FFFFFF; background: #016964; padding: 2px 15px; border-radius: 2px; font: 0.8rem Tahoma;', 'Bluetooth module initialized')
 });
@@ -62,6 +64,7 @@ export const handleSize = (size) => {
 export async function printNewBuffer(receipt) {
   try {
     const currentStore = store.getState()
+    const { settings, } = currentStore.user
 
     await resolveDevice()
 
@@ -90,9 +93,11 @@ export async function printNewBuffer(receipt) {
       }
 
       if (kitchenReceipts) {
-        await asyncForEach(kitchenReceipts, async (item) => {
+        await asyncForEach(kitchenReceipts, async (item, index) => {
           await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), ``, ``, `${item.diff ? item.diff : item.quantity} шт`], { paddingLeft: 2 }, 'buffer')
-          await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+          if(index !== (kitchenReceipts - 1)) {
+            await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+          }
         })
       }
 
@@ -118,9 +123,11 @@ export async function printNewBuffer(receipt) {
       }
 
       if (paydeskReceipts) {
-        await asyncForEach(paydeskReceipts, async (item) => {
+        await asyncForEach(paydeskReceipts, async (item, index) => {
           await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), ``, ``, `${item.diff ? item.diff : item.quantity} шт`], { paddingLeft: 2 }, 'buffer')
-          await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+          if(index !== (paydeskReceipts.length - 1)) {
+            await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+          }
         })
       }
 
@@ -131,8 +138,8 @@ export async function printNewBuffer(receipt) {
       await cutLine()
     }
   } catch (error) {
-    if(error.message.includes('null is not an object')) {
-      Alert.alert("Помилка друку", 'Друк чеків не працює в емуляторі')
+    if(error.message.includes('of undefined')) {
+      Alert.alert("Помилка друку", 'Друк чеків не працює в тестовому оточенні')
     } else {
       Alert.alert("Помилка друку", error.message)
     }
@@ -205,7 +212,7 @@ export async function printReceipt(receipt) {
 
     await BluetoothEscposPrinter.setBlob(5)
 
-    await printColumn(['Продукт', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
+    await printColumn(['Назва', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
 
     await BluetoothEscposPrinter.setBlob(0)
     await BluetoothEscposPrinter.printerLineSpace(75)
@@ -214,7 +221,9 @@ export async function printReceipt(receipt) {
 
     await asyncForEach(receipt.receipt, async (item, index) => {
       await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
-      await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+      if(index !== (receipt.receipt.length - 1)) {
+        await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+      }
     })
 
     if (receipt && receipt.discount !== '0%') {
@@ -236,8 +245,8 @@ export async function printReceipt(receipt) {
 
     await cutLine()
   } catch (error) {
-    if(error.message.includes('null is not an object')) {
-      Alert.alert("Помилка друку", 'Друк чеків не працює в емуляторі')
+    if(error.message.includes('of undefined')) {
+      Alert.alert("Помилка друку", 'Друк чеків не працює в тестовому оточенні')
     } else {
       Alert.alert("Помилка друку", error.message)
     }
@@ -263,17 +272,13 @@ export async function printPreReceipt(receipt) {
 
     await BluetoothEscposPrinter.printerLineSpace(75)
 
-    {
-      settings.receipt_show_subheader && (
-        await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
-      )
-    }
+    {settings.receipt_show_subheader && (
+      await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
+    )}
 
-    {
-      settings.receipt_show_address && (
-        await printRegularLine(parceCyrrilicText(currentAccount.address), { spaces: 1, paddingLeft: 2 })
-      )
-    }
+    {settings.receipt_show_address && (
+      await printRegularLine(parceCyrrilicText(currentAccount.address), { spaces: 1, paddingLeft: 2 })
+    )}
 
     await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
     await printRegularLine(`Касир: ${parceCyrrilicText(receipt.employee)}`, { spaces: 1, paddingLeft: 2 })
@@ -285,7 +290,7 @@ export async function printPreReceipt(receipt) {
 
     await BluetoothEscposPrinter.setBlob(5)
 
-    await printColumn(['Продукт', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
+    await printColumn(['Назва', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
 
     await BluetoothEscposPrinter.setBlob(0)
     await BluetoothEscposPrinter.printerLineSpace(75)
@@ -294,7 +299,9 @@ export async function printPreReceipt(receipt) {
 
     await asyncForEach(receipt.receipt, async (item, index) => {
       await printColumn([parceCyrrilicText((item.size && item.size !== '') ? `${item.title}, ${handleSize(item.size)}` : item.title), `${item.price}`, `x${item.quantity}`, `${item.price * item.quantity}`], { paddingLeft: 2 })
-      await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+      if(index !== (receipt.receipt.length - 1)) {
+        await printRegularLine('', { spaces: 1, paddingLeft: 2 })
+      }
     })
 
     await BluetoothEscposPrinter.printerLineSpace(30)
@@ -308,9 +315,11 @@ export async function printPreReceipt(receipt) {
     await printRegularLine('', { spaces: 4, })
 
     await cutLine()
+
+    store.dispatch(savePreReceipt('printed'))
   } catch (error) {
-    if(error.message.includes('null is not an object')) {
-      Alert.alert("Помилка друку", 'Друк чеків не працює в емуляторі')
+    if(error.message.includes('of undefined')) {
+      Alert.alert("Помилка друку", 'Друк чеків не працює в тестовому оточенні')
     } else {
       Alert.alert("Помилка друку", error.message)
     }

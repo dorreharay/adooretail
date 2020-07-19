@@ -66,7 +66,7 @@ function Menu(props) {
         />
         <View style={styles.modal}>
           {menuButtons.map((button, index) => (
-            <TouchableOpacity
+            <TouchableHighlight
               style={[styles.modalItem, index === 0 && styles.withTopBorderRadius]}
               onPress={() => {
                 if (index === 1) {
@@ -74,7 +74,7 @@ function Menu(props) {
                 }
                 button.onPress()
               }}
-              activeOpacity={1}
+              underlayColor='#F3F3F3'
               key={index}
             >
               <>
@@ -87,7 +87,7 @@ function Menu(props) {
 
                 <Text style={styles.modalItemText}>{button.name}</Text>
               </>
-            </TouchableOpacity>
+            </TouchableHighlight>
           ))}
 
           <TouchableOpacity

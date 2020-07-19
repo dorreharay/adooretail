@@ -163,7 +163,7 @@ function Session(props) {
   const renderMainContent = () => {
     return (
       <View style={{ width: '86%', paddingTop: 35, paddingBottom: 30, }}>
-        <Text style={styles.heading}>{endOfSession ? 'Закінчіть касову зміну' : 'Розпочніть касову зміну'}</Text>
+        <Text style={styles.heading}>{endOfSession ? 'Закінчити касову зміну' : 'Розпочати касову зміну'}</Text>
 
         <View>
           <Text style={styles.label}>Готівкова каса на початку зміни</Text>
@@ -313,7 +313,7 @@ function Session(props) {
         style={{ zIndex: 13, }}
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        extraScrollHeight={270}
+        extraScrollHeight={150}
         keyboardOpeningTime={0}
         enableOnAndroid={true}
       >

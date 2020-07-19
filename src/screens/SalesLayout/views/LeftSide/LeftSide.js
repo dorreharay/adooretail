@@ -13,7 +13,7 @@ import { printNewBuffer, printPreReceipt, } from '@printer'
 import { headerHeight, headerButtonSizes, headerIcon, lsInstance, } from '@constants'
 
 import { updateLocalReceipt, } from '@reducers/UserReducer'
-import { clearCurrentReceipt, setBuffer, setPaymentModalVisibility, setOldReceipt, } from '@reducers/TempReducer'
+import { clearCurrentReceipt, setBuffer, setPaymentModalVisibility, setOldReceipt, setPrintStatus, setReceiptOptionsVisibility, } from '@reducers/TempReducer'
 import { setSelectedReceipt, setReceiptEditState, } from '@reducers/OrdersReducer'
 import { currentSessionSelector, } from '@selectors'
 
@@ -36,6 +36,8 @@ function LeftSide(props) {
   const updateModeData = useSelector(state => state.orders.updateModeData)
   const editedReceiptId = useSelector(state => state.orders.editedReceiptId)
   const editedReceiptPayload = useSelector(state => state.orders.editedReceiptPayload)
+  const receiptsIds = useSelector(state => state.orders.receiptsIds)
+  const receiptsPreStates = useSelector(state => state.orders.receiptsPreStates)
   const buffer = useSelector(state => state.temp.buffer)
   const oldReceiptState = useSelector(state => state.temp.oldReceiptState)
   const currentSession = useSelector(currentSessionSelector)
@@ -164,7 +166,11 @@ function LeftSide(props) {
   const saveBuffer = async () => {
     if (bufferButtonDisabled || printInProgress) return
 
+    dispatch(setPrintStatus(true))
+
     await performPrinterScript()
+
+    dispatch(setPrintStatus(false))
   }
 
   const performPrinterScript = async () => {
@@ -230,16 +236,9 @@ function LeftSide(props) {
   const handlePreReceipt = async () => {
     if (printInProgress) return
 
-    function guidGenerator() {
-      let S4 = function () {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-      };
-      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-    }
-
     const currentReceipt = receipts[selectedReceiptIndex]
 
-    const receiptId = guidGenerator()
+    const receiptId = receiptsIds[selectedReceiptIndex]
 
     const payload = {
       receipt: currentReceipt,
@@ -249,7 +248,13 @@ function LeftSide(props) {
       employee: currentSession ? currentSession.employees[currentEmployee] : '',
     }
 
-    await printPreReceipt(payload)
+    try {
+      dispatch(setPrintStatus(true))
+
+      await printPreReceipt(payload)
+    } catch (error) {} finally {
+      dispatch(setPrintStatus(false))
+    }
   }
 
   const findReceiptAndUpdate = async () => {
@@ -391,7 +396,7 @@ function LeftSide(props) {
                   style={headerButtonSizes}
                   iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
                   onPress={() => {
-                    
+                    dispatch(setReceiptOptionsVisibility(true)) 
                   }}
                   source={require('@images/kebab.png')}
                 />
@@ -458,7 +463,7 @@ function LeftSide(props) {
                 end={{ x: 1, y: 0 }}
                 colors={paymentColorSchema.gradient}
               >
-                <Text style={[styles.lsproceedButtonText, { fontSize: 24, }, updateModeData && { fontSize: 22, }, settings.printer_precheck && settings.printer_preorder && { fontSize: 18, }]}>{!updateModeData ? printInProgress ? 'Друк...' : `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
+                <Text style={[styles.lsproceedButtonText, { fontSize: 24, }, updateModeData && { fontSize: 22, }, settings.printer_precheck && settings.printer_preorder && { fontSize: 18, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -472,7 +477,7 @@ function LeftSide(props) {
                       styles.zProceedEx,
                       { borderColor: paymentColorSchema.color, },
                       { paddingHorizontal: 0, paddingVertical: 0, },
-                      printInProgress && { borderColor: paymentColorSchema.disabled },
+                      (printInProgress || receiptSum === 0 || receiptsPreStates.find(item => item.hash_id === receiptsIds[selectedReceiptIndex])) && { borderColor: paymentColorSchema.disabled },
                     ]}
                     underlayColor={paymentColorSchema.disabled}
                   >
@@ -480,7 +485,7 @@ function LeftSide(props) {
                       styles.lsproceedButton,
                       // { opacity: 0.4 }
                     ]}>
-                      <Text style={[styles.lspreText, { color: paymentColorSchema.color, }, printInProgress && { opacity: 0.4 }]}>ПРЕЧ.</Text>
+                      <Text style={[styles.lspreText, { color: paymentColorSchema.color, }, (printInProgress || receiptSum === 0 || receiptsPreStates.find(item => item.hash_id === receiptsIds[selectedReceiptIndex])) && { opacity: 0.4 }]}>ПРЕЧ.</Text>
                     </View>
                   </TouchableHighlight>
                 )}
