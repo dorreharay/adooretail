@@ -141,7 +141,7 @@ function HistoryList(props) {
                 <View style={styles.receiptLeftButtons}>
                   <TouchableOpacity
                     style={styles.receiptLeftButton}
-                    onPress={reprintReceipt}
+                    onPress={() => reprintReceipt(receipt)}
                     activeOpacity={0.7}
                   >
                     <FastImage
