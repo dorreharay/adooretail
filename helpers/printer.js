@@ -65,6 +65,7 @@ export async function printNewBuffer(receipt) {
   try {
     const currentStore = store.getState()
     const { settings, } = currentStore.user
+    const { receiptsIds, selectedReceiptIndex, } = currentStore.orders
 
     await resolveDevice()
 
@@ -82,7 +83,7 @@ export async function printNewBuffer(receipt) {
 
     if (kitchenReceipts.length !== 0 && settings.kitchen_enabled) {
       await printHeading(parceCyrrilicText('Кухня'), { spaces: 2, })
-      await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Номер замовлення: #${receiptsIds[selectedReceiptIndex].slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
@@ -111,7 +112,7 @@ export async function printNewBuffer(receipt) {
     if (paydeskReceipts.length !== 0 && settings.desk_enabled) {
       await printHeading(parceCyrrilicText('Бар'), { spaces: 2, })
 
-      await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Номер замовлення: #${receiptsIds[selectedReceiptIndex].slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
 
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })

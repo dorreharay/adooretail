@@ -4,8 +4,8 @@ import { DURATION } from 'react-native-easy-toast'
 import { getFormattedDate, getStartOfPeriod, getEndOfPeriod, getIsBetween, } from '@dateFormatter'
 import { START, END, NOT_ON_SHIFT } from '@statuses'
 import { syncDataWithStore, setNeedToReenter, setProducts, } from '@reducers/UserReducer'
-import { setModalStatus } from '@reducers/TempReducer'
-import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
+import { setPreReceipts } from '@reducers/OrdersReducer'
+import { setEndOfSessionStatus, setSessionModalState, setModalStatus, } from '@reducers/TempReducer'
 
 function getState(reducer) {
   return store.getState()[reducer]
@@ -90,7 +90,7 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
   const dispatch = store.dispatch
 
   const { currentAccount } = currentStore.user
-  const { currentRoute, } = currentStore.temp
+  const { receiptsPreStates, } = currentStore.orders
 
   if (!currentAccount) {
     callback()
@@ -103,10 +103,13 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
   try {
     const data = await API.synchronizeSessions({
       localSessions: getLastItems(newLocalSessions ? newLocalSessions : localSessions, customOffset ? customOffset : 5),
+      receiptsPreStates,
       newSettings: settings,
     }, currentAccount.id)
 
     if (!data) return null
+
+    dispatch(setPreReceipts([]))
 
     const { shift_start, shift_end, client_data, } = data
     const { passcode: clientPasscode } = client_data
