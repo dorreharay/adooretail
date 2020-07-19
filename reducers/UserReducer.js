@@ -23,6 +23,7 @@ const SET_CURRENT_EMPLOYEE = 'SET_CURRENT_EMPLOYEE';
 const SET_CURRENT_SERVICE = 'SET_CURRENT_SERVICE';
 const SET_INITIAL_FLOW = 'SET_INITIAL_FLOW'
 const UPDATE_LOCAL_RECEIPT = 'UPDATE_LOCAL_RECEIPT'
+const RESET_USER = 'RESET_USER'
 
 const initialState = {
   startCash: 0,
@@ -246,7 +247,6 @@ export function setProducts(payload) {
   }
 }
 
-
 export function updateLocalReceipt(receiptSum, editedPaymentType) {
   return async function (dispatch, getState) {
     try {
@@ -284,6 +284,12 @@ export function updateLocalReceipt(receiptSum, editedPaymentType) {
       console.log(error)
     }
   };
+}
+
+export function resetUser() {
+  return {
+    type: RESET_USER,
+  }
 }
 
 const ACTION_HANDLERS = {
@@ -486,6 +492,9 @@ const ACTION_HANDLERS = {
     const { currentAccount } = state
 
     return { ...state, currentAccount: { ...currentAccount, localSessions: action.payload }, }
+  },
+  [RESET_USER]: () => {
+    return initialState
   },
 };
 

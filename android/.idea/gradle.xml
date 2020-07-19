@@ -18,6 +18,8 @@
             <option value="$PROJECT_DIR$/../node_modules/@react-native-community/viewpager/android" />
             <option value="$PROJECT_DIR$/../node_modules/lottie-react-native/src/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-background-timer/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-ble-manager/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-ble-plx/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-bluetooth-escpos-printer/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-camera/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-device-info/android" />
@@ -25,6 +27,7 @@
             <option value="$PROJECT_DIR$/../node_modules/react-native-fast-image/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-fetch-blob/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-gesture-handler/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-image-picker/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-linear-gradient/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-orientation/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-reanimated/android" />

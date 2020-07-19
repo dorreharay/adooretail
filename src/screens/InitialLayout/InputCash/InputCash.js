@@ -6,10 +6,6 @@ import FastImage from 'react-native-fast-image'
 import { syncSessions, } from '@helpers'
 import styles from './styles'
 
-import createStore from '../../../../store/store'
-
-const { persistor } = createStore();
-
 import { cashKeyboardLayout } from '@keyboards'
 
 import { setStartCash, updateCurrentSession, restoreDefaultShift, resetSessions, } from '@reducers/UserReducer'

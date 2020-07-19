@@ -8,7 +8,7 @@ import styles from './styles'
 import { deviceWidth } from '@dimensions'
 
 import { setEmployees, setStartCash, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus, setResetStatus, } from '@reducers/TempReducer';
+import { setEndOfSessionStatus, setSessionModalState, setResetStatus, } from '@reducers/TempReducer';
 
 function Heading(props) {
   const { navigation, activeTab, setActiveTab, } = props
@@ -16,18 +16,17 @@ function Heading(props) {
   const dispatch = useDispatch()
 
   const currentAccount = useSelector(state => state.user.currentAccount)
-  const settings = useSelector(state => state.user.settings)
 
   const [exitPromptVisible, setExitPromptState] = useState(false)
 
   const endSession = () => {
-    // dispatch(setEmployees([]))
     dispatch(setStartCash(0))
-    // dispatch(setEndOfSessionStatus(true))
     dispatch(setResetStatus(true))
+    dispatch(setEndOfSessionStatus(true))
+    dispatch(setSessionModalState(true))
     setExitPromptState(false)
 
-    navigation.jumpTo('InputCash')
+    navigation.jumpTo('SalesLayout')
   }
 
   return (
@@ -110,16 +109,15 @@ function Heading(props) {
       </View>
 
       <TouchableOpacity
-        style={[styles.menuButton, { height: styles.menuButton.height + 15 }]}
+        style={[styles.menuButton, { marginBottom: 10, }]}
         onPress={() => setExitPromptState(true)}
-        activeOpacity={0.9}
+        activeOpacity={1}
       >
         <FastImage
           style={styles.accountIcon}
           source={require('@images/logout.png')}
         />
-
-        <Text style={[styles.menuItemActiveText, { color: '#6D6D6D', fontSize: 18, }]}>
+        <Text style={styles.menuItemText}>
           Вийти з аккаунту
         </Text>
       </TouchableOpacity>

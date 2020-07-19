@@ -139,7 +139,7 @@ export async function printNewBuffer(receipt) {
       await cutLine()
     }
   } catch (error) {
-    if(error.message.includes('of undefined')) {
+    if(error.message.includes('getBondedPeripherals')) {
       Alert.alert("Помилка друку", 'Друк чеків не працює в тестовому оточенні')
     } else {
       Alert.alert("Помилка друку", error.message)
@@ -246,7 +246,7 @@ export async function printReceipt(receipt) {
 
     await cutLine()
   } catch (error) {
-    if(error.message.includes('of undefined')) {
+    if(error.message.includes('getBondedPeripherals')) {
       Alert.alert("Помилка друку", 'Друк чеків не працює в тестовому оточенні')
     } else {
       Alert.alert("Помилка друку", error.message)
@@ -319,7 +319,7 @@ export async function printPreReceipt(receipt) {
 
     store.dispatch(savePreReceipt('printed'))
   } catch (error) {
-    if(error.message.includes('of undefined')) {
+    if(error.message.includes('getBondedPeripherals')) {
       Alert.alert("Помилка друку", 'Друк чеків не працює в тестовому оточенні')
     } else {
       Alert.alert("Помилка друку", error.message)

@@ -110,7 +110,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(700, {
+  maxHeight(600, {
     heading: {
       color: '#000000',
       fontSize: 16,

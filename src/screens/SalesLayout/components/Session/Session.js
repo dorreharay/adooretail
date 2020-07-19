@@ -11,14 +11,13 @@ import ImagePicker from 'react-native-image-picker';
 
 import { syncSessions, } from '@helpers'
 import { currentSessionSelector, } from '@selectors'
-import { setStartCash, setEmployees, updateCurrentSession, restoreDefaultShift, resetSessions, } from '@reducers/UserReducer'
+import { setStartCash, setEmployees, updateCurrentSession, restoreDefaultShift, resetSessions, resetUser, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
 
-import { getFormattedDate, } from '@dateFormatter'
-import { deviceWidth, deviceHeight } from '@dimensions'
+import { deviceHeight } from '@dimensions'
 
 function Session(props) {
-  const {} = props
+  const { } = props
 
   const toastRef = useRef(null)
 
@@ -33,6 +32,7 @@ function Session(props) {
   const endOfSession = useSelector(state => state.temp.endOfSession)
   const modalStatus = useSelector(state => state.temp.modalStatus)
   const sessionModalVisible = useSelector(state => state.temp.sessionModalVisible)
+  const resetAccount = useSelector(state => state.temp.resetAccount)
 
   const [startSum, setStartSum] = useState('0')
   const [endSum, setEndSum] = useState('0')
@@ -114,19 +114,26 @@ function Session(props) {
 
   const endSession = async () => {
     if (!canProceed) return
+
+    if(resetAccount) {
+      syncSessions(() => { }, null, 1)
+
+      dispatch(resetUser())
+
+      navigation.jumpTo('Initial1')
+      return
+    }
     navigation.jumpTo('Login')
     setEndSum('0')
     setReportPhoto(null)
 
-    setTimeout(() => {
-      dispatch(setEndOfSessionStatus(false))
-      dispatch(updateCurrentSession({ status: 'end', endCash: endSum, reportPhoto: reportPhoto.uri, }))
-      dispatch(restoreDefaultShift())
+    dispatch(setEndOfSessionStatus(false))
+    dispatch(updateCurrentSession({ status: 'end', endCash: endSum, reportPhoto: reportPhoto.uri, }))
+    dispatch(restoreDefaultShift())
 
-      syncSessions(() => { }, null, 1)
+    await syncSessions(() => { }, null, 1)
 
-      dispatch(resetSessions())
-    }, 1)
+    dispatch(resetSessions())
   }
 
   const handlePicker = async () => {
@@ -145,7 +152,7 @@ function Session(props) {
         if (response.didCancel) {
           return
         }
-        
+
         const terminalReportPhoto = 'data:image/jpeg;base64,' + response.data
 
         setReportPhoto({ uri: terminalReportPhoto, size: response.fileSize, })

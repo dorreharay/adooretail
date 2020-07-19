@@ -180,12 +180,6 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
 
   const isValid = getIsBetween(currentAccountSession.startTime, startOfShift, endOfShift) && getIsBetween(null, startOfShift, endOfShift)
 
-  if (isValid) {
-    dispatch(setModalStatus(false))
-    dispatch(setSessionModalState(false))
-    dispatch(setEndOfSessionStatus(false))
-  }
-
   if (!isValid) {
     dispatch(setModalStatus(true))
     dispatch(setSessionModalState(true))

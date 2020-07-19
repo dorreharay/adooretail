@@ -393,12 +393,14 @@ function LeftSide(props) {
                 </View>
 
                 <SharedButton
-                  style={headerButtonSizes}
+                  style={[headerButtonSizes, receipts[selectedReceiptIndex].length === 0 && { opacity: 0.5 }]}
                   iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
                   onPress={() => {
+                    if(receipts[selectedReceiptIndex].length === 0) return
+
                     dispatch(setReceiptOptionsVisibility(true)) 
                   }}
-                  source={require('@images/kebab.png')}
+                  source={receipts[selectedReceiptIndex].length === 0 ? require('@images/kebab-disabled.png') : require('@images/kebab.png')}
                 />
               </View>
 
