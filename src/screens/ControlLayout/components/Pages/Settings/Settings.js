@@ -50,7 +50,7 @@ const Settings = ({ navigation }) => {
             onPress={() => setSelectedSetting(null)}
             activeOpacity={0.8}
           >
-            <Text style={styles.mainBackText}>Назад</Text>
+            <Text style={styles.mainBackText}>Закрити</Text>
           </TouchableOpacity>
         )}
       </View>
