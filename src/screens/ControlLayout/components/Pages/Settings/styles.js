@@ -108,7 +108,7 @@ const base = {
   },
   captionText: {
     color: '#6C6C6C',
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: GILROY_REGULAR,
   }
 };
