@@ -22,10 +22,22 @@ const Settings = ({ navigation }) => {
     }))
   }
 
+  const renderSettingType = () => {
+    if(selectedSetting === 'general') {
+      return '/ Загальні'
+    }
+    if (selectedSetting === 'payments') {
+      return '/ Оплата'
+    }
+    if (selectedSetting === 'prints') {
+      return '/ Друк'
+    }
+  }
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 100, }} bounces={false}>
       <View style={styles.mainHeading}>
-        <Text style={styles.mainHeadingText}>Налаштування</Text>
+        <Text style={styles.mainHeadingText}>Налаштування {renderSettingType()}</Text>
         {selectedSetting && (
           <TouchableOpacity
             style={styles.mainHeadingBackButton}
