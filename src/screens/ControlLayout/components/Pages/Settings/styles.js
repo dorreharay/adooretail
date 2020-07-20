@@ -13,11 +13,35 @@ const base = {
   },
   settingHeading: {
     alignSelf: 'flex-start',
-    paddingHorizontal: 32,
-    paddingVertical: 15,
-    marginVertical: 20,
+    // paddingHorizontal: 32,
+    paddingVertical: 5,
+    marginVertical: 0,
     borderRadius: 3,
-    backgroundColor: '#FFFFFF',
+  },
+  mainHeading: {
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingVertical: 5,
+    marginVertical: 0,
+    borderRadius: 3,
+  },
+  mainHeadingText: {
+    marginVertical: 10,
+    marginBottom: 20,
+    fontSize: 22,
+    fontFamily: GILROY_MEDIUM,
+  },
+  mainHeadingBackButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    marginRight: -10,
+  },
+  mainBackText: {
+    fontSize: 16,
+    fontFamily: GILROY_MEDIUM,
   },
   settingHeadingText: {
     fontSize: 20,
@@ -63,6 +87,30 @@ const base = {
     flexDirection: 'row',
     marginTop: 15,
   },
+  card: {
+    alignSelf: 'flex-start',
+    width: '32%',
+    paddingHorizontal: 25,
+    paddingVertical: 20,
+    borderRadius: 3,
+    backgroundColor: '#FFFFFF',
+  },
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 22,
+    fontFamily: GILROY_MEDIUM,
+  },
+  caption: {
+    marginTop: 20,
+  },
+  captionText: {
+    color: '#6C6C6C',
+    fontSize: 16,
+    fontFamily: GILROY_REGULAR,
+  }
 };
 
 const styles = createStyles(
