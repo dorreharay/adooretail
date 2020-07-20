@@ -27,7 +27,7 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    width: deviceWidth * 0.43,
+    width: 480,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     zIndex: 12,

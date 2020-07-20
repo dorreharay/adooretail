@@ -25,7 +25,7 @@ const base = {
   },
   container: {
     flexDirection: 'row',
-    width: deviceWidth * 0.7,
+    width: 760,
     height: 630,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',

@@ -28,7 +28,6 @@ function NoAccount(props) {
 
   const inputRef = useRef(null)
 
-  const [cameraVisible, setCameraVisibility] = useState(true)
   const [accountCode, setAccountCode] = useState('')
   const [loading, setLoadingStatus] = useState(false)
   const [errorVisible, setErrorVisible] = useState('')
@@ -38,8 +37,8 @@ function NoAccount(props) {
     setAccountCode(text)
   }
 
-  const handleCode = async (code) => {
-    const value = code ? code : accountCode
+  const handleCode = async () => {
+    const value = accountCode
 
     if (value.length < 10) {
       return
@@ -133,7 +132,7 @@ function NoAccount(props) {
       <KeyboardAwareScrollView
         contentContainerStyle={styles.awareContentContainerStyles}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        extraScrollHeight={40}
+        extraScrollHeight={60}
         keyboardOpeningTime={0}
         enableOnAndroid
         keyboardShouldPersistTaps={'handled'}
@@ -154,6 +153,7 @@ function NoAccount(props) {
                     style={styles.input}
                     value={accountCode}
                     onChangeText={(text) => setCode(text)}
+                    onSubmitEditing={handleCode}
                     maxLength={10}
                     keyboardType='decimal-pad'
                     autoCapitalize='characters'
@@ -172,7 +172,7 @@ function NoAccount(props) {
 
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={() => handleCode()}
+                  onPress={handleCode}
                   activeOpacity={0.8}
                 >
                   {loading ? (
