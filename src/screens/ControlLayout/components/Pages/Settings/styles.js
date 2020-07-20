@@ -85,7 +85,7 @@ const base = {
   },
   settingCategoryContainer: {
     flexDirection: 'row',
-    marginTop: 15,
+    // marginTop: 15,
   },
   card: {
     alignSelf: 'flex-start',
