@@ -37,7 +37,13 @@ const Settings = ({ navigation }) => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 100, }} bounces={false}>
       <View style={styles.mainHeading}>
-        <Text style={styles.mainHeadingText}>Налаштування {renderSettingType()}</Text>
+        <TouchableOpacity
+          style={[styles.mainHeadingBackButton, { marginLeft: -20, marginRight: 0, }]}
+          onPress={() => setSelectedSetting(null)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.mainHeadingText}>Налаштування {renderSettingType()}</Text>
+        </TouchableOpacity>
         {selectedSetting && (
           <TouchableOpacity
             style={styles.mainHeadingBackButton}
