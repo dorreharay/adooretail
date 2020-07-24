@@ -98,8 +98,8 @@ const base = {
     width: '100%',
     paddingLeft: 35,
     paddingRight: 20,
-    paddingTop: 15,
-    paddingBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 5,
     // backgroundColor: '#FCBC7933'
   },
   receiptTitle: {
@@ -107,7 +107,7 @@ const base = {
   },
   receiptTitleText: {
     color: '#343434',
-    fontSize: 20,
+    fontSize: 17,
     fontFamily: GILROY_MEDIUM,
     lineHeight: 30,
   },
@@ -124,7 +124,7 @@ const base = {
   },
   receiptOnePrice: {
     color: '#343434',
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: GILROY_REGULAR,
   },
   receiptQtyContainer: {
@@ -160,7 +160,7 @@ const base = {
   },
   receiptQtyText: {
     color: '#343434',
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: GILROY_REGULAR,
   },
   receiptPrice: {
@@ -180,7 +180,7 @@ const base = {
     height: '100%',
 
     color: '#343434',
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: GILROY_REGULAR,
     textAlign: 'center',
   },
