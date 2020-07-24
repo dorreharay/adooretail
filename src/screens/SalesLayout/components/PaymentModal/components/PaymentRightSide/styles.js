@@ -26,7 +26,7 @@ const base = {
     paddingTop: '7%',
     paddingBottom: '5%',
     color: '#343434',
-    fontSize: 25,
+    fontSize: 22,
     fontFamily: GILROY_MEDIUM,
   },
   headingCommentText: {
@@ -66,7 +66,7 @@ const base = {
   },
   paidInput: {
     width: 90,
-    paddingVertical: Platform.OS === 'android' ? 0 : 13,
+    paddingVertical: Platform.OS === 'android' ? 10 : 13,
     marginRight: 15,
     borderWidth: 1.5,
     borderColor: '#343434',
@@ -84,7 +84,7 @@ const base = {
   },
   waitingText: {
     color: '#343434',
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: GILROY_REGULAR,
   },
   changeText: {

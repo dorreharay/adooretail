@@ -27,20 +27,20 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    width: 480,
+    width: 400,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     zIndex: 12,
   },
   heading: {
-    marginBottom: 40,
+    marginBottom: 20,
     color: '#000000',
-    fontSize: 34,
+    fontSize: 24,
     fontFamily: GILROY_BOLD,
   },
   label: {
     color: '#000000',
-    fontSize: 18,
+    fontSize: 12,
     fontFamily: GILROY_MEDIUM,
   },
   inputContainer: {
@@ -75,20 +75,20 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     flexGrow: 1,
-    height: 70,
+    height: 60,
     marginVertical: 20,
     backgroundColor: '#F3F4F6',
   },
   debitReportButtonText: {
     color: '#000000',
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: GILROY_REGULAR,
   },
   linearButton: {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: 75,
+    height: 65,
     opacity: 1,
   },
   linearButtonGradient: {
@@ -101,7 +101,7 @@ const base = {
   },
   linearButtonText: {
     color: '#FFFFFF',
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: GILROY_MEDIUM,
   },
   backButton: {
@@ -118,14 +118,14 @@ const base = {
   employeeName: {
     marginLeft: 20,
     color: '#000000',
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: GILROY_MEDIUM,
   },
   selectedButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 36,
-    height: 36,
+    width: 30,
+    height: 30,
     backgroundColor: '#E46162',
     borderRadius: 100,
   }

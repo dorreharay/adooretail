@@ -110,28 +110,6 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(600, {
-    heading: {
-      color: '#000000',
-      fontSize: 16,
-      fontFamily: GILROY_SEMIBOLD,
-    },
-    caption: {
-      fontSize: 10,
-    },
-    loginHeading: {
-      fontSize: 6,
-    },
-    loginHeadingSuper: {
-      fontSize: 6,
-    },
-    midContainer: {
-      width: deviceWidth * 0.42,
-      height: deviceHeight * 0.25,
-      marginVertical: 70,
-    },
-  }),
-
   maxHeight(500, {
     loginHeading: {
       fontSize: 10,

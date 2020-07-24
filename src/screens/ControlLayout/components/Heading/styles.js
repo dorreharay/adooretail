@@ -56,12 +56,12 @@ const base = {
   },
   menuItemText: {
     color: '#6D6D6D',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: GILROY_MEDIUM,
   },
   menuItemActiveText: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: GILROY_MEDIUM,
   },
   menuItemActiveIcon: {

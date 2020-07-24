@@ -31,18 +31,18 @@ const base = {
   },
   paymentModal: {
     flexDirection: 'row',
-    width: 760,
-    height: 660,
-    borderRadius: 5,
+    width: deviceHeight * 1.1,
+    height: deviceHeight * 0.9,
+    borderRadius: 2,
     backgroundColor: '#FFFFFF',
     zIndex: 20,
   },
   paymentSubmitButton: {
     position: 'absolute',
     left: '7.5%',
-    bottom: 40,
+    bottom: 35,
     width: '85%',
-    height: 80,
+    height: 75,
   },
   paymentSubmitButtonGradient: {
     alignItems: 'center',
@@ -54,8 +54,8 @@ const base = {
   },
   paymentSubmitButtonText: {
     color: '#FFFFFF',
-    fontSize: 26,
-    fontFamily: GILROY_MEDIUM,
+    fontSize: 22,
+    fontFamily: GILROY_REGULAR,
   },
   paymentHeadingContainer: {
     flexDirection: 'row',

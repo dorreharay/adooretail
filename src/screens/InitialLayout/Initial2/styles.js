@@ -14,17 +14,22 @@ const base = {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   heading: {
     width: '40%',
     color: '#000000',
-    fontSize: 30,
+    fontSize: 22,
     fontFamily: GILROY_SEMIBOLD,
   },
   caption: {
     width: '42%',
     marginTop: '2%',
     color: '#000000',
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: GILROY_REGULAR,
     lineHeight: 20,
   },
@@ -41,17 +46,17 @@ const base = {
   list: {
     width: '32%',
     height: '60%',
-    marginTop: '4%',
+    marginTop: '2%',
   },
   listItem: {
     flexDirection: 'row',
     width: '100%',
-    marginVertical: 10,
+    marginVertical: 6,
   },
   listItemText: {
     marginLeft: 15,
     color: '#000000',
-    fontSize: 16,
+    fontSize: 12,
     fontFamily: GILROY_REGULAR,
     lineHeight: 18,
   },
@@ -83,7 +88,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(600, {
+  maxHeight(500, {
     phoneImage: {
       right: deviceWidth * 0.16,
       width: deviceWidth * 0.32,

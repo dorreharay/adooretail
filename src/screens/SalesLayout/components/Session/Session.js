@@ -253,7 +253,7 @@ function Session(props) {
 
   const renderEmployeesList = () => {
     return (
-      <View style={{ width: '86%', maxHeight: deviceHeight * 0.7, paddingTop: 30, }}>
+      <View style={{ width: '86%', maxHeight: deviceHeight * 0.7, paddingTop: 25, }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15, }}>
           <Text style={[styles.heading, { marginTop: 0, marginBottom: 0, }]}>Працівники</Text>
           <TouchableOpacity style={styles.backButton} onPress={() => setEmployeesPicker(false)}>
@@ -272,7 +272,7 @@ function Session(props) {
             >
               <View style={styles.employee} key={index}>
                 <FastImage
-                  style={{ width: 50, height: 50, borderRadius: 100, }}
+                  style={{ width: 40, height: 40, borderRadius: 100, }}
                   source={{ uri: employee.icon ? employee.icon : img_url }}
                 />
                 <Text style={styles.employeeName}>{employee.name}</Text>
@@ -320,9 +320,9 @@ function Session(props) {
         style={{ zIndex: 13, }}
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        extraScrollHeight={150}
+        extraScrollHeight={0}
         keyboardOpeningTime={0}
-        enableOnAndroid={true}
+        enableOnAndroid={endOfSession}
       >
         <View style={styles.container}>
           {employeesPickerOpened ? renderEmployeesList() : renderMainContent()}

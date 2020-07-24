@@ -73,7 +73,7 @@ const base = {
   },
   buttonText: {
     color: '#C6C6C6',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: GILROY_MEDIUM,
   },
   activeButton: {

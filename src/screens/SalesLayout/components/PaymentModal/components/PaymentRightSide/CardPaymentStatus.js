@@ -49,9 +49,9 @@ function CardPaymentStatus(props) {
   return (
     <View style={[styles.secondContainer, { justifyContent: 'space-between', paddingRight: '7%', }]}>
       <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', }}>
-        <View style={{ flexDirection: 'row', width: '90%', }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', }}>
           <Animated.View style={[styles.statusDot, { backgroundColor: statusColor }, { opacity: statusDotOpacity }]} />
-          <Text style={[styles.waitingText, { fontSize: 22 }]}>{statusText}</Text>
+          <Text style={styles.waitingText}>{statusText}</Text>
         </View>
       </View>
     </View>

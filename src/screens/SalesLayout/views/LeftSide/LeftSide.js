@@ -369,21 +369,21 @@ function LeftSide(props) {
                   setReceiptInstancesVisibility(!isReceiptInstancesVisible)
                 }}
                 style={headerButtonSizes}
-                iconStyle={{ width: headerIcon.width - 1, height: headerIcon.height - 1, }}
+                iconStyle={{ width: 16, height: 16, }}
                 source={require('@images/prev.png')}
               />
             </View>
           </View>
         ) : (
             <View style={[styles.header, { height: headerHeight, }]} onLayout={(e) => startTimer(e)}>
-              <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '77%', flexDirection: 'row' }}>
+              <View style={{ alignItems: 'center', justifyContent: 'space-between', width: '71%', flexDirection: 'row' }}>
                 <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginLeft: deviceHeight < 500 ? 10 : 0, }}>
                   <SharedButton
                     onPress={() => { }}
-                    style={{ width: headerButtonSizes.width - 15, height: headerButtonSizes.height - 10, }}
+                    style={{ width: headerButtonSizes.width - 17, height: headerButtonSizes.height - 17, }}
                     scale={0.85}
                   >
-                    <ClockIcon width={deviceHeight < 500 ? 13 : 20} height={deviceHeight < 500 ? 13 : 20} />
+                    <ClockIcon width={16} height={16} />
                   </SharedButton>
                   <Text
                     style={styles.timeText}
@@ -394,7 +394,7 @@ function LeftSide(props) {
 
                 <SharedButton
                   style={[headerButtonSizes, receipts[selectedReceiptIndex].length === 0 && { opacity: 0.5 }]}
-                  iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
+                  iconStyle={{ width: 16, height: 16, }}
                   onPress={() => {
                     if(receipts[selectedReceiptIndex].length === 0) return
 
@@ -407,7 +407,7 @@ function LeftSide(props) {
               <View style={{ width: '23%', flexDirection: 'row', justifyContent: 'flex-end' }}>
                 <SharedButton
                   style={headerButtonSizes}
-                  iconStyle={{ width: headerIcon.width + 0.5, height: headerIcon.height + 0.5, }}
+                  iconStyle={{ width: 16, height: 16, }}
                   onPress={() => {
                     if (updateModeData) return
                     setReceiptInstancesVisibility(!isReceiptInstancesVisible)
@@ -465,7 +465,7 @@ function LeftSide(props) {
                 end={{ x: 1, y: 0 }}
                 colors={paymentColorSchema.gradient}
               >
-                <Text style={[styles.lsproceedButtonText, { fontSize: 24, }, updateModeData && { fontSize: 22, }, settings.printer_precheck && settings.printer_preorder && { fontSize: 18, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
+                <Text style={[styles.lsproceedButtonText, { fontSize: 22, }, updateModeData && { fontSize: 20, }, settings.printer_precheck && settings.printer_preorder && { fontSize: 16, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -538,7 +538,7 @@ function LeftSide(props) {
                 end={{ x: 1, y: 0 }}
                 colors={paymentColorSchema.gradient}
               >
-                <Text style={[styles.lsproceedButtonText, { fontSize: 22, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
+                <Text style={[styles.lsproceedButtonText, { fontSize: 20, }]}>{!updateModeData ? `ОПЛАТА ${receiptSum ? receiptSum : 0}₴` : updateLoading ? 'ОНОВЛЕННЯ...' : `ЗБЕРЕГТИ ${receiptSum}₴`}</Text>
               </LinearGradient>
             </TouchableOpacity>
           </>

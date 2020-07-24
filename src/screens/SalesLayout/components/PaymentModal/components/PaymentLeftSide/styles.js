@@ -8,15 +8,15 @@ const base = {
     position: 'relative',
     width: '32%',
     height: '100%',
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 2,
+    borderBottomLeftRadius: 2,
     backgroundColor: '#181619',
   },
   heading: {
     flexDirection: 'row',
     paddingLeft: leftPadding,
     color: '#FFFFFF',
-    fontSize: 25,
+    fontSize: 22,
     fontFamily: GILROY_MEDIUM,
   },
   paymentType: {
@@ -27,7 +27,7 @@ const base = {
   },
   paymentTypeName: {
     color: '#575759',
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: GILROY_MEDIUM,
     lineHeight: 30,
   },
@@ -81,7 +81,7 @@ const base = {
   currentEmployeeName: {
     marginLeft: 15,
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: GILROY_REGULAR,
   },
   editButton: {
@@ -113,48 +113,48 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(670, {
-    heading: {
-      fontSize: 20,
-    },
-    paymentType: {
-      paddingLeft: leftPadding,
-      padding: 15,
-    },
-    paymentTypeName: {
-      fontSize: 15,
-      lineHeight: 30,
-    },
-    currentEmployee: {
-      height: 55,
-    },
-    currentEmployeeImage: {
-      position: 'absolute',
-      left: 4,
-      top: 4,
-      width: 32,
-      height: 32,
-      borderRadius: 100,
-    },
-    currentEmployeeBorder: {
-      width: 40.5,
-      height: 40.5,
-      borderWidth: 1,
-      borderColor: '#E36062',
-      borderRadius: 100,
-    },
-    currentEmployeeName: {
-      marginLeft: 15,
-      color: '#FFFFFF',
-      fontSize: 15,
-      fontFamily: GILROY_REGULAR,
-    },
-    serviceImage: {
-      width: 38,
-      height: 38,
-      borderRadius: 100,
-    },
-  })
+  // maxHeight(670, {
+  //   heading: {
+  //     fontSize: 20,
+  //   },
+  //   paymentType: {
+  //     paddingLeft: leftPadding,
+  //     padding: 15,
+  //   },
+  //   paymentTypeName: {
+  //     fontSize: 15,
+  //     lineHeight: 30,
+  //   },
+  //   currentEmployee: {
+  //     height: 55,
+  //   },
+  //   currentEmployeeImage: {
+  //     position: 'absolute',
+  //     left: 4,
+  //     top: 4,
+  //     width: 32,
+  //     height: 32,
+  //     borderRadius: 100,
+  //   },
+  //   currentEmployeeBorder: {
+  //     width: 40.5,
+  //     height: 40.5,
+  //     borderWidth: 1,
+  //     borderColor: '#E36062',
+  //     borderRadius: 100,
+  //   },
+  //   currentEmployeeName: {
+  //     marginLeft: 15,
+  //     color: '#FFFFFF',
+  //     fontSize: 15,
+  //     fontFamily: GILROY_REGULAR,
+  //   },
+  //   serviceImage: {
+  //     width: 38,
+  //     height: 38,
+  //     borderRadius: 100,
+  //   },
+  // })
 );
 
 export default styles

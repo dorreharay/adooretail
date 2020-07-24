@@ -19,7 +19,7 @@ const base = {
   },
   timeText: {
     color: '#343434',
-    fontSize: 17,
+    fontSize: 14,
     fontFamily: GILROY_MEDIUM,
   },
   receiptButtonText: {

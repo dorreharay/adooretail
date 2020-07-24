@@ -25,15 +25,15 @@ const base = {
   },
   container: {
     flexDirection: 'row',
-    width: 760,
-    height: 630,
+    width: deviceHeight * 1.1,
+    height: deviceHeight * 0.9,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     zIndex: 12,
   },
   headingText: {
     color: '#343434',
-    fontSize: 35,
+    fontSize: 28,
     fontFamily: GILROY_BOLD,
   },
   leftSide: {
@@ -65,7 +65,7 @@ const base = {
   },
   typeItemText: {
     color: '#575757',
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: GILROY_MEDIUM,
   },
   typeItemTextActive: {
@@ -166,7 +166,7 @@ const base = {
 const styles = createStyles(
   base,
 
-  maxHeight(670, {
+  maxHeight(500, {
     container: {
       flexDirection: 'row',
       width: deviceWidth * 0.7,

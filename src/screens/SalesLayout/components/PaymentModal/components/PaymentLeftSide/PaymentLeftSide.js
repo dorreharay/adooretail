@@ -45,7 +45,7 @@ function PaymentLeftSide(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.heading, { marginTop: '14%', }]}>Спосіб оплати</Text>
+      <Text style={[styles.heading, { marginTop: '15%', }]}>Спосіб оплати</Text>
 
       <View style={{ marginTop: '10%', }}>
         {pTypes.map((item, index) => (
