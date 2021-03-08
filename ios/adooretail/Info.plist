@@ -45,15 +45,14 @@
 	<array>
 		<string>agfutura.ttf</string>
 		<string>comfortaa_bold.ttf</string>
-		<string>comfortaa_light.ttf</string>
-		<string>comfortaa_regular.ttf</string>
+		<string>MAZZARD_LIGHT.ttf</string>
+		<string>MAZZARD_REGULAR.ttf</string>
 		<string>evolventa_bold.ttf</string>
 		<string>evolventa_boldOblique.ttf</string>
 		<string>evolventa_oblique.ttf</string>
 		<string>evolventa_regular.ttf</string>
 		<string>futura_light.ttf</string>
 		<string>futura_new_demi.otf</string>
-		<string>futura_regular.ttf</string>
 		<string>ttcommons_black.ttf</string>
 		<string>ttcommons_bold.ttf</string>
 		<string>ttcommons_demibold.ttf</string>
@@ -73,10 +72,8 @@
 		<string>Gilroy-Medium.ttf</string>
 		<string>Gilroy-Regular.ttf</string>
 		<string>Gilroy-Thin.ttf</string>
-		<string>gilroy_bold.ttf</string>
-		<string>gilroy_light.ttf</string>
-		<string>gilroy_medium.ttf</string>
-		<string>gilroy_regular.ttf</string>
+		<string>MAZZARD_SEMIBOLD.ttf</string>
+		<string>MAZZARD_MEDIUM.ttf</string>
 		<string>Geometria-Bold.ttf</string>
 		<string>Geometria-Light.ttf</string>
 		<string>Geometria-Medium.ttf</string>
@@ -96,7 +93,18 @@
 		<string>Circe-Light.ttf</string>
 		<string>Circe-Regular.ttf</string>
 		<string>Circe-Thin.ttf</string>
-		<string>gilroy_semibold.ttf</string>
+		<string>MazzardH-Light.ttf</string>
+		<string>MazzardH-Medium.ttf</string>
+		<string>MazzardH-Regular.ttf</string>
+		<string>MazzardH-SemiBold.ttf</string>
+		<string>MazzardL-Light.ttf</string>
+		<string>MazzardL-Medium.ttf</string>
+		<string>MazzardL-Regular.ttf</string>
+		<string>MazzardL-SemiBold.ttf</string>
+		<string>MazzardM-Light.ttf</string>
+		<string>MazzardM-Medium.ttf</string>
+		<string>MazzardM-Regular.ttf</string>
+		<string>MazzardM-SemiBold.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, PROBA_BOLD, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_MEDIUM, MAZZARD_BOLD, } from '@fonts'
 
 const base = {
   container: {
@@ -23,7 +23,7 @@ const base = {
   tabText: {
     color: '#FFFFFF',
     fontSize: 15,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   }
 };
 

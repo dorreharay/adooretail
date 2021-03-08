@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_MEDIUM, PROBA_REGULAR, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 
 import { deviceWidth, deviceHeight } from '@dimensions'
@@ -71,21 +71,21 @@ const base = {
     marginBottom: 2.5,
     color: '#4E4E4E',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 30,
   },
   categoryTitleText4: {
     marginBottom: 2.5,
     color: '#4E4E4E',
     fontSize: 15,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 20,
   },
   categoryTitleText5: {
     marginBottom: 0,
     color: '#4E4E4E',
     fontSize: 13,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 15,
   },
   variant: {
@@ -101,7 +101,7 @@ const base = {
     paddingRight: 30,
     color: '#FFFFFF',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 38,
   },
   variantText4: {
@@ -112,7 +112,7 @@ const base = {
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 28,
   },
   variantText5: {
@@ -123,7 +123,7 @@ const base = {
     paddingRight: 10,
     color: '#FFFFFF',
     fontSize: 15,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 20,
   },
   variantPrice3: {
@@ -141,7 +141,7 @@ const base = {
   variantPriceText3: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 20,
   },
   variantPrice4: {
@@ -159,7 +159,7 @@ const base = {
   variantPriceText4: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 20,
   },
   variantPrice5: {
@@ -177,25 +177,25 @@ const base = {
   variantPriceText5: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 15,
   },
   variantSizeText3: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 20,
   },
   variantSizeText4: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 20,
   },
   variantSizeText5: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 18,
   },
   variantSize3: {
@@ -252,7 +252,7 @@ const base = {
   matchesText: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   backCategoryIcon: {
     width: 15,
@@ -299,7 +299,7 @@ const styles = createStyles(
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 30,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 38,
   },
   variantText4: {
@@ -310,7 +310,7 @@ const styles = createStyles(
     paddingRight: 0,
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 28,
   },
   variantText5: {
@@ -321,7 +321,7 @@ const styles = createStyles(
     paddingRight: 5,
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 20,
   },
   variantPrice: {

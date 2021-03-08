@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 const base = {
   сontainer: {
@@ -47,10 +47,10 @@ const base = {
   employeeName: {
     color: '#ffffff',
     fontSize: 17,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   checkedName: {
-    // fontFamily: GILROY_MEDIUM,
+    // fontFamily: MAZZARD_MEDIUM,
   }
 };
 

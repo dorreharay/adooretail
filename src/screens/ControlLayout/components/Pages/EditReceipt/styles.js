@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, GILROY_BOLD } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD } from '@fonts'
 
 import { deviceWidth, deviceHeight, } from '@dimensions';
 
@@ -34,7 +34,7 @@ const base = {
     marginBottom: 15,
     color: '#000000',
     fontSize: 26,
-    fontFamily: GILROY_BOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   sideMenuButton: {
     flexDirection: 'row',
@@ -46,22 +46,22 @@ const base = {
   sideMenuRegular: {
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   heading: {
     color: '#000000',
     fontSize: 26,
-    fontFamily: GILROY_BOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   subheading: {
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   regular: {
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 30,
   },
   devider: {
@@ -87,7 +87,7 @@ const base = {
   bold: {
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_BOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
     lineHeight: 30,
   },
   sideMenuTestButton: {

@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries'
-import { GILROY_BOLD, GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 
 import { deviceWidth, deviceHeight, } from '@dimensions'
 
@@ -23,7 +23,7 @@ const base = {
   listHeadingText: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   pairedList: {
     width: listWidth,
@@ -42,7 +42,7 @@ const base = {
   pairedText: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   pairedButton: {
     minWidth: 90,
@@ -56,7 +56,7 @@ const base = {
   pairedButtonText: {
     color: '#E46162',
     fontSize: 10,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   foundList: {
     width: listWidth,
@@ -75,7 +75,7 @@ const base = {
   foundText: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   foundButton: {
     minWidth: 130,
@@ -88,7 +88,7 @@ const base = {
   foundButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   unavailableWrapper: {
     alignItems: 'center',
@@ -103,7 +103,7 @@ const base = {
   unavailableWrapperText: {
     color: '#343434',
     fontSize: 15,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   emptyContainer: {
     flex: 1,
@@ -115,7 +115,7 @@ const base = {
     marginVertical: 15,
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   }
 };
 

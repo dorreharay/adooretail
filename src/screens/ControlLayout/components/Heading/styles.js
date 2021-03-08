@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, PROBA_BOLD, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -26,7 +26,7 @@ const base = {
   backIconText: {
     color: '#FFFFFF',
     fontSize: 15,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   menuButton: {
     flexDirection: 'row',
@@ -47,7 +47,7 @@ const base = {
   accountName: {
     color: '#FFFFFF',
     fontSize: 15,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   accountIcon: {
     width: 18,
@@ -57,12 +57,12 @@ const base = {
   menuItemText: {
     color: '#6D6D6D',
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   menuItemActiveText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   menuItemActiveIcon: {
     width: 13,
@@ -72,7 +72,7 @@ const base = {
   promptText: {
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
 };
 

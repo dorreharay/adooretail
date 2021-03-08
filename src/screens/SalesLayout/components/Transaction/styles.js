@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_BOLD, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
@@ -34,7 +34,7 @@ const base = {
   headingText: {
     color: '#343434',
     fontSize: 28,
-    fontFamily: GILROY_BOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   leftSide: {
     justifyContent: 'center',
@@ -66,7 +66,7 @@ const base = {
   typeItemText: {
     color: '#575757',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   typeItemTextActive: {
     color: '#FFFFFF',
@@ -75,7 +75,7 @@ const base = {
     marginTop: '6%',
     color: '#343434',
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   amountContainer: {
     flexDirection: 'row',
@@ -96,12 +96,12 @@ const base = {
 
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   amountCurrency: {
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   commentInput: {
     alignItems: 'center',
@@ -120,7 +120,7 @@ const base = {
 
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     textAlignVertical: 'top'
   },
   submitButton: {
@@ -138,7 +138,7 @@ const base = {
   submitButtonText: {
     color: '#6C6C6C',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   closeButton: {
     paddingVertical: 10,
@@ -147,7 +147,7 @@ const base = {
   closeText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   paymentSubmitButtonGradient: {
     alignItems: 'center',
@@ -159,7 +159,7 @@ const base = {
   paymentSubmitButtonText: {
     color: '#FFFFFF',
     fontSize: 26,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
 };
 

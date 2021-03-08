@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 const leftPadding = '7.5%'
 
@@ -16,7 +16,7 @@ const base = {
   headingText: {
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   arrowStyles: {
     width: 15,

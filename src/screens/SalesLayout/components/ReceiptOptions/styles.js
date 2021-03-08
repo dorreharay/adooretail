@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
@@ -71,7 +71,7 @@ const base = {
   modalItemText: {
     color: '#414141',
     fontSize: 22,
-  fontFamily: GILROY_REGULAR,
+  fontFamily: MAZZARD_REGULAR,
   },
   redText: {
     color: '#E25B63',
@@ -95,7 +95,7 @@ const base = {
   promptText: {
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
 };
 

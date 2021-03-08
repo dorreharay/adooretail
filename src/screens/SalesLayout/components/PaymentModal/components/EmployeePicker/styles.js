@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_MEDIUM, GILROY_REGULAR, MUSEO_MEDIUM, } from '@fonts'
+import { MAZZARD_MEDIUM, MAZZARD_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '12%'
 
@@ -29,7 +29,7 @@ const base = {
     marginBottom: 15,
     marginLeft: 30,
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   employeesList: {
     width: '100%',
@@ -48,7 +48,7 @@ const base = {
   employeesListItemName: {
     marginLeft: 20,
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   pickEmployeeButton: {
 
@@ -61,7 +61,7 @@ const base = {
   pickEmployeeButtonText: {
     color: '#FFF',
     fontSize: 15,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   }
 };
 

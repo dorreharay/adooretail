@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries'
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -12,7 +12,7 @@ const base = {
     marginBottom: 30,
     color: '#343434',
     fontSize: 32,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -28,7 +28,7 @@ const base = {
   },
   buttonText: {
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   activeButton: {
     flex: 1,

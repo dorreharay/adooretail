@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, GILROY_REGULAR, GILROY_SEMIBOLD, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_SEMIBOLD, } from '@fonts'
 
 const base = {
   container: {
@@ -11,7 +11,7 @@ const base = {
   loginHeading: {
     color: '#ffffff',
     fontSize: 30,
-    fontFamily: GILROY_SEMIBOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   proceedButton: {
     alignItems: 'center',
@@ -42,7 +42,7 @@ const base = {
   backButtonText: {
     color: '#F6F6F6',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
 };
 
@@ -53,7 +53,7 @@ const styles = createStyles(
     loginHeading: {
       color: '#ffffff',
       fontSize: 10,
-      fontFamily: COMFORTAA_LIGHT,
+      fontFamily: MAZZARD_LIGHT,
       letterSpacing: 1,
     },
     proceedButton: {

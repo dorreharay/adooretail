@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -12,7 +12,7 @@ const base = {
   paymentHeadingText: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   paymentDetails: {
     flexDirection: 'row',
@@ -32,27 +32,27 @@ const base = {
   paymentDetailsButtonText: {
     color: '#343434',
     fontSize: 19,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   paymentDetailsHeadingText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   paymentDetailsText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   menuMainButton: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   menuItemText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   }
 };
 

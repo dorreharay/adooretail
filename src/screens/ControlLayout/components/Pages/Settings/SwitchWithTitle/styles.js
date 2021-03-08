@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { CIRCE_BOLD, FUTURA_LIGHT, FUTURA_REGULAR, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM } from '@fonts'
 
 const base = {
   container: {
@@ -14,7 +14,7 @@ const base = {
     marginRight: 20,
     color: '#000000',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM
+    fontFamily: MAZZARD_MEDIUM
   },
   toggle: {
     alignItems: 'center',

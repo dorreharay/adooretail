@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_MEDIUM, } from '@fonts'
 
 import { deviceWidth } from '@dimensions';
 
@@ -36,7 +36,7 @@ const base = {
   sidebarHeading: {
     color: '#343434',
     fontSize: 22,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   button: {
     alignItems: 'center',
@@ -50,7 +50,7 @@ const base = {
   buttonText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   activeButton: {
     backgroundColor: '#000000',

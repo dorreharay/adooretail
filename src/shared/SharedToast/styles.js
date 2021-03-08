@@ -1,12 +1,12 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, } from '@fonts'
+import { MAZZARD_REGULAR, } from '@fonts'
 
 const base = {
   toastText: {
     marginBottom: 2,
     color: '#FFFFFF',
     fontSize: 17,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
 };
 

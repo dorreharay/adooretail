@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_BOLD,} from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD,} from '@fonts'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
@@ -36,12 +36,12 @@ const base = {
     marginBottom: 20,
     color: '#000000',
     fontSize: 24,
-    fontFamily: GILROY_BOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   label: {
     color: '#000000',
     fontSize: 12,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   inputContainer: {
     alignItems: 'center',
@@ -59,7 +59,7 @@ const base = {
 
     color: '#000000',
     fontSize: 26,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   disabled: {
     backgroundColor: '#F3F4F6',
@@ -69,7 +69,7 @@ const base = {
     marginRight: 20,
     color: '#000000',
     fontSize: 26,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   debitReportButton: {
     alignItems: 'center',
@@ -82,7 +82,7 @@ const base = {
   debitReportButtonText: {
     color: '#000000',
     fontSize: 14,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   linearButton: {
     alignItems: 'center',
@@ -102,7 +102,7 @@ const base = {
   linearButtonText: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   backButton: {
     alignItems: 'center',
@@ -119,7 +119,7 @@ const base = {
     marginLeft: 20,
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   selectedButton: {
     alignItems: 'center',

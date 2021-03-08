@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_MEDIUM } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM } from '@fonts'
 
 const toolsBarHeight = 45
 
@@ -34,7 +34,7 @@ const base = {
     marginTop: 0.5,
     flex: 1,
     fontSize: 17,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   printer: {
     alignItems: 'center',
@@ -56,7 +56,7 @@ const base = {
   printersAmountText: {
     color: '#414141',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   connection: {
     flexDirection: 'row',
@@ -72,7 +72,7 @@ const base = {
     marginTop: Platform.OS === 'ios' ? 1 : 0,
     paddingBottom: Platform.OS === 'android' ? 2.5 : 0,
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   update: {
     width: toolsBarHeight,
@@ -123,7 +123,7 @@ const base = {
   layoutNumberText: {
     color: '#414141',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
 };
 

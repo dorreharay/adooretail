@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
@@ -31,7 +31,7 @@ const base = {
     marginVertical: 10,
     marginBottom: 20,
     fontSize: 22,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   mainHeadingBackButton: {
     alignItems: 'center',
@@ -41,11 +41,11 @@ const base = {
   },
   mainBackText: {
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   settingHeadingText: {
     fontSize: 20,
-    fontFamily: GILROY_SEMIBOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   settingCard: {
     alignItems: 'center',
@@ -74,7 +74,7 @@ const base = {
   buttonText: {
     color: '#C6C6C6',
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   activeButton: {
     borderColor: '#E3E3E300',
@@ -101,7 +101,7 @@ const base = {
   },
   titleText: {
     fontSize: 22,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   caption: {
     marginTop: 20,
@@ -109,7 +109,7 @@ const base = {
   captionText: {
     color: '#6C6C6C',
     fontSize: 14,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   }
 };
 

@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_MEDIUM, GILROY_REGULAR, MUSEO_MEDIUM, } from '@fonts'
+import { MAZZARD_MEDIUM, MAZZARD_REGULAR, MUSEO_MEDIUM, } from '@fonts'
 
 const leftPadding = '12%'
 
@@ -17,7 +17,7 @@ const base = {
     paddingLeft: leftPadding,
     color: '#FFFFFF',
     fontSize: 22,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   paymentType: {
     flexDirection: 'row',
@@ -28,7 +28,7 @@ const base = {
   paymentTypeName: {
     color: '#575759',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 30,
   },
   cancelOrderButton: {
@@ -42,7 +42,7 @@ const base = {
   cancelOrderButtonText: {
     color: '#575757',
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   currentEmployee: {
     alignItems: 'center',
@@ -82,7 +82,7 @@ const base = {
     marginLeft: 15,
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   editButton: {
     alignItems: 'center',
@@ -147,7 +147,7 @@ const styles = createStyles(
   //     marginLeft: 15,
   //     color: '#FFFFFF',
   //     fontSize: 15,
-  //     fontFamily: GILROY_REGULAR,
+  //     fontFamily: MAZZARD_REGULAR,
   //   },
   //   serviceImage: {
   //     width: 38,

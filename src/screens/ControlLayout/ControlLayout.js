@@ -12,7 +12,7 @@ import Settings from './components/Pages/Settings/Settings'
 import { loadReceipts, loadDetails, } from '@reducers/OrdersReducer'
 
 import { deviceWidth, deviceHeight, } from '@dimensions'
-import { GILROY_MEDIUM, } from '@fonts'
+import { MAZZARD_MEDIUM, } from '@fonts'
 
 function ControlLayout(props) {
   const { navigation, route } = props
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   menuItemText: {
     color: '#343434',
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
 })
 

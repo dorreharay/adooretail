@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 
 import { deviceHeight } from '@dimensions'
 
@@ -28,13 +28,13 @@ const base = {
     marginBottom: 10,
     color: '#000000',
     fontSize: 28,
-    fontFamily: GILROY_SEMIBOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   modalRegularText: {
     marginBottom: 20,
     color: '#000000',
     fontSize: 25,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   modalShiftText: {
     position: 'absolute',
@@ -42,7 +42,7 @@ const base = {
     left: 40,
     color: '#363636',
     fontSize: 25,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     textDecorationLine: 'underline',
   },
   changeAccountButton: {
@@ -55,7 +55,7 @@ const base = {
   changeAccountButtonText: {
     color: '#7D7D7D',
     fontSize: 17,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: MAZZARD_LIGHT,
   },
   linearButton: {
     alignItems: 'center',
@@ -74,7 +74,7 @@ const base = {
   linearButtonText: {
     color: '#FFFFFF',
     fontSize: 22,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   additonalButton: {
     alignItems: 'center',
@@ -89,7 +89,7 @@ const base = {
   additonalButtonText: {
     color: '#343434',
     fontSize: 16,
-    fontFamily: FUTURA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   }
 };
 

@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
-import { GILROY_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD,  } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD,  } from '@fonts'
 
 import { deviceWidth, deviceHeight, } from '@dimensions';
 
@@ -23,14 +23,14 @@ const base = {
     width: '40%',
     color: '#000000',
     fontSize: 22,
-    fontFamily: GILROY_SEMIBOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   caption: {
     width: '42%',
     marginTop: '2%',
     color: '#000000',
     fontSize: 14,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 20,
   },
   helpButton: {
@@ -41,7 +41,7 @@ const base = {
   helpText: {
     color: '#343434',
     fontSize: 15,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   list: {
     width: '32%',
@@ -57,7 +57,7 @@ const base = {
     marginLeft: 15,
     color: '#000000',
     fontSize: 12,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 18,
   },
   proceedButton: {
@@ -74,7 +74,7 @@ const base = {
   proceedButtonText: {
     color: '#FFFFFF',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   phoneImage: {
     position: 'absolute',

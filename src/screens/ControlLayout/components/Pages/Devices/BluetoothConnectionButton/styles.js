@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries'
-import { COMFORTAA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 const base = {
   container: {
@@ -29,7 +29,7 @@ const base = {
   text: {
     color: '#E46162',
     fontSize: 12,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   }
 };
 

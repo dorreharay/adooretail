@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_MEDIUM, GILROY_REGULAR, PROBA_LIGHT, PROBA_MEDIUM } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, } from '@fonts'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 
@@ -55,7 +55,7 @@ const base = {
   paymentSubmitButtonText: {
     color: '#FFFFFF',
     fontSize: 22,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   paymentHeadingContainer: {
     flexDirection: 'row',
@@ -67,7 +67,7 @@ const base = {
   paymentHeadingText: {
     color: '#222222',
     fontSize: 50,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: MAZZARD_LIGHT,
   },
   paymentCloseButton: {
     alignItems: 'center',
@@ -93,7 +93,7 @@ const base = {
     marginHorizontal: 15,
     color: '#343434',
     fontSize: 32,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: MAZZARD_LIGHT,
   },
 };
 

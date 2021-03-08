@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
-import { GILROY_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 import { deviceWidth, deviceHeight, } from '@dimensions';
 
 const base = {
@@ -29,25 +29,25 @@ const base = {
   helpText: {
     color: '#343434',
     fontSize: 14,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   heading: {
     color: '#000000',
     fontSize: 26,
-    fontFamily: GILROY_SEMIBOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
   },
   caption: {
     width: '40%',
     marginTop: 15,
     color: '#000000',
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     textAlign: 'center',
   },
   changeText: {
     color: '#000000',
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     textDecorationLine: 'underline',
   },
   midContainer: {
@@ -67,7 +67,7 @@ const base = {
 
     color: '#000000',
     fontSize: 25,
-    fontFamily: PROBA_REGULAR
+    fontFamily: MAZZARD_REGULAR
   },
   clearButton: {
     position: 'absolute',

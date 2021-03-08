@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 
 import { deviceHeight } from '@dimensions';
 
@@ -25,20 +25,20 @@ const base = {
     marginRight: 30,
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   dayHeaderTotal: {
     // minWidth: '20%',
     marginRight: 30,
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   dayHeaderEmployees: {
     marginRight: 30,
     color: '#343434',
     fontSize: 16,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   dayHeaderIcon: {
     alignItems: 'center',
@@ -84,14 +84,14 @@ const base = {
     marginLeft: 15,
     color: '#343434',
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   total: {
     position: 'absolute',
     right: 25,
     color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   historyInstanceContainer: {
     width: '100%',
@@ -109,24 +109,24 @@ const base = {
   receiptItem: {
     color: '#535353',
     fontSize: 17,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 35,
   },
   receiptDetailHeading: {
     width: '53%',
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   receiptDetailHeadingComment: {
     width: '100%',
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 25,
   },
   receiptDetailContent: {
-    fontFamily: PROBA_LIGHT,
+    fontFamily: MAZZARD_LIGHT,
     // textDecorationLine: 'underline',
   },
   collapsedReceiptContent: {
@@ -138,14 +138,14 @@ const base = {
     marginVertical: 10,
     color: '#000000',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   receiptModalHeading: {
     width: '60%',
     marginBottom: 30,
     color: '#000000',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     textAlign: 'center',
     lineHeight: 30,
   },
@@ -166,7 +166,7 @@ const base = {
     borderColor: '#E8E8E8',
 
     fontSize: 22,
-    fontFamily: GILROY_REGULAR
+    fontFamily: MAZZARD_REGULAR
   },
   qrCodeInputPlaceholder: {
     width: '90%',
@@ -177,7 +177,7 @@ const base = {
     borderColor: '#E8E8E8',
 
     fontSize: 22,
-    fontFamily: PROBA_LIGHT
+    fontFamily: MAZZARD_LIGHT
   },
   qrCodeButton: {
     width: '100%',
@@ -190,7 +190,7 @@ const base = {
   qrCodeButtonText: {
     color: '#FFFFFF',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   errorText: {
     width: '100%',
@@ -198,7 +198,7 @@ const base = {
     paddingLeft: 25,
     color: 'red',
     fontSize: 18,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: MAZZARD_LIGHT,
   },
   scrollTopButton: {
     alignSelf: 'center',
@@ -232,7 +232,7 @@ const base = {
   loadMoreButtonText: {
     color: '#BBBBBB',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   receiptLeftButtons: {
     alignItems: 'center',
@@ -259,22 +259,22 @@ const base = {
   receiptSummaryText: {
     marginBottom: 15,
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   receiptSummaryReceiptText: {
     marginBottom: 15,
     fontSize: 15,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   emptyHeadingText: {
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   emptyText: {
     width: '70%',
     marginTop: 10,
     fontSize: 17,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     textAlign: 'center',
   },
 };

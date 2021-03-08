@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
+import { MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 
 const leftPadding = '7.5%'
 
@@ -27,7 +27,7 @@ const base = {
     paddingBottom: '5%',
     color: '#343434',
     fontSize: 22,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   headingCommentText: {
     paddingLeft: leftPadding,
@@ -35,7 +35,7 @@ const base = {
     paddingBottom: '1%',
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   toByPaid: {
     borderLeftWidth: 1,
@@ -48,7 +48,7 @@ const base = {
   toByPaidText: {
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   secondContainer: {
     alignItems: 'center',
@@ -74,23 +74,23 @@ const base = {
 
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   paidText: {
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 30,
   },
   waitingText: {
     color: '#343434',
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   changeText: {
     color: '#9A9A9A',
     fontSize: 20,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     lineHeight: 27,
   },
   cancelButton: {
@@ -104,7 +104,7 @@ const base = {
   cancelButtonText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   discountContainer: {
     width: '85%',
@@ -128,7 +128,7 @@ const base = {
 
     color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     textAlignVertical: 'center'
   },
   optionHeadingContainer: {
@@ -141,7 +141,7 @@ const base = {
   optionHeadingText: {
     color: '#343434',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   collapsibleContainer: {
     paddingBottom: 20,
@@ -159,7 +159,7 @@ const base = {
   discountItemText: {
     color: '#CFCFCF',
     fontSize: 20,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   orderContainer: {
     width: '85%',
@@ -182,7 +182,7 @@ const base = {
   orderItemText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   cancelPaymentProcessButton: {
     padding: 10,
@@ -190,7 +190,7 @@ const base = {
   cancelPaymentProcessText: {
     color: '#343434',
     fontSize: 15,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   cameraContainer: {
     width: '70%',
@@ -224,7 +224,7 @@ const base = {
   optionTypeText: {
     color: '#000',
     fontSize: 15,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
 };
 
@@ -289,7 +289,7 @@ const styles = createStyles(
     paidInput: {
       color: '#343434',
       fontSize: 20,
-      fontFamily: GILROY_MEDIUM,
+      fontFamily: MAZZARD_MEDIUM,
     },
     discountItem: {
       width: 55,
@@ -312,7 +312,7 @@ const styles = createStyles(
     optionTypeText: {
       color: '#000',
       fontSize: 12,
-      fontFamily: GILROY_MEDIUM,
+      fontFamily: MAZZARD_MEDIUM,
     },
   })
 );

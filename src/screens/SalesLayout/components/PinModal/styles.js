@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 
 import { deviceHeight } from '@dimensions'
 
@@ -15,7 +15,7 @@ const base = {
     marginBottom: 10,
     color: '#000000',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     textAlign: 'center'
   },
   pinValues: {
@@ -34,7 +34,7 @@ const base = {
   pinValue: {
     color: '#000000',
     fontSize: 25,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   pinKeys: {
     flex: 1,
@@ -63,7 +63,7 @@ const base = {
   pinKeyText: {
     color: '#000000',
     fontSize: 25,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
 };
 

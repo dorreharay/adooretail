@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, MAZZARD_MEDIUM, MAZZARD_SEMIBOLD, } from '@fonts'
 
 const base = {
   container: {
@@ -20,12 +20,12 @@ const base = {
   timeText: {
     color: '#343434',
     fontSize: 14,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
   },
   receiptButtonText: {
     color: '#343434',
     fontSize: 22,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   receipts: {
     flex: 1,
@@ -55,7 +55,7 @@ const base = {
   lspreText: {
     color: '#E46162',
     fontSize: 18,
-    fontFamily: GILROY_SEMIBOLD,
+    fontFamily: MAZZARD_SEMIBOLD,
     textAlign: 'center',
   },
   proceedContainer: {
@@ -77,13 +77,13 @@ const base = {
   lsproceedButtonText: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     letterSpacing: 0.7,
   },
   lsprecheckButtonText: {
     color: '#000000',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     letterSpacing: 0.7,
   },
   lsInstanceContainer: {
@@ -108,7 +108,7 @@ const base = {
   receiptTitleText: {
     color: '#343434',
     fontSize: 17,
-    fontFamily: GILROY_MEDIUM,
+    fontFamily: MAZZARD_MEDIUM,
     lineHeight: 30,
   },
   receiptDetails: {
@@ -125,7 +125,7 @@ const base = {
   receiptOnePrice: {
     color: '#343434',
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   receiptQtyContainer: {
     alignItems: 'center',
@@ -161,7 +161,7 @@ const base = {
   receiptQtyText: {
     color: '#343434',
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   receiptPrice: {
     alignItems: 'center',
@@ -181,11 +181,11 @@ const base = {
 
     color: '#343434',
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     textAlign: 'center',
   },
   selectedText: {
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   paymentModal: {
     position: 'absolute',
@@ -200,7 +200,7 @@ const base = {
   modalHeadingText: {
     color: '#343434',
     fontSize: 35,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   paymentModalInner: {
     flexDirection: 'row',
@@ -226,7 +226,7 @@ const base = {
   paymentTypeText: {
     color: '#FFFFFF',
     fontSize: 13,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   paymentModalNotice: {
     justifyContent: 'flex-start',
@@ -243,13 +243,13 @@ const base = {
   paymentModalNoticeInput: {
     color: '#707070',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   loginCaption: {
     marginTop: 10,
     color: '#343434',
     fontSize: 55,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: MAZZARD_LIGHT,
   },
   lsNumpad: {
     width: 550,
@@ -268,7 +268,7 @@ const base = {
   lsNumText: {
     color: '#343434',
     fontSize: 42,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     textAlign: 'center',
     textAlignVertical: 'center',
   },
@@ -286,7 +286,7 @@ const base = {
   detailsRowText: {
     color: '#343434',
     fontSize: 25,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
   },
   editedPayment: {
     flexDirection: 'row',
@@ -357,18 +357,18 @@ const styles = createStyles(
     receiptQtyText: {
       color: '#343434',
       fontSize: 13,
-      fontFamily: GILROY_REGULAR,
+      fontFamily: MAZZARD_REGULAR,
     },
     receiptTotal: {
       height: '100%',
 
       color: '#343434',
       fontSize: 13,
-      fontFamily: GILROY_REGULAR,
+      fontFamily: MAZZARD_REGULAR,
       textAlign: 'center',
     },
     selectedText: {
-      fontFamily: GILROY_REGULAR,
+      fontFamily: MAZZARD_REGULAR,
     },
     qtyButton: {
       width: 20,

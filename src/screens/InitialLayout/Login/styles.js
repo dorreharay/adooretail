@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
-import { COMFORTAA_LIGHT, COMFORTAA_REGULAR, GILROY_LIGHT, GILROY_REGULAR, FUTURA_LIGHT, } from '@fonts'
+import { MAZZARD_LIGHT, MAZZARD_REGULAR, } from '@fonts'
 
 const base = {
   container: {
@@ -12,13 +12,13 @@ const base = {
   loginHeading: {
     color: '#FFFFFF',
     fontSize: 17,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: MAZZARD_LIGHT,
     letterSpacing: 1,
   },
   loginHeadingSuper: {
     color: '#FFFFFF',
     fontSize: 17,
-    fontFamily: COMFORTAA_LIGHT,
+    fontFamily: MAZZARD_LIGHT,
     letterSpacing: 2,
   },
   dot: {
@@ -37,7 +37,7 @@ const base = {
   loginCaption: {
     color: '#F7F7F7',
     fontSize: 14,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     marginTop: 35,
   },
   lsNumpad: {
@@ -59,7 +59,7 @@ const base = {
   lsNumText: {
     color: '#F6F6F6',
     fontSize: 44,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: MAZZARD_REGULAR,
     textAlign: 'center',
     textAlignVertical: 'center',
   },
@@ -105,7 +105,7 @@ const styles = createStyles(
     loginCaption: {
       color: '#F7F7F7',
       fontSize: 10,
-      fontFamily: GILROY_LIGHT,
+      fontFamily: MAZZARD_LIGHT,
       marginTop: 35,
     },
     lsNumpad: {
@@ -127,7 +127,7 @@ const styles = createStyles(
     lsNumText: {
       color: '#F6F6F6',
       fontSize: 36,
-      fontFamily: GILROY_LIGHT,
+      fontFamily: MAZZARD_LIGHT,
       textAlign: 'center',
       textAlignVertical: 'center',
     },
