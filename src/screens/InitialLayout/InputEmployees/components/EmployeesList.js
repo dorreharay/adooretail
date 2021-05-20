@@ -39,7 +39,7 @@ function EmployeesList(props) {
                 ]}
                 key={index} activeOpacity={1}
               >
-                <FastImage style={[styles.employeeIcon, styles.checkedIcon]} source={{ uri: employee.icon !== '' ? employee.icon : currentAccount.img_url }} fadeDuration={0}></FastImage>
+                <FastImage style={[styles.employeeIcon, styles.checkedIcon]} source={{ uri: employee.icon !== '' ? employee.icon : currentAccount?.img_url }} fadeDuration={0}></FastImage>
                 <Text style={[styles.employeeName, styles.checkedName]}>{employee.name}</Text>
               </LinearGradient>
             </TouchableOpacity>
@@ -52,7 +52,7 @@ function EmployeesList(props) {
                 ]} onPress={() => handleCheck(employee.name, index)}
                 key={index} activeOpacity={1}
               >
-                <FastImage style={styles.employeeIcon} source={{ uri: employee.icon !== '' ? employee.icon : currentAccount.img_url }} fadeDuration={0}></FastImage>
+                <FastImage style={styles.employeeIcon} source={{ uri: employee.icon !== '' ? employee.icon : currentAccount?.img_url }} fadeDuration={0}></FastImage>
                 <Text style={styles.employeeName}>{employee.name}</Text>
               </TouchableOpacity>
             )

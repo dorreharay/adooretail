@@ -199,7 +199,7 @@ export async function printReceipt(receipt) {
     )}
 
     {settings.receipt_show_address && (
-      await printRegularLine(parceCyrrilicText(currentAccount.address), { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(parceCyrrilicText(currentAccount?.address), { spaces: 1, paddingLeft: 2 })
     )}
 
     await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
@@ -278,7 +278,7 @@ export async function printPreReceipt(receipt) {
     )}
 
     {settings.receipt_show_address && (
-      await printRegularLine(parceCyrrilicText(currentAccount.address), { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(parceCyrrilicText(currentAccount?.address), { spaces: 1, paddingLeft: 2 })
     )}
 
     await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })

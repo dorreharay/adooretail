@@ -60,14 +60,14 @@ function AppSessions(props) {
       if (settings.shifts_enabled) {
         validationRef.current = BackgroundTimer.setInterval(() => {
           validateSessionRoutine()
-        }, currentAccount && currentAccount.client_data && currentAccount.client_data.shift_validation_period || (30 * 1000));
+        }, currentAccount && currentAccount?.client_data && currentAccount?.client_data.shift_validation_period || (30 * 1000));
       }
 
       BackgroundTimer.clearInterval(syncRef.current);
 
       syncRef.current = BackgroundTimer.setInterval(() => {
         syncSessions()
-      }, currentAccount && currentAccount.client_data && currentAccount.client_data.update_period || (30 * 1000));
+      }, currentAccount && currentAccount?.client_data && currentAccount?.client_data.update_period || (30 * 1000));
     }
 
     return () => {

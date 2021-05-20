@@ -59,7 +59,7 @@ function Heading(props) {
           />
 
           <Text style={[styles.menuItemActiveText, { fontSize: 18, }]}>
-            {currentAccount ? currentAccount.business_name : ''}
+            {currentAccount ? currentAccount?.business_name : ''}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

@@ -23,7 +23,7 @@ function EmployeesList(props) {
   }
 
   const employeesList = useMemo(() => {
-    return currentAccount ? chunkArray(currentAccount.employees, 3) : []
+    return currentAccount ? chunkArray(currentAccount?.employees, 3) : []
   }, [currentAccount])
 
   return (

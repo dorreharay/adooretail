@@ -50,7 +50,7 @@ function History(props) {
   const historyList = useMemo(() => {
     if (!currentAccount) return []
 
-    let newHistory = currentAccount && currentAccount.history || []
+    let newHistory = currentAccount && currentAccount?.history || []
 
     if (withoutEmptySessions) {
       newHistory = newHistory.filter(item => item.receipts.length !== 0)

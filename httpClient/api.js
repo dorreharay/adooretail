@@ -39,7 +39,7 @@ async function asyncAxiosCall(event, payload, options = {}) {
 
   const { currentAccount } = store.getState().user
 
-  const token = currentAccount ? currentAccount.id : null
+  const token = currentAccount ? currentAccount?.id : null
 
   if (!token && hasToken) {
     console.log('%c%s', 'color: #FFFFFF; background: #D8664D; padding: 2px 15px; border-radius: 2px; font: 0.8rem Tahoma;', 'No access token')

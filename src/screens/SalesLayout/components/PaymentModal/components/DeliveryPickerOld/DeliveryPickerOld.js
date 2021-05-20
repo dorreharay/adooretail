@@ -50,7 +50,7 @@ function DeliveryPickerOld(props) {
           style={styles.employeesList}
           contentContainerStyle={{ paddingLeft: '6%', paddingRight: '10%', paddingBottom: 50, }}
         >
-          {currentAccount.available_services.map((item, key) => (
+          {currentAccount?.available_services.map((item, key) => (
             <Ripple
               style={styles.employeesListItem}
               onPress={() => {

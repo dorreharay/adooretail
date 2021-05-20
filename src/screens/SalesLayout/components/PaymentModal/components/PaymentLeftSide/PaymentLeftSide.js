@@ -88,7 +88,7 @@ function PaymentLeftSide(props) {
           <View style={styles.currentEmployeeImageWrapper}>
             <FastImage
               style={styles.currentEmployeeImage}
-              source={{ uri: currentAccount && currentAccount.img_url || '' }}
+              source={{ uri: currentAccount && currentAccount?.img_url || '' }}
             />
             <View style={styles.currentEmployeeBorder} />
           </View>
@@ -123,7 +123,7 @@ function PaymentLeftSide(props) {
               />
             </View>
 
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.currentEmployeeName}>{currentAccount && currentAccount.available_services ? currentAccount.available_services[currentService].name : ''}</Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.currentEmployeeName}>{currentAccount && currentAccount?.available_services ? currentAccount?.available_services[currentService].name : ''}</Text>
           </Ripple>
         </View>
       )}

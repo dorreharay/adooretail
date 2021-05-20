@@ -100,7 +100,7 @@ const PaymentModal = (props) => {
       transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
       employee: currentSession ? currentSession.employees[currentEmployee] : '',
       comment: comment,
-      service: currentAccount && currentAccount.available_services ? currentAccount.available_services[currentService].id : '',
+      service: currentAccount && currentAccount?.available_services ? currentAccount?.available_services[currentService].id : '',
     }
 
     if (!payload) {

@@ -47,7 +47,7 @@ function EmployeePicker(props) {
               <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                 <FastImage
                   style={{ width: 40, height: 40, backgroundColor: '#DDDDDD', borderRadius: 100, }}
-                  source={{ uri: currentAccount && currentAccount.img_url || '' }}
+                  source={{ uri: currentAccount && currentAccount?.img_url || '' }}
                 />
                 <Text style={styles.employeesListItemName}>{currentSession.employees[key]}</Text>
               </View>

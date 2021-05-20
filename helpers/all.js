@@ -33,7 +33,7 @@ export function updateLayout(products) {
     const { currentAccount } = user
 
     if (currentAccount) {
-      products = currentAccount.products
+      products = currentAccount?.products
     }
   }
 
@@ -105,7 +105,7 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
       localSessions: getLastItems(newLocalSessions ? newLocalSessions : localSessions, customOffset ? customOffset : 5),
       receiptsPreStates,
       newSettings: settings,
-    }, currentAccount.id)
+    }, currentAccount?.id)
 
     if (!data) return null
 
@@ -125,7 +125,7 @@ export async function syncSessions(callback, newLocalSessions, customOffset) {
     validateByRoute(shift_start, shift_end, callback)
   } catch (error) {
     console.log(error)
-    validateByRoute(currentAccount.shift_start, currentAccount.shift_end, callback)
+    validateByRoute(currentAccount?.shift_start, currentAccount?.shift_end, callback)
   }
 }
 
@@ -163,8 +163,8 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
   let endOfShift = ''
 
   if (!shift_start || !shift_end) {
-    shift_start = currentAccount.shift_start
-    shift_end = currentAccount.shift_end
+    shift_start = currentAccount?.shift_start
+    shift_end = currentAccount?.shift_end
   }
 
   if (settings.shifts.enabled) {

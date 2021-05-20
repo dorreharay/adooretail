@@ -28,7 +28,7 @@ function PinModal(props) {
     const final = pin.join('')
 
     if (final.length === 4) {
-      if (currentAccount && currentAccount.pins.includes(final)) {
+      if (currentAccount && currentAccount?.pins.includes(final)) {
         BackgroundTimer.setTimeout(() => {
           setVisible(false)
 

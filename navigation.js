@@ -38,7 +38,7 @@ function AppContainer() {
   if (initialFlow) {
     initialRoute = 'Initial1'
   } else if (currentAccount) {
-    if (currentSession.endTime || currentAccount.localSessions.length === 0) {
+    if (currentSession.endTime || currentAccount?.localSessions.length === 0) {
       initialRoute = 'Login'
     } else {
       initialRoute = 'SalesLayout'
@@ -48,7 +48,7 @@ function AppContainer() {
   }
 
   useEffect(() => {
-    if (initialRoute === 'SalesLayout' && currentSession.endTime || (currentAccount && currentAccount.localSessions.length === 0)) {
+    if (initialRoute === 'SalesLayout' && currentSession.endTime || (currentAccount && currentAccount?.localSessions.length === 0)) {
       dispatch(setSessionModalState(true))
     }
   }, [])

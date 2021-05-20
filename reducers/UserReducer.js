@@ -130,14 +130,14 @@ export function getSessions(changedOptions, callback) {
       const { currentAccount, } = store.user
 
       const payload = {
-        offset: changedOptions.offset ? changedOptions.offset === 'onemore' ? currentAccount.historyOptions.offset + 1 : changedOptions.active_filter ? 1 : changedOptions.offset : currentAccount.historyOptions.offset,
-        items_per_page: changedOptions.items_per_page || currentAccount.historyOptions.items_per_page,
-        active_sort: changedOptions.active_sort || currentAccount.historyOptions.active_sort,
-        active_filter: changedOptions.active_filter || currentAccount.historyOptions.active_filter,
+        offset: changedOptions.offset ? changedOptions.offset === 'onemore' ? currentAccount?.historyOptions.offset + 1 : changedOptions.active_filter ? 1 : changedOptions.offset : currentAccount?.historyOptions.offset,
+        items_per_page: changedOptions.items_per_page || currentAccount?.historyOptions.items_per_page,
+        active_sort: changedOptions.active_sort || currentAccount?.historyOptions.active_sort,
+        active_filter: changedOptions.active_filter || currentAccount?.historyOptions.active_filter,
       }
 
       const data = await API.getSessions({
-        token: currentAccount.id,
+        token: currentAccount?.id,
         ...payload,
       })
 
@@ -157,8 +157,8 @@ export function syncReceipt(receipt) {
 
       const { currentAccount } = store.user
 
-      const newLocalSessions = currentAccount.localSessions.map((elem, key) => {
-        return currentAccount.localSessions.length - 1 === key ? ({ ...elem, receipts: [...elem.receipts, receipt] }) : elem
+      const newLocalSessions = currentAccount?.localSessions.map((elem, key) => {
+        return currentAccount?.localSessions.length - 1 === key ? ({ ...elem, receipts: [...elem.receipts, receipt] }) : elem
       })
 
       dispatch(saveLocalReceipt(receipt))
@@ -255,9 +255,9 @@ export function updateLocalReceipt(receiptSum, editedPaymentType) {
       const { currentAccount } = store.user
       const { editedReceiptId, editedReceiptPayload, updateModeData, } = store.orders
 
-      const lastSessionIndex = currentAccount.localSessions.length - 1
+      const lastSessionIndex = currentAccount?.localSessions.length - 1
 
-      const newLocalSessions = currentAccount.localSessions.map((elem, key) => {
+      const newLocalSessions = currentAccount?.localSessions.map((elem, key) => {
         return lastSessionIndex === key ? ({ 
           ...elem,
           receipts: elem.receipts.map(item => {
@@ -295,7 +295,7 @@ export function resetUser() {
 const ACTION_HANDLERS = {
   [SAVE_TRANSACTION]: (state, action) => {
     const { currentAccount } = state
-    const localSessions = currentAccount.localSessions
+    const localSessions = currentAccount?.localSessions
     const newTransaction = action.payload
 
     const lastIndex = localSessions.length - 1
@@ -385,7 +385,7 @@ const ACTION_HANDLERS = {
       currentAccount: {
         ...currentAccount,
         history: data,
-        historyOptions: options ? options : ({ ...currentAccount.historyOptions, offset: 1, })
+        historyOptions: options ? options : ({ ...currentAccount?.historyOptions, offset: 1, })
       },
     }
   },
@@ -393,9 +393,9 @@ const ACTION_HANDLERS = {
     const { currentAccount } = state
     const newReceipt = action.payload
 
-    const lastSessionIndex = currentAccount.localSessions.length - 1
+    const lastSessionIndex = currentAccount?.localSessions.length - 1
 
-    const newLocalSessions = currentAccount.localSessions.map((elem, key) => lastSessionIndex === key ? ({ ...elem, receipts: [...elem.receipts, newReceipt] }) : elem)
+    const newLocalSessions = currentAccount?.localSessions.map((elem, key) => lastSessionIndex === key ? ({ ...elem, receipts: [...elem.receipts, newReceipt] }) : elem)
 
     return ({
       ...state,
@@ -408,12 +408,12 @@ const ACTION_HANDLERS = {
   [ADD_FIVE_MINUTES_TO_SHIFT]: (state, action) => {
     const { currentAccount, } = state
 
-    return { ...state, currentAccount: ({ ...currentAccount, shift_end: { ...currentAccount.shift_end, minutes: currentAccount.shift_end.minutes + 5 } }), }
+    return { ...state, currentAccount: ({ ...currentAccount, shift_end: { ...currentAccount?.shift_end, minutes: currentAccount?.shift_end.minutes + 5 } }), }
   },
   [RESTORE_DEFAULT_SHIFT]: (state, action) => {
     const { currentAccount, } = state
 
-    return { ...state, currentAccount: ({ ...currentAccount, shift_end: currentAccount.default_shift_end }), }
+    return { ...state, currentAccount: ({ ...currentAccount, shift_end: currentAccount?.default_shift_end }), }
   },
   [CHANGE_ACCOUNT]: (state, action) => {
     return { ...state, currentAccount: action.payload }
@@ -427,7 +427,7 @@ const ACTION_HANDLERS = {
     const { status, endCash, reportPhoto, newSessionProp } = action.payload
     const { currentAccount } = state
 
-    const localSessions = currentAccount.localSessions
+    const localSessions = currentAccount?.localSessions
 
     let newSession = {}, updatedSessions = []
 

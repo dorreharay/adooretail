@@ -22,7 +22,7 @@ function Products(props) {
   const currentAccount = useSelector(state => state.user.currentAccount)
   const paymentModalVisibility  = useSelector(state => state.temp.paymentModalVisibility)
 
-  const products = currentAccount && currentAccount.products || null
+  const products = currentAccount && currentAccount?.products || null
 
   const [activeCategory, setActiveCategory] = useState(null)
   const [categoryVisible, setCategoryVisibility] = useState(null)

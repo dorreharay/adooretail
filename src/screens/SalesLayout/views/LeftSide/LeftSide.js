@@ -259,7 +259,7 @@ function LeftSide(props) {
 
   const findReceiptAndUpdate = async () => {
     setUpdateLoading(true)
-    const isLocalReceipt = currentAccount.localSessions
+    const isLocalReceipt = currentAccount?.localSessions
       .map(item => item.receipts)
       .flat()
       .find(item => item.hash_id === editedReceiptId)

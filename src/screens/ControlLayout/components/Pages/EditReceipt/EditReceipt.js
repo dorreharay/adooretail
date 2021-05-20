@@ -35,18 +35,18 @@ function EditReceipt(props) {
             {currentAccount && settings.receipt_show_logo ? (
               <FastImage
                 style={{ width: 70, height: 70, marginBottom: 10, borderRadius: 100. }}
-                source={{ uri: currentAccount.receipt_logo || '' }}
+                source={{ uri: currentAccount?.receipt_logo || '' }}
                 
               />
             ) : null}
 
-            <Text style={styles.heading}>{currentAccount && currentAccount.receipt_name.toUpperCase()}</Text>
-            {settings.receipt_show_subheader && <Text style={styles.subheading}>{currentAccount && currentAccount.receipt_description}</Text>}
+            <Text style={styles.heading}>{currentAccount && currentAccount?.receipt_name.toUpperCase()}</Text>
+            {settings.receipt_show_subheader && <Text style={styles.subheading}>{currentAccount && currentAccount?.receipt_description}</Text>}
 
             <View style={{ width: '85%', marginTop: 20, }}>
-              {settings.receipt_show_address && <Text style={styles.regular}>{currentAccount && currentAccount.address}</Text>}
+              {settings.receipt_show_address && <Text style={styles.regular}>{currentAccount && currentAccount?.address}</Text>}
               <Text style={styles.regular}>Номер чека: #XXXX-XXXXX-XXXX</Text>
-              <Text style={styles.regular}>Касир: {currentAccount && currentAccount.localSessions.length > 0 && currentAccount.localSessions[currentAccount.localSessions.length - 1].employees[currentEmployee]}</Text>
+              <Text style={styles.regular}>Касир: {currentAccount && currentAccount?.localSessions.length > 0 && currentAccount?.localSessions[currentAccount?.localSessions.length - 1].employees[currentEmployee]}</Text>
               <Text style={styles.regular}>Друк: {getFormattedDate('YYYY-MM-DD HH:mm:ss')}</Text>
               <Text style={styles.regular}>Тип оплати: Готівка</Text>
             </View>
@@ -108,8 +108,8 @@ function EditReceipt(props) {
 
             {settings.receipt_show_description && (
               <>
-                {currentAccount && currentAccount.feedback_heading && <Text style={[styles.regular, { marginTop: 10, fontSize: 14, }]}>{currentAccount.feedback_heading}</Text>}
-                <Text style={[styles.regular, { width: '70%', textAlign: 'center', fontSize: 12, lineHeight: 14, marginTop: 5, }]}>{currentAccount && currentAccount.feedback_source}</Text>
+                {currentAccount && currentAccount?.feedback_heading && <Text style={[styles.regular, { marginTop: 10, fontSize: 14, }]}>{currentAccount?.feedback_heading}</Text>}
+                <Text style={[styles.regular, { width: '70%', textAlign: 'center', fontSize: 12, lineHeight: 14, marginTop: 5, }]}>{currentAccount && currentAccount?.feedback_source}</Text>
               </>
             )}
           </View>

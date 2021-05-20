@@ -65,7 +65,7 @@ function Login(props) {
   }
 
   const validateDeviceID = async (enteredPinCode) => {
-    if (!currentAccount || !currentAccount.registered_device_ids) {
+    if (!currentAccount || !currentAccount?.registered_device_ids) {
       navigation.jumpTo('NoAccount')
       resetState()
 
@@ -98,7 +98,7 @@ function Login(props) {
 
       dispatch(setEndOfSessionStatus(false))
 
-      if (currentSession.endTime || currentAccount.localSessions.length === 0) {
+      if (currentSession.endTime || currentAccount?.localSessions.length === 0) {
         dispatch(setSessionModalState(true))
       }
 
