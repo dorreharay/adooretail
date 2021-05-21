@@ -5,55 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Circe-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Circe-ExtraBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Circe-ExtraLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Circe-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Circe-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Circe-Thin.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Geometria-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Geometria-Medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/Geometria.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/MuseoSansCyrl-900.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/museo_bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/museo_light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/museo_medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/museo_regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/probapro_bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/probapro_extralight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/probapro_light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/probapro_medium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/fonts/probapro_regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../config/fonts.js" beforeDir="false" afterPath="$PROJECT_DIR$/../config/fonts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/adooretail.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/adooretail.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/adooretail/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/adooretail/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Heading/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Heading/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Menu/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Menu/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/DeliveryFeed/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/DeliveryFeed/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Devices/BluetoothConnectionButton/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Devices/BluetoothConnectionButton/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Devices/ScannedBluetoothDevices/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Devices/ScannedBluetoothDevices/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Devices/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Devices/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/Details/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/Details/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/HistoryList/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/HistoryList/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/SwitchWithTitle/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/Settings/SwitchWithTitle/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/Login/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/InitialLayout/NoAccount/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Menu/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Menu/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PinModal/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PinModal/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/ReceiptOptions/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/ReceiptOptions/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/SessionModal/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/SessionModal/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Transaction/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Transaction/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/Products/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/Products/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/shared/SharedPaymentOption/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/shared/SharedPaymentOption/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/wrappers/AppSessions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/wrappers/AppSessions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
