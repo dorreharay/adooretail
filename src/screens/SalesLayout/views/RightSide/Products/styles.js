@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_MEDIUM, PROBA_REGULAR, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
 
 
 import { deviceWidth, deviceHeight } from '@dimensions'
@@ -141,7 +141,7 @@ const base = {
   variantPriceText3: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
     lineHeight: 20,
   },
   variantPrice4: {
@@ -159,7 +159,7 @@ const base = {
   variantPriceText4: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
     lineHeight: 20,
   },
   variantPrice5: {
@@ -177,25 +177,25 @@ const base = {
   variantPriceText5: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
     lineHeight: 15,
   },
   variantSizeText3: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 20,
   },
   variantSizeText4: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 20,
   },
   variantSizeText5: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     lineHeight: 18,
   },
   variantSize3: {
@@ -252,7 +252,7 @@ const base = {
   matchesText: {
     color: '#FFFFFF',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   backCategoryIcon: {
     width: 15,

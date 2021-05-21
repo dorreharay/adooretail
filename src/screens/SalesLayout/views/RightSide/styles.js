@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, PROBA_MEDIUM } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM } from '@fonts'
 
 const toolsBarHeight = 45
 
@@ -56,7 +56,7 @@ const base = {
   printersAmountText: {
     color: '#414141',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   connection: {
     flexDirection: 'row',
@@ -123,7 +123,7 @@ const base = {
   layoutNumberText: {
     color: '#414141',
     fontSize: 18,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
 };
 

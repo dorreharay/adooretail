@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
-import { GILROY_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_LIGHT, GILROY_REGULAR, GILROY_SEMIBOLD } from '@fonts'
 import { deviceWidth, deviceHeight, } from '@dimensions';
 
 const base = {
@@ -67,7 +67,7 @@ const base = {
 
     color: '#000000',
     fontSize: 25,
-    fontFamily: PROBA_REGULAR
+    fontFamily: GILROY_REGULAR
   },
   clearButton: {
     position: 'absolute',

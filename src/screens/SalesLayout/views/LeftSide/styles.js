@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { EUCLID_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, GILROY_LIGHT, } from '@fonts'
 
 const base = {
   container: {
@@ -19,8 +19,8 @@ const base = {
   },
   timeText: {
     color: '#343434',
-    fontSize: 14,
-    fontFamily: GILROY_MEDIUM,
+    fontSize: 16,
+    fontFamily: EUCLID_REGULAR,
   },
   receiptButtonText: {
     color: '#343434',
@@ -83,7 +83,7 @@ const base = {
   lsprecheckButtonText: {
     color: '#000000',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     letterSpacing: 0.7,
   },
   lsInstanceContainer: {
@@ -200,7 +200,7 @@ const base = {
   modalHeadingText: {
     color: '#343434',
     fontSize: 35,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   paymentModalInner: {
     flexDirection: 'row',
@@ -226,7 +226,7 @@ const base = {
   paymentTypeText: {
     color: '#FFFFFF',
     fontSize: 13,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   paymentModalNotice: {
     justifyContent: 'flex-start',
@@ -243,13 +243,13 @@ const base = {
   paymentModalNoticeInput: {
     color: '#707070',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   loginCaption: {
     marginTop: 10,
     color: '#343434',
     fontSize: 55,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: GILROY_LIGHT,
   },
   lsNumpad: {
     width: 550,
@@ -268,7 +268,7 @@ const base = {
   lsNumText: {
     color: '#343434',
     fontSize: 42,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
     textAlign: 'center',
     textAlignVertical: 'center',
   },
@@ -286,7 +286,7 @@ const base = {
   detailsRowText: {
     color: '#343434',
     fontSize: 25,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   editedPayment: {
     flexDirection: 'row',

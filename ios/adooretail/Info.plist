@@ -97,6 +97,16 @@
 		<string>Circe-Regular.ttf</string>
 		<string>Circe-Thin.ttf</string>
 		<string>gilroy_semibold.ttf</string>
+		<string>euclid_circular_light.ttf</string>
+		<string>euclid_circular_medium.ttf</string>
+		<string>euclid_circular_regular.ttf</string>
+		<string>euclid_circular_sItalic.ttf</string>
+		<string>EuclidCircularA-Bold.ttf</string>
+		<string>EuclidCircularA-BoldItalic.ttf</string>
+		<string>EuclidCircularA-Italic.ttf</string>
+		<string>EuclidCircularA-LightItalic.ttf</string>
+		<string>EuclidCircularA-MediumItalic.ttf</string>
+		<string>EuclidCircularA-SemiBold.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

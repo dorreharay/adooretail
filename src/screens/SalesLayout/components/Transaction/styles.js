@@ -1,5 +1,5 @@
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_BOLD, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_BOLD, } from '@fonts'
 
 import { deviceWidth, deviceHeight } from '@dimensions'
 

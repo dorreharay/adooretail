@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { PROBA_REGULAR, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
 
 const leftPadding = '7.5%'
 
@@ -128,7 +128,7 @@ const base = {
 
     color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
     textAlignVertical: 'center'
   },
   optionHeadingContainer: {
@@ -182,7 +182,7 @@ const base = {
   orderItemText: {
     color: '#343434',
     fontSize: 18,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   cancelPaymentProcessButton: {
     padding: 10,
@@ -190,7 +190,7 @@ const base = {
   cancelPaymentProcessText: {
     color: '#343434',
     fontSize: 15,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   cameraContainer: {
     width: '70%',

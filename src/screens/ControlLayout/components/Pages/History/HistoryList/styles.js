@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, PROBA_LIGHT, PROBA_REGULAR, PROBA_MEDIUM, } from '@fonts'
+import { GILROY_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
 
 import { deviceHeight } from '@dimensions';
 
@@ -91,7 +91,7 @@ const base = {
     right: 25,
     color: '#343434',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   historyInstanceContainer: {
     width: '100%',
@@ -126,7 +126,7 @@ const base = {
     lineHeight: 25,
   },
   receiptDetailContent: {
-    fontFamily: PROBA_LIGHT,
+    fontFamily: GILROY_LIGHT,
     // textDecorationLine: 'underline',
   },
   collapsedReceiptContent: {
@@ -145,7 +145,7 @@ const base = {
     marginBottom: 30,
     color: '#000000',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     textAlign: 'center',
     lineHeight: 30,
   },
@@ -177,7 +177,7 @@ const base = {
     borderColor: '#E8E8E8',
 
     fontSize: 22,
-    fontFamily: PROBA_LIGHT
+    fontFamily: GILROY_LIGHT
   },
   qrCodeButton: {
     width: '100%',
@@ -190,7 +190,7 @@ const base = {
   qrCodeButtonText: {
     color: '#FFFFFF',
     fontSize: 20,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
   },
   errorText: {
     width: '100%',
@@ -198,7 +198,7 @@ const base = {
     paddingLeft: 25,
     color: 'red',
     fontSize: 18,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: GILROY_LIGHT,
   },
   scrollTopButton: {
     alignSelf: 'center',
@@ -232,7 +232,7 @@ const base = {
   loadMoreButtonText: {
     color: '#BBBBBB',
     fontSize: 20,
-    fontFamily: PROBA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   },
   receiptLeftButtons: {
     alignItems: 'center',
