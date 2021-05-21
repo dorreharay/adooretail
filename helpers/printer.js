@@ -1,5 +1,5 @@
 import { Alert, } from 'react-native'
-import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
+// import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
 import BleManager from 'react-native-ble-manager';
 import store from '@store'
 
@@ -43,7 +43,7 @@ function parceCyrrilicText(text) {
 }
 
 const cutLine = async () => {
-  await BluetoothEscposPrinter.cutOnePoint()
+  // await BluetoothEscposPrinter.cutOnePoint()
 }
 
 export const handleSize = (size) => {
@@ -69,13 +69,13 @@ export async function printNewBuffer(receipt) {
 
     await resolveDevice()
 
-    await BluetoothEscposPrinter.printerInit()
+    // await BluetoothEscposPrinter.printerInit()
 
     const kitchenReceipts = receipt.receipt.filter(item => item.department === 'kitchen')
     const paydeskReceipts = receipt.receipt.filter(item => item.department === 'paydesk')
 
-    await BluetoothEscposPrinter.printerLineSpace(75)
-    await BluetoothEscposPrinter.setWidth(400)
+    // await BluetoothEscposPrinter.printerLineSpace(75)
+    // await BluetoothEscposPrinter.setWidth(400)
 
     if (!settings.kitchen_enabled && !settings.desk_enabled) {
       throw new Error('Не обрано жодного активного цеху. Оберіть необхідний в розділі Налаштування -> Активні цехи')
@@ -155,11 +155,11 @@ async function asyncForEach(array, callback) {
 }
 
 async function resolveDevice() {
-  const hasContact = await BluetoothManager.isBluetoothEnabled()
+  // const hasContact = await BluetoothManager.isBluetoothEnabled()
 
-  if (!hasContact) {
-    await BluetoothManager.enableBluetooth()
-  }
+  // if (!hasContact) {
+  //   await BluetoothManager.enableBluetooth()
+  // }
 
   const devices = await BleManager.getBondedPeripherals([]);
 
@@ -172,7 +172,7 @@ async function resolveDevice() {
   const alreadyConnected = await BleManager.isPeripheralConnected(printer.id, [])
 
   if (printer && !alreadyConnected) {
-    await BluetoothManager.connect(printer.id)
+    // await BluetoothManager.connect(printer.id)
   }
 }
 
@@ -184,19 +184,19 @@ export async function printReceipt(receipt) {
 
     await resolveDevice()
 
-    await BluetoothEscposPrinter.printerInit()
+    // await BluetoothEscposPrinter.printerInit()
 
-    await BluetoothEscposPrinter.printerLineSpace(80)
-    await BluetoothEscposPrinter.printerUnderLine(0)
-    await BluetoothEscposPrinter.setBlob(0)
+    // await BluetoothEscposPrinter.printerLineSpace(80)
+    // await BluetoothEscposPrinter.printerUnderLine(0)
+    // await BluetoothEscposPrinter.setBlob(0)
 
     await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
 
-    await BluetoothEscposPrinter.printerLineSpace(75)
+    // await BluetoothEscposPrinter.printerLineSpace(75)
 
-    {settings.receipt_show_subheader && (
-      await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
-    )}
+    // {settings.receipt_show_subheader && (
+      // await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
+    // )}
 
     {settings.receipt_show_address && (
       await printRegularLine(parceCyrrilicText(currentAccount?.address), { spaces: 1, paddingLeft: 2 })
@@ -207,16 +207,16 @@ export async function printReceipt(receipt) {
     await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss', receipt.transaction_time_end)}`, { spaces: 1, paddingLeft: 2 })
     await printRegularLine(`Тип оплати: ${parceCyrrilicText(receipt.payment_type === 'card' ? 'Картка' : 'Готівка')}`, { spaces: 1, paddingLeft: 2 })
 
-    await BluetoothEscposPrinter.printerLineSpace(20)
+    // await BluetoothEscposPrinter.printerLineSpace(20)
 
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
-    await BluetoothEscposPrinter.setBlob(5)
+    // await BluetoothEscposPrinter.setBlob(5)
 
     await printColumn(['Назва', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
 
-    await BluetoothEscposPrinter.setBlob(0)
-    await BluetoothEscposPrinter.printerLineSpace(75)
+    // await BluetoothEscposPrinter.setBlob(0)
+    // await BluetoothEscposPrinter.printerLineSpace(75)
 
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
@@ -234,13 +234,13 @@ export async function printReceipt(receipt) {
       await printColumn(['', '', 'Знижка:', `-${parceCyrrilicText(receipt.discount)}`], { spaces: 1, paddingLeft: 2 }, 'total')
     }
 
-    await BluetoothEscposPrinter.printerLineSpace(30)
+    // await BluetoothEscposPrinter.printerLineSpace(30)
 
     await printRegularLine('---------------------------------------------', { spaces: 2, paddingLeft: 2 })
     await printColumn(['', '', 'До сплати:', `${receipt ? receipt.total : '0'} грн`], { paddingLeft: 2 }, 'total')
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
-    await BluetoothEscposPrinter.printerLineSpace(70)
+    // await BluetoothEscposPrinter.printerLineSpace(70)
 
     await printRegularLine('', { spaces: 4, })
 
@@ -263,19 +263,19 @@ export async function printPreReceipt(receipt) {
 
     await resolveDevice()
 
-    await BluetoothEscposPrinter.printerInit()
+    // await BluetoothEscposPrinter.printerInit()
 
-    await BluetoothEscposPrinter.printerLineSpace(80)
-    await BluetoothEscposPrinter.printerUnderLine(0)
-    await BluetoothEscposPrinter.setBlob(0)
+    // await BluetoothEscposPrinter.printerLineSpace(80)
+    // await BluetoothEscposPrinter.printerUnderLine(0)
+    // await BluetoothEscposPrinter.setBlob(0)
 
     await printHeading(parceCyrrilicText(receipt_name.toUpperCase()), { spaces: 1, })
 
-    await BluetoothEscposPrinter.printerLineSpace(75)
+    // await BluetoothEscposPrinter.printerLineSpace(75)
 
-    {settings.receipt_show_subheader && (
-      await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
-    )}
+    // {settings.receipt_show_subheader && (
+      // await printRegularLine(parceCyrrilicText(receipt_description), { spaces: 2, }, BluetoothEscposPrinter.ALIGN.CENTER)
+    // )}
 
     {settings.receipt_show_address && (
       await printRegularLine(parceCyrrilicText(currentAccount?.address), { spaces: 1, paddingLeft: 2 })
@@ -285,16 +285,16 @@ export async function printPreReceipt(receipt) {
     await printRegularLine(`Касир: ${parceCyrrilicText(receipt.employee)}`, { spaces: 1, paddingLeft: 2 })
     await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss', receipt.transaction_time_end)}`, { spaces: 1, paddingLeft: 2 })
 
-    await BluetoothEscposPrinter.printerLineSpace(20)
+    // await BluetoothEscposPrinter.printerLineSpace(20)
 
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
-    await BluetoothEscposPrinter.setBlob(5)
+    // await BluetoothEscposPrinter.setBlob(5)
 
     await printColumn(['Назва', 'Цiна', 'К-сть', 'Сума'], { paddingLeft: 2 })
 
-    await BluetoothEscposPrinter.setBlob(0)
-    await BluetoothEscposPrinter.printerLineSpace(75)
+    // await BluetoothEscposPrinter.setBlob(0)
+    // await BluetoothEscposPrinter.printerLineSpace(75)
 
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
@@ -305,13 +305,13 @@ export async function printPreReceipt(receipt) {
       }
     })
 
-    await BluetoothEscposPrinter.printerLineSpace(30)
+    // await BluetoothEscposPrinter.printerLineSpace(30)
 
     await printRegularLine('---------------------------------------------', { spaces: 2, paddingLeft: 2 })
     await printColumn(['', '', 'До сплати:', `${receipt ? receipt.total : '0'} грн`], { paddingLeft: 2 }, 'total')
     await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
-    await BluetoothEscposPrinter.printerLineSpace(70)
+    // await BluetoothEscposPrinter.printerLineSpace(70)
 
     await printRegularLine('', { spaces: 4, })
 
@@ -347,24 +347,24 @@ const printHeading = async (text, options) => {
 
   const printValue = `${calculatePaddingLeft(paddingLeft)}${text}${calculateSpaces(spaces)}`
 
-  await BluetoothEscposPrinter.printAndFeed(0);
+//   await BluetoothEscposPrinter.printAndFeed(0);
 
-  await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
-  await BluetoothEscposPrinter.printText(printValue, printOptionsHeading);
-}
+//   await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
+//   await BluetoothEscposPrinter.printText(printValue, printOptionsHeading);
+// }
 
 const printRegularLine = async (text, options, align) => {
   const { spaces = 1, paddingLeft = 0 } = options
 
   const printValue = `${calculatePaddingLeft(paddingLeft)}${text}${calculateSpaces(spaces)}`
 
-  await BluetoothEscposPrinter.printerAlign(align ? align : BluetoothEscposPrinter.ALIGN.LEFT);
-  await BluetoothEscposPrinter.printText(printValue, printOptions);
+  // await BluetoothEscposPrinter.printerAlign(align ? align : BluetoothEscposPrinter.ALIGN.LEFT);
+  // await BluetoothEscposPrinter.printText(printValue, printOptions);
 }
 
 const printQRCode = async (text) => {
-  await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
-  await BluetoothEscposPrinter.printQRCode(text, 200, 2)
+  // await BluetoothEscposPrinter.printerAlign(BluetoothEscposPrinter.ALIGN.CENTER);
+  // await BluetoothEscposPrinter.printQRCode(text, 200, 2)
 }
 
 const printColumn = async (values, options, extraType) => {
@@ -416,27 +416,27 @@ const printColumn = async (values, options, extraType) => {
 
 const performColumnPrint = async (values) => {
   let columnWidths = [23, 10, 6, 8];
-  await BluetoothEscposPrinter.printColumn(
-    columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
-    values,
-    printOptions
-  );
+  // await BluetoothEscposPrinter.printColumn(
+  //   columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.RIGHT],
+  //   values,
+  //   printOptions
+  // );
 }
 
 const performTotalColumnPrint = async (values) => {
   let columnWidths = [2, 8, 11, 10];
-  await BluetoothEscposPrinter.printColumn(
-    columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
-    values,
-    printOptionsTotal
-  );
+  // await BluetoothEscposPrinter.printColumn(
+  //   columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
+  //   values,
+  //   printOptionsTotal
+  // );
 }
 
 const performBufferColumnPrint = async (values) => {
   let columnWidths = [32, 2, 2, 10];
-  await BluetoothEscposPrinter.printColumn(
-    columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
-    values,
-    printOptions
-  );
-}
+  // await BluetoothEscposPrinter.printColumn(
+  //   columnWidths, [BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.CENTER, BluetoothEscposPrinter.ALIGN.LEFT, BluetoothEscposPrinter.ALIGN.RIGHT],
+  //   values,
+  //   printOptions
+  // );
+}}

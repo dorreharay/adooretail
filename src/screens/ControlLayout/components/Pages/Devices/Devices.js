@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
-import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
+// import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
 import BluetoothConnectionButton from './BluetoothConnectionButton/BluetoothConnectionButton'
 import ScannedBluetoothDevices from './ScannedBluetoothDevices/ScannedBluetoothDevices'
 import FastImage from 'react-native-fast-image';
@@ -23,7 +23,7 @@ function Devices({ activeCategory, }) {
 
   const checkBluetoothConnection = async () => {
     try {
-      const enabled = await BluetoothManager.isBluetoothEnabled()
+      const enabled = false
 
       setStatus(enabled)
 

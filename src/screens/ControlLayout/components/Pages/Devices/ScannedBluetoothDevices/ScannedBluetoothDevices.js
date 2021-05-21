@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, Fragment, } from 'react'
 import { View, Text, TouchableOpacity, Alert, ScrollView, } from 'react-native'
-import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
+// import { BluetoothManager, BluetoothEscposPrinter, } from 'react-native-bluetooth-escpos-printer';
 import { useSelector } from 'react-redux'
 import FastImage from 'react-native-fast-image';
 import * as Progress from 'react-native-progress';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, } from 'react'
 import { View, Text, TouchableOpacity, Alert, } from 'react-native'
-import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
+// import { BluetoothManager, } from 'react-native-bluetooth-escpos-printer';
 import * as Progress from 'react-native-progress';
 import styles from './styles'
 
@@ -14,7 +14,7 @@ function BluetoothConnectionButton(props) {
 
     if (!connected) {
       try {
-        await BluetoothManager.enableBluetooth()
+        // await BluetoothManager.enableBluetooth()
 
         setStatus(true)
         scan()
