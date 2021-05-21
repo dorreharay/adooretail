@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, FUTURA_REGULAR, PROBA_REGULAR, PROBA_MEDIUM, PROBA_BOLD, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
 
 const base = {
   container: {

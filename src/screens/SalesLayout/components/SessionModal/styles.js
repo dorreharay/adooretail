@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
+import { GILROY_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
 
 import { deviceHeight } from '@dimensions'
 
@@ -42,7 +42,7 @@ const base = {
     left: 40,
     color: '#363636',
     fontSize: 25,
-    fontFamily: PROBA_MEDIUM,
+    fontFamily: GILROY_MEDIUM,
     textDecorationLine: 'underline',
   },
   changeAccountButton: {
@@ -55,7 +55,7 @@ const base = {
   changeAccountButtonText: {
     color: '#7D7D7D',
     fontSize: 17,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: GILROY_LIGHT,
   },
   linearButton: {
     alignItems: 'center',
@@ -89,7 +89,7 @@ const base = {
   additonalButtonText: {
     color: '#343434',
     fontSize: 16,
-    fontFamily: FUTURA_REGULAR,
+    fontFamily: GILROY_REGULAR,
   }
 };
 

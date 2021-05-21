@@ -163,7 +163,7 @@ function Login(props) {
         <Logo width={40} height={40} />
       </View>
       <View style={styles.container}>
-        <Text style={styles.loginHeading}><Text style={styles.loginHeadingSuper}>В</Text>ведіть код доступу</Text>
+        <Text style={styles.loginHeading}>Введіть код доступу</Text>
         <Animated.View style={[styles.idDots, { left: animatedValue }]}>
           {passwordArray.map((item, index) => (
             <Svg width={styles.dot.width} height={styles.dot.height} key={index}>

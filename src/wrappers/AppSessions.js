@@ -15,7 +15,7 @@ import { syncSessions, validateSessionRoutine, } from '@helpers'
 import { deviceWidth, deviceHeight, } from '@dimensions';
 
 import { currentSessionSelector, currentAccountSelector, } from '@selectors'
-import { PROBA_LIGHT } from '@fonts'
+import { GILROY_LIGHT } from '@fonts'
 import { setNeedToReenter, } from '@reducers/UserReducer'
 import { setOrientationDimensions, setCurrentRoute, } from '@reducers/TempReducer'
 
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   versionText: {
     color: '#222222',
     fontSize: 15,
-    fontFamily: PROBA_LIGHT,
+    fontFamily: GILROY_LIGHT,
   },
 })
 

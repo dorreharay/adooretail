@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { PROBA_REGULAR, PROBA_MEDIUM } from '@fonts'
+import {  } from '@fonts'
 
 import { deviceHeight } from '@dimensions'
 

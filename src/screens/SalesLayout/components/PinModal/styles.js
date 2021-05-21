@@ -1,5 +1,5 @@
 import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { FUTURA_REGULAR, PROBA_MEDIUM, PROBA_LIGHT, GILROY_REGULAR, GILROY_MEDIUM, GILROY_SEMIBOLD, } from '@fonts'
+import { GILROY_REGULAR, GILROY_MEDIUM, } from '@fonts'
 
 import { deviceHeight } from '@dimensions'
 
