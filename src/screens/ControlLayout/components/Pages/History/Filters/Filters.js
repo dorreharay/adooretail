@@ -93,37 +93,37 @@ function Filters(props) {
       <Collapsible style={{ width: deviceWidth * 0.38, paddingVertical: 15, paddingHorizontal: 25, }} collapsed={!detailsExpanded}>
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Безготівковий підсумок</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details.payments.debit.total || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{details && details?.payments?.debit?.total || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Готівковий підсумок</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details.payments.cash.total || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{details && details?.payments?.cash?.total || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Всього</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{(details && details.total || 0) + (0 || 0) || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{(details && details?.total || 0) + (0 || 0) || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Витрати (транзакції)</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details.transactions.outcome && `-${details.transactions.outcome}` || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{details && details?.transactions?.outcome && `-${details?.transactions?.outcome}` || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Інкасації (транзакції)</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details.transactions.incasations && `-${details.transactions.incasations}` || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{details && details?.transactions?.incasations && `-${details?.transactions?.incasations}` || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Прибуток (транзакції)</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details.transactions.income || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{details && details?.transactions?.income || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Підсумок</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details ? ((details.payments.cash.total || 0) + (details.payments.debit.total || 0) - (details.transactions.outcome || 0) - (details.transactions.incasations || 0) + (details.transactions.income || 0)) : 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{details ? ((details?.payments?.cash?.total || 0) + (details?.payments?.debit?.total || 0) - (details?.transactions?.outcome || 0) - (details?.transactions?.incasations || 0) + (details?.transactions?.income || 0)) : 0} грн</Text>
         </View>
       </Collapsible>
     </View>

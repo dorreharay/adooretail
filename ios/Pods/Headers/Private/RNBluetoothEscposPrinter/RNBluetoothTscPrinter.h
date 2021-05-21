@@ -1,1 +1,0 @@
-../../../../../node_modules/react-native-bluetooth-escpos-printer/ios/RNBluetoothTscPrinter.h

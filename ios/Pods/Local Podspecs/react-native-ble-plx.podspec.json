@@ -1,6 +1,6 @@
 {
   "name": "react-native-ble-plx",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "summary": "React Native Bluetooth Low Energy library",
   "authors": {
     "Przemysław Lenart": "przemek.lenart@gmail.com"
@@ -20,7 +20,7 @@
 
     ],
     "MultiplatformBleAdapter": [
-      "0.1.6"
+      "0.1.7"
     ]
   }
 }
