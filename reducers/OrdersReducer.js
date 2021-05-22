@@ -35,9 +35,9 @@ export function savePreReceipt(status) {
     const hasDuplicate = receiptsPreStates.find(item => item.hash_id === currentId.hash_id)
 
     let newPreState = hasDuplicate ? receiptsPreStates.map(item => item.hash_id === currentId ? ({ ...item, status }) : item) : [...receiptsPreStates, { hash_id: currentId, status, }]
-        newPreState = newPreState.filter(item => !!item.hash_id)
-        newPreState = [...new Map(newPreState.map(item => [item['hash_id'], item])).values()]
-  
+    newPreState = newPreState.filter(item => !!item.hash_id)
+    newPreState = [...new Map(newPreState.map(item => [item['hash_id'], item])).values()]
+
     dispatch(setPreReceipts(newPreState))
   }
 }
@@ -60,9 +60,9 @@ export function generateCurrentReceiptId() {
       };
       return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     }
-    
+
     const newIds = receiptsIds.map((item, index) => selectedReceiptIndex === index ? guidGenerator() : item)
-  
+
     dispatch(setReceiptIds(newIds))
   }
 }
@@ -71,9 +71,9 @@ export function removeCurrentReceiptId() {
   return function (dispatch, getState) {
     const state = getState()
     const { selectedReceiptIndex, receiptsIds, } = state.orders
-    
+
     const newIds = receiptsIds.map((item, index) => selectedReceiptIndex === index ? null : item)
-  
+
     dispatch(setReceiptIds(newIds))
   }
 }
@@ -137,7 +137,9 @@ export function loadReceipts() {
         sort: historyParams.sort,
       })
 
-      dispatch(setHistory(data.reverse()))
+      if (typeof data === 'object') {
+        dispatch(setHistory(data.reverse()))
+      }
     } catch (error) {
       console.log(error)
     }
@@ -176,13 +178,13 @@ export function setDetails(payload) {
 
 const ACTION_HANDLERS = {
   [SET_PRE_RECEIPTS]: (state, action) => {
-    return {...state, receiptsPreStates: action.payload}
+    return { ...state, receiptsPreStates: action.payload }
   },
   [SET_RECEIPT_IDS]: (state, action) => {
-    return {...state, receiptsIds: action.payload}
+    return { ...state, receiptsIds: action.payload }
   },
   [SET_LAYOUT]: (state, action) => {
-    return {...state, layout: action.payload}
+    return { ...state, layout: action.payload }
   },
   [SET_SELECTED_RECEIPT]: (state, action) => {
     return { ...state, selectedReceiptIndex: action.payload }

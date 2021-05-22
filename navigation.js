@@ -10,8 +10,6 @@ import Initial1 from './src/screens/InitialLayout/Initial1/Initial1'
 import Initial2 from './src/screens/InitialLayout/Initial2/Initial2'
 import NoAccount from './src/screens/InitialLayout/NoAccount/NoAccount'
 import Login from './src/screens/InitialLayout/Login/Login'
-import InputCash from './src/screens/InitialLayout/InputCash/InputCash';
-import InputEmployees from './src/screens/InitialLayout/InputEmployees/InputEmployees';
 import SalesLayout from './src/screens/SalesLayout/SalesLayout'
 import ControlLayout from './src/screens/ControlLayout/ControlLayout'
 
@@ -81,8 +79,6 @@ function AppContainer() {
           <Tab.Screen name="NoAccount" component={NoAccount} />
 
           <Tab.Screen name="Login" component={Login} />
-          {/* <Tab.Screen name="InputCash" component={InputCash} />
-          <Tab.Screen name="InputEmployee" component={InputEmployees} /> */}
           <Tab.Screen name="SalesLayout" component={SalesLayout} />
           <Tab.Screen name="ControlLayout" component={ControlLayout} />
         </Tab.Navigator>

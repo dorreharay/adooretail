@@ -13,8 +13,6 @@ import LottieView from 'lottie-react-native';
 import BackgroundTimer from 'react-native-background-timer';
 import styles from './styles';
 
-import Logo from '@images/logo-default.svg'
-
 import API from '@api'
 
 import { addAccount } from '@reducers/UserReducer'
@@ -64,11 +62,6 @@ function NoAccount(props) {
 
       navigation.jumpTo('Login')
     } catch (error) {
-      console.log('error - handleCode', error)
-
-      // if (error.message === 'Invalid response') {
-      //   setError('Аккаунт не знайдено')
-      // }
       setErrorVisible(true)
       setError('Аккаунт не знайдено')
 
@@ -78,32 +71,7 @@ function NoAccount(props) {
     }
   }
 
-  const handleQRCode = async ({ barcodes }) => {
-    if (!loading) {
-      const qr = barcodes[0].data
-
-      if (qr.slice(0, 11) === 'EGABJDFDKJ-' && qr.slice(21) === '-DDJIJIHLDF') {
-        const deviceId = qr.slice(11, 21)
-
-        setLoadingStatus(true)
-
-        try {
-          await handleCode(deviceId)
-
-          BackgroundTimer.setTimeout(() => {
-            setLoadingStatus(false)
-          }, 2000)
-        } catch (error) {
-          setLoadingStatus(false)
-        }
-      } else {
-        setLoadingStatus(false)
-      }
-    }
-  }
-
   const reset = () => {
-    // setCode('')
     setErrorVisible(false)
 
     BackgroundTimer.setTimeout(() => {
@@ -117,10 +85,6 @@ function NoAccount(props) {
       contentContainerStyle={styles.contentContainerStyle}
       keyboardShouldPersistTaps={'handled'}
     >
-      <View style={styles.logoContainer}>
-        <Logo width={50} height={50} />
-      </View>
-
       <TouchableOpacity
         style={styles.helpContainer}
         onPressIn={() => { }}
@@ -129,99 +93,131 @@ function NoAccount(props) {
         <Text style={styles.helpText}>Де такий знайти?</Text>
       </TouchableOpacity>
 
-      <KeyboardAwareScrollView
-        contentContainerStyle={styles.awareContentContainerStyles}
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        extraScrollHeight={60}
-        keyboardOpeningTime={0}
-        enableOnAndroid
-        keyboardShouldPersistTaps={'handled'}
+      <KeyboardAvoidingView
+        behavior='position'
+        keyboardVerticalOffset={-130}
       >
+        <View style={{ width: "100%", height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+          <FastImage
+            style={styles.headingLogo}
+            source={require('@images/logo-heading.png')}
+          />
 
-        <Text style={styles.heading}>Код-ідентифікатор закладу</Text>
-        <Text style={styles.caption}>Введіть 10-значний код закладу Adoo для початку роботи.</Text>
+          <Text style={styles.heading}>Прив’язка планшета до Adoo Cloud</Text>
+          {/* <Text style={styles.caption}>Введіть унікальний ідентифікатор закладу Adoo для початку роботи.</Text> */}
 
-        <View style={styles.midContainer}>
-          <ChangeView
-            visible={errorVisible}
-            duration={300}
-            first={
-              <KeyboardAvoidingView behavior="height">
-                <View>
-                  <TextInput
-                    ref={inputRef}
-                    style={styles.input}
-                    value={accountCode}
-                    onChangeText={(text) => setCode(text)}
-                    onSubmitEditing={handleCode}
-                    maxLength={10}
-                    keyboardType='decimal-pad'
-                    autoCapitalize='characters'
-                  />
+          <View style={styles.midContainer}>
+            <ChangeView
+              visible={errorVisible}
+              duration={300}
+              first={
+                <>
+                  <View>
+                    <Text style={styles.inputLabelText}>Ідентифікатор закладу</Text>
+                    <TextInput
+                      ref={inputRef}
+                      style={styles.input}
+                      value={accountCode}
+                      onChangeText={(text) => setCode(text)}
+                      onSubmitEditing={handleCode}
+                      placeholder='Ідентифікатор закладу'
+                      placeholderTextColor='#CCCCCC88'
+                      maxLength={10}
+                      keyboardType='decimal-pad'
+                      autoCapitalize='characters'
+                    />
+                    <TouchableOpacity
+                      style={styles.clearButton}
+                      onPress={() => setCode('')}
+                      activeOpacity={0.6}
+                    >
+                      {accountCode.length > 0 &&
+                        <FastImage
+                          style={{ width: 18, height: 18, }}
+                          source={require('@images/x_icon.png')}
+                        />
+                      }
+                    </TouchableOpacity>
+                  </View>
+
+                  <View>
+                    <Text style={styles.inputLabelText}>Пароль доступу</Text>
+                    <TextInput
+                      ref={inputRef}
+                      style={styles.input}
+                      value={accountCode}
+                      onChangeText={(text) => setCode(text)}
+                      onSubmitEditing={handleCode}
+                      placeholder='Пароль доступу'
+                      placeholderTextColor='#CCCCCC88'
+                      maxLength={10}
+                      keyboardType='decimal-pad'
+                      autoCapitalize='characters'
+                    />
+                    <TouchableOpacity
+                      style={styles.clearButton}
+                      onPress={() => setCode('')}
+                      activeOpacity={0.6}
+                    >
+                      {accountCode.length > 0 &&
+                        <FastImage
+                          style={{ width: 18, height: 18, }}
+                          source={require('@images/x_icon.png')}
+                        />
+                      }
+                    </TouchableOpacity>
+                  </View>
+
                   <TouchableOpacity
-                    style={styles.clearButton}
-                    onPress={() => setCode('')}
-                    activeOpacity={0.6}
+                    style={[styles.submitButton, accountCode.length < 10 && styles.disabled]}
+                    onPress={handleCode}
+                    activeOpacity={0.8}
+                  >
+                    {loading ? (
+                      error ? (
+                        <FastImage
+                          style={{ width: '30%', height: '30%', }}
+                          source={require('@images/x_icon.png')}
+                        />
+                      ) : (
+                          <Progress.Circle
+                            endAngle={0.7} size={25} color={'#FFFFFF'}
+                            borderWidth={1.5} indeterminate={true}
+                          />
+                        )
+                    ) : (
+                        <Text style={styles.submitText}>Підтвердити</Text>
+                      )}
+                  </TouchableOpacity>
+                </>
+              }
+              second={
+                <View style={styles.errorContainer}>
+                  <LottieView
+                    style={styles.llamaError}
+                    source={require('@lottie/lama-error.json')}
+                    autoPlay
+                    loop
+                  />
+
+                  <Text style={[styles.caption, { width: '100%', fontSize: 20, }]}>{error}</Text>
+
+                  <TouchableOpacity
+                    style={styles.retryButton}
+                    onPress={reset}
+                    activeOpacity={0.8}
                   >
                     <FastImage
-                      style={{ width: 16, height: 16, }}
-                      source={require('@images/x_icon.png')}
+                      style={{ width: '35%', height: '35%', }}
+                      source={require('@images/reload.png')}
                     />
                   </TouchableOpacity>
                 </View>
-
-                <TouchableOpacity
-                  style={styles.submitButton}
-                  onPress={handleCode}
-                  activeOpacity={0.8}
-                >
-                  {loading ? (
-                    error ? (
-                      <FastImage
-                        style={{ width: '30%', height: '30%', }}
-                        source={require('@images/x_icon.png')}
-                      />
-                    ) : (
-                        <Progress.Circle
-                          endAngle={0.7} size={20} color={'#000000'}
-                          borderWidth={1.5} indeterminate={true}
-                        />
-                      )
-                  ) : (
-                      <FastImage
-                        style={{ width: '30%', height: '30%', }}
-                        source={require('@images/tick.png')}
-                      />
-                    )}
-                </TouchableOpacity>
-              </KeyboardAvoidingView>
-            }
-            second={
-              <View style={styles.errorContainer}>
-                <LottieView
-                  style={styles.llamaError}
-                  source={require('@lottie/lama-error.json')}
-                  autoPlay
-                  loop
-                />
-
-                <Text style={[styles.caption, { width: '100%', fontSize: 20, }]}>{error}</Text>
-
-                <TouchableOpacity
-                  style={styles.retryButton}
-                  onPress={reset}
-                  activeOpacity={0.8}
-                >
-                  <FastImage
-                    style={{ width: '35%', height: '35%', }}
-                    source={require('@images/reload.png')}
-                  />
-                </TouchableOpacity>
-              </View>
-            }
-          />
+              }
+            />
+          </View>
         </View>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     </ScrollView>
   )
 }

@@ -55,7 +55,7 @@ function SharedBackground({ image, children, }) {
         {children}
       </View>
 
-      <FastImage style={{ width: '100%', height: '101%', top: -1, zIndex: 10 }} source={backgrounds[activeBackgroundIndex]} />
+      {/* <FastImage style={{ width: '100%', height: '101%', top: -1, zIndex: 10 }} source={backgrounds[activeBackgroundIndex]} /> */}
     </View>
   )
 }

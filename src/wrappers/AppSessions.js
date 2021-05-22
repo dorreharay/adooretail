@@ -132,35 +132,17 @@ function AppSessions(props) {
     <>
       <AnimatedSplash
         isLoaded={initialLoadingVisibility}
-        logoImage={require("@images/splash_logo.png")}
+        logoImage={require("@images/logo-heading.png")}
         backgroundColor={"#FFFFFF"}
-        logoHeight={200}
-        logoWidth={200}
+        logoHeight={100}
+        logoWidth={100}
       >
-        <SharedBackground
-          image={0}
-          navigation={null}
-        >
-          {/* <UserInactivity
-            timeForInactivity={120 * 1000}
-            timeoutHandler={BackgroundTimer}
-            isActive={!pinVisible}
-            onAction={active => {
-              if (!active) {
-                setPinVisible(true)
-              }
-            }}
-            style={{ width: '100%', height: '100%', }}
-          > */}
-            <View style={{ width: '100%', height: '100%', zIndex: 10, }}>
-              <View style={styles.versionContainer}>
-                <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
-              </View>
-              {withProps}
-
-            </View>
-          {/* </UserInactivity> */}
-        </SharedBackground>
+        <View style={{ width: '100%', height: '100%', zIndex: 10, backgroundColor: '#FAFAFA' }}>
+          <View style={styles.versionContainer}>
+            <Text style={styles.versionText}>Beta Build {buildInfo.version} ({buildInfo.buildNumber})</Text>
+          </View>
+          {withProps}
+        </View>
       </AnimatedSplash>
     </>
   )

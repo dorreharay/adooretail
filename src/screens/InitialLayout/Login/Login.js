@@ -1,35 +1,24 @@
 import React, { useState, useEffect, useRef, } from "react";
-import { View, Text, Image, Animated, Easing, } from "react-native";
+import { View, Text, Animated, Easing, TouchableOpacity, Keyboard, KeyboardAvoidingView, } from "react-native";
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import Ripple from 'react-native-material-ripple';
 import DeviceInfo from 'react-native-device-info';
 import Toast, { DURATION } from 'react-native-easy-toast'
-import Svg, { Circle } from 'react-native-svg';
+import OTPInputView from '@twotalltotems/react-native-otp-input'
 import Logo from '@images/logo-big.svg'
 import styles from './styles';
 
 import { currentSessionSelector, } from '@selectors'
-import { loginKeyboardLayout } from '@keyboards'
 
 import LoginLoader from '@shared/LoginLoader'
-import SharedButton from '@shared/SharedButton'
 
 import { setNeedToReenter, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
+import FastImage from "react-native-fast-image";
 
 function Login(props) {
   const { navigation, } = props;
-
-  const initialPassword = [
-    { entered: false, },
-    { entered: false, },
-    { entered: false, },
-    { entered: false, },
-    { entered: false, },
-    { entered: false, },
-    { entered: false, },
-  ]
 
   const toast = useRef(null)
 
@@ -38,33 +27,36 @@ function Login(props) {
   const currentAccount = useSelector(state => state.user.currentAccount)
   const currentSession = useSelector(currentSessionSelector)
 
-  const [passwordArray, setPasswordArray] = useState(initialPassword)
   const [loading, setLoadingStatus] = useState(false)
-  const [error, setError] = useState(false)
-  const [currentInput, setCurrentInput] = useState('')
+  const [pin, setPin] = useState('')
+  const [disabled, setDisabledState] = useState(false)
 
   const [animatedValue] = useState(new Animated.Value(0))
 
   const resetState = () => {
-    setPasswordArray(initialPassword)
+    setPin('')
     setLoadingStatus(false)
-    setError(false)
-    setCurrentInput('')
   }
 
   const handleAnimation = () => {
     Animated.sequence([
 
-      Animated.timing(animatedValue, { toValue: 10.0, duration: 50, easing: Easing.linear }),
+      Animated.timing(animatedValue, { toValue: 20.0, duration: 50, easing: Easing.linear }),
 
-      Animated.timing(animatedValue, { toValue: -10.0, duration: 50, easing: Easing.linear }),
+      Animated.timing(animatedValue, { toValue: -20.0, duration: 50, easing: Easing.linear }),
+
+      Animated.timing(animatedValue, { toValue: 0.0, duration: 50, easing: Easing.linear }),
+
+      Animated.timing(animatedValue, { toValue: 20.0, duration: 50, easing: Easing.linear }),
+
+      Animated.timing(animatedValue, { toValue: -20.0, duration: 50, easing: Easing.linear }),
 
       Animated.timing(animatedValue, { toValue: 0.0, duration: 50, easing: Easing.linear }),
 
     ]).start();
   }
 
-  const validateDeviceID = async (enteredPinCode) => {
+  const validateDeviceID = async (code) => {
     if (!currentAccount || !currentAccount?.registered_device_ids) {
       navigation.jumpTo('NoAccount')
       resetState()
@@ -77,16 +69,17 @@ function Login(props) {
     setLoadingStatus(true)
 
     try {
+      setDisabledState(true)
       const deviceId = await DeviceInfo.getUniqueId();
 
-      if (enteredPinCode == '2050205') {
+      if (code == '00000') {
         toast.current && toast.current.show(deviceId, DURATION.FOREVER)
-        console.log(deviceId)
+        setDisabledState(false)
         resetState()
         return
       }
 
-      if (!passcodes.includes(enteredPinCode)) {
+      if (!passcodes.map(item => item.slice(0, 5)).includes(code)) {
         throw new Error('Не дійсний пін код')
       }
 
@@ -110,95 +103,56 @@ function Login(props) {
       handleAnimation()
       resetState()
     } finally {
+      setDisabledState(false)
       setLoadingStatus(false)
     }
   }
 
-  const handleKeyPress = (input) => {
-    let newInput = currentInput;
-
-    if (currentInput.length < passwordArray.length)
-      newInput = currentInput + input;
-    else
-      return
-
-    const enteredLength = passwordArray.filter(item => item.entered === true).length
-
-    if (error)
-      setError(false)
-
-    const newPass = passwordArray.map((item, index) => index === enteredLength ? ({ ...item, entered: true, }) : item)
-
-    setCurrentInput(newInput)
-    setPasswordArray(newPass)
-
-    if (newInput.length === passwordArray.length && !loading && !error) {
-      validateDeviceID(newInput)
-    }
-  }
-
-  const handleDeleteSign = () => {
-    let newInput = currentInput;
-
-    if (currentInput.length > 0)
-      newInput = currentInput.slice(0, -1);
-    else
-      return
-
-    const enteredLength = passwordArray.filter(item => item.entered === true).length
-
-    const newPass = passwordArray.map((item, index) => index === enteredLength - 1 ? ({ ...item, entered: false, }) : item)
-
-    setCurrentInput(newInput)
-    setPasswordArray(newPass)
-  }
-
   return (
-    <View style={{ flex: 1, }}>
-      <View
-        style={styles.logoContainer}
-        onPress={() => { }}
-        scale={0.85}
+    <KeyboardAvoidingView
+      behavior='position'
+      keyboardVerticalOffset={-300}
+      style={{ width: "100%", height: '100%', }}
+    >
+      <TouchableOpacity
+        style={{ width: "100%", height: '100%', }}
+        onPress={() => Keyboard.dismiss()}
+        activeOpacity={1}
       >
-        <Logo width={40} height={40} />
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.loginHeading}>Введіть код доступу</Text>
-        <Animated.View style={[styles.idDots, { left: animatedValue }]}>
-          {passwordArray.map((item, index) => (
-            <Svg width={styles.dot.width} height={styles.dot.height} key={index}>
-              <Circle
-                cx={styles.dot.cx}
-                cy={styles.dot.cy}
-                r={styles.dot.r}
-                strokeWidth="1.5"
-                stroke="white"
-                fill={item.entered ? 'white' : "#33333300"}
+        <>
+          <View
+            style={styles.logoContainer}
+            onPress={() => { }}
+            scale={0.85}
+          >
+            <FastImage
+              style={{ width: 50, height: 50, }}
+              source={require('@images/logo-heading.png')}
+            />
+          </View>
+          <View style={styles.container}>
+            <Text style={styles.loginHeading}>Введіть пін-код</Text>
+            <Animated.View style={{ left: animatedValue }}>
+              <OTPInputView
+                style={[styles.idDots, disabled && styles.disabled]}
+                codeInputFieldStyle={styles.dot}
+                pinCount={5}
+                editable={!disabled}
+                code={pin}
+                onCodeChanged={code => setPin(code)}
+                autoFocusOnLoad
+                onCodeFilled={code => validateDeviceID(code)}
               />
-            </Svg>
-          ))}
-        </Animated.View>
+            </Animated.View>
 
-        <Text style={styles.loginCaption}>Код можна змінити в налаштування Adoo Cloud Account</Text>
-        <View style={styles.lsNumpad}>
-          {loginKeyboardLayout.map((num, index) => (
-            <Ripple
-              style={styles.lsNum}
-              onPress={() => num.disabled ? null : handleKeyPress(num.value)}
-              rippleColor={`#FFFFFF66${num.disabled ? '00' : ''}`}
-              rippleContainerBorderRadius={50} rippleFades rippleCentered key={index}
-            >
-              <Text style={styles.lsNumText}>{num.value}</Text>
-            </Ripple>
-          ))}
-          <Ripple style={styles.lsNum} onPress={handleDeleteSign} rippleColor={'#FFFFFF'} rippleContainerBorderRadius={50} rippleCentered>
-            <Image style={styles.erase} source={require('@images/erase.png')} fadeDuration={0} />
-          </Ripple>
-        </View>
-        <LoginLoader active={loading} />
-        <Toast ref={toast} />
-      </View>
-    </View>
+            <Text style={styles.loginCaption}>або дізнайдесь його у адміністратора</Text>
+
+            <LoginLoader active={loading} />
+            <Toast ref={toast} />
+          </View>
+        </>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   )
 }
 

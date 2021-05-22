@@ -1,10 +1,10 @@
 import { createStyles, maxWidth, maxHeight, } from 'react-native-media-queries';
-import { GILROY_LIGHT, GILROY_REGULAR, GILROY_SEMIBOLD } from '@fonts'
+import { EUCLID_LIGHT, EUCLID_REGULAR, EUCLID_MEDIUM } from '@fonts'
 import { deviceWidth, deviceHeight, } from '@dimensions';
 
 const base = {
   container: {
-    backgroundColor: '#FFFFFF',
+
   },
   contentContainerStyle: {
     flex: 1,
@@ -13,7 +13,7 @@ const base = {
   },
   awareContentContainerStyles: {
     alignItems: 'center',
-    paddingTop: deviceHeight * 0.15,
+    paddingTop: deviceHeight * 0.25,
   },
   logoContainer: {
     position: 'absolute',
@@ -29,25 +29,33 @@ const base = {
   helpText: {
     color: '#343434',
     fontSize: 14,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: EUCLID_REGULAR,
+  },
+  headingLogo: {
+    width: 70,
+    height: 70,
+    marginBottom: 25,
   },
   heading: {
+    width: '40%',
+    marginBottom: 15,
     color: '#000000',
     fontSize: 26,
-    fontFamily: GILROY_SEMIBOLD,
+    fontFamily: EUCLID_MEDIUM,
+    textAlign: 'center',
   },
   caption: {
-    width: '40%',
+    width: '60%',
     marginTop: 15,
     color: '#000000',
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: EUCLID_REGULAR,
     textAlign: 'center',
   },
   changeText: {
     color: '#000000',
     fontSize: 16,
-    fontFamily: GILROY_REGULAR,
+    fontFamily: EUCLID_REGULAR,
     textDecorationLine: 'underline',
   },
   midContainer: {
@@ -57,35 +65,51 @@ const base = {
     height: deviceHeight * 0.5,
   },
   input: {
-    textAlign: 'center',
-    width: deviceWidth * 0.45,
-    height: deviceWidth * 0.07,
-    paddingHorizontal: 20,
-    marginBottom: deviceWidth * 0.04,
+    // textAlign: 'center',
+    width: deviceWidth * 0.4,
+    height: deviceWidth * 0.06,
+    paddingHorizontal: 30,
+    marginBottom: deviceWidth * 0.02,
     borderRadius: 5,
-    backgroundColor: '#F2F2F2',
+    borderWidth: 1,
+    borderColor: '#C6C6C688',
+    backgroundColor: '#FFFFFF',
 
     color: '#000000',
-    fontSize: 25,
-    fontFamily: GILROY_REGULAR
+    fontSize: 20,
+    fontFamily: EUCLID_REGULAR
+  },
+  inputLabelText: {
+    marginBottom: 10,
+    color: '#000000',
+    fontSize: 16,
+    fontFamily: EUCLID_LIGHT,
   },
   clearButton: {
     position: 'absolute',
     right: 0,
-    top: 0,
+    top: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    width: deviceWidth * 0.07,
-    height: deviceWidth * 0.07,
+    width: deviceWidth * 0.06,
+    height: deviceWidth * 0.06,
   },
   submitButton: {
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
-    borderRadius: 100,
-    backgroundColor: '#F2F2F2',
+    width: deviceWidth * 0.4,
+    height: 75,
+    marginTop: 20,
+    backgroundColor: '#18232B',
+  },
+  submitText: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontFamily: EUCLID_REGULAR,
+  },
+  disabled: {
+    backgroundColor: '#CCC'
   },
   retryButton: {
     alignSelf: 'center',
