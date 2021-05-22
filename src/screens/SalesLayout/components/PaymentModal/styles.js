@@ -102,7 +102,7 @@ const styles = createStyles(
 
   maxWidth(1300, {
     paymentModal: {
-      width: deviceHeight * 1,
+      width: deviceHeight,
       height: deviceHeight * 0.8,
     },
   })

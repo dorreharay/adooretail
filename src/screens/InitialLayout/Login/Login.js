@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef, } from "react";
+import React, { useState, useRef, } from "react";
 import { View, Text, Animated, Easing, TouchableOpacity, Keyboard, KeyboardAvoidingView, } from "react-native";
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
-import Ripple from 'react-native-material-ripple';
 import DeviceInfo from 'react-native-device-info';
 import Toast, { DURATION } from 'react-native-easy-toast'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
-import Logo from '@images/logo-big.svg'
 import styles from './styles';
 
 import { currentSessionSelector, } from '@selectors'

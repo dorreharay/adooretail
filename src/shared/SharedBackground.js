@@ -1,61 +1,12 @@
-import React, { useState } from 'react'
-import { View, Image, StyleSheet, Text, Animated, TouchableOpacity, Alert, } from 'react-native'
-import { useSelector, useDispatch, } from 'react-redux';
-import FastImage from 'react-native-fast-image'
-import Logo from '@images/logo-big.svg'
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
 
-import SharedButton from '@shared/SharedButton';
-import { setActiveBackgroundIndex } from '@reducers/UserReducer'
-
-function SharedBackground({ image, children, }) {
-  const [loadEnd, setLoadEnd] = useState(false)
-
-  const dispatch = useDispatch()
-
-  const currentRoute = useSelector(state => state.temp.currentRoute)
-  const activeBackgroundIndex = useSelector(state => state.user.activeBackgroundIndex)
-
-  const [backgrounds] = useState([
-    require('@images/background-adv1.png'),
-    require('@images/background-adv8.png'),
-    require('@images/background-adv9.png'),
-    require('@images/background-adv10.png'),
-    require('@images/background-adv11.png'),
-    // require('@images/background-adv12.png'),
-  ])
-
-  const changeBackgroudIndex = () => {
-    let index = null
-
-    if (activeBackgroundIndex < (backgrounds.length - 1)) {
-      index = activeBackgroundIndex + 1
-    } else {
-      index = 0
-    }
-
-    dispatch(setActiveBackgroundIndex(index))
-  }
-
-  const logoExceptions = [0, 1, 2, 6, 7]
-
+function SharedBackground({ children, }) {
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        {/* {!logoExceptions.includes(currentRoute) && (
-          <SharedButton
-            style={styles.logoContainer}
-            onPress={changeBackgroudIndex}
-            scale={0.85}
-          >
-            <Logo width={40} height={40} />
-          </SharedButton>
-        )} */}
-
-
         {children}
       </View>
-
-      {/* <FastImage style={{ width: '100%', height: '101%', top: -1, zIndex: 10 }} source={backgrounds[activeBackgroundIndex]} /> */}
     </View>
   )
 }
