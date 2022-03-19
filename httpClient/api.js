@@ -6,7 +6,7 @@ import httpClient from './index'
 
 const API = {
   async requestAccount(payload) {
-    return await asyncAxiosCall('/user/requestAccount', payload, { hasToken: false })
+    return await asyncAxiosCall('/client/account/get', payload)
   },
   async synchronizeSessions(payload) {
     return await asyncAxiosCall(`/user/synchronizeSessions`, payload)

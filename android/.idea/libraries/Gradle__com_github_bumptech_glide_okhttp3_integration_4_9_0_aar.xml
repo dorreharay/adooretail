@@ -9,8 +9,14 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/406afd2e6063cf04a9cebc59745f7766/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/406afd2e6063cf04a9cebc59745f7766/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/406afd2e6063cf04a9cebc59745f7766/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5164b9a7bfb61a8b79b70007799e31ef/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b5bf43e2baf328cc9d8525b4b7721dba/jetified-okhttp3-integration-4.9.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b5bf43e2baf328cc9d8525b4b7721dba/jetified-okhttp3-integration-4.9.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b5bf43e2baf328cc9d8525b4b7721dba/jetified-okhttp3-integration-4.9.0/res" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/okhttp3-integration/4.9.0/7a0245ee3ec9491f0e60cdefe95edfdc909e564f/okhttp3-integration-4.9.0-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/okhttp3-integration/4.9.0/a013a750f172803890aa4b31a200e199e3d53c20/okhttp3-integration-4.9.0-sources.jar!/" />
     </SOURCES>

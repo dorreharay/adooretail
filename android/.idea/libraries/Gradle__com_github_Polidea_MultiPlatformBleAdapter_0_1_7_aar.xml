@@ -3,6 +3,7 @@
     <ANNOTATIONS>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/29a26954b130311e331c773d8680e9e2/annotations.zip!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/45bf888e5e2e398d7f21355f95005c62/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/112b787d5d20b9610b13dc79bb1e220c/jetified-MultiPlatformBleAdapter-0.1.7/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/29a26954b130311e331c773d8680e9e2/jars/classes.jar!/" />
@@ -11,6 +12,10 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/45bf888e5e2e398d7f21355f95005c62/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/45bf888e5e2e398d7f21355f95005c62/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/45bf888e5e2e398d7f21355f95005c62/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/177520917c5ace50539cc21292f20d9f/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/112b787d5d20b9610b13dc79bb1e220c/jetified-MultiPlatformBleAdapter-0.1.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/112b787d5d20b9610b13dc79bb1e220c/jetified-MultiPlatformBleAdapter-0.1.7/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/112b787d5d20b9610b13dc79bb1e220c/jetified-MultiPlatformBleAdapter-0.1.7/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
