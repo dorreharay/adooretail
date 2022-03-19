@@ -188,7 +188,6 @@ android {
 dependencies {
     implementation project(':react-native-bluetooth-escpos-printer')
     implementation project(':react-native-camera')
-    implementation project(':react-native-fetch-blob')
     implementation project(':react-native-device-info')
     implementation project(':react-native-linear-gradient')
     implementation fileTree(dir: "libs", include: ["*.jar"])

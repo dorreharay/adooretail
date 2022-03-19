@@ -7,7 +7,6 @@ import com.facebook.react.ReactApplication;
 import cn.jystudio.bluetooth.RNBluetoothEscposPrinterPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import org.reactnative.camera.RNCameraPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactNativeHost;

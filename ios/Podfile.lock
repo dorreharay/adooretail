@@ -225,8 +225,6 @@ PODS:
     - React
   - react-native-camera/RN (3.15.1):
     - React
-  - react-native-fetch-blob (0.10.6):
-    - React-Core
   - react-native-image-picker (2.3.4):
     - React-Core
   - react-native-netinfo (4.7.0):
@@ -268,8 +266,14 @@ PODS:
     - React-cxxreact (= 0.61.1)
     - React-jsi (= 0.61.1)
     - ReactCommon/jscallinvoker (= 0.61.1)
+  - rn-fetch-blob (0.12.0):
+    - React-Core
+  - RNBluetoothEscposPrinter (0.0.6):
+    - React
   - RNCAsyncStorage (1.7.1):
     - React
+  - RNCClipboard (1.5.1):
+    - React-Core
   - RNCViewpager (1.1.7):
     - React
   - RNDeviceInfo (3.1.4):
@@ -318,7 +322,6 @@ DEPENDENCIES:
   - react-native-ble-plx (from `../node_modules/react-native-ble-plx`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-camera (from `../node_modules/react-native-camera`)
-  - react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-orientation (from `../node_modules/react-native-orientation`)
@@ -333,7 +336,10 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
+  - RNBluetoothEscposPrinter (from `../node_modules/react-native-bluetooth-escpos-printer`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - "RNCViewpager (from `../node_modules/@react-native-community/viewpager`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
@@ -397,8 +403,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/blur"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
-  react-native-fetch-blob:
-    :path: "../node_modules/react-native-fetch-blob"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-netinfo:
@@ -425,8 +429,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  rn-fetch-blob:
+    :path: "../node_modules/rn-fetch-blob"
+  RNBluetoothEscposPrinter:
+    :path: "../node_modules/react-native-bluetooth-escpos-printer"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-community/clipboard"
   RNCViewpager:
     :path: "../node_modules/@react-native-community/viewpager"
   RNDeviceInfo:
@@ -469,7 +479,6 @@ SPEC CHECKSUMS:
   react-native-ble-plx: caac53ee98151ec81198239d591c203809a1ed6e
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-camera: d5b131588a2d1f0ad377a321793f58794dbdc768
-  react-native-fetch-blob: 0cbdf9764c75d9438c162427395f4bc35a857d5a
   react-native-image-picker: 32d1ad2c0024ca36161ae0d5c2117e2d6c441f11
   react-native-netinfo: 3dd993921571d01b78a8f91f1caaffcab7a1e1c7
   react-native-orientation: d4a97266b06ec8d45d74e626656a730ebbebbb6f
@@ -483,7 +492,10 @@ SPEC CHECKSUMS:
   React-RCTText: 81b62b4e7f11531a5154e4daa5617670d5a2d5de
   React-RCTVibration: 8be61459e3749d1fb02cf414edd05b3007622882
   ReactCommon: 4fba5be89efdf0b5720e0adb3d8d7edf6e532db0
+  rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
+  RNBluetoothEscposPrinter: 19b5ed20827bec727b80409b18af79ed1f3664c2
   RNCAsyncStorage: 8539fc80a0075fcc9c8e2dff84cd22dc5bf1dacf
+  RNCClipboard: 5e299c6df8e0c98f3d7416b86ae563d3a9f768a3
   RNCViewpager: eff3ba6712d3aff9ea779ef1c99f78aa7cd36771
   RNDeviceInfo: 9e88577c51bd42f65275e53bb0de0a0f728ed6b8
   RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2
@@ -494,6 +506,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 947093edd1349d820c40afbd9f42acb6cdecd987
   Yoga: d8c572ddec8d05b7dba08e4e5f1924004a177078
 
-PODFILE CHECKSUM: 71c7bd0665fdc8263c037b09d39d7f2c976cf49b
+PODFILE CHECKSUM: 2b60d7d50913b89f2ec6424aeff11c79539a1ed5
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
