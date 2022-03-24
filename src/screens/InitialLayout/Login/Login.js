@@ -22,7 +22,7 @@ function Login(props) {
 
   const dispatch = useDispatch();
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const account = useSelector(state => state.account)
   const currentSession = useSelector(currentSessionSelector)
 
   const [loading, setLoadingStatus] = useState(false)
@@ -54,44 +54,25 @@ function Login(props) {
     ]).start();
   }
 
-  const validateDeviceID = async (code) => {
-    if (!currentAccount || !currentAccount?.registered_device_ids) {
-      navigation.jumpTo('NoAccount')
-      resetState()
-
-      return
-    }
-
-    const { registered_device_ids, passcodes } = currentAccount
+  const handleCode = async (code) => {
+    const { passcodes } = account?.secure_data
 
     setLoadingStatus(true)
 
     try {
       setDisabledState(true)
-      const deviceId = await DeviceInfo.getUniqueId();
 
-      if (code == '00000') {
-        toast.current && toast.current.show(deviceId, DURATION.FOREVER)
-        setDisabledState(false)
-        resetState()
-        return
-      }
+      console.log('passcodes', passcodes)
 
       if (!passcodes.map(item => item.slice(0, 5)).includes(code)) {
         throw new Error('Не дійсний пін код')
       }
 
-      if (!registered_device_ids.includes(deviceId)) {
-        throw new Error('Не правильний Device Id')
-      }
-
-      dispatch(setNeedToReenter(false))
-
       dispatch(setEndOfSessionStatus(false))
 
-      if (currentSession.endTime || currentAccount?.localSessions.length === 0) {
-        dispatch(setSessionModalState(true))
-      }
+      // if (currentSession.endTime || currentAccount?.localSessions.length === 0) {
+      //   dispatch(setSessionModalState(true))
+      // }
 
       navigation.jumpTo('SalesLayout')
 
@@ -139,7 +120,7 @@ function Login(props) {
                 code={pin}
                 onCodeChanged={code => setPin(code)}
                 autoFocusOnLoad
-                onCodeFilled={code => validateDeviceID(code)}
+                onCodeFilled={handleCode}
               />
             </Animated.View>
 

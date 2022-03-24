@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import OrdersReducer from '@reducers/OrdersReducer';
 import UserReducer from '@reducers/UserReducer';
 import TempReducer from '@reducers/TempReducer';
+import AccountReducer from '@reducers/AccountReducer';
 
 const RESET_STORE = 'RESET_STORE';
 
@@ -12,8 +13,8 @@ const RESET_STORE = 'RESET_STORE';
 //   user: persistReducer(UserReducer),
 // });
 
-const persistConfig = {
-  key: 'root',
+const accountPersistConfig = {
+  key: 'account',
   storage: AsyncStorage
 }
 
@@ -29,6 +30,7 @@ const usersPersistConfig = {
 }
 
 const appReducer = combineReducers({
+  account: persistReducer(accountPersistConfig, AccountReducer),
   orders: persistReducer(ordersPersistConfig, OrdersReducer),
   user: persistReducer(usersPersistConfig, UserReducer),
   temp: TempReducer

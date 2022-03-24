@@ -24,7 +24,7 @@ const Tab = createMaterialTopTabNavigator();
 function AppContainer() {
   const dispatch = useDispatch()
   const currentRoute = useSelector(state => state.temp.currentRoute)
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const account = useSelector(state => state.account)
   const initialFlow = useSelector(state => state.user.initialFlow)
 
   const currentSession = useSelector(currentSessionSelector)
@@ -35,21 +35,21 @@ function AppContainer() {
 
   if (initialFlow) {
     initialRoute = 'Initial1'
-  } else if (currentAccount) {
-    if (currentSession.endTime || currentAccount?.localSessions.length === 0) {
+  } else if (account) {
+    // if (currentSession.endTime || currentAccount?.localSessions.length === 0) {
       initialRoute = 'Login'
-    } else {
-      initialRoute = 'SalesLayout'
-    }
+    // } else {
+    //   initialRoute = 'SalesLayout'
+    // }
   } else {
     initialRoute = 'NoAccount'
   }
 
-  useEffect(() => {
-    if (initialRoute === 'SalesLayout' && currentSession.endTime || (currentAccount && currentAccount?.localSessions.length === 0)) {
-      dispatch(setSessionModalState(true))
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (initialRoute === 'SalesLayout' && currentSession.endTime || (currentAccount && currentAccount?.localSessions.length === 0)) {
+  //     dispatch(setSessionModalState(true))
+  //   }
+  // }, [])
 
   return (
     <NavigationContainer

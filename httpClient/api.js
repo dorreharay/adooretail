@@ -31,35 +31,10 @@ const API = {
 export default API
 
 
-async function asyncAxiosCall(event, payload, options = {}) {
-  const { hasToken = true } = options
-
-  const deviceToken = await DeviceInfo.getUniqueId();
-  const { isConnected } = await NetInfo.fetch()
-
-  const { currentAccount } = store.getState().user
-
-  const token = currentAccount ? currentAccount?.id : null
-
-  if (!token && hasToken) {
-    console.log('%c%s', 'color: #FFFFFF; background: #D8664D; padding: 2px 15px; border-radius: 2px; font: 0.8rem Tahoma;', 'No access token')
-
-    return null;
-  }
-
-  if (!isConnected) {
-    console.log('%c No connection ' + '%c - asyncAxiosCall()', 'background: #3F0B81; color: #FFFFFF', '');
-
-    return null;
-  }
-
+async function asyncAxiosCall(event, payload) {
   try {
-    const data = _.extend(payload, {}, { device_token: deviceToken });
-
-    event = event + `/${hasToken ? token : ''}`
-
-    console.log('Rest call ==>', event, data);
-    const result = await httpClient.post(event, { ...data });
+    console.log('Rest call ==>', event, payload);
+    const result = await httpClient.post(event, { ...payload });
     console.log('Response ==>', event, result.data);
 
     return result.data

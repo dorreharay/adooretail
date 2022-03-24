@@ -4,27 +4,27 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/adooretail.iml" filepath="$PROJECT_DIR$/.idea/modules/adooretail.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/adooretail.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/adooretail.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-754617125/adooretail.lottie-react-native.iml" filepath="$PROJECT_DIR$/.idea/modules/-754617125/adooretail.lottie-react-native.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1230114241/adooretail.react-native-background-timer.iml" filepath="$PROJECT_DIR$/.idea/modules/1230114241/adooretail.react-native-background-timer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/208110144/adooretail.react-native-ble-manager.iml" filepath="$PROJECT_DIR$/.idea/modules/208110144/adooretail.react-native-ble-manager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-764381425/adooretail.react-native-ble-plx.iml" filepath="$PROJECT_DIR$/.idea/modules/-764381425/adooretail.react-native-ble-plx.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1121568230/adooretail.react-native-bluetooth-escpos-printer.iml" filepath="$PROJECT_DIR$/.idea/modules/1121568230/adooretail.react-native-bluetooth-escpos-printer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/679320000/adooretail.react-native-camera.iml" filepath="$PROJECT_DIR$/.idea/modules/679320000/adooretail.react-native-camera.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-596816561/adooretail.react-native-community_async-storage.iml" filepath="$PROJECT_DIR$/.idea/modules/-596816561/adooretail.react-native-community_async-storage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1806357346/adooretail.react-native-community_blur.iml" filepath="$PROJECT_DIR$/.idea/modules/1806357346/adooretail.react-native-community_blur.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1925561659/adooretail.react-native-community_clipboard.iml" filepath="$PROJECT_DIR$/.idea/modules/1925561659/adooretail.react-native-community_clipboard.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/683909040/adooretail.react-native-community_netinfo.iml" filepath="$PROJECT_DIR$/.idea/modules/683909040/adooretail.react-native-community_netinfo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1629572067/adooretail.react-native-community_viewpager.iml" filepath="$PROJECT_DIR$/.idea/modules/1629572067/adooretail.react-native-community_viewpager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2116116682/adooretail.react-native-device-info.iml" filepath="$PROJECT_DIR$/.idea/modules/2116116682/adooretail.react-native-device-info.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-951012033/adooretail.react-native-device-settings.iml" filepath="$PROJECT_DIR$/.idea/modules/-951012033/adooretail.react-native-device-settings.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1046990021/adooretail.react-native-fast-image.iml" filepath="$PROJECT_DIR$/.idea/modules/1046990021/adooretail.react-native-fast-image.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1993943829/adooretail.react-native-fetch-blob.iml" filepath="$PROJECT_DIR$/.idea/modules/-1993943829/adooretail.react-native-fetch-blob.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1029093813/adooretail.react-native-gesture-handler.iml" filepath="$PROJECT_DIR$/.idea/modules/-1029093813/adooretail.react-native-gesture-handler.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1645424485/adooretail.react-native-image-picker.iml" filepath="$PROJECT_DIR$/.idea/modules/-1645424485/adooretail.react-native-image-picker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-409142691/adooretail.react-native-linear-gradient.iml" filepath="$PROJECT_DIR$/.idea/modules/-409142691/adooretail.react-native-linear-gradient.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1434898987/adooretail.react-native-orientation.iml" filepath="$PROJECT_DIR$/.idea/modules/-1434898987/adooretail.react-native-orientation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1638574863/adooretail.react-native-reanimated.iml" filepath="$PROJECT_DIR$/.idea/modules/-1638574863/adooretail.react-native-reanimated.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1737332585/adooretail.react-native-svg.iml" filepath="$PROJECT_DIR$/.idea/modules/1737332585/adooretail.react-native-svg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/570754009/adooretail.lottie-react-native.iml" filepath="$PROJECT_DIR$/.idea/modules/570754009/adooretail.lottie-react-native.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1314776639/adooretail.react-native-background-timer.iml" filepath="$PROJECT_DIR$/.idea/modules/1314776639/adooretail.react-native-background-timer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1655057662/adooretail.react-native-ble-manager.iml" filepath="$PROJECT_DIR$/.idea/modules/-1655057662/adooretail.react-native-ble-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1763539153/adooretail.react-native-ble-plx.iml" filepath="$PROJECT_DIR$/.idea/modules/1763539153/adooretail.react-native-ble-plx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1002684316/adooretail.react-native-bluetooth-escpos-printer.iml" filepath="$PROJECT_DIR$/.idea/modules/-1002684316/adooretail.react-native-bluetooth-escpos-printer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1730697150/adooretail.react-native-camera.iml" filepath="$PROJECT_DIR$/.idea/modules/1730697150/adooretail.react-native-camera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1573898189/adooretail.react-native-community_async-storage.iml" filepath="$PROJECT_DIR$/.idea/modules/1573898189/adooretail.react-native-community_async-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1516047580/adooretail.react-native-community_blur.iml" filepath="$PROJECT_DIR$/.idea/modules/-1516047580/adooretail.react-native-community_blur.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-451598663/adooretail.react-native-community_clipboard.iml" filepath="$PROJECT_DIR$/.idea/modules/-451598663/adooretail.react-native-community_clipboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/440094894/adooretail.react-native-community_netinfo.iml" filepath="$PROJECT_DIR$/.idea/modules/440094894/adooretail.react-native-community_netinfo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-747588255/adooretail.react-native-community_viewpager.iml" filepath="$PROJECT_DIR$/.idea/modules/-747588255/adooretail.react-native-community_viewpager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/252948876/adooretail.react-native-device-info.iml" filepath="$PROJECT_DIR$/.idea/modules/252948876/adooretail.react-native-device-info.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/21550337/adooretail.react-native-device-settings.iml" filepath="$PROJECT_DIR$/.idea/modules/21550337/adooretail.react-native-device-settings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1922606141/adooretail.react-native-fast-image.iml" filepath="$PROJECT_DIR$/.idea/modules/-1922606141/adooretail.react-native-fast-image.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-56531443/adooretail.react-native-gesture-handler.iml" filepath="$PROJECT_DIR$/.idea/modules/-56531443/adooretail.react-native-gesture-handler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/725915673/adooretail.react-native-image-picker.iml" filepath="$PROJECT_DIR$/.idea/modules/725915673/adooretail.react-native-image-picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/563419679/adooretail.react-native-linear-gradient.iml" filepath="$PROJECT_DIR$/.idea/modules/563419679/adooretail.react-native-linear-gradient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/996900503/adooretail.react-native-orientation.iml" filepath="$PROJECT_DIR$/.idea/modules/996900503/adooretail.react-native-orientation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-313203729/adooretail.react-native-reanimated.iml" filepath="$PROJECT_DIR$/.idea/modules/-313203729/adooretail.react-native-reanimated.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/653642283/adooretail.react-native-svg.iml" filepath="$PROJECT_DIR$/.idea/modules/653642283/adooretail.react-native-svg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1242222002/adooretail.rn-fetch-blob.iml" filepath="$PROJECT_DIR$/.idea/modules/1242222002/adooretail.rn-fetch-blob.iml" />
     </modules>
   </component>
 </project>
