@@ -8,16 +8,13 @@ import Collapsible from 'react-native-collapsible'
 import BackgroundTimer from 'react-native-background-timer';
 import { printReceipt, } from '@printer'
 
-import SharedButton from '@shared/SharedButton'
-
 import { deviceWidth, deviceHeight } from '@dimensions';
-import { getDiff, getUpperCaseDate, getFormattedDate, } from '@dateFormatter'
-import { setReceiptEditState, setSelectedReceipt, setEditedReceiptId, setEditedReceiptPayload, } from '@reducers/OrdersReducer'
+import { getUpperCaseDate } from '@dateFormatter'
 
 import ReceiptModal from './ReceiptModal'
 
 function HistoryList(props) {
-  const { data = [], loading, setLoadingStatus, } = props
+  const { data = [] } = props
 
   const timerRef = useRef(null)
 
@@ -77,14 +74,6 @@ function HistoryList(props) {
 
   const reprintReceipt = async (receipt) => {
     await printReceipt(receipt)
-  }
-
-  const handleEditReceipt = (receipt) => {
-    dispatch(setSelectedReceipt(0))
-    dispatch(setReceiptEditState(receipt.receipt))
-    dispatch(setEditedReceiptId(receipt.hash_id))
-    dispatch(setEditedReceiptPayload(receipt))
-    navigation.jumpTo('SalesLayout')
   }
 
   useEffect(() => {
@@ -156,16 +145,6 @@ function HistoryList(props) {
                     <FastImage
                       style={{ width: 22, height: 22, }}
                       source={require('@images/qr-code.png')}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.receiptLeftButton}
-                    onPress={() => { return; handleEditReceipt(receipt) }}
-                    activeOpacity={0.7}
-                  >
-                    <FastImage
-                      style={{ width: 18, height: 18, }}
-                      source={require('@images/edit_filled.png')}
                     />
                   </TouchableOpacity>
                 </View>

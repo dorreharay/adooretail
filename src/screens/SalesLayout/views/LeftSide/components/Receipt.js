@@ -101,7 +101,7 @@ function Receipt(props) {
                 ellipsizeMode='tail'
                 numberOfLines={1}
               >
-                {item.quantity * item.price} грн
+                {item?.quantity * item?.price} грн
               </Text>
             </View>
             <TouchableOpacity
@@ -110,7 +110,7 @@ function Receipt(props) {
               activeOpacity={1}
             >
               <Image
-                style={{ width: '30%', height: '30%', }}
+                style={{ width: 14, height: 14, }}
                 source={require('@images/x_icon.png')}
                 fadeDuration={0}
               />

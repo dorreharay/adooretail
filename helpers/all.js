@@ -53,6 +53,7 @@ export function updateLayout(products) {
 export const loadProducts = async (toastRef) => {
   try {
     const orders = getState('orders')
+    const account = getState('account')
 
     const { layout } = orders
 
@@ -60,7 +61,7 @@ export const loadProducts = async (toastRef) => {
       toastRef.show("Синхронізація", DURATION.FOREVER);
     }
 
-    const data = await API.getProducts()
+    const data = await API.getProducts({ token: account._id })
 
     if (!data) {
       if(toastRef) {
@@ -84,6 +85,8 @@ export const loadProducts = async (toastRef) => {
 }
 
 export async function syncSessions(callback, newLocalSessions, customOffset) {
+  return
+  
   if (!store) return
 
   const currentStore = store.getState()

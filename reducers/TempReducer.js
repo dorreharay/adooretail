@@ -1,21 +1,24 @@
-import { getFormattedDate, } from '@dateFormatter'
-import { setReceipts, setReceiptEditState, generateCurrentReceiptId, } from './OrdersReducer'
+import { getFormattedDate } from '@dateFormatter';
+import {
+  setReceipts,
+  generateCurrentReceiptId,
+} from './OrdersReducer';
 
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
-const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS'
-const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE'
-const SET_MODAL_STATUS = 'SET_MODAL_STATUS'
-const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES'
-const SET_RESET_STATUS = 'SET_RESET_STATUS'
-const SET_HISTORY_PARAMS = 'SET_HISTORY_PARAMS'
-const SET_SESSION_MODAL_STATE = 'SET_SESSION_MODAL_STATE'
-const SET_BUFFER = 'SET_BUFFER'
-const SET_PAYMENT_MODAL_VISIBILITY = 'SET_PAYMENT_MODAL_VISIBILITY'
-const SET_OLD_RECEIPT = 'SET_OLD_RECEIPT'
-const SET_MENU_VISIBILITY = 'SET_MENU_VISIBILITY'
-const SET_TRANSACTION_VISIBILITY = 'SET_TRANSACTION_VISIBILITY'
-const SET_PRINT_STATUS = 'SET_PRINT_STATUS'
-const SET_RECEIPT_OPTIONS_VISIBILITY = 'SET_RECEIPT_OPTIONS_VISIBILITY'
+const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS';
+const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE';
+const SET_MODAL_STATUS = 'SET_MODAL_STATUS';
+const SET_BLUETOOTH_DEVICES = 'SET_BLUETOOTH_DEVICES';
+const SET_RESET_STATUS = 'SET_RESET_STATUS';
+const SET_HISTORY_PARAMS = 'SET_HISTORY_PARAMS';
+const SET_SESSION_MODAL_STATE = 'SET_SESSION_MODAL_STATE';
+const SET_BUFFER = 'SET_BUFFER';
+const SET_PAYMENT_MODAL_VISIBILITY = 'SET_PAYMENT_MODAL_VISIBILITY';
+const SET_OLD_RECEIPT = 'SET_OLD_RECEIPT';
+const SET_MENU_VISIBILITY = 'SET_MENU_VISIBILITY';
+const SET_TRANSACTION_VISIBILITY = 'SET_TRANSACTION_VISIBILITY';
+const SET_PRINT_STATUS = 'SET_PRINT_STATUS';
+const SET_RECEIPT_OPTIONS_VISIBILITY = 'SET_RECEIPT_OPTIONS_VISIBILITY';
 
 const initialState = {
   endOfSession: false,
@@ -45,146 +48,153 @@ const initialState = {
 export function setReceiptOptionsVisibility(payload) {
   return {
     type: SET_RECEIPT_OPTIONS_VISIBILITY,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setPrintStatus(payload) {
   return {
     type: SET_PRINT_STATUS,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setTransactionModalVisibility(payload) {
   return {
     type: SET_TRANSACTION_VISIBILITY,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setMenuVisibility(payload) {
   return {
     type: SET_MENU_VISIBILITY,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setOldReceipt(payload) {
   return {
     type: SET_OLD_RECEIPT,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setPaymentModalVisibility(payload) {
   return {
     type: SET_PAYMENT_MODAL_VISIBILITY,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setBuffer(payload) {
   return {
     type: SET_BUFFER,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setModalStatus(payload) {
   return {
     type: SET_MODAL_STATUS,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setSessionModalState(payload) {
   return {
     type: SET_SESSION_MODAL_STATE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setEndOfSessionStatus(payload) {
   return {
     type: SET_END_OF_SESSION_STATUS,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setResetStatus(payload) {
   return {
     type: SET_RESET_STATUS,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setOrientationDimensions(payload) {
   return {
     type: SET_ORIENTATION_DIMENSIONS,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setCurrentRoute(payload) {
   return {
     type: SET_CURRENT_ROUTE,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setProducts(payload) {
   return {
     type: SET_PRODUCTS,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setBluetoothDevices(payload) {
   return {
     type: SET_BLUETOOTH_DEVICES,
-    payload
-  }
+    payload,
+  };
 }
 
 export function setHistoryParams(payload) {
   return {
     type: SET_HISTORY_PARAMS,
-    payload
-  }
+    payload,
+  };
 }
 
 export function addProductQuantity(payload) {
-  return function (dispatch, getState) {
-    const state = getState()
+  return function(dispatch, getState) {
+    const state = getState();
 
-    let { selectedReceiptIndex, receipts, receiptsIds, updateModeData, } = state.orders
-    
-    const product = payload
+    let {
+      selectedReceiptIndex,
+      receipts,
+      receiptsIds,
+      updateModeData,
+    } = state.orders;
+
+    const product = payload;
 
     if (updateModeData) {
-      receipts = [updateModeData, [], [], []]
+      receipts = [updateModeData, [], [], []];
     }
 
-    let receipt = receipts[selectedReceiptIndex]
-    const currentId = receiptsIds[selectedReceiptIndex]
+    let receipt = receipts[selectedReceiptIndex];
+    const currentId = receiptsIds[selectedReceiptIndex];
 
-    if(receipt.length === 0 && !currentId) {
-      dispatch(generateCurrentReceiptId())
+    if (receipt.length === 0 && !currentId) {
+      dispatch(generateCurrentReceiptId());
     }
 
-    const productExists = !!receipt.find(item => item.hash_id === product.hash_id)
-  
-    let newReceiptsInstance = []
-  
+    const productExists = !!receipt.find(
+      item => item.hash_id === product.hash_id,
+    );
+
+    let newReceiptsInstance = [];
+
     if (productExists) {
       newReceiptsInstance = receipt.map((item, index) => {
         if (item.hash_id === product.hash_id) {
-          return ({ ...item, quantity: item.quantity + 1 })
+          return { ...item, quantity: item.quantity + 1 };
         }
-  
-        return item
-      })
+
+        return item;
+      });
     } else {
       const firstReceiptItem = {
         title: product.title,
@@ -194,142 +204,142 @@ export function addProductQuantity(payload) {
         size: product.size || null,
         time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
         department: product.department,
-      }
-  
-      newReceiptsInstance = [...receipt, firstReceiptItem]
+      };
+
+      newReceiptsInstance = [...receipt, firstReceiptItem];
     }
-  
-    const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? newReceiptsInstance : item)
-  
-    if (updateModeData) {
-      dispatch(setReceiptEditState(newReceipts[0]))
-    } else {
-      dispatch(setReceipts(newReceipts))
-    }
-  }
+
+    const newReceipts = receipts.map((item, index) =>
+      index === selectedReceiptIndex ? newReceiptsInstance : item,
+    );
+
+    dispatch(setReceipts(newReceipts));
+  };
 }
 
 export function substractProductQuantity(payload) {
-  return function (dispatch, getState) {
-    const state = getState()
+  return function(dispatch, getState) {
+    const state = getState();
 
-    let { selectedReceiptIndex, receipts, updateModeData, } = state.orders
-    const product = payload
+    let { selectedReceiptIndex, receipts, updateModeData } = state.orders;
+    const product = payload;
 
-    let receipt = receipts[selectedReceiptIndex]
+    let receipt = receipts[selectedReceiptIndex];
 
     if (updateModeData) {
-      receipts = [updateModeData, [], [], []]
+      receipts = [updateModeData, [], [], []];
     }
 
-    let newReceiptsInstance = []
-  
+    let newReceiptsInstance = [];
+
     if (product.quantity === 1) {
-      newReceiptsInstance = receipt.filter((item, index) => item.hash_id !== product.hash_id)
+      newReceiptsInstance = receipt.filter(
+        (item, index) => item.hash_id !== product.hash_id,
+      );
     } else {
       newReceiptsInstance = receipt.map((item, index) => {
         if (item.hash_id === product.hash_id) {
-          return ({ ...item, quantity: item.quantity - 1 })
+          return { ...item, quantity: item.quantity - 1 };
         }
 
-        return item
-      })
+        return item;
+      });
     }
-  
-    const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? newReceiptsInstance : item)
-  
-    if (updateModeData) {
-      dispatch(setReceiptEditState(newReceipts[0]))
-    } else {
-      dispatch(setReceipts(newReceipts))
-    }
-  }
+
+    const newReceipts = receipts.map((item, index) =>
+      index === selectedReceiptIndex ? newReceiptsInstance : item,
+    );
+
+    dispatch(setReceipts(newReceipts));
+  };
 }
 
 export function deleteCurrentReceiptItem(payload) {
-  return function (dispatch, getState) {
-    const state = getState()
-    const receiptIndex = payload
+  return function(dispatch, getState) {
+    const state = getState();
+    const receiptIndex = payload;
 
-    let { selectedReceiptIndex, receipts, updateModeData, } = state.orders
+    let { selectedReceiptIndex, receipts, updateModeData } = state.orders;
 
     if (updateModeData) {
-      receipts = [updateModeData, [], [], []]
+      receipts = [updateModeData, [], [], []];
     }
 
-    const updatedReceipt = receipts[selectedReceiptIndex].filter((item, index) => index !== receiptIndex)
-  
-    const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? updatedReceipt : item)
-  
-    if (updateModeData) {
-      dispatch(setReceiptEditState(newReceipts[0]))
-    } else {
-      dispatch(setReceipts(newReceipts))
-    }
-  }
+    const updatedReceipt = receipts[selectedReceiptIndex].filter(
+      (item, index) => index !== receiptIndex,
+    );
+
+    const newReceipts = receipts.map((item, index) =>
+      index === selectedReceiptIndex ? updatedReceipt : item,
+    );
+
+    dispatch(setReceipts(newReceipts));
+  };
 }
 
 export function clearCurrentReceipt() {
-  return function (dispatch, getState) {
-    const state = getState()
+  return function(dispatch, getState) {
+    const state = getState();
 
-    const { selectedReceiptIndex, receipts, } = state.orders
-  
-    const newReceipts = receipts.map((item, index) => index === selectedReceiptIndex ? [] : item)
-  
-    dispatch(setReceipts(newReceipts))
-  }
+    const { selectedReceiptIndex, receipts } = state.orders;
+
+    const newReceipts = receipts.map((item, index) =>
+      index === selectedReceiptIndex ? [] : item,
+    );
+
+    dispatch(setReceipts(newReceipts));
+  };
 }
 
 const ACTION_HANDLERS = {
   [SET_RECEIPT_OPTIONS_VISIBILITY]: (state, action) => {
-    return { ...state, receiptOptionsVisibility: action.payload }
+    return { ...state, receiptOptionsVisibility: action.payload };
   },
   [SET_TRANSACTION_VISIBILITY]: (state, action) => {
-    return { ...state, transactionModalVisibility: action.payload }
+    return { ...state, transactionModalVisibility: action.payload };
   },
   [SET_MENU_VISIBILITY]: (state, action) => {
-    return { ...state, menuVisibility: action.payload }
+    return { ...state, menuVisibility: action.payload };
   },
   [SET_OLD_RECEIPT]: (state, action) => {
-    return { ...state, oldReceiptState: action.payload }
+    return { ...state, oldReceiptState: action.payload };
   },
   [SET_PAYMENT_MODAL_VISIBILITY]: (state, action) => {
-    return { ...state, paymentModalVisibility: action.payload }
+    return { ...state, paymentModalVisibility: action.payload };
   },
   [SET_BUFFER]: (state, action) => {
-    return { ...state, buffer: action.payload }
+    return { ...state, buffer: action.payload };
   },
   [SET_END_OF_SESSION_STATUS]: (state, action) => {
-    return { ...state, endOfSession: action.payload }
+    return { ...state, endOfSession: action.payload };
   },
   [SET_SESSION_MODAL_STATE]: (state, action) => {
-    return { ...state, sessionModalVisible: action.payload }
+    return { ...state, sessionModalVisible: action.payload };
   },
   [SET_RESET_STATUS]: (state, action) => {
-    return { ...state, resetAccount: action.payload }
+    return { ...state, resetAccount: action.payload };
   },
   [SET_ORIENTATION_DIMENSIONS]: (state, action) => {
-    return { ...state, dimensions: action.payload }
+    return { ...state, dimensions: action.payload };
   },
   [SET_CURRENT_ROUTE]: (state, action) => {
-    return { ...state, currentRoute: action.payload }
+    return { ...state, currentRoute: action.payload };
   },
   [SET_MODAL_STATUS]: (state, action) => {
-    return { ...state, modalStatus: action.payload }
+    return { ...state, modalStatus: action.payload };
   },
   [SET_BLUETOOTH_DEVICES]: (state, action) => {
-    return { ...state, bluetoothDevices: action.payload }
+    return { ...state, bluetoothDevices: action.payload };
   },
   [SET_HISTORY_PARAMS]: (state, action) => {
-    return { ...state, historyParams: action.payload }
+    return { ...state, historyParams: action.payload };
   },
   [SET_PRINT_STATUS]: (state, action) => {
-    return { ...state, printInProgress: action.payload }
+    return { ...state, printInProgress: action.payload };
   },
 };
 
 export default function TempReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
-  return handler ? handler(state, action) : state
+  return handler ? handler(state, action) : state;
 }

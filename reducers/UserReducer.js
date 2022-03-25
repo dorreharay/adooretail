@@ -22,7 +22,6 @@ const SET_PRODUCTS = 'SET_PRODUCTS';
 const SET_CURRENT_EMPLOYEE = 'SET_CURRENT_EMPLOYEE';
 const SET_CURRENT_SERVICE = 'SET_CURRENT_SERVICE';
 const SET_INITIAL_FLOW = 'SET_INITIAL_FLOW'
-const UPDATE_LOCAL_RECEIPT = 'UPDATE_LOCAL_RECEIPT'
 const RESET_USER = 'RESET_USER'
 
 const initialState = {
@@ -247,45 +246,6 @@ export function setProducts(payload) {
   }
 }
 
-export function updateLocalReceipt(receiptSum, editedPaymentType) {
-  return async function (dispatch, getState) {
-    try {
-      const store = getState()
-
-      const { currentAccount } = store.user
-      const { editedReceiptId, editedReceiptPayload, updateModeData, } = store.orders
-
-      const lastSessionIndex = currentAccount?.localSessions.length - 1
-
-      const newLocalSessions = currentAccount?.localSessions.map((elem, key) => {
-        return lastSessionIndex === key ? ({ 
-          ...elem,
-          receipts: elem.receipts.map(item => {
-            return item.hash_id === editedReceiptId ? ({
-              ...editedReceiptPayload,
-              receipt: updateModeData,
-              initial: receiptSum,
-              input: receiptSum,
-              total: receiptSum,
-              edited: true,
-              payment_type: editedPaymentType === 'debit' ? 'card' : 'cash',
-            }) : item
-          })
-        }) : elem
-      })
-
-      dispatch({
-        type: UPDATE_LOCAL_RECEIPT,
-        payload: newLocalSessions,
-      })
-
-      await syncSessions(() => { }, newLocalSessions)
-    } catch (error) {
-      console.log(error)
-    }
-  };
-}
-
 export function resetUser() {
   return {
     type: RESET_USER,
@@ -487,11 +447,6 @@ const ACTION_HANDLERS = {
   },
   [SET_INITIAL_FLOW]: (state, action) => {
     return { ...state, initialFlow: action.payload }
-  },
-  [UPDATE_LOCAL_RECEIPT]: (state, action) => {
-    const { currentAccount } = state
-
-    return { ...state, currentAccount: { ...currentAccount, localSessions: action.payload }, }
   },
   [RESET_USER]: () => {
     return initialState

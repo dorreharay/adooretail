@@ -60,7 +60,7 @@ function AppContainer() {
         }
       }}
     >
-      <AppSessions navigationRef={navigationRef}>
+      {/* <AppSessions navigationRef={navigationRef}> */}
         <Tab.Navigator
           initialRouteName={initialRoute}
           backBehavior='none'
@@ -82,7 +82,7 @@ function AppContainer() {
           <Tab.Screen name="SalesLayout" component={SalesLayout} />
           <Tab.Screen name="ControlLayout" component={ControlLayout} />
         </Tab.Navigator>
-      </AppSessions>
+      {/* </AppSessions> */}
     </NavigationContainer>
   );
 }

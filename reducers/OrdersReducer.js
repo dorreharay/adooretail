@@ -1,5 +1,3 @@
-
-import { getFormattedDate, } from '@dateFormatter'
 import API from '../httpClient/api'
 
 const SET_SELECTED_RECEIPT = 'SET_SELECTED_RECEIPT'
@@ -7,9 +5,6 @@ const SET_RECEIPTS = 'SET_RECEIPTS'
 const SET_LAYOUT = 'SET_LAYOUT'
 const SET_HISTORY = 'SET_HISTORY'
 const SET_DETAILS = 'SET_DETAILS'
-const SET_RECEIPT_EDIT = 'SET_RECEIPT_EDIT'
-const SET_EDITED_RECEIPT_ID = 'SET_EDITED_RECEIPT_ID'
-const SET_EDITED_RECEIPT_PAYLOAD = 'SET_EDITED_RECEIPT_PAYLOAD'
 const SET_RECEIPT_IDS = 'SET_RECEIPT_IDS'
 const SET_PRE_RECEIPTS = 'SET_PRE_RECEIPTS'
 
@@ -88,27 +83,6 @@ export function setReceiptIds(payload) {
 export function setLayout(payload) {
   return {
     type: SET_LAYOUT,
-    payload
-  }
-}
-
-export function setReceiptEditState(payload) {
-  return {
-    type: SET_RECEIPT_EDIT,
-    payload
-  }
-}
-
-export function setEditedReceiptId(payload) {
-  return {
-    type: SET_EDITED_RECEIPT_ID,
-    payload
-  }
-}
-
-export function setEditedReceiptPayload(payload) {
-  return {
-    type: SET_EDITED_RECEIPT_PAYLOAD,
     payload
   }
 }
@@ -197,16 +171,7 @@ const ACTION_HANDLERS = {
   },
   [SET_DETAILS]: (state, action) => {
     return { ...state, details: action.payload }
-  },
-  [SET_RECEIPT_EDIT]: (state, action) => {
-    return { ...state, updateModeData: action.payload }
-  },
-  [SET_EDITED_RECEIPT_ID]: (state, action) => {
-    return { ...state, editedReceiptId: action.payload }
-  },
-  [SET_EDITED_RECEIPT_PAYLOAD]: (state, action) => {
-    return { ...state, editedReceiptPayload: action.payload }
-  },
+  }
 };
 
 export default function OrdersReducer(state = initialState, action) {
