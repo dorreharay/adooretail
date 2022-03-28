@@ -11,7 +11,7 @@ import HistoryList from './HistoryList/HistoryList'
 
 import SharedToast from '@shared/SharedToast/SharedToast';
 
-import { loadReceipts, loadDetails, } from '@reducers/OrdersReducer'
+// import { loadReceipts, loadDetails, } from '@reducers/OrderReducer'
 import { setHistoryParams, } from '@reducers/TempReducer'
 
 import { getSubstractDate, getUpperCaseDate, } from '@dateFormatter'
@@ -67,7 +67,7 @@ function History(props) {
     if (activeCategory === 0) {
       toastRef.current.show('Оновлення чеків')
 
-      dispatch(loadReceipts())
+      // dispatch(loadReceipts())
     }
   }, [activeCategory])
 
@@ -75,8 +75,8 @@ function History(props) {
     async function updateList() {
       toastRef.current.show('Оновлення чеків')
       try {
-        await dispatch(loadReceipts())
-        await dispatch(loadDetails()) 
+        // await dispatch(loadReceipts())
+        // await dispatch(loadDetails()) 
       } catch (error) {
         
       } finally {

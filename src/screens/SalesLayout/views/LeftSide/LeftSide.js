@@ -14,6 +14,7 @@ import _ from 'lodash';
 import styles from './styles';
 
 import { deviceHeight } from '@dimensions';
+import { dbidGenerator } from '@helpers';
 import { getUpperCaseDate, getFormattedDate } from '@dateFormatter';
 import { printNewBuffer, printPreReceipt } from '@printer';
 import { headerHeight, headerButtonSizes, lsInstance } from '@constants';
@@ -25,26 +26,24 @@ import {
   setPrintStatus,
   setReceiptOptionsVisibility,
 } from '@reducers/TempReducer';
-import { setSelectedReceipt } from '@reducers/OrdersReducer';
-import { currentSessionSelector } from '@selectors';
+import { setSelectedReceipt } from '@reducers/OrderReducer';
+import { currentSessionSelector, activeReceiptSelector } from '@selectors';
 
 import ClockIcon from '@images/wall-clock.svg';
 
 import SharedButton from '@shared/SharedButton';
 import Receipt from './components/Receipt';
 
-function LeftSide(props) {
-  const {} = props;
-
+function LeftSide() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const currentAccount = useSelector(state => state.user.currentAccount);
+  const activeReceipt = useSelector(activeReceiptSelector);
+  const activeReceiptIndex = useSelector(
+    state => state.orders.activeReceiptIndex,
+  );
   const settings = useSelector(state => state.user.settings);
   const receipts = useSelector(state => state.orders.receipts);
-  const selectedReceiptIndex = useSelector(
-    state => state.orders.selectedReceiptIndex,
-  );
   const receiptsIds = useSelector(state => state.orders.receiptsIds);
   const receiptsPreStates = useSelector(
     state => state.orders.receiptsPreStates,
@@ -71,32 +70,6 @@ function LeftSide(props) {
 
   const startTimer = e => {
     validateTime();
-  };
-
-  function guidGenerator() {
-    let S4 = function() {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    return (
-      S4() +
-      S4() +
-      '-' +
-      S4() +
-      '-' +
-      S4() +
-      '-' +
-      S4() +
-      '-' +
-      S4() +
-      S4() +
-      S4()
-    );
-  }
-
-  const changePaymentModalState = status => {
-    if (status && receipts[selectedReceiptIndex].length === 0) return;
-
-    dispatch(setPaymentModalVisibility(status));
   };
 
   const checkQuantityChange = (newReceipt, oldReceipt, newDiff) => {
@@ -229,7 +202,7 @@ function LeftSide(props) {
 
   const updateBuffer = data => {
     const newBuffer = buffer.map((item, index) =>
-      index === selectedReceiptIndex ? data : item,
+      index === activeReceiptIndex ? data : item,
     );
 
     dispatch(setBuffer(newBuffer));
@@ -249,13 +222,11 @@ function LeftSide(props) {
     try {
       const bufferInstance = await compareReceipts();
 
-      const newReceipt = receipts[selectedReceiptIndex];
-
       if (bufferInstance) {
         await printNewBuffer(bufferInstance);
 
         const newOldReceipt = oldReceiptState.map((item, index) =>
-          index === selectedReceiptIndex ? newReceipt : item,
+          index === activeReceiptIndex ? activeReceipt : item,
         );
 
         dispatch(setOldReceipt(newOldReceipt));
@@ -267,18 +238,17 @@ function LeftSide(props) {
   };
 
   const compareReceipts = async () => {
-    const newReceipt = receipts[selectedReceiptIndex];
-    const oldBuffer = buffer[selectedReceiptIndex];
-    const oldReceipt = oldReceiptState[selectedReceiptIndex];
+    const oldBuffer = buffer[activeReceiptIndex];
+    const oldReceipt = oldReceiptState[activeReceiptIndex];
 
     let newDiff = [];
 
     if (oldBuffer === null) {
-      newDiff = newReceipt;
+      newDiff = activeReceipt;
     } else {
-      newDiff = checkQuantityChange(newReceipt, oldReceipt, newDiff);
-      newDiff = checkNewItems(newReceipt, oldReceipt, newDiff);
-      newDiff = checkDeletedItems(newReceipt, oldReceipt, newDiff);
+      newDiff = checkQuantityChange(activeReceipt, oldReceipt, newDiff);
+      newDiff = checkNewItems(activeReceipt, oldReceipt, newDiff);
+      newDiff = checkDeletedItems(activeReceipt, oldReceipt, newDiff);
     }
 
     console.log(
@@ -291,34 +261,32 @@ function LeftSide(props) {
     if (newDiff.every(item => item === undefined)) return null;
 
     const bufferInstance = {
-      ...buffer[selectedReceiptIndex],
+      ...buffer[activeReceiptIndex],
       hash_id:
         oldBuffer === null
-          ? guidGenerator()
-          : buffer[selectedReceiptIndex].hash_id,
+          ? dbidGenerator()
+          : buffer[activeReceiptIndex].hash_id,
       receipt: newDiff,
     };
 
     return bufferInstance;
   };
 
-  const handlePayment = () => {
+  const openPaymentModal = () => {
     if (receiptSum <= 0 || printInProgress) return;
 
-    changePaymentModalState(true);
+    dispatch(setPaymentModalVisibility(true));
   };
 
   const handlePreReceipt = async () => {
     if (printInProgress) return;
 
-    const currentReceipt = receipts[selectedReceiptIndex];
-
-    const receiptId = receiptsIds[selectedReceiptIndex];
+    const receiptId = receiptsIds[activeReceiptIndex];
 
     const payload = {
-      receipt: currentReceipt,
+      receipt: activeReceipt,
       hash_id: receiptId,
-      total: currentReceipt.reduce(
+      total: activeReceipt.reduce(
         (accumulator, currentValue) =>
           accumulator + currentValue.price * currentValue.quantity,
         0,
@@ -348,12 +316,12 @@ function LeftSide(props) {
   }, []);
 
   const receiptSum = useMemo(() => {
-    return receipts[selectedReceiptIndex].reduce(
+    return activeReceipt?.reduce(
       (accumulator, currentValue) =>
         accumulator + currentValue.price * currentValue.quantity,
       0,
     );
-  }, [receipts, selectedReceiptIndex]);
+  }, [activeReceipt, activeReceiptIndex]);
 
   useEffect(() => {
     async function deepBufferCheck() {
@@ -363,7 +331,7 @@ function LeftSide(props) {
     }
 
     deepBufferCheck();
-  }, [receiptSum, buffer[selectedReceiptIndex]]);
+  }, [receiptSum, buffer[activeReceiptIndex]]);
 
   const paymentColorSchema = useMemo(() => {
     return {
@@ -403,7 +371,7 @@ function LeftSide(props) {
                     start={{ x: 2, y: 1 }}
                     end={{ x: 0, y: 2 }}
                     colors={
-                      selectedReceiptIndex === index
+                      activeReceiptIndex === index
                         ? paymentColorSchema.gradient
                         : ['#FF767500', '#FD9C6C00']
                     }
@@ -419,7 +387,7 @@ function LeftSide(props) {
                     <Text
                       style={[
                         styles.receiptButtonText,
-                        selectedReceiptIndex === index && {
+                        activeReceiptIndex === index && {
                           color: '#FFFFFF',
                         },
                       ]}
@@ -492,18 +460,18 @@ function LeftSide(props) {
             <SharedButton
               style={[
                 headerButtonSizes,
-                receipts[selectedReceiptIndex].length === 0 && {
+                !activeReceipt?.length && {
                   opacity: 0.5,
                 },
               ]}
               iconStyle={{ width: 16, height: 16 }}
               onPress={() => {
-                if (receipts[selectedReceiptIndex].length === 0) return;
+                if (!activeReceipt?.length) return;
 
                 dispatch(setReceiptOptionsVisibility(true));
               }}
               source={
-                receipts[selectedReceiptIndex].length === 0
+                !activeReceipt?.length
                   ? require('@images/kebab-disabled.png')
                   : require('@images/kebab.png')
               }
@@ -545,7 +513,7 @@ function LeftSide(props) {
             }}
           >
             <TouchableOpacity
-              onPress={handlePayment}
+              onPress={openPaymentModal}
               style={[styles.proceedContainer, styles.zProceed]}
               activeOpacity={0.8}
             >
@@ -566,7 +534,7 @@ function LeftSide(props) {
                       settings.printer_preorder && { fontSize: 16 },
                   ]}
                 >
-                  ОПЛАТА ${receiptSum ? receiptSum : 0}₴
+                  ОПЛАТА {receiptSum ? receiptSum : 0}₴
                 </Text>
               </LinearGradient>
             </TouchableOpacity>
@@ -582,8 +550,7 @@ function LeftSide(props) {
                   (printInProgress ||
                     receiptSum === 0 ||
                     receiptsPreStates.find(
-                      item =>
-                        item.hash_id === receiptsIds[selectedReceiptIndex],
+                      item => item.hash_id === receiptsIds[activeReceiptIndex],
                     )) && { borderColor: paymentColorSchema.disabled },
                 ]}
                 underlayColor={paymentColorSchema.disabled}
@@ -602,7 +569,7 @@ function LeftSide(props) {
                         receiptSum === 0 ||
                         receiptsPreStates.find(
                           item =>
-                            item.hash_id === receiptsIds[selectedReceiptIndex],
+                            item.hash_id === receiptsIds[activeReceiptIndex],
                         )) && { opacity: 0.4 },
                     ]}
                   >
@@ -650,7 +617,7 @@ function LeftSide(props) {
       ) : (
         <>
           <TouchableOpacity
-            onPress={handlePayment}
+            onPress={openPaymentModal}
             style={styles.proceedContainer}
             activeOpacity={1}
           >
@@ -664,7 +631,7 @@ function LeftSide(props) {
               colors={paymentColorSchema.gradient}
             >
               <Text style={[styles.lsproceedButtonText, { fontSize: 20 }]}>
-                ОПЛАТА ${receiptSum ? receiptSum : 0}₴
+                ОПЛАТА {receiptSum ? receiptSum : 0}₴
               </Text>
             </LinearGradient>
           </TouchableOpacity>

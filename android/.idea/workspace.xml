@@ -9,6 +9,35 @@
   <component name="ChangeListManager">
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../constants.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../helpers/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/../helpers/all.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../helpers/printer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../helpers/printer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../reducers/AccountReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../reducers/AccountReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../reducers/OrdersReducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../reducers/TempReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../reducers/TempReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../reducers/UserReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../reducers/UserReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/ControlLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/ControlLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/Filters/Filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/Filters/Filters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/History.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/ControlLayout/components/Pages/History/History.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/PaymentModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/PaymentModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/EmployeePicker/EmployeePicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/EmployeePicker/EmployeePicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/CardPaymentStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/CardPaymentStatus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/CodePayment.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/PaymentRightSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/PaymentRightSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/PaymentType.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentSubmit.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentSubmit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/ReceiptOptions/ReceiptOptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/ReceiptOptions/ReceiptOptions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Session/Session.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Session/Session.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Transaction/Transaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Transaction/Transaction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/LeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/LeftSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/components/Receipt.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/components/Receipt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/Products/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/Products/Products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/RightSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/RightSide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../store/reducers.js" beforeDir="false" afterPath="$PROJECT_DIR$/../store/reducers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../store/selectors.js" beforeDir="false" afterPath="$PROJECT_DIR$/../store/selectors.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

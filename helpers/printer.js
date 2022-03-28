@@ -5,8 +5,6 @@ import store from '@store'
 
 import { getFormattedDate, } from '@dateFormatter'
 
-import { savePreReceipt } from '@reducers/OrdersReducer'
-
 BleManager.start({ showAlert: false }).then(() => {
   console.log('%c%s', 'color: #FFFFFF; background: #016964; padding: 2px 15px; border-radius: 2px; font: 0.8rem Tahoma;', 'Bluetooth module initialized')
 });
@@ -65,7 +63,7 @@ export async function printNewBuffer(receipt) {
   try {
     const currentStore = store.getState()
     const { settings, } = currentStore.user
-    const { receiptsIds, selectedReceiptIndex, } = currentStore.orders
+    const { receiptsIds, activeReceiptIndex, } = currentStore.orders
 
     await resolveDevice()
 
@@ -83,7 +81,7 @@ export async function printNewBuffer(receipt) {
 
     if (kitchenReceipts.length !== 0 && settings.kitchen_enabled) {
       await printHeading(parceCyrrilicText('Кухня'), { spaces: 2, })
-      await printRegularLine(`Номер замовлення: #${receiptsIds[selectedReceiptIndex].slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Номер замовлення: #${receiptsIds[activeReceiptIndex].slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
 
@@ -112,7 +110,7 @@ export async function printNewBuffer(receipt) {
     if (paydeskReceipts.length !== 0 && settings.desk_enabled) {
       await printHeading(parceCyrrilicText('Бар'), { spaces: 2, })
 
-      await printRegularLine(`Номер замовлення: #${receiptsIds[selectedReceiptIndex].slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(`Номер замовлення: #${receiptsIds[activeReceiptIndex].slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
       await printRegularLine(`Друк: ${getFormattedDate('YYYY-MM-DD HH:mm:ss')}`, { spaces: 1, paddingLeft: 2 })
 
       await printRegularLine('---------------------------------------------', { spaces: 1, paddingLeft: 2 })
@@ -316,8 +314,6 @@ export async function printPreReceipt(receipt) {
     await printRegularLine('', { spaces: 4, })
 
     await cutLine()
-
-    store.dispatch(savePreReceipt('printed'))
   } catch (error) {
     if(error.message.includes('getBondedPeripherals')) {
       Alert.alert("Помилка друку", 'Друк чеків не працює в тестовому оточенні')

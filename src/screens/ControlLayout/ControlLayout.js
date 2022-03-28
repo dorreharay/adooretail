@@ -1,52 +1,52 @@
-import React, { useState, useRef, useEffect, } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, } from 'react-native'
-import { useSelector, useDispatch, } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 
-import Heading from './components/Heading/Heading'
-import History from './components/Pages/History/History'
-import Devices from './components/Pages/Devices/Devices'
-import EditReceipt from './components/Pages/EditReceipt/EditReceipt'
-import Settings from './components/Pages/Settings/Settings'
+import Heading from './components/Heading/Heading';
+import History from './components/Pages/History/History';
+import Devices from './components/Pages/Devices/Devices';
+import EditReceipt from './components/Pages/EditReceipt/EditReceipt';
+import Settings from './components/Pages/Settings/Settings';
 
-import { loadReceipts, loadDetails, } from '@reducers/OrdersReducer'
+// import { loadReceipts, loadDetails, } from '@reducers/OrderReducer'
 
-import { deviceWidth, deviceHeight, } from '@dimensions'
-import { GILROY_MEDIUM, } from '@fonts'
+import { deviceWidth, deviceHeight } from '@dimensions';
+import { GILROY_MEDIUM } from '@fonts';
 
 function ControlLayout(props) {
-  const { navigation, route } = props
+  const { navigation, route } = props;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const toastRef = useRef(null)
-  const carouselRef = useRef(null)
+  const toastRef = useRef(null);
+  const carouselRef = useRef(null);
 
-  const settings = useSelector(state => state.user.settings)
+  const settings = useSelector(state => state.user.settings);
 
-  const [activeTab, setActiveTabIndex] = useState(0)
+  const [activeTab, setActiveTabIndex] = useState(0);
 
   const setActiveTab = (index, animated = true) => {
     if (carouselRef.current) {
-      carouselRef.current.snapToItem(index, !!animated)
-      setActiveTabIndex(index)
+      carouselRef.current.snapToItem(index, !!animated);
+      setActiveTabIndex(index);
     }
-  }
+  };
 
   useEffect(() => {
     if (route && carouselRef.current) {
       if (route.params) {
-        setActiveTab(route.params.screen, false)
+        setActiveTab(route.params.screen, false);
       }
     }
-  }, [route, carouselRef.current])
+  }, [route, carouselRef.current]);
 
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      dispatch(loadReceipts())
-      dispatch(loadDetails())
-    })
-  }, [])
+  // useEffect(() => {
+  //   navigation.addListener('focus', () => {
+  //     dispatch(loadReceipts())
+  //     dispatch(loadDetails())
+  //   })
+  // }, [])
 
   return (
     <View style={styles.container}>
@@ -56,17 +56,26 @@ function ControlLayout(props) {
         setActiveTab={setActiveTab}
       />
 
-      <View style={{ width: '75%', }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 70, paddingHorizontal: '2%', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#F2F2F2' }}>
+      <View style={{ width: '75%' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: 70,
+            paddingHorizontal: '2%',
+            backgroundColor: '#FFFFFF',
+            borderBottomWidth: 1,
+            borderBottomColor: '#F2F2F2',
+          }}
+        >
           <TouchableOpacity
             style={styles.menuButton}
-            onPress={() => { }}
+            onPress={() => {}}
             activeOpacity={1}
           >
             <View style={styles.accountIcon} />
-            <Text style={styles.menuItemText}>
-
-            </Text>
+            <Text style={styles.menuItemText} />
           </TouchableOpacity>
           <View style={styles.menuButton}>
             <View style={styles.accountIcon} />
@@ -75,9 +84,7 @@ function ControlLayout(props) {
               onPress={() => navigation.jumpTo('SalesLayout')}
               activeOpacity={0.8}
             >
-              <Text style={styles.menuItemText}>
-                Назад до меню
-              </Text>
+              <Text style={styles.menuItemText}>Назад до меню</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -85,16 +92,24 @@ function ControlLayout(props) {
           ref={carouselRef}
           data={[{}, {}, {}, {}, {}]}
           renderItem={({ index }) => {
-            if (index == 0) return <History activeCategory={activeTab} loadReceipts={async () => {
-              await dispatch(loadReceipts())
-              await dispatch(loadDetails())
-            }} toastRef={toastRef} />
+            if (index == 0)
+              return (
+                <History
+                  activeCategory={activeTab}
+                  loadReceipts={async () => {
+                    // await dispatch(loadReceipts())
+                    // await dispatch(loadDetails())
+                  }}
+                  toastRef={toastRef}
+                />
+              );
 
-            if (index == 1 && settings.printer_enabled) return <Devices activeCategory={activeTab} toastRef={toastRef} />
+            if (index == 1 && settings.printer_enabled)
+              return <Devices activeCategory={activeTab} toastRef={toastRef} />;
 
             // if (index == 2 && settings.printer_enabled) return <EditReceipt navigation={navigation} />
 
-            if (index == 3) return <Settings navigation={navigation} />
+            if (index == 3) return <Settings navigation={navigation} />;
           }}
           vertical
           sliderWidth={deviceWidth}
@@ -110,7 +125,7 @@ function ControlLayout(props) {
 
       {/* <Menu menuOpened={menuOpened} /> */}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -120,7 +135,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flexDirection: 'row',
-    backgroundColor: '#F3F4F6'
+    backgroundColor: '#F3F4F6',
   },
   backButton: {
     alignItems: 'center',
@@ -133,6 +148,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: GILROY_MEDIUM,
   },
-})
+});
 
-export default ControlLayout
+export default ControlLayout;

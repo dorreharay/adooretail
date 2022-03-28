@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage';
-import OrdersReducer from '@reducers/OrdersReducer';
+import OrderReducer from '@reducers/OrderReducer';
 import UserReducer from '@reducers/UserReducer';
 import TempReducer from '@reducers/TempReducer';
 import AccountReducer from '@reducers/AccountReducer';
@@ -9,7 +9,7 @@ import AccountReducer from '@reducers/AccountReducer';
 const RESET_STORE = 'RESET_STORE';
 
 // const appReducer =  combineReducers({
-//   orders: persistReducer(OrdersReducer),
+//   orders: persistReducer(OrderReducer),
 //   user: persistReducer(UserReducer),
 // });
 
@@ -31,7 +31,7 @@ const usersPersistConfig = {
 
 const appReducer = combineReducers({
   account: persistReducer(accountPersistConfig, AccountReducer),
-  orders: persistReducer(ordersPersistConfig, OrdersReducer),
+  orders: persistReducer(ordersPersistConfig, OrderReducer),
   user: persistReducer(usersPersistConfig, UserReducer),
   temp: TempReducer
 })

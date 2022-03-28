@@ -8,6 +8,7 @@ import styles from './styles'
 import FastImage from 'react-native-fast-image'
 
 import { syncSessions, } from '@helpers'
+import { dbidGenerator } from '@helpers'
 import { currentSessionSelector, } from '@selectors'
 import { setTransactionModalVisibility } from '@reducers/TempReducer'
 import { saveTransaction } from '@reducers/UserReducer'
@@ -44,13 +45,6 @@ function Transaction(props) {
 
   const handleSubmit = () => {
     if (canProceed) {
-      function guidGenerator() {
-        let S4 = function () {
-          return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-        };
-        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-      }
-
       dispatch(saveTransaction({
         type: selectedTransactionType,
         sum: amount,
@@ -58,7 +52,7 @@ function Transaction(props) {
         time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
         session_id: currentSession.localId,
         employees: currentSession.employees,
-        localId: guidGenerator(),
+        localId: dbidGenerator(),
       }))
 
       setAmount('0')

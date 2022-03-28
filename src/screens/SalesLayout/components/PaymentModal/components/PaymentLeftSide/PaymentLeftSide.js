@@ -1,134 +1,117 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, } from 'react-native'
-import { useSelector, } from 'react-redux';
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import Ripple from 'react-native-material-ripple';
-import styles from './styles'
+import styles from './styles';
 
-import { currentAccountSelector, currentSessionSelector, } from '@selectors'
+import {
+  setActivePaymentType,
+  setEmployeesListVisibility,
+} from '@reducers/OrderReducer';
 
-import EditIcon from '@images/edit.svg'
-import { deviceHeight } from '@dimensions'
+import { currentSessionSelector } from '@selectors';
+import { PAYMENT_TYPES } from '@constants';
+
+import EditIcon from '@images/edit.svg';
 
 import SharedButton from '@shared/SharedButton';
 
-function PaymentLeftSide(props) {
-  const {
-    selectedType, pTypes, selectPType,
-    setEmployeesListVisibility,
-    setDeliveryListVisibility,
-  } = props
+function PaymentLeftSide() {
+  const dispatch = useDispatch();
 
-  const currentSession = useSelector(currentSessionSelector)
-  const currentService = useSelector(state => state.user.currentService) || 0
-  const currentEmployee = useSelector(state => state.user.currentEmployee) || 0
-  const currentAccount = useSelector(state => state.user.currentAccount)
-  const settings = useSelector(state => state.user.settings)
-
-  const renderServiceIcon = () => {
-    if (currentService === 0) {
-      return require('@images/question.png')
-    }
-    if (currentService === 1) {
-      return require('@images/glovo-icon.png')
-    }
-    if (currentService === 2) {
-      return require('@images/raketa-icon.png')
-    }
-    if (currentService === 3) {
-      return require('@images/misteram-icon.png')
-    }
-    if (currentService === 4) {
-      return require('@images/ubereats-icon.png')
-    }
-  }
+  const activePaymentType = useSelector(
+    state => state.orders.activePaymentType,
+  );
+  const currentSession = useSelector(currentSessionSelector);
+  const currentService = useSelector(state => state.user.currentService) || 0;
+  const currentEmployee = useSelector(state => state.user.currentEmployee) || 0;
+  const currentAccount = useSelector(state => state.user.currentAccount);
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.heading, { marginTop: '15%', }]}>Спосіб оплати</Text>
+      <Text style={[styles.heading, { marginTop: '15%' }]}>Спосіб оплати</Text>
 
-      <View style={{ marginTop: '10%', }}>
-        {pTypes.map((item, index) => (
+      <View style={{ marginTop: '10%' }}>
+        {[PAYMENT_TYPES.CASH, PAYMENT_TYPES.DEBIT].map((item, index) => (
           <TouchableOpacity
-            style={[styles.paymentType, selectedType.index === index && { backgroundColor: '#2E2C2E', }]}
-            onPress={() => selectPType(item)}
+            style={[
+              styles.paymentType,
+              activePaymentType.key === index && { backgroundColor: '#2E2C2E' },
+            ]}
+            onPress={() => dispatch(setActivePaymentType(item))}
             activeOpacity={1}
             key={index}
           >
             {item.imageSource && (
               <FastImage
-                style={[{ width: 30, height: 30, marginRight: 15, }, selectedType.index !== index && { opacity: 0.5 }]}
+                style={[
+                  { width: 30, height: 30, marginRight: 15 },
+                  activePaymentType.key !== index && { opacity: 0.5 },
+                ]}
                 source={item.imageSource}
               />
             )}
 
-            <Text style={[styles.paymentTypeName, selectedType.index === index && { color: '#FFFFFF', }]}>{item.name}</Text>
+            <Text
+              style={[
+                styles.paymentTypeName,
+                activePaymentType.key === index && { color: '#FFFFFF' },
+              ]}
+            >
+              {item?.name}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
 
-
       <View>
-        <View style={{ position: 'relative', alignItems: 'center', flexDirection: 'row', marginTop: '5%', marginBottom: 0, }}>
+        <View
+          style={{
+            position: 'relative',
+            alignItems: 'center',
+            flexDirection: 'row',
+            marginTop: '5%',
+            marginBottom: 0,
+          }}
+        >
           <Text style={styles.heading}>Працівник</Text>
           <SharedButton
             style={styles.editButton}
-            onPress={() => setEmployeesListVisibility(true)}
+            onPress={() => dispatch(setEmployeesListVisibility(true))}
           >
             <EditIcon width={13} height={13} />
           </SharedButton>
         </View>
 
-        <Ripple
+        <TouchableOpacity
           style={styles.currentEmployee}
-          onPress={() => setEmployeesListVisibility(true)}
-          rippleColor={`#C4C4C4`}
-          rippleFades
+          onPress={() => dispatch(setEmployeesListVisibility(true))}
+          activeOpacity={0.7}
         >
           <View style={styles.currentEmployeeImageWrapper}>
             <FastImage
               style={styles.currentEmployeeImage}
-              source={{ uri: currentAccount && currentAccount?.img_url || '' }}
+              source={{
+                uri: (currentAccount && currentAccount?.img_url) || '',
+              }}
             />
             <View style={styles.currentEmployeeBorder} />
           </View>
 
-          <Text ellipsizeMode='tail' numberOfLines={1} style={styles.currentEmployeeName}>{currentSession && currentSession.employees ? currentSession.employees[currentEmployee] : ''}</Text>
-        </Ripple>
-      </View>
-
-
-      {settings.printer_enabled && settings.delivery_use && settings.delivery_position_side && (
-        <View>
-          <View style={{ position: 'relative', alignItems: 'center', flexDirection: 'row', marginTop: '5%', marginBottom: 0, }}>
-            <Text style={styles.heading}>Доставка</Text>
-            <SharedButton
-              style={styles.editButton}
-              onPress={() => setDeliveryListVisibility(true)}
-            >
-              <EditIcon width={13} height={13} />
-            </SharedButton>
-          </View>
-
-          <Ripple
-            style={styles.currentEmployee}
-            onPress={() => setDeliveryListVisibility(true)}
-            rippleColor={`#C4C4C4`}
-            rippleFades
+          <Text
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={styles.currentEmployeeName}
           >
-            <View style={styles.currentEmployeeImageWrapper}>
-              <FastImage
-                style={styles.serviceImage}
-                source={renderServiceIcon()}
-              />
-            </View>
-
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.currentEmployeeName}>{currentAccount && currentAccount?.available_services ? currentAccount?.available_services[currentService].name : ''}</Text>
-          </Ripple>
-        </View>
-      )}
+            {currentSession && currentSession.employees
+              ? currentSession.employees[currentEmployee]
+              : ''}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
-  )
+  );
 }
 
-export default PaymentLeftSide
+export default PaymentLeftSide;

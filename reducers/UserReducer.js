@@ -18,7 +18,6 @@ const SET_NEED_TO_REENTER = 'SET_NEED_TO_REENTER';
 const SET_HISTORY = 'SET_HISTORY'
 const SET_ACTIVE_BACKGROUND_INDEX = 'SET_ACTIVE_BACKGROUND_INDEX'
 const RESET_SESSION = 'RESET_SESSION'
-const SET_PRODUCTS = 'SET_PRODUCTS';
 const SET_CURRENT_EMPLOYEE = 'SET_CURRENT_EMPLOYEE';
 const SET_CURRENT_SERVICE = 'SET_CURRENT_SERVICE';
 const SET_INITIAL_FLOW = 'SET_INITIAL_FLOW'
@@ -238,14 +237,6 @@ export function setNeedToReenter(payload) {
     payload
   }
 }
-
-export function setProducts(payload) {
-  return {
-    type: SET_PRODUCTS,
-    payload
-  }
-}
-
 export function resetUser() {
   return {
     type: RESET_USER,
@@ -432,12 +423,6 @@ const ACTION_HANDLERS = {
   },
   [SET_ACTIVE_BACKGROUND_INDEX]: (state, action) => {
     return { ...state, activeBackgroundIndex: action.payload }
-  },
-  [SET_PRODUCTS]: (state, action) => {
-    const { currentAccount } = state
-    const newProducts = action.payload
-
-    return { ...state, currentAccount: { ...currentAccount, products: newProducts }, }
   },
   [SET_CURRENT_EMPLOYEE]: (state, action) => {
     return { ...state, currentEmployee: action.payload }

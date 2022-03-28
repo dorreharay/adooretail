@@ -10,7 +10,7 @@ import { deviceWidth } from '@dimensions'
 
 import SharedButton from '@shared/SharedButton';
 import { getFormattedDate, getSubstractDate, } from '@dateFormatter';
-import { loadReceipts, loadDetails, } from '@reducers/OrdersReducer'
+// import { loadReceipts, loadDetails, } from '@reducers/OrderReducer'
 import { setHistoryParams, } from '@reducers/TempReducer'
 
 function Filters(props) {
@@ -27,8 +27,8 @@ function Filters(props) {
     try {
       toastRef.current.show("Оновлення чеків", DURATION.FOREVER);
 
-      await dispatch(loadReceipts())
-      await dispatch(loadDetails())
+      // await dispatch(loadReceipts())
+      // await dispatch(loadDetails())
     } catch (error) {
       console.log('error - Filters - loadAgain', error)
     } finally {

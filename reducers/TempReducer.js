@@ -2,7 +2,7 @@ import { getFormattedDate } from '@dateFormatter';
 import {
   setReceipts,
   generateCurrentReceiptId,
-} from './OrdersReducer';
+} from './OrderReducer';
 
 const SET_END_OF_SESSION_STATUS = 'SET_END_OF_SESSION_STATUS';
 const SET_ORIENTATION_DIMENSIONS = 'SET_ORIENTATION_DIMENSIONS';
@@ -136,13 +136,6 @@ export function setCurrentRoute(payload) {
   };
 }
 
-export function setProducts(payload) {
-  return {
-    type: SET_PRODUCTS,
-    payload,
-  };
-}
-
 export function setBluetoothDevices(payload) {
   return {
     type: SET_BLUETOOTH_DEVICES,
@@ -162,33 +155,29 @@ export function addProductQuantity(payload) {
     const state = getState();
 
     let {
-      selectedReceiptIndex,
+      activeReceiptIndex,
       receipts,
       receiptsIds,
-      updateModeData,
     } = state.orders;
 
     const product = payload;
 
-    if (updateModeData) {
-      receipts = [updateModeData, [], [], []];
-    }
+    const currentId = receiptsIds[activeReceiptIndex];
 
-    let receipt = receipts[selectedReceiptIndex];
-    const currentId = receiptsIds[selectedReceiptIndex];
+    const activeReceipt = receipts[activeReceiptIndex];
 
-    if (receipt.length === 0 && !currentId) {
+    if (!activeReceipt?.length && !currentId) {
       dispatch(generateCurrentReceiptId());
     }
 
-    const productExists = !!receipt.find(
+    const productExists = !!activeReceipt?.find(
       item => item.hash_id === product.hash_id,
     );
 
     let newReceiptsInstance = [];
 
     if (productExists) {
-      newReceiptsInstance = receipt.map((item, index) => {
+      newReceiptsInstance = activeReceipt?.map((item, index) => {
         if (item.hash_id === product.hash_id) {
           return { ...item, quantity: item.quantity + 1 };
         }
@@ -206,11 +195,11 @@ export function addProductQuantity(payload) {
         department: product.department,
       };
 
-      newReceiptsInstance = [...receipt, firstReceiptItem];
+      newReceiptsInstance = [...activeReceipt, firstReceiptItem];
     }
 
     const newReceipts = receipts.map((item, index) =>
-      index === selectedReceiptIndex ? newReceiptsInstance : item,
+      index === activeReceiptIndex ? newReceiptsInstance : item,
     );
 
     dispatch(setReceipts(newReceipts));
@@ -221,14 +210,10 @@ export function substractProductQuantity(payload) {
   return function(dispatch, getState) {
     const state = getState();
 
-    let { selectedReceiptIndex, receipts, updateModeData } = state.orders;
+    let { activeReceiptIndex, receipts } = state.orders;
     const product = payload;
 
-    let receipt = receipts[selectedReceiptIndex];
-
-    if (updateModeData) {
-      receipts = [updateModeData, [], [], []];
-    }
+    let receipt = receipts[activeReceiptIndex];
 
     let newReceiptsInstance = [];
 
@@ -247,7 +232,7 @@ export function substractProductQuantity(payload) {
     }
 
     const newReceipts = receipts.map((item, index) =>
-      index === selectedReceiptIndex ? newReceiptsInstance : item,
+      index === activeReceiptIndex ? newReceiptsInstance : item,
     );
 
     dispatch(setReceipts(newReceipts));
@@ -259,18 +244,14 @@ export function deleteCurrentReceiptItem(payload) {
     const state = getState();
     const receiptIndex = payload;
 
-    let { selectedReceiptIndex, receipts, updateModeData } = state.orders;
+    let { activeReceiptIndex, receipts } = state.orders;
 
-    if (updateModeData) {
-      receipts = [updateModeData, [], [], []];
-    }
-
-    const updatedReceipt = receipts[selectedReceiptIndex].filter(
+    const updatedReceipt = receipts[activeReceiptIndex].filter(
       (item, index) => index !== receiptIndex,
     );
 
     const newReceipts = receipts.map((item, index) =>
-      index === selectedReceiptIndex ? updatedReceipt : item,
+      index === activeReceiptIndex ? updatedReceipt : item,
     );
 
     dispatch(setReceipts(newReceipts));
@@ -281,10 +262,10 @@ export function clearCurrentReceipt() {
   return function(dispatch, getState) {
     const state = getState();
 
-    const { selectedReceiptIndex, receipts } = state.orders;
+    const { activeReceiptIndex, receipts } = state.orders;
 
     const newReceipts = receipts.map((item, index) =>
-      index === selectedReceiptIndex ? [] : item,
+      index === activeReceiptIndex ? [] : item,
     );
 
     dispatch(setReceipts(newReceipts));

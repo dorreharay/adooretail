@@ -1,7 +1,7 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_LIGHT } from '@fonts'
+import { createStyles, maxWidth } from 'react-native-media-queries';
+import { GILROY_REGULAR, GILROY_LIGHT } from '@fonts';
 
-import { deviceWidth, deviceHeight } from '@dimensions'
+import { deviceWidth, deviceHeight } from '@dimensions';
 
 const base = {
   container: {
@@ -31,8 +31,8 @@ const base = {
   },
   paymentModal: {
     flexDirection: 'row',
-    width: deviceHeight * 1.1,
-    height: deviceHeight * 0.9,
+    // width: 500,
+    // height: 400,
     borderRadius: 2,
     backgroundColor: '#FFFFFF',
     zIndex: 20,
@@ -95,6 +95,10 @@ const base = {
     fontSize: 32,
     fontFamily: GILROY_LIGHT,
   },
+  keyboardAwareScrollViewStyles: {
+    paddingTop: (deviceHeight - deviceHeight * 0.9) / 2,
+    zIndex: 13,
+  },
 };
 
 const styles = createStyles(
@@ -105,7 +109,7 @@ const styles = createStyles(
       width: deviceHeight,
       height: deviceHeight * 0.8,
     },
-  })
+  }),
 );
 
-export default styles
+export default styles;

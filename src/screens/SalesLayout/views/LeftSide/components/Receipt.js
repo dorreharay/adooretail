@@ -1,58 +1,69 @@
-import React, { useRef, useState, useMemo, useEffect, } from 'react';
-import { View, Text, TouchableOpacity, Image, } from 'react-native';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import BackgroundTimer from 'react-native-background-timer';
-import { useDispatch, useSelector, } from 'react-redux'
-import styles from '../styles'
+import { useDispatch, useSelector } from 'react-redux';
+import styles from '../styles';
 
-import { addProductQuantity, substractProductQuantity, deleteCurrentReceiptItem } from '@reducers/TempReducer' 
-import { handleSize } from '@printer'
+import {
+  addProductQuantity,
+  substractProductQuantity,
+  deleteCurrentReceiptItem,
+} from '@reducers/TempReducer';
+
+import { handleSize } from '@printer';
+
+import { activeReceiptSelector } from '@selectors';
 
 import SharedButton from '@shared/SharedButton';
 
-function Receipt(props) {
-  const { receipt, setReceiptInstance, } = props
+function Receipt() {
+  const activatedRef = useRef(null);
 
-  const activatedRef = useRef(null)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { selectedReceiptIndex, receipts, } = useSelector(state => state.orders)
-  const updateModeData = useSelector(state => state.orders.updateModeData)
+  const activeReceipt = useSelector(activeReceiptSelector);
 
-  const [activatedIndex, setActivatedIndex] = useState(false)
+  const [activatedIndex, setActivatedIndex] = useState(false);
 
-  const handleActivate = (index) => {
-    setActivatedIndex(index)
+  const handleActivate = index => {
+    setActivatedIndex(index);
 
     if (activatedIndex === false) {
       activatedRef.current = BackgroundTimer.setTimeout(() => {
-        setActivatedIndex(false)
-      }, 1500)
+        setActivatedIndex(false);
+      }, 1500);
     }
-  }
+  };
 
   const handlePress = (type, rowItem) => {
     if (type === 'plus') {
-      dispatch(addProductQuantity(rowItem))
+      dispatch(addProductQuantity(rowItem));
     } else {
-      dispatch(substractProductQuantity(rowItem))
+      dispatch(substractProductQuantity(rowItem));
     }
 
-    clearTimeout(activatedRef.current)
+    clearTimeout(activatedRef.current);
 
-    activatedRef.current = BackgroundTimer.setTimeout(() => setActivatedIndex(false), 1000)
-  }
-
-  const receiptsInstances = useMemo(() => {
-    return updateModeData ? [updateModeData, [], [], []] : receipts
-  }, [updateModeData, receipts,])
+    activatedRef.current = BackgroundTimer.setTimeout(
+      () => setActivatedIndex(false),
+      1000,
+    );
+  };
 
   return (
-    <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10, }}>
-      {receiptsInstances[selectedReceiptIndex].map((item, index) => (
+    <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10 }}>
+      {activeReceipt.map((item, index) => (
         <View style={styles.receiptItem} key={index}>
           <View style={styles.receiptTitle}>
-            <Text numberOfLines={2} ellipsizeMode='tail' style={styles.receiptTitleText}>{item.title}{item.size ? `, ${handleSize(item.size)}` : ''}</Text>
+            <Text
+              numberOfLines={2}
+              ellipsizeMode="tail"
+              style={styles.receiptTitleText}
+            >
+              {item.title}
+              {item.size ? `, ${handleSize(item.size)}` : ''}
+            </Text>
           </View>
           <View style={styles.receiptDetails}>
             <View style={styles.receiptOnePriceContainer}>
@@ -78,7 +89,14 @@ function Receipt(props) {
                 scale={0.85}
               >
                 <View style={styles.receiptQtyInner}>
-                  <Text style={[styles.receiptQtyText, activatedIndex === index && styles.selectedText]}>{item.quantity}</Text>
+                  <Text
+                    style={[
+                      styles.receiptQtyText,
+                      activatedIndex === index && styles.selectedText,
+                    ]}
+                  >
+                    {item.quantity}
+                  </Text>
                 </View>
               </SharedButton>
 
@@ -96,9 +114,9 @@ function Receipt(props) {
               )}
             </View>
             <View style={styles.receiptPrice}>
-              <Text 
+              <Text
                 style={styles.receiptTotal}
-                ellipsizeMode='tail'
+                ellipsizeMode="tail"
                 numberOfLines={1}
               >
                 {item?.quantity * item?.price} грн
@@ -110,7 +128,7 @@ function Receipt(props) {
               activeOpacity={1}
             >
               <Image
-                style={{ width: 14, height: 14, }}
+                style={{ width: 14, height: 14 }}
                 source={require('@images/x_icon.png')}
                 fadeDuration={0}
               />
@@ -119,7 +137,7 @@ function Receipt(props) {
         </View>
       ))}
     </View>
-  )
+  );
 }
 
-export default Receipt
+export default Receipt;

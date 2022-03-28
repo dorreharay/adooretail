@@ -37,9 +37,9 @@ function AppContainer() {
     initialRoute = 'Initial1'
   } else if (account) {
     // if (currentSession.endTime || currentAccount?.localSessions.length === 0) {
-      initialRoute = 'Login'
+      // initialRoute = 'Login'
     // } else {
-    //   initialRoute = 'SalesLayout'
+      initialRoute = 'SalesLayout'
     // }
   } else {
     initialRoute = 'NoAccount'

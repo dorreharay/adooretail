@@ -1,32 +1,45 @@
-import React, { useState, useEffect, } from 'react'
-import { View, Text, Animated, } from 'react-native'
-import styles from './styles'
+import React, { useState, useEffect } from 'react';
+import { View, Text, Animated } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import styles from './styles';
 
-function CardPaymentStatus(props) {
-  const { status, setStatus, initialStatuses, isVisible, } = props
-  const { statusColor, statusText, blinking, } = status
+import { setActivePaymentStatus } from '@reducers/OrderReducer';
 
-  const [statusDotOpacity, setStatusDotOpacity] = useState(new Animated.Value(1))
+import { PAYMENT_STATUSES } from '@constants';
+
+function CardPaymentStatus() {
+  const dispatch = useDispatch();
+
+  const activePaymentStatus = useSelector(
+    state => state.orders.activePaymentStatus,
+  );
+  const activePaymentType = useSelector(
+    state => state.orders.activePaymentType,
+  );
+
+  const [statusDotOpacity, setStatusDotOpacity] = useState(
+    new Animated.Value(1),
+  );
 
   const stopBlinking = () => {
-    statusDotOpacity.stopAnimation()
-    setStatusDotOpacity(new Animated.Value(1))
-  }
+    statusDotOpacity.stopAnimation();
+    setStatusDotOpacity(new Animated.Value(1));
+  };
 
   useEffect(() => {
     return () => {
-      stopBlinking()
-      setStatus(initialStatuses.waiting)
-    }
-  }, [isVisible])
+      stopBlinking();
+      dispatch(setActivePaymentStatus(PAYMENT_STATUSES.WAITING));
+    };
+  }, []);
 
   useEffect(() => {
-    if (status.index === 1) {
+    if (activePaymentStatus.index === 1) {
       Animated.loop(
         Animated.sequence([
           Animated.timing(statusDotOpacity, {
             toValue: 0,
-            duration: 500
+            duration: 500,
           }),
           Animated.timing(statusDotOpacity, {
             toValue: 1,
@@ -34,28 +47,51 @@ function CardPaymentStatus(props) {
           }),
         ]),
         {
-          iterations: 300
-        }
-      ).start()
+          iterations: 300,
+        },
+      ).start();
     }
-  }, [status])
+  }, [activePaymentStatus]);
 
   useEffect(() => {
-    if (!blinking) {
-      stopBlinking()
+    if (!activePaymentStatus?.blinking) {
+      stopBlinking();
     }
-  }, [blinking])
+  }, [activePaymentStatus?.blinking]);
+
+  if (activePaymentType?.key !== 1) return null;
 
   return (
-    <View style={[styles.secondContainer, { justifyContent: 'space-between', paddingRight: '7%', }]}>
-      <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', }}>
-          <Animated.View style={[styles.statusDot, { backgroundColor: statusColor }, { opacity: statusDotOpacity }]} />
-          <Text style={styles.waitingText}>{statusText}</Text>
+    <View
+      style={[
+        styles.secondContainer,
+        { justifyContent: 'space-between', paddingRight: '7%' },
+      ]}
+    >
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+        }}
+      >
+        <View
+          style={{ flexDirection: 'row', alignItems: 'center', width: '90%' }}
+        >
+          <Animated.View
+            style={[
+              styles.statusDot,
+              { backgroundColor: activePaymentStatus?.statusColor },
+              { opacity: statusDotOpacity },
+            ]}
+          />
+          <Text style={styles.waitingText}>
+            {activePaymentStatus?.statusText}
+          </Text>
         </View>
       </View>
     </View>
-  )
+  );
 }
 
-export default CardPaymentStatus
+export default CardPaymentStatus;

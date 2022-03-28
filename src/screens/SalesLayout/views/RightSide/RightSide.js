@@ -9,7 +9,7 @@ import _ from 'lodash'
 import styles from './styles'
 
 import { setMenuVisibility } from '@reducers/TempReducer'
-import { setLayout } from '@reducers/OrdersReducer'
+import { setLayout } from '@reducers/OrderReducer'
 
 import SharedButton from '@shared/SharedButton';
 import Products from './Products/Products'

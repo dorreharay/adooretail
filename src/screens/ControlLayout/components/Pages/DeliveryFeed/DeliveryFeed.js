@@ -38,7 +38,7 @@ function DeliveryFeed() {
                   numberOfLines={1}
                   ellipsizeMode='tail'
                 >
-                  Order #{order.id}
+                  Order #{order?.id}
                 </Text>
                 <Text
                   style={styles.orderTime}

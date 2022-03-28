@@ -226,6 +226,11 @@ const base = {
     fontSize: 15,
     fontFamily: GILROY_MEDIUM,
   },
+  cancelButtonInner: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 };
 
 const styles = createStyles(

@@ -9,6 +9,8 @@ import styles from './styles'
 import FastImage from 'react-native-fast-image'
 import ImagePicker from 'react-native-image-picker';
 
+import { dbidGenerator } from '@helpers'
+
 import { syncSessions, } from '@helpers'
 import { currentSessionSelector, } from '@selectors'
 import { setStartCash, setEmployees, updateCurrentSession, restoreDefaultShift, resetSessions, resetUser, } from '@reducers/UserReducer'
@@ -85,13 +87,6 @@ function Session(props) {
   const startSession = () => {
     if (!canProceed) return
 
-    function guidGenerator() {
-      let S4 = function () {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-      };
-      return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-    }
-
     const selectedEmployees = employees.filter((item, index) => selected.includes(index)).map(item => item.name)
 
     let newSession = {
@@ -101,7 +96,7 @@ function Session(props) {
       receipts: [],
       shift_start,
       shift_end,
-      localId: guidGenerator(),
+      localId: dbidGenerator(),
       transactions: [],
     }
 

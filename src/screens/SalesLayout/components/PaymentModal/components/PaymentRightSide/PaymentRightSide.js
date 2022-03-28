@@ -1,118 +1,54 @@
-import React, { useState, useEffect, } from 'react'
-import { useDispatch } from 'react-redux'
-import { View, Text, } from 'react-native'
-import styles from './styles'
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import styles from './styles';
 
-import SharedButton from '@shared/SharedButton';
+import { PAYMENT_STATUSES } from '@constants';
 
-import { setPaymentModalVisibility } from '@reducers/TempReducer'
+import { setPaymentModalVisibility } from '@reducers/TempReducer';
+import {
+  setPaymentButtonAccessibility,
+  setActivePaymentStatus,
+} from '@reducers/OrderReducer';
 
-import PaymentType from './PaymentType'
-import CodePayment from './CodePayment'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import PaymentType from './PaymentType/PaymentType';
 
-function PaymentRightSide(props) {
-  const {
-    total = '', receipt,
-    selectedType, status, setStatus, initialStatuses,
-    buttonAccessible, resetStatus, enteredSum, setEnteredSum,
-    saveReceipt, setButtonAccessibility,
-    isVisible, activeDiscount, setActiveDiscount, 
-    discounts, setDiscounts, comment, setComment,
-    toBePaid, setToByPaid, setAmountFocused,
-    selectedService,
-  } = props
+function PaymentRightSide() {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const activePaymentType = useSelector(
+    state => state.orders.activePaymentType,
+  );
 
-  const [invalidColor, setInvalidColor] = useState(false)
-
-  useEffect(() => {
-    if (selectedType.index === 1) return setButtonAccessibility(true)
-
-    if (+enteredSum >= toBePaid) {
-      setButtonAccessibility(true)
-      setInvalidColor(false)
-    }
-
-    if (+enteredSum < toBePaid) {
-      setButtonAccessibility(false)
-      setInvalidColor(true)
-    }
-    
-  }, [enteredSum, selectedType])
-  
-  useEffect(() => { 
-    if(activeDiscount === 0) {
-      setToByPaid(total)
-
-      return
-    }
-  }, [total, activeDiscount])
-
-  const handleChangeSum = (value) => {
-    value = value.replace(/[^0-9.]/g, '')
-
-    const splittedValue = value.split('')
-    const dotsAmount = splittedValue.filter(item => item === '.').length
-
-    if (dotsAmount > 1) {
-      return
-    }
-
-    const dotIndex = value.indexOf('.')
-    const valueBeforeDot = value.slice(0, dotIndex)
-    const valueAfterDot = value.slice(dotIndex)
-
-    if (valueBeforeDot.length >= 5) return
-    if (valueAfterDot.length > 3) return
-
-    setButtonAccessibility(false)
-
-    setEnteredSum(value)
-  }
+  const handleClose = () => {
+    dispatch(setPaymentModalVisibility(false));
+    dispatch(setActivePaymentStatus(PAYMENT_STATUSES.WAITING));
+    dispatch(setPaymentButtonAccessibility(true));
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.heading}>
-        <Text style={styles.headingText}>{selectedType.index !== 2 ? 'Деталі оплати' : 'Відскануйте QR-код'}</Text>
+        <Text style={styles.headingText}>
+          {activePaymentType.index !== 2
+            ? 'Деталі оплати'
+            : 'Відскануйте QR-код'}
+        </Text>
 
-      <View style={styles.cancelButton}>
-        <TouchableOpacity
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-          onPress={() => {
-            dispatch(setPaymentModalVisibility(false))
-            resetStatus()
-          }}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.cancelButtonText}>Закрити</Text>
-        </TouchableOpacity>
-      </View>
-        
+        <View style={styles.cancelButton}>
+          <TouchableOpacity
+            style={styles.cancelButtonInner}
+            onPress={handleClose}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.cancelButtonText}>Закрити</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {selectedType.index !== 2 ? (
-        <PaymentType
-          selectedType={selectedType}
-          enteredSum={enteredSum} receipt={receipt}
-          buttonAccessible={buttonAccessible}
-          invalidColor={invalidColor}
-          status={status} setStatus={setStatus}
-          initialStatuses={initialStatuses} resetStatus={resetStatus}
-          setPaymentModalVisibility={(state) => dispatch(setPaymentModalVisibility(state))}
-          handleChangeSum={handleChangeSum} saveReceipt={saveReceipt}
-          isVisible={isVisible} toBePaid={toBePaid}  setToByPaid={setToByPaid}
-          activeDiscount={activeDiscount} setActiveDiscount={setActiveDiscount}
-          discounts={discounts} setDiscounts={setDiscounts}
-          comment={comment} setComment={setComment} setAmountFocused={setAmountFocused}
-          selectedService={selectedService}
-        />
-      ) : (
-          <CodePayment />
-        )}
+      <PaymentType />
     </View>
-  )
+  );
 }
 
-export default PaymentRightSide
+export default PaymentRightSide;
