@@ -31,8 +31,6 @@ const base = {
   },
   paymentModal: {
     flexDirection: 'row',
-    // width: 500,
-    // height: 400,
     borderRadius: 2,
     backgroundColor: '#FFFFFF',
     zIndex: 20,
@@ -96,8 +94,8 @@ const base = {
     fontFamily: GILROY_LIGHT,
   },
   keyboardAwareScrollViewStyles: {
-    paddingTop: (deviceHeight - deviceHeight * 0.9) / 2,
-    zIndex: 13,
+    paddingTop: (deviceHeight - deviceHeight * 0.8) / 2,
+    zIndex: 13
   },
 };
 

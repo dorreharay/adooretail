@@ -5,13 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import BackgroundTimer from 'react-native-background-timer';
 import styles from '../styles';
 
-import { activeReceiptSelector } from '@selectors';
+import { PAYMENT_STATUSES } from '@constants';
+
+
 import {
   clearCurrentReceipt,
   setPrintStatus,
   setPaymentModalVisibility,
 } from '@reducers/TempReducer';
-import { setPaymentButtonAccessibility } from '@reducers/OrderReducer';
+import { setCurrentService } from '@reducers/UserReducer';
+import { setPaymentButtonAccessibility, setActivePaymentStatus } from '@reducers/OrderReducer';
 
 function PaymentSubmit() {
   const dispatch = useDispatch();
@@ -27,6 +30,7 @@ function PaymentSubmit() {
     dispatch(clearCurrentReceipt());
     dispatch(setPaymentModalVisibility(false));
     dispatch(setPaymentButtonAccessibility(true));
+    dispatch(setCurrentService(0));
   };
 
   const handleSubmit = async () => {
@@ -38,8 +42,13 @@ function PaymentSubmit() {
       dispatch(setPrintStatus(true));
       // await saveReceipt(activePaymentType.apiName, activeReceipt);
       if (activePaymentType.key === 1) {
+        dispatch(setActivePaymentStatus(PAYMENT_STATUSES.SUCCESS));
         BackgroundTimer.setTimeout(() => {
           resetToInitial()
+
+          BackgroundTimer.setTimeout(() => {
+            dispatch(setActivePaymentStatus(PAYMENT_STATUSES.WAITING));
+          }, 300)
         }, 500);
       } else {
         resetToInitial()

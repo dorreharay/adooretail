@@ -23,10 +23,8 @@ function PaymentLeftSide() {
   const activePaymentType = useSelector(
     state => state.orders.activePaymentType,
   );
-  const currentSession = useSelector(currentSessionSelector);
-  const currentService = useSelector(state => state.user.currentService) || 0;
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0;
-  const currentAccount = useSelector(state => state.user.currentAccount);
+  const account = useSelector(state => state.account);
 
   return (
     <View style={styles.container}>
@@ -93,7 +91,7 @@ function PaymentLeftSide() {
             <FastImage
               style={styles.currentEmployeeImage}
               source={{
-                uri: (currentAccount && currentAccount?.img_url) || '',
+                uri: (account && account?.client_data?.img_url) || '',
               }}
             />
             <View style={styles.currentEmployeeBorder} />
@@ -104,8 +102,8 @@ function PaymentLeftSide() {
             numberOfLines={1}
             style={styles.currentEmployeeName}
           >
-            {currentSession && currentSession.employees
-              ? currentSession.employees[currentEmployee]
+            {account && account?.employees
+              ? account?.employees[currentEmployee].name
               : ''}
           </Text>
         </TouchableOpacity>

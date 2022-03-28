@@ -10,6 +10,7 @@ import {
   substractProductQuantity,
   deleteCurrentReceiptItem,
 } from '@reducers/TempReducer';
+import { setToBePaidSum, setEnteredSum } from '@reducers/OrderReducer';
 
 import { handleSize } from '@printer';
 
@@ -25,6 +26,17 @@ function Receipt() {
   const activeReceipt = useSelector(activeReceiptSelector);
 
   const [activatedIndex, setActivatedIndex] = useState(false);
+
+  useEffect(() => {
+    const receiptSum = activeReceipt?.reduce(
+      (accumulator, currentValue) =>
+        accumulator + currentValue.price * currentValue.quantity,
+      0,
+    );
+
+    dispatch(setToBePaidSum(receiptSum));
+    dispatch(setEnteredSum(receiptSum));
+  }, [activeReceipt]);
 
   const handleActivate = index => {
     setActivatedIndex(index);

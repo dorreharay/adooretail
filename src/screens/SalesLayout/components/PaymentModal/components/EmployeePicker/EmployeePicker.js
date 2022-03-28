@@ -16,8 +16,7 @@ function EmployeePicker() {
   const dispatch = useDispatch();
 
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0;
-  const currentSession = useSelector(currentSessionSelector);
-  const currentAccount = useSelector(state => state.user.currentAccount);
+  const account = useSelector(state => state.account);
 
   const employeesListVisible = useSelector(
     state => state.orders.employeesListVisible,
@@ -46,18 +45,16 @@ function EmployeePicker() {
         <Text style={styles.employeesListHeading}>Працівник</Text>
 
         <ScrollView style={styles.employeesList}>
-          {currentSession &&
-            currentSession.employees &&
-            currentSession.employees.map((item, key) => (
-              <Ripple
+          {account?.employees &&
+            account?.employees.map((item, key) => (
+              <TouchableOpacity
                 style={styles.employeesListItem}
                 onPress={() => {
                   dispatch(setCurrentEmployee(key));
 
                   handleClickOutSide();
                 }}
-                rippleColor={`#C4C4C4`}
-                rippleFades
+                activeOpacity={0.7}
                 key={key}
               >
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
@@ -69,37 +66,35 @@ function EmployeePicker() {
                       borderRadius: 100,
                     }}
                     source={{
-                      uri: (currentAccount && currentAccount?.img_url) || '',
+                      uri: (account && account?.client_data?.img_url) || '',
                     }}
                   />
                   <Text style={styles.employeesListItemName}>
-                    {currentSession.employees[key]}
+                    {account?.employees[key]?.name}
                   </Text>
                 </View>
                 <View style={styles.pickEmployeeButton}>
-                  <SharedButton>
-                    <LinearGradient
-                      style={styles.pickEmployeeButtonLinear}
-                      start={{ x: 1, y: 1 }}
-                      end={{ x: 0, y: 2 }}
-                      colors={
-                        currentEmployee !== key
-                          ? ['#DB3E69', '#FD9C6C']
-                          : ['#f4f4f4', '#f4f4f4']
-                      }
+                  <LinearGradient
+                    style={styles.pickEmployeeButtonLinear}
+                    start={{ x: 1, y: 1 }}
+                    end={{ x: 0, y: 2 }}
+                    colors={
+                      currentEmployee !== key
+                        ? ['#DB3E69', '#FD9C6C']
+                        : ['#f4f4f4', '#f4f4f4']
+                    }
+                  >
+                    <Text
+                      style={[
+                        styles.pickEmployeeButtonText,
+                        currentEmployee === key && { color: '#A4A4A4' },
+                      ]}
                     >
-                      <Text
-                        style={[
-                          styles.pickEmployeeButtonText,
-                          currentEmployee === key && { color: '#A4A4A4' },
-                        ]}
-                      >
-                        {currentEmployee === key ? 'обрано' : 'обрати'}
-                      </Text>
-                    </LinearGradient>
-                  </SharedButton>
+                      {currentEmployee === key ? 'обрано' : 'обрати'}
+                    </Text>
+                  </LinearGradient>
                 </View>
-              </Ripple>
+              </TouchableOpacity>
             ))}
         </ScrollView>
       </View>

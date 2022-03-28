@@ -6,7 +6,7 @@ import store from '@store';
 import styles from './styles';
 
 import { setPaymentModalVisibility } from '@reducers/TempReducer';
-import { setToBePaidSum, setEnteredSum, setActivePaymentStatus } from '@reducers/OrderReducer';
+import { setActivePaymentStatus } from '@reducers/OrderReducer';
 
 import { PAYMENT_STATUSES } from '@constants';
 
@@ -24,20 +24,6 @@ const PaymentModal = () => {
   useEffect(() => {
     if (paymentModalVisibility) {
       dispatch(setActivePaymentStatus(PAYMENT_STATUSES.WAITING));
-
-      const orders = store.getState().orders;
-      const { receipts, activeReceiptIndex } = orders;
-
-      const activeReceipt = receipts[activeReceiptIndex];
-
-      const receiptSum = activeReceipt?.reduce(
-        (accumulator, currentValue) =>
-          accumulator + currentValue.price * currentValue.quantity,
-        0,
-      );
-
-      dispatch(setToBePaidSum(receiptSum));
-      dispatch(setEnteredSum(receiptSum));
     }
   }, [paymentModalVisibility]);
 

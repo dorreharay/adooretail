@@ -16,10 +16,31 @@ function CardPaymentStatus() {
   const activePaymentType = useSelector(
     state => state.orders.activePaymentType,
   );
+  const paymentModalVisibility = useSelector(
+    state => state.temp.paymentModalVisibility,
+  );
 
   const [statusDotOpacity, setStatusDotOpacity] = useState(
     new Animated.Value(1),
   );
+
+  const startBlinking = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(statusDotOpacity, {
+          toValue: 0,
+          duration: 500,
+        }),
+        Animated.timing(statusDotOpacity, {
+          toValue: 1,
+          duration: 500,
+        }),
+      ]),
+      {
+        iterations: 300,
+      },
+    ).start();
+  };
 
   const stopBlinking = () => {
     statusDotOpacity.stopAnimation();
@@ -27,37 +48,12 @@ function CardPaymentStatus() {
   };
 
   useEffect(() => {
-    return () => {
-      stopBlinking();
-      dispatch(setActivePaymentStatus(PAYMENT_STATUSES.WAITING));
-    };
-  }, []);
-
-  useEffect(() => {
-    if (activePaymentStatus.index === 1) {
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(statusDotOpacity, {
-            toValue: 0,
-            duration: 500,
-          }),
-          Animated.timing(statusDotOpacity, {
-            toValue: 1,
-            duration: 500,
-          }),
-        ]),
-        {
-          iterations: 300,
-        },
-      ).start();
-    }
-  }, [activePaymentStatus]);
-
-  useEffect(() => {
-    if (!activePaymentStatus?.blinking) {
+    if (paymentModalVisibility) {
+      startBlinking();
+    } else {
       stopBlinking();
     }
-  }, [activePaymentStatus?.blinking]);
+  }, [paymentModalVisibility]);
 
   if (activePaymentType?.key !== 1) return null;
 

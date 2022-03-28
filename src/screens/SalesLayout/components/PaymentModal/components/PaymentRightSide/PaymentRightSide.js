@@ -12,6 +12,8 @@ import {
 } from '@reducers/OrderReducer';
 
 import PaymentType from './PaymentType/PaymentType';
+import DeliveryPicker from '../DeliveryPicker/DeliveryPicker';
+import PaymentSubmit from '../PaymentSubmit';
 
 function PaymentRightSide() {
   const dispatch = useDispatch();
@@ -47,6 +49,14 @@ function PaymentRightSide() {
       </View>
 
       <PaymentType />
+
+      <Text style={[styles.headingText, { paddingTop: 10, paddingBottom: 20 }]}>
+        Сервіс доставки
+      </Text>
+
+      <DeliveryPicker />
+
+      <PaymentSubmit />
     </View>
   );
 }

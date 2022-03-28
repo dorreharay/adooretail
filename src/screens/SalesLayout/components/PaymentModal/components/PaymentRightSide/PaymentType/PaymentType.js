@@ -8,7 +8,6 @@ import {
   setEnteredSum,
 } from '@reducers/OrderReducer';
 
-import PaymentSubmit from '../../PaymentSubmit';
 import CardPaymentStatus from '../CardPaymentStatus';
 
 function PaymentType() {
@@ -105,8 +104,6 @@ function PaymentType() {
 
         <CardPaymentStatus />
       </View>
-
-      <PaymentSubmit />
     </>
   );
 }
