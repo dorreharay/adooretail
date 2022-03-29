@@ -20,6 +20,7 @@
           "@requests": "./helpers/requests",
           "@printer": "./helpers/printer",
           "@helpers": "./helpers/all",
+          "@receipt": "./helpers/receipt",
           "@shared": "./src/shared",
           "@selectors": "./store/selectors",
           "@statuses": "./config/statuses",

@@ -6,7 +6,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import styles from '../styles';
 
 import { PAYMENT_STATUSES } from '@constants';
-
+import saveReceipt from '@receipt'
 
 import {
   clearCurrentReceipt,
@@ -40,7 +40,7 @@ function PaymentSubmit() {
 
     try {
       dispatch(setPrintStatus(true));
-      // await saveReceipt(activePaymentType.apiName, activeReceipt);
+      saveReceipt();
       if (activePaymentType.key === 1) {
         dispatch(setActivePaymentStatus(PAYMENT_STATUSES.SUCCESS));
         BackgroundTimer.setTimeout(() => {
@@ -55,6 +55,7 @@ function PaymentSubmit() {
       }
 
       dispatch(setPrintStatus(false));
+
     } catch (error) {
       dispatch(setPrintStatus(false));
     }

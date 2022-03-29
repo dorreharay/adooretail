@@ -54,11 +54,7 @@ function Session() {
     total_end: 0,
     selected_employees: [],
   });
-
-  const [startSum, setStartSum] = useState('0');
-  const [endSum, setEndSum] = useState('0');
   const [employeesPickerOpened, setEmployeesPicker] = useState(false);
-  const [selected, setSelected] = useState([]);
 
   const handleValue = field => value => {
     setValues(prev => ({
@@ -127,6 +123,12 @@ function Session() {
       client_id: account?._id,
       session_id: dbidGenerator(),
     };
+
+    setValues({
+      total_start: 0,
+      total_end: 0,
+      selected_employees: [],
+    });
 
     dispatch(createSession(newSession));
 
@@ -342,12 +344,6 @@ function Session() {
       </View>
     );
   };
-
-  useEffect(() => {
-    if (endOfSession) {
-      setStartSum(lastSession?.summary?.total_start || 0);
-    }
-  }, [sessionModalVisible]);
 
   const canProceed = useMemo(() => {
     return endOfSession

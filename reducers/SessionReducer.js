@@ -1,5 +1,6 @@
 const CREATE_SESSION = 'CREATE_SESSION';
 const UPDATE_SESSION = 'UPDATE_SESSION';
+const SAVE_RECEIPT_DATA = 'SAVE_RECEIPT_DATA';
 
 const initialState = {
   list: [],
@@ -19,6 +20,13 @@ export function updateSession(payload) {
   };
 }
 
+export function saveReceiptData(payload) {
+  return {
+    type: SAVE_RECEIPT_DATA,
+    payload,
+  };
+}
+
 const ACTION_HANDLERS = {
   [CREATE_SESSION]: (state, action) => {
     return { ...state, list: [...state?.list, action.payload] };
@@ -33,12 +41,30 @@ const ACTION_HANDLERS = {
             ...action.payload,
             summary: {
               ...session.summary,
-              ...action.payload.summary
-            }
+              ...action.payload.summary,
+            },
           };
         }
 
-        return session
+        return session;
+      }),
+    };
+  },
+  [SAVE_RECEIPT_DATA]: (state, action) => {
+    return {
+      ...state,
+      list: state?.list?.map(session => {
+        if (session?.session_id === action.payload.session_id) {
+          return {
+            ...session,
+            receipts: [
+              ...session.receipts,
+              action.payload
+            ]
+          };
+        }
+
+        return session;
       }),
     };
   },
