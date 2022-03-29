@@ -33,6 +33,15 @@ export const currentSessionSelector = createSelector(
   },
 );
 
+export const lastSessionSelector = createSelector(
+  state => state.sessions.list,
+  sessions => {
+    if (!sessions?.length) return null;
+
+    return sessions.slice(-1)[0];
+  },
+);
+
 export const currentAccountSelector = createSelector(
   selectIndexAndAccounts,
   ({ accounts, currentAccountIndex }) => accounts[currentAccountIndex],

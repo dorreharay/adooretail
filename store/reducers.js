@@ -5,6 +5,7 @@ import OrderReducer from '@reducers/OrderReducer';
 import UserReducer from '@reducers/UserReducer';
 import TempReducer from '@reducers/TempReducer';
 import AccountReducer from '@reducers/AccountReducer';
+import SessionReducer from '@reducers/SessionReducer';
 
 const RESET_STORE = 'RESET_STORE';
 
@@ -15,6 +16,11 @@ const RESET_STORE = 'RESET_STORE';
 
 const accountPersistConfig = {
   key: 'account',
+  storage: AsyncStorage
+}
+
+const sessionsPersistConfig = {
+  key: 'sessions',
   storage: AsyncStorage
 }
 
@@ -33,6 +39,7 @@ const appReducer = combineReducers({
   account: persistReducer(accountPersistConfig, AccountReducer),
   orders: persistReducer(ordersPersistConfig, OrderReducer),
   user: persistReducer(usersPersistConfig, UserReducer),
+  sessions: persistReducer(sessionsPersistConfig, SessionReducer),
   temp: TempReducer
 })
 

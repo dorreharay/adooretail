@@ -73,6 +73,8 @@ export const loadProducts = async toastRef => {
 
     const data = await API.getProducts({ token: account._id });
 
+    console.log('data', data)
+
     if (!data) {
       if (toastRef) {
         toastRef.close();
@@ -236,5 +238,5 @@ export function dbidGenerator() {
   let S4 = function() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
   };
-  return S4() + S4() + S4() + S4();
+  return S4() + S4() + S4() + S4() + S4() + S4();
 }

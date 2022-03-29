@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import Ripple from 'react-native-material-ripple';
 import styles from './styles';
 
 import {
@@ -10,7 +9,6 @@ import {
   setEmployeesListVisibility,
 } from '@reducers/OrderReducer';
 
-import { currentSessionSelector } from '@selectors';
 import { PAYMENT_TYPES } from '@constants';
 
 import EditIcon from '@images/edit.svg';

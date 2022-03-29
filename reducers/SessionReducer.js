@@ -1,32 +1,46 @@
-const SET_ACCOUNT = 'SET_ACCOUNT';
-const SET_PRODUCTS_LIST = 'SET_PRODUCTS_LIST';
-const RESET_USER = 'RESET_USER';
+const CREATE_SESSION = 'CREATE_SESSION';
+const UPDATE_SESSION = 'UPDATE_SESSION';
 
-const initialState = {};
+const initialState = {
+  list: [],
+};
 
-export function startSession(payload) {
+export function createSession(payload) {
   return {
-    type: SET_ACCOUNT,
+    type: CREATE_SESSION,
     payload,
   };
 }
 
-export function finishSession(payload) {
+export function updateSession(payload) {
   return {
-    type: SET_PRODUCTS_LIST,
+    type: UPDATE_SESSION,
     payload,
   };
 }
 
 const ACTION_HANDLERS = {
-  [SET_ACCOUNT]: (state, action) => {
-    return { ...state, ...action.payload };
+  [CREATE_SESSION]: (state, action) => {
+    return { ...state, list: [...state?.list, action.payload] };
   },
-  [SET_PRODUCTS_LIST]: (state, action) => {
-    return { ...state, products: action.payload };
-  },
-  [RESET_USER]: () => {
-    return initialState;
+  [UPDATE_SESSION]: (state, action) => {
+    return {
+      ...state,
+      list: state?.list?.map(session => {
+        if (session?.session_id === action.payload.session_id) {
+          return {
+            ...session,
+            ...action.payload,
+            summary: {
+              ...session.summary,
+              ...action.payload.summary
+            }
+          };
+        }
+
+        return session
+      }),
+    };
   },
 };
 

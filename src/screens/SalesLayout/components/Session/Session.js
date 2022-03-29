@@ -1,188 +1,190 @@
-import React, { useState, useEffect, useMemo, useRef, } from 'react'
-import { View, Text, TouchableOpacity, TextInput, TouchableOpacityBase, ScrollView, } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import Toast, { DURATION } from 'react-native-easy-toast'
-import styles from './styles'
-import FastImage from 'react-native-fast-image'
-import ImagePicker from 'react-native-image-picker';
+import Toast, { DURATION } from 'react-native-easy-toast';
+import BackgroundTimer from 'react-native-background-timer';
+import styles from './styles';
+import FastImage from 'react-native-fast-image';
 
-import { dbidGenerator } from '@helpers'
+import { dbidGenerator } from '@helpers';
 
-import { syncSessions, } from '@helpers'
-import { currentSessionSelector, } from '@selectors'
-import { setStartCash, setEmployees, updateCurrentSession, restoreDefaultShift, resetSessions, resetUser, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
+import { syncSessions } from '@helpers';
+import { lastSessionSelector } from '@selectors';
+import {
+  updateCurrentSession,
+  restoreDefaultShift,
+  resetSessions,
+  resetUser,
+} from '@reducers/UserReducer';
+import { createSession, updateSession } from '@reducers/SessionReducer';
+import {
+  setEndOfSessionStatus,
+  setSessionModalState,
+} from '@reducers/TempReducer';
 
-import { deviceHeight } from '@dimensions'
+import { deviceHeight } from '@dimensions';
+import _BackgroundTimer from 'react-native-background-timer';
 
-function Session(props) {
-  const { } = props
+function Session() {
+  const toastRef = useRef(null);
 
-  const toastRef = useRef(null)
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const lastSession = useSelector(lastSessionSelector);
+  const account = useSelector(state => state.account);
+  const endOfSession = useSelector(state => state.temp.endOfSession);
+  const modalStatus = useSelector(state => state.temp.modalStatus);
+  const sessionModalVisible = useSelector(
+    state => state.temp.sessionModalVisible,
+  );
+  const resetAccount = useSelector(state => state.temp.resetAccount);
 
-  const currentSession = useSelector(currentSessionSelector)
-  const employees = useSelector(state => state.user.currentAccount && state.user.currentAccount?.employees)
-  const img_url = useSelector(state => state.user.currentAccount && state.user.currentAccount?.img_url)
-  const shift_start = useSelector(state => state.user.currentAccount && state.user.currentAccount?.shift_start)
-  const shift_end = useSelector(state => state.user.currentAccount && state.user.currentAccount?.shift_end)
-  const endOfSession = useSelector(state => state.temp.endOfSession)
-  const modalStatus = useSelector(state => state.temp.modalStatus)
-  const sessionModalVisible = useSelector(state => state.temp.sessionModalVisible)
-  const resetAccount = useSelector(state => state.temp.resetAccount)
+  const [values, setValues] = useState({
+    total_start: 0,
+    total_end: 0,
+    selected_employees: [],
+  });
 
-  const [startSum, setStartSum] = useState('0')
-  const [endSum, setEndSum] = useState('0')
-  const [reportPhoto, setReportPhoto] = useState(null)
-  const [employeesPickerOpened, setEmployeesPicker] = useState(false)
-  const [selected, setSelected] = useState([])
-  const [submitStatus, setSubmitStatus] = useState(false)
-  const [pickerLoader, setPickerLoader] = useState(false)
-  const [resultLoading, setResultLoading] = useState(false)
+  const [startSum, setStartSum] = useState('0');
+  const [endSum, setEndSum] = useState('0');
+  const [employeesPickerOpened, setEmployeesPicker] = useState(false);
+  const [selected, setSelected] = useState([]);
 
-  const handleChange = (e) => {
-    let value = e.nativeEvent.text
-      .replace(/[^.\d]/g, '')
-      .replace('..', '.')
+  const handleValue = field => value => {
+    setValues(prev => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleChange = e => {
+    let value = e.nativeEvent.text.replace(/[^.\d]/g, '').replace('..', '.');
 
     if (value === '.') {
-      value = value.replace('.', '')
+      value = value.replace('.', '');
     }
 
-    const arr = value.split('')
+    const arr = value.split('');
 
     if (arr.filter(item => item === '.').length > 1) {
-      value = arr.reverse().join('').replace('.', '')
-      value = value.split('').reverse().join('')
+      value = arr
+        .reverse()
+        .join('')
+        .replace('.', '');
+      value = value
+        .split('')
+        .reverse()
+        .join('');
     }
 
     if (endOfSession) {
-      setEndSum(value)
+      handleValue('total_end')(value);
     } else {
-      setStartSum(value)
+      handleValue('total_start')(value);
     }
-  }
+  };
 
   const clearText = () => {
     if (endOfSession) {
-      setEndSum(prev => prev === '0' ? '' : prev)
+      handleValue('total_end')(prev => (prev === '0' ? '' : prev));
     } else {
-      setStartSum(prev => prev === '0' ? '' : prev)
+      handleValue('total_start')(prev => (prev === '0' ? '' : prev));
     }
-  }
+  };
 
   const handleSubmit = () => {
     if (!endOfSession) {
-      startSession()
+      startSession();
     } else {
-      endSession()
+      endSession();
     }
-  }
+  };
 
   const startSession = () => {
-    if (!canProceed) return
+    if (!canProceed) return;
 
-    const selectedEmployees = employees.filter((item, index) => selected.includes(index)).map(item => item.name)
-
-    let newSession = {
-      startSum,
-      employees: selectedEmployees,
-      incasations: [],
+    const newSession = {
+      employees: values.selected_employees,
       receipts: [],
-      shift_start,
-      shift_end,
-      localId: dbidGenerator(),
       transactions: [],
-    }
+      summary: {
+        total_start: +values?.total_start || 0,
+        total_end: null,
+        time_start: new Date().toISOString(),
+        time_end: null,
+        zbalance: null,
+      },
+      client_id: account?._id,
+      session_id: dbidGenerator(),
+    };
 
-    dispatch(updateCurrentSession({ status: 'new', newSessionProp: newSession }))
-    dispatch(setEmployees([]))
-    dispatch(setStartCash(0))
+    dispatch(createSession(newSession));
 
-    dispatch(setSessionModalState(false))
-  }
+    dispatch(setSessionModalState(false));
+  };
 
   const endSession = async () => {
-    if (!canProceed) return
+    if (!canProceed) return;
 
-    if(resetAccount) {
-      syncSessions(() => { }, null, 1)
-
-      dispatch(resetUser())
-
-      navigation.jumpTo('Initial1')
-      return
-    }
-    navigation.jumpTo('Login')
-    setEndSum('0')
-    setReportPhoto(null)
-
-    dispatch(setEndOfSessionStatus(false))
-    dispatch(updateCurrentSession({ status: 'end', endCash: endSum, reportPhoto: reportPhoto.uri, }))
-    dispatch(restoreDefaultShift())
-
-    await syncSessions(() => { }, null, 1)
-
-    dispatch(resetSessions())
-  }
-
-  const handlePicker = async () => {
-    setPickerLoader(true)
-
-    try {
-      const options = {
-        title: 'Select Avatar',
-        customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-        storageOptions: {
-          skipBackup: true,
-          path: 'images',
+    dispatch(
+      updateSession({
+        session_id: lastSession?.session_id,
+        summary: {
+          total_end: +values?.total_end || 0,
+          time_end: new Date().toISOString(),
+          zbalance: +values?.zbalance,
         },
-      };
-      await ImagePicker.launchCamera(options, (response) => {
-        if (response.didCancel) {
-          return
-        }
+      }),
+    );
 
-        const terminalReportPhoto = 'data:image/jpeg;base64,' + response.data
+    navigation.jumpTo('Login');
 
-        setReportPhoto({ uri: terminalReportPhoto, size: response.fileSize, })
+    BackgroundTimer.setTimeout(() => {
+      handleValue('total_end')(0);
+      dispatch(setEndOfSessionStatus(false));
+      dispatch(setSessionModalState(true));
+    }, 300);
 
-        setPickerLoader(false)
-      })
-    } catch (error) {
+    // await syncSessions(() => {}, null, 1);
 
-    } finally {
-      setPickerLoader(false)
-    }
-  }
-
+    // dispatch(resetSessions());
+  };
 
   const renderMainContent = () => {
     return (
-      <View style={{ width: '86%', paddingTop: 35, paddingBottom: 30, }}>
-        <Text style={styles.heading}>{endOfSession ? 'Закінчити касову зміну' : 'Розпочати касову зміну'}</Text>
+      <View style={{ width: '86%', paddingTop: 35, paddingBottom: 30 }}>
+        <Text style={styles.heading}>
+          {endOfSession ? 'Закінчити касову зміну' : 'Розпочати касову зміну'}
+        </Text>
 
-        <View>
-          <Text style={styles.label}>Готівкова каса на початку зміни</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={[styles.input, endOfSession && styles.disabled]}
-              value={startSum}
-              placeholder='0'
-              onChange={handleChange}
-              maxLength={7}
-              onFocus={clearText}
-              keyboardType={'number-pad'}
-              pointerEvents={endOfSession ? 'none' : 'auto'}
-            />
-            <Text style={styles.currency}>грн</Text>
+        {!endOfSession && (
+          <View>
+            <Text style={styles.label}>Готівкова каса на початку зміни</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={[styles.input, endOfSession && styles.disabled]}
+                value={values?.total_start}
+                placeholder="0"
+                onChangeText={value => handleValue('total_start')(value)}
+                maxLength={7}
+                onFocus={clearText}
+                keyboardType={'number-pad'}
+                pointerEvents={endOfSession ? 'none' : 'auto'}
+              />
+              <Text style={styles.currency}>грн</Text>
+            </View>
           </View>
-        </View>
+        )}
         {endOfSession ? (
           <>
             <View>
@@ -190,43 +192,60 @@ function Session(props) {
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.input}
-                  value={endSum}
-                  placeholder='0'
-                  onChange={handleChange}
+                  value={values?.total_end}
+                  placeholder="0"
+                  onChangeText={value => handleValue('total_end')(value)}
                   maxLength={7}
-                  onFocus={clearText}
+                  onFocus={() => handleValue('total_end')('')}
                   keyboardType={'number-pad'}
                 />
                 <Text style={styles.currency}>грн</Text>
               </View>
             </View>
-            <View>
-              <Text style={styles.label}>Звіт терміналу</Text>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.label}>Z-Баланс</Text>
               <View style={styles.inputContainer}>
-                <TouchableOpacity
-                  style={styles.debitReportButton}
-                  onPress={handlePicker}
-                  activeOpacity={0.8}
-                >
-                  <Text style={styles.debitReportButtonText}>{pickerLoader ? 'Обробка...' : reportPhoto && reportPhoto.uri ? `report.png / ${(reportPhoto.size / 1000000).toFixed(1)}MB` : 'Завантажити фото'}</Text>
-                </TouchableOpacity>
+                <TextInput
+                  style={styles.input}
+                  value={values?.zbalance}
+                  placeholder="0"
+                  onChangeText={value => handleValue('zbalance')(value)}
+                  maxLength={7}
+                  onFocus={() => handleValue('zbalance')('')}
+                  keyboardType={'number-pad'}
+                />
+                <Text style={styles.currency}>грн</Text>
               </View>
             </View>
           </>
         ) : (
-            <View>
-              <Text style={styles.label}>Працівники</Text>
-              <View style={styles.inputContainer}>
-                <TouchableOpacity
-                  style={styles.debitReportButton}
-                  onPress={() => setEmployeesPicker(true)}
-                  activeOpacity={0.8}
-                >
-                  <Text style={styles.debitReportButtonText}>{selected.length === 0 ? 'Натисніть, щоб вибрати працівників' : `${selected.length === 1 ? 'Обраний' : 'Обрано'} ${selected.length} ${selected.length === 1 ? 'працівник' : selected.length < 5 ? 'працівника' : 'працівників'}`}</Text>
-                </TouchableOpacity>
-              </View>
+          <View>
+            <Text style={styles.label}>Працівники</Text>
+            <View style={styles.inputContainer}>
+              <TouchableOpacity
+                style={styles.debitReportButton}
+                onPress={() => setEmployeesPicker(true)}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.debitReportButtonText}>
+                  {values?.selected_employees?.length === 0
+                    ? 'Натисніть, щоб вибрати працівників'
+                    : `${
+                        values?.selected_employees?.length === 1
+                          ? 'Обраний'
+                          : 'Обрано'
+                      } ${values?.selected_employees?.length} ${
+                        values?.selected_employees?.length === 1
+                          ? 'працівник'
+                          : values?.selected_employees?.length < 5
+                          ? 'працівника'
+                          : 'працівників'
+                      }`}
+                </Text>
+              </TouchableOpacity>
             </View>
-          )}
+          </View>
+        )}
 
         <TouchableOpacity
           onPress={handleSubmit}
@@ -237,82 +256,122 @@ function Session(props) {
             style={styles.linearButtonGradient}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 0 }}
-            colors={canProceed ? ['#DB3E69', '#EF9058'] : ['#DB3E6955', '#EF905855']}
+            colors={
+              canProceed ? ['#DB3E69', '#EF9058'] : ['#DB3E6955', '#EF905855']
+            }
           >
-            <Text style={styles.linearButtonText}>{resultLoading ? 'Обробка...' : 'Готово'}</Text>
+            <Text style={styles.linearButtonText}>Готово</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   const renderEmployeesList = () => {
     return (
-      <View style={{ width: '86%', maxHeight: deviceHeight * 0.7, paddingTop: 25, }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15, }}>
-          <Text style={[styles.heading, { marginTop: 0, marginBottom: 0, }]}>Працівники</Text>
-          <TouchableOpacity style={styles.backButton} onPress={() => setEmployeesPicker(false)}>
+      <View
+        style={{ width: '86%', maxHeight: deviceHeight * 0.7, paddingTop: 25 }}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: 15,
+          }}
+        >
+          <Text style={[styles.heading, { marginTop: 0, marginBottom: 0 }]}>
+            Працівники
+          </Text>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => setEmployeesPicker(false)}
+          >
             <FastImage
-              style={{ width: 20, height: 20, }}
+              style={{ width: 20, height: 20 }}
               source={require('@images/x_icon.png')}
             />
           </TouchableOpacity>
         </View>
-        <ScrollView style={{ maxHeight: deviceHeight * 0.65, }} contentContainerStyle={{ paddingBottom: 25, paddingRight: 20, }}>
-          {employees.map((employee, index) => (
-            <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderTopWidth: 1, borderTopColor: '#F2F2F2', }}
-              onPress={() => setSelected(prev => prev.includes(index) ? prev.filter(item => item !== index) : ([...prev, index]))}
-              activeOpacity={1}
-            >
-              <View style={styles.employee} key={index}>
-                <FastImage
-                  style={{ width: 40, height: 40, borderRadius: 100, }}
-                  source={{ uri: employee.icon ? employee.icon : img_url }}
-                />
-                <Text style={styles.employeeName}>{employee.name}</Text>
-              </View>
+        <ScrollView
+          style={{ maxHeight: deviceHeight * 0.65 }}
+          contentContainerStyle={{ paddingBottom: 25, paddingRight: 20 }}
+        >
+          {account?.employees?.map((employee, index) => {
+            const hasEmployeeSelected = values.selected_employees.includes(
+              employee.id,
+            );
 
-              {selected.includes(index) && (
-                <View style={styles.selectedButton} key={index}>
+            return (
+              <TouchableOpacity
+                style={styles.employeeItem}
+                onPress={() => {
+                  const newValue = hasEmployeeSelected
+                    ? values.selected_employees.filter(
+                        item => item !== employee.id,
+                      )
+                    : [...values.selected_employees, employee.id];
+                  handleValue('selected_employees')(newValue);
+                }}
+                activeOpacity={1}
+              >
+                <View style={styles.employee} key={index}>
                   <FastImage
-                    style={{ width: 16, height: 16, }}
-                    source={require('@images/tick_white.png')}
+                    style={{ width: 40, height: 40, borderRadius: 100 }}
+                    source={{
+                      uri: employee?.icon
+                        ? employee?.icon
+                        : account?.client_data?.img_url,
+                    }}
                   />
+                  <Text style={styles.employeeName}>{employee.name}</Text>
                 </View>
-              )}
-            </TouchableOpacity>
-          ))}
+
+                {hasEmployeeSelected && (
+                  <View style={styles.selectedButton} key={index}>
+                    <FastImage
+                      style={{ width: 16, height: 16 }}
+                      source={require('@images/tick_white.png')}
+                    />
+                  </View>
+                )}
+              </TouchableOpacity>
+            );
+          })}
         </ScrollView>
       </View>
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     if (endOfSession) {
-      setStartSum(currentSession.startSum)
-      if (sessionModalVisible) {
-        setStartSum(currentSession.startSum)
-      }
+      setStartSum(lastSession?.summary?.total_start || 0);
     }
-  }, [sessionModalVisible])
+  }, [sessionModalVisible]);
 
   const canProceed = useMemo(() => {
-    return endOfSession ? +endSum > 0 && endSum !== '' && reportPhoto && reportPhoto.uri : +startSum > 0 && startSum !== '' && selected.length > 0
-  }, [startSum, endSum, selected, reportPhoto, endOfSession])
+    return endOfSession
+      ? +values?.total_end > 0 &&
+          values?.total_end !== '' &&
+          +values?.zbalance > 0 &&
+          values?.zbalance !== ''
+      : +values?.total_start > 0 &&
+          values?.total_start !== '' &&
+          values?.selected_employees?.length > 0;
+  }, [values, endOfSession]);
 
   return (
-    <View style={[styles.wrapper, sessionModalVisible && { top: 0, }]}>
+    <View style={[styles.wrapper, sessionModalVisible && { top: 0 }]}>
       <TouchableOpacity
         style={styles.touchWrapper}
         onPress={() => {
-          if (!endOfSession || modalStatus) return
-          dispatch(setSessionModalState(false))
+          if (!endOfSession || modalStatus) return;
+          dispatch(setSessionModalState(false));
         }}
         activeOpacity={1}
       />
       <KeyboardAwareScrollView
-        style={{ zIndex: 13, }}
+        style={{ zIndex: 13 }}
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         extraScrollHeight={0}
@@ -327,14 +386,14 @@ function Session(props) {
         ref={toastRef}
         opacity={1}
         style={{ paddingHorizontal: 40, backgroundColor: '#00000088' }}
-        position='bottom'
+        position="bottom"
         positionValue={150}
         textStyle={styles.toastText}
         fadeInDuration={200}
         fadeOutDuration={800}
       />
     </View>
-  )
+  );
 }
 
-export default Session
+export default Session;

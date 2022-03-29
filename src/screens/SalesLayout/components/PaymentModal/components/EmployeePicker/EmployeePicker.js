@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles';
 
-import { currentSessionSelector } from '@selectors';
 import { setCurrentEmployee } from '@reducers/UserReducer';
 import { setEmployeesListVisibility } from '@reducers/OrderReducer';
-
-import SharedButton from '@shared/SharedButton';
 
 function EmployeePicker() {
   const dispatch = useDispatch();

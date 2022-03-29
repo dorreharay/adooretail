@@ -2,18 +2,16 @@ import React, { useState, useRef, } from "react";
 import { View, Text, Animated, Easing, TouchableOpacity, Keyboard, KeyboardAvoidingView, } from "react-native";
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
-import DeviceInfo from 'react-native-device-info';
+import FastImage from "react-native-fast-image";
 import Toast, { DURATION } from 'react-native-easy-toast'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import styles from './styles';
 
-import { currentSessionSelector, } from '@selectors'
+import { lastSessionSelector } from '@selectors'
+
+import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
 
 import LoginLoader from '@shared/LoginLoader'
-
-import { setNeedToReenter, } from '@reducers/UserReducer'
-import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
-import FastImage from "react-native-fast-image";
 
 function Login(props) {
   const { navigation, } = props;
@@ -23,7 +21,8 @@ function Login(props) {
   const dispatch = useDispatch();
 
   const account = useSelector(state => state.account)
-  const currentSession = useSelector(currentSessionSelector)
+
+  const lastSession = useSelector(lastSessionSelector)
 
   const [loading, setLoadingStatus] = useState(false)
   const [pin, setPin] = useState('')
@@ -70,9 +69,9 @@ function Login(props) {
 
       dispatch(setEndOfSessionStatus(false))
 
-      // if (currentSession.endTime || currentAccount?.localSessions.length === 0) {
-      //   dispatch(setSessionModalState(true))
-      // }
+      if (!lastSession || !lastSession?.summary?.time_start) {
+        dispatch(setSessionModalState(true))
+      }
 
       navigation.jumpTo('SalesLayout')
 

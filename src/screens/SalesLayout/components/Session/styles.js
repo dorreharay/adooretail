@@ -110,6 +110,13 @@ const base = {
     width: 50,
     height: 50,
   },
+  employeeItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderTopWidth: 1,
+    borderTopColor: '#F2F2F2',
+  },
   employee: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,14 +1,10 @@
-import React, { useState, } from 'react'
+import React from 'react'
 import { View, Text, TouchableOpacity, ScrollView, } from 'react-native'
 import { useSelector, useDispatch, } from 'react-redux';
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image'
-import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles'
 
-import { currentAccountSelector, currentSessionSelector } from '@selectors'
-
-import SharedButton from '@shared/SharedButton';
 import { setCurrentService } from '@reducers/UserReducer';
 
 function DeliveryPickerOld(props) {

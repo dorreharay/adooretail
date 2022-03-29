@@ -25,7 +25,7 @@ function Products(props) {
   const dispatch = useDispatch();
 
   const layout = useSelector(state => state.orders.layout);
-  const account = useSelector(state => state.user.currentAccount);
+  const account = useSelector(state => state.account);
   const paymentModalVisibility = useSelector(
     state => state.temp.paymentModalVisibility,
   );
@@ -162,6 +162,7 @@ function Products(props) {
   }, [searchTerm, layout]);
 
   const actualList = useMemo(() => {
+    console.log('account?.products', account?.products)
     if (!account?.products) return [];
 
     return [searchResult.length > 0 ? searchResult : account?.products][0];
