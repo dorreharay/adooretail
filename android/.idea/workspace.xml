@@ -9,15 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/PaymentModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/PaymentModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/EmployeePicker/EmployeePicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/EmployeePicker/EmployeePicker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentLeftSide/PaymentLeftSide.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/CardPaymentStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/CardPaymentStatus.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/PaymentRightSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/PaymentRightSide.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/PaymentType/PaymentType.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentRightSide/PaymentType/PaymentType.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentSubmit.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentSubmit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/components/Receipt.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/components/Receipt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/Products/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/RightSide/Products/Products.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

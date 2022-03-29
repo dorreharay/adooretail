@@ -67,8 +67,6 @@ function Products(props) {
     const newActiveCategory =
       searchResult.length > 0 ? searchResult[index] : account?.products[index];
 
-    // scrollView.current.scrollTo({ x: 0, y: 0, animated: false, })
-
     const newItem = newActiveCategory[key];
 
     const withback = [{ title: 'back' }, ...newItem.variants];

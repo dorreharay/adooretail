@@ -26,7 +26,7 @@ import {
   setPrintStatus,
   setReceiptOptionsVisibility,
 } from '@reducers/TempReducer';
-import { setSelectedReceipt } from '@reducers/OrderReducer';
+import { setActiveReceipt } from '@reducers/OrderReducer';
 import { currentSessionSelector, activeReceiptSelector } from '@selectors';
 
 import ClockIcon from '@images/wall-clock.svg';
@@ -362,7 +362,7 @@ function LeftSide() {
                 key={index}
               >
                 <SharedButton
-                  onPress={() => dispatch(setSelectedReceipt(index))}
+                  onPress={() => dispatch(setActiveReceipt(index))}
                   style={{ flex: 1 }}
                   borderRadius={headerHeight}
                   scale={0.8}

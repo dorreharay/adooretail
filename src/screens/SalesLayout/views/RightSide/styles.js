@@ -1,7 +1,7 @@
-import { createStyles, maxWidth, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM } from '@fonts'
+import { createStyles, maxWidth } from 'react-native-media-queries';
+import { GILROY_REGULAR, GILROY_MEDIUM } from '@fonts';
 
-const toolsBarHeight = 45
+const toolsBarHeight = 45;
 
 const base = {
   container: {
@@ -10,7 +10,7 @@ const base = {
     padding: '2%',
     paddingTop: 15,
     paddingBottom: 0,
-    backgroundColor: '#F3F4F6'
+    backgroundColor: '#F3F4F6',
   },
   toolsBar: {
     flexDirection: 'row',
@@ -100,7 +100,7 @@ const base = {
     justifyContent: 'space-between',
     borderRadius: 4,
     elevation: 0,
-    backgroundColor: '#FFFFFF00'
+    backgroundColor: '#FFFFFF00',
   },
   optionWrapper: {
     padding: 0,
@@ -118,21 +118,24 @@ const base = {
     right: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: '#00000044'
+    backgroundColor: '#00000044',
   },
   layoutNumberText: {
     color: '#414141',
     fontSize: 18,
     fontFamily: GILROY_MEDIUM,
   },
+  menuButtonBase: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+  },
 };
 
 const styles = createStyles(
   base,
 
-  maxWidth(500, {
-
-  })
+  maxWidth(500, {}),
 );
 
-export default styles
+export default styles;
