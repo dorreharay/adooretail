@@ -16,7 +16,7 @@ const base = {
     flexDirection: 'row',
     paddingLeft: leftPadding,
     color: '#FFFFFF',
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: GILROY_MEDIUM,
   },
   paymentType: {

@@ -52,7 +52,7 @@ function RightSide(props) {
       return;
     }
 
-    if (account) {
+    if (account?._id) {
       delayedQuery(toastRef?.current);
     }
   };

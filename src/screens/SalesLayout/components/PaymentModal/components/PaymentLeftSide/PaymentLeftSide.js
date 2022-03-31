@@ -107,7 +107,7 @@ function PaymentLeftSide() {
             <FastImage
               style={styles.currentEmployeeImage}
               source={{
-                uri: (account && account?.client_data?.img_url) || '',
+                uri: (account?._id && account?.client_data?.img_url) || '',
               }}
             />
             <View style={styles.currentEmployeeBorder} />

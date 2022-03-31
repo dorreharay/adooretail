@@ -7,30 +7,30 @@ import { deviceWidth, deviceHeight } from '@dimensions'
 
 const base = {
   serviceIcon: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     backgroundColor: '#DDDDDD',
     borderRadius: 100,
   },
   contentContainerStyle: {
     paddingLeft: '6%',
-    paddingRight: '10%',
-    height: 80,
+    paddingRight: '5%',
+    height: 70,
   },
   deliveryListItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
     paddingHorizontal: 15,
     borderRadius: 100,
   },
   frame: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 74,
-    height: 74,
+    width: 64,
+    height: 64,
     borderWidth: 2.5,
     borderColor: '#FFFFFF00',
     borderRadius: 300,

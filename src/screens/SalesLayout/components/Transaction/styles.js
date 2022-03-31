@@ -33,20 +33,20 @@ const base = {
   },
   headingText: {
     color: '#343434',
-    fontSize: 28,
+    fontSize: 24,
     fontFamily: GILROY_BOLD,
   },
   leftSide: {
     width: '70%',
     height: '100%',
     padding: '5%',
-    paddingTop: 40,
+    paddingTop: 30,
     backgroundColor: '#FFFFFF00',
   },
   rightSide: {
     width: '30%',
     height: '100%',
-    paddingTop: 25,
+    paddingTop: 5,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     backgroundColor: '#181619',
@@ -73,7 +73,7 @@ const base = {
   smallHeader: {
     marginTop: '6%',
     color: '#343434',
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: GILROY_MEDIUM,
   },
   amountContainer: {
@@ -85,8 +85,8 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-start',
-    width: '40%',
-    height: 65,
+    width: '35%',
+    height: 55,
     paddingHorizontal: 25,
     marginRight: 15,
     borderWidth: 3,
@@ -99,7 +99,7 @@ const base = {
   },
   amountCurrency: {
     color: '#343434',
-    fontSize: 25,
+    fontSize: 18,
     fontFamily: GILROY_MEDIUM,
   },
   commentInput: {
@@ -107,7 +107,7 @@ const base = {
     justifyContent: 'center',
     alignSelf: 'flex-start',
     width: '100%',
-    height: deviceHeight * 0.25,
+    height: 100,
     marginTop: '3%',
     marginRight: 15,
     paddingTop: '5%',
@@ -118,7 +118,7 @@ const base = {
     borderRadius: 3,
 
     color: '#343434',
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: GILROY_REGULAR,
     textAlignVertical: 'top',
   },
@@ -150,7 +150,7 @@ const base = {
   },
   transactionSubmitButton: {
     width: '100%',
-    height: 75,
+    height: 70,
     marginTop: 40,
   },
   transactionSubmitButtonGradient: {
@@ -162,7 +162,7 @@ const base = {
   },
   transactionSubmitButtonText: {
     color: '#FFFFFF',
-    fontSize: 26,
+    fontSize: 22,
     fontFamily: GILROY_MEDIUM,
   },
 };

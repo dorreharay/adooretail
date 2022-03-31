@@ -38,9 +38,9 @@ const base = {
   },
   heading: {
     width: '40%',
-    marginBottom: 15,
+    marginBottom: 25,
     color: '#000000',
-    fontSize: 26,
+    fontSize: 20,
     fontFamily: EUCLID_MEDIUM,
     textAlign: 'center',
   },
@@ -65,8 +65,7 @@ const base = {
     height: deviceHeight * 0.5,
   },
   input: {
-    // textAlign: 'center',
-    width: deviceWidth * 0.4,
+    width: deviceWidth * 0.38,
     height: deviceWidth * 0.06,
     paddingHorizontal: 30,
     marginBottom: deviceWidth * 0.02,
@@ -76,13 +75,13 @@ const base = {
     backgroundColor: '#FFFFFF',
 
     color: '#000000',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: EUCLID_REGULAR
   },
   inputLabelText: {
     marginBottom: 10,
     color: '#000000',
-    fontSize: 16,
+    fontSize: 12,
     fontFamily: EUCLID_LIGHT,
   },
   clearButton: {
@@ -92,20 +91,20 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     width: deviceWidth * 0.06,
-    height: deviceWidth * 0.06,
+    height: deviceWidth * 0.05,
   },
   submitButton: {
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    width: deviceWidth * 0.4,
-    height: 75,
+    width: deviceWidth * 0.38,
+    height: 60,
     marginTop: 20,
     backgroundColor: '#18232B',
   },
   submitText: {
     color: '#FFFFFF',
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: EUCLID_REGULAR,
   },
   disabled: {

@@ -36,8 +36,10 @@ export function updateLayout(products) {
 
   const { layout } = orders;
 
+  if (!account?._id) return;
+
   if (!products) {
-    if (account) {
+    if (account?._id) {
       products = account?.products;
     }
   }
@@ -64,16 +66,16 @@ export const loadProducts = async toastRef => {
 
     const { layout } = orders;
 
-    if (toastRef) {
-      toastRef.show('Синхронізація', DURATION.FOREVER);
-    }
+    // if (toastRef) {
+    //   toastRef.show('Синхронізація', DURATION.FOREVER);
+    // }
 
-    const data = await API.getProducts({ token: account._id });
+    const data = await API.getProducts({ token: account?._id });
 
     if (!data) {
-      if (toastRef) {
-        toastRef.close();
-      }
+      // if (toastRef) {
+      //   toastRef.close();
+      // }
 
       return null;
     }
@@ -81,13 +83,13 @@ export const loadProducts = async toastRef => {
     updateLayout(data, layout);
   } catch (error) {
     console.warn('Failed to fetch products', error);
-    if (toastRef) {
-      toastRef.show('Помилка мережі', 1000);
-    }
+    // if (toastRef) {
+    //   toastRef.show('Помилка мережі', 1000);
+    // }
   } finally {
-    if (toastRef) {
-      toastRef.close();
-    }
+    // if (toastRef) {
+    //   toastRef.close();
+    // }
   }
 };
 
@@ -133,7 +135,7 @@ export function validateSession() {
   const account = getState('account');
   const lastSession = getLastSession();
 
-  if (!account) return;
+  if (!account?._id) return;
 
   if (!lastSession) {
     dispatch(setSessionModalState(true));

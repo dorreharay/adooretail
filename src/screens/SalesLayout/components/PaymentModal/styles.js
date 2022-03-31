@@ -42,7 +42,7 @@ const base = {
     left: '7.5%',
     bottom: 35,
     width: '85%',
-    height: 75,
+    height: 65,
   },
   paymentSubmitButtonGradient: {
     alignItems: 'center',

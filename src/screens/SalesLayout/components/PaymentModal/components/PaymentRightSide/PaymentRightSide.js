@@ -55,7 +55,7 @@ function PaymentRightSide() {
       {settings?.delivery_use && (
         <>
           <Text
-            style={[styles.headingText, { paddingTop: 10, paddingBottom: 20 }]}
+            style={[styles.headingText, { paddingTop: 10, paddingBottom: 15 }]}
           >
             Сервіс доставки
           </Text>

@@ -27,7 +27,7 @@ import {
   setReceiptOptionsVisibility,
 } from '@reducers/TempReducer';
 import { setActiveReceipt } from '@reducers/OrderReducer';
-import { currentSessionSelector, activeReceiptSelector } from '@selectors';
+import { lastSessionSelector, activeReceiptSelector } from '@selectors';
 
 import ClockIcon from '@images/wall-clock.svg';
 
@@ -50,7 +50,7 @@ function LeftSide() {
   );
   const buffer = useSelector(state => state.temp.buffer);
   const oldReceiptState = useSelector(state => state.temp.oldReceiptState);
-  const currentSession = useSelector(currentSessionSelector);
+  const lastSession = useSelector(lastSessionSelector);
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0;
   const printInProgress = useSelector(state => state.temp.printInProgress);
 
@@ -292,8 +292,10 @@ function LeftSide() {
         0,
       ),
       transaction_time_end: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
-      employee: currentSession ? currentSession.employees[currentEmployee] : '',
+      employee: lastSession ? lastSession?.employees[currentEmployee] : '',
     };
+
+    console.log('///////', payload)
 
     try {
       dispatch(setPrintStatus(true));

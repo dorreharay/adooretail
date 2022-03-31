@@ -65,7 +65,7 @@ function EmployeePicker() {
                       borderRadius: 100,
                     }}
                     source={{
-                      uri: (account && account?.client_data?.img_url) || '',
+                      uri: (account?._id && account?.client_data?.img_url) || '',
                     }}
                   />
                   <Text style={styles.employeesListItemName}>

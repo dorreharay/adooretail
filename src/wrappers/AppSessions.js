@@ -37,7 +37,7 @@ function AppSessions(props) {
   const [pinVisible, setPinVisible] = useState(false)
 
   useEffect(() => {
-    if (account) {
+    if (account?._id) {
       syncSessions()
       validateSession()
 

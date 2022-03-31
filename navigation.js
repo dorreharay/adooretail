@@ -35,7 +35,7 @@ function AppContainer() {
 
   if (initialFlow) {
     initialRoute = 'Initial1';
-  } else if (account) {
+  } else if (account?._id) {
     if (lastSession?.summary?.time_start) {
       initialRoute = 'SalesLayout';
     } else {

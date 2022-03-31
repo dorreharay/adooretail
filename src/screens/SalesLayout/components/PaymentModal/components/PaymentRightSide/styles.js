@@ -26,7 +26,7 @@ const base = {
     paddingTop: '7%',
     paddingBottom: '5%',
     color: '#343434',
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: GILROY_MEDIUM,
   },
   headingCommentText: {
@@ -84,7 +84,7 @@ const base = {
   },
   waitingText: {
     color: '#343434',
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: GILROY_REGULAR,
   },
   changeText: {

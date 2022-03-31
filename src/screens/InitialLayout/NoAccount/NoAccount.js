@@ -80,7 +80,7 @@ function NoAccount(props) {
         <Text style={styles.helpText}>Де такий знайти?</Text>
       </TouchableOpacity>
 
-      <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={-130}>
+      <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={-160}>
         <View
           style={{
             width: '100%',
@@ -115,7 +115,7 @@ function NoAccount(props) {
               >
                 {values?.identifier?.length > 0 && (
                   <FastImage
-                    style={{ width: 18, height: 18 }}
+                    style={{ width: 14, height: 14 }}
                     source={require('@images/x_icon.png')}
                   />
                 )}
@@ -141,7 +141,7 @@ function NoAccount(props) {
               >
                 {values?.password?.length > 0 && (
                   <FastImage
-                    style={{ width: 18, height: 18 }}
+                    style={{ width: 14, height: 14 }}
                     source={require('@images/x_icon.png')}
                   />
                 )}

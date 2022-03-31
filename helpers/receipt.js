@@ -82,8 +82,6 @@ export default async function saveReceipt() {
       await printReceipt(payload);
     }
 
-    dispatch(removeCurrentReceiptId());
-
     const newBuffer = buffer.map((item, index) =>
       index === activeReceiptIndex ? null : item,
     );
@@ -99,6 +97,7 @@ export default async function saveReceipt() {
     BackgroundTimer.setTimeout(() => {
       dispatch(saveReceiptData(payload));
       dispatch(setCurrentService(0));
+      dispatch(removeCurrentReceiptId());
     }, 300);
   } catch (error) {
     throw new Error();

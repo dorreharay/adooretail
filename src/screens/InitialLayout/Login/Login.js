@@ -7,6 +7,8 @@ import Toast, { DURATION } from 'react-native-easy-toast'
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import styles from './styles';
 
+import { loadProducts, } from '@helpers'
+
 import { lastSessionSelector } from '@selectors'
 
 import { setEndOfSessionStatus, setSessionModalState, } from '@reducers/TempReducer'
@@ -74,6 +76,8 @@ function Login(props) {
       }
 
       navigation.jumpTo('SalesLayout')
+
+      loadProducts(toastRef?.current)
 
       resetState()
     } catch (e) {
