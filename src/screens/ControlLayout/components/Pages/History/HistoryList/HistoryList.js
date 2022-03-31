@@ -1,196 +1,245 @@
-import React, { useState, useRef, useEffect, useMemo, Fragment, } from 'react'
-import { View, Text, ScrollView, TouchableOpacity, Animated, Easing, FlatList, } from 'react-native'
-import { useSelector, useDispatch, } from 'react-redux'
+import React, { useState, useRef, useEffect, useMemo, Fragment } from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Animated,
+  Easing,
+  FlatList,
+} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import FastImage from 'react-native-fast-image'
-import styles from './styles'
-import Collapsible from 'react-native-collapsible'
+import FastImage from 'react-native-fast-image';
+import styles from './styles';
+import Collapsible from 'react-native-collapsible';
 import BackgroundTimer from 'react-native-background-timer';
-import { printReceipt, } from '@printer'
+import { printReceipt } from '@printer';
 
 import { deviceWidth, deviceHeight } from '@dimensions';
-import { getUpperCaseDate } from '@dateFormatter'
+import { getUpperCaseDate } from '@dateFormatter';
 
-import ReceiptModal from './ReceiptModal'
+import ReceiptModal from './ReceiptModal';
 
 function HistoryList(props) {
-  const { data = [] } = props
+  const { data = [] } = props;
 
-  const timerRef = useRef(null)
+  const timerRef = useRef(null);
 
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-  const historyParams = useSelector(state => state.temp.historyParams)
+  const dayReceipts = useSelector(state => state.orders.dayReceipts);
+  const historyParams = useSelector(state => state.temp.historyParams);
 
-  const [expandedIndex, setExpandedIndex] = useState(null)
-  const [receiptModalItem, setReceiptModalItem] = useState(false)
-  const [receiptModalOpened, setReceiptModalVisibility] = useState(false)
-  const [receiptModalState, setReceiptModalState] = useState(false)
-  const [spinValue] = useState(new Animated.Value(1))
-  const [showScrollTopButton, setScrollTopButtonVisibility] = useState(false)
+  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [receiptModalItem, setReceiptModalItem] = useState(false);
+  const [receiptModalOpened, setReceiptModalVisibility] = useState(false);
+  const [receiptModalState, setReceiptModalState] = useState(false);
 
-  const scrollRef = useRef(null)
+  const scrollRef = useRef(null);
 
-  const handleExpand = (index) => {
+  const handleExpand = index => {
     if (expandedIndex === index) {
-      Animated.timing(
-        spinValue,
-        {
-          toValue: 0,
-          duration: 300,
-          easing: Easing.ease,
-        }
-      ).start()
-
-      setExpandedIndex(null)
+      setExpandedIndex(null);
     } else {
-      Animated.timing(
-        spinValue,
-        {
-          toValue: 0.5,
-          duration: 300,
-          easing: Easing.ease,
-        }
-      ).start()
-
       scrollRef.current.scrollTo({ x: 0, y: index * 70 })
-
-      setExpandedIndex(index)
+      setExpandedIndex(index);
     }
-  }
-
-  const AnimatedImage = Animated.createAnimatedComponent(FastImage)
+  };
 
   const hideReceiptModal = () => {
-    setReceiptModalVisibility(false)
+    setReceiptModalVisibility(false);
 
     BackgroundTimer.setTimeout(() => {
-      setReceiptModalState(null)
+      setReceiptModalState(null);
 
-      clearTimeout(timerRef.current)
-    }, 300)
-  }
+      clearTimeout(timerRef.current);
+    }, 300);
+  };
 
-  const reprintReceipt = async (receipt) => {
-    await printReceipt(receipt)
-  }
+  const reprintReceipt = async receipt => {
+    await printReceipt(receipt);
+  };
 
   useEffect(() => {
-    setExpandedIndex(null)
-  }, [historyParams])
+    setExpandedIndex(null);
+  }, [historyParams]);
 
   return (
     <ScrollView
       ref={scrollRef}
       style={styles.container}
-      contentContainerStyle={{ paddingHorizontal: 40, paddingBottom: 300 }}
+      contentContainerStyle={{ paddingHorizontal: 40, paddingBottom: 400 }}
       scrollToOverflowEnabled
       scrollEnabled={expandedIndex === null}
       scrollEventThrottle={100}
     >
-      {(data && data.length > 0) ? data.map((receipt, index) => {
-        const spin = spinValue.interpolate({
-          inputRange: [0, 1],
-          outputRange: ['0deg', '360deg']
-        })
-
-        return (
-          <Fragment key={index}>
-            <TouchableOpacity
-              style={styles.dayHeader}
-              onPress={() => handleExpand(index, 0)}
-              activeOpacity={1}
-            >
-              <View style={{ alignItems: 'center', justifyContent: 'center', width: 70, height: '100%', }}>
-                <FastImage
-                  style={{ width: 22, height: 22, }}
-                  source={require('@images/session_process.png')}
-                />
-              </View>
-              <Text style={styles.dayHeaderTotal}>{getUpperCaseDate('HH:mm:ss', receipt.transaction_time_end)}</Text>
-              <Text
-                style={[styles.dayHeaderTotal, { width: '32%', }]}
-                ellipsizeMode={'tail'}
-                numberOfLines={1}
+      {dayReceipts?.length ? (
+        dayReceipts?.map((receipt, index) => {
+          return (
+            <Fragment key={index}>
+              <TouchableOpacity
+                style={styles.dayHeader}
+                onPress={() => handleExpand(index, 0)}
+                activeOpacity={1}
               >
-                {receipt.receipt.map(item => item.title).join(', ') || 0}
-              </Text>
-              <Text style={styles.dayHeaderTotal}>Сума: {receipt.total || 0} грн</Text>
-              <Text style={styles.dayHeaderTotal}>{receipt.employee || '-'}</Text>
-              <View style={styles.dayHeaderIcon}>
-                <AnimatedImage
-                  style={[{ width: 15, height: 15 }, expandedIndex === index && { transform: [{ rotate: spin }] }]}
-                  source={require('@images/down-arrow.png')}
-                />
-              </View>
-            </TouchableOpacity>
-            <Collapsible style={{ flexDirection: 'row', backgroundColor: '#FFFFFF', }} collapsed={expandedIndex !== index}>
-              <View style={{ width: '60%', paddingHorizontal: 25, height: deviceHeight * 0.345, borderRightWidth: 1, borderRightColor: '#F2F2F2' }}>
-                <View style={styles.receiptLeftButtons}>
-                  <TouchableOpacity
-                    style={styles.receiptLeftButton}
-                    onPress={() => reprintReceipt(receipt)}
-                    activeOpacity={0.7}
-                  >
-                    <FastImage
-                      style={{ width: 22, height: 22, }}
-                      source={require('@images/tprinter.png')}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.receiptLeftButton}
-                    activeOpacity={0.7}
-                  >
-                    <FastImage
-                      style={{ width: 22, height: 22, }}
-                      source={require('@images/qr-code.png')}
-                    />
-                  </TouchableOpacity>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 70,
+                    height: '100%',
+                  }}
+                >
+                  <FastImage
+                    style={{ width: 22, height: 22 }}
+                    source={require('@images/session_process.png')}
+                  />
                 </View>
-                <View style={styles.receiptRightContainer}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <View style={{ marginRight: 30, }}>
-                      <Text style={[styles.receiptSummaryText, { maxWidth: deviceWidth * 0.15, }]} numberOfLines={1} ellipsizeMode='tail'>#{receipt.hash_id}</Text>
-                      <Text style={styles.receiptSummaryText}>Тип оплати: {receipt.payment_type === 'cash' ? 'Готівка' : 'Картка'}</Text>
-                      <Text style={styles.receiptSummaryText}>Час оплати: {getUpperCaseDate('HH:mm:ss', receipt.transaction_time_end)}</Text>
+                <Text style={styles.dayHeaderTotal}>
+                  {getUpperCaseDate('HH:mm:ss', receipt?.transaction_time_end)}
+                </Text>
+                <Text
+                  style={[styles.dayHeaderTotal, { width: '32%' }]}
+                  ellipsizeMode={'tail'}
+                  numberOfLines={1}
+                >
+                  {receipt.receipt.map(item => item.title).join(', ') || 0}
+                </Text>
+                <Text style={styles.dayHeaderTotal}>
+                  Сума: {receipt?.total || 0} грн
+                </Text>
+                <Text style={styles.dayHeaderTotal}>
+                  {receipt?.employee?.name || '-'}
+                </Text>
+                <View style={styles.dayHeaderIcon}>
+                  <FastImage
+                    style={[
+                      { width: 15, height: 15 },
+                      {
+                        transform: [
+                          {
+                            rotate: expandedIndex === index ? '180deg' : '0deg',
+                          },
+                        ],
+                      },
+                    ]}
+                    source={require('@images/down-arrow.png')}
+                  />
+                </View>
+              </TouchableOpacity>
+              {expandedIndex === index && (
+                <View
+                  style={{ flexDirection: 'row', backgroundColor: '#FFFFFF' }}
+                >
+                  <View
+                    style={{
+                      width: '60%',
+                      paddingHorizontal: 25,
+                      height: 250,
+                      borderRightWidth: 1,
+                      borderRightColor: '#F2F2F2',
+                    }}
+                  >
+                    <View style={styles.receiptLeftButtons}>
+                      <TouchableOpacity
+                        style={styles.receiptLeftButton}
+                        onPress={() => reprintReceipt(receipt)}
+                        activeOpacity={0.7}
+                      >
+                        <FastImage
+                          style={{ width: 22, height: 22 }}
+                          source={require('@images/tprinter.png')}
+                        />
+                      </TouchableOpacity>
                     </View>
-                    <View>
-                      <Text style={styles.receiptSummaryText}>До сплати: {receipt.initial} грн</Text>
-                      <Text style={styles.receiptSummaryText}>Внесено: {receipt.input} грн</Text>
-                      <Text style={styles.receiptSummaryText}>Знижка: {receipt.discount}</Text>
-                      <Text style={styles.receiptSummaryText}>Решта: 0 грн</Text>
-                    </View>
+                    <View style={styles.receiptRightContainer}>
+                      <View style={{ flexDirection: 'row' }}>
+                        <View style={{ marginRight: 30 }}>
+                          <Text style={styles.receiptSummaryText}>
+                            Тип оплати:{' '}
+                            {receipt?.payment_type === 'CASH'
+                              ? 'Готівка'
+                              : 'Картка'}
+                          </Text>
+                          <Text style={styles.receiptSummaryText}>
+                            Час оплати:{' '}
+                            {getUpperCaseDate(
+                              'HH:mm:ss',
+                              receipt?.transaction_time_end,
+                            )}
+                          </Text>
+                        </View>
+                        <View>
+                          <Text style={styles.receiptSummaryText}>
+                            До сплати: {receipt?.initial} грн
+                          </Text>
+                          <Text style={styles.receiptSummaryText}>
+                            Внесено: {receipt?.input} грн
+                          </Text>
+                          <Text style={styles.receiptSummaryText}>
+                            Решта: 0 грн
+                          </Text>
+                        </View>
 
-                    {/* <Text style={styles.receiptSummaryText}>Працівник: {receipt.employee}</Text> */}
+                        {/* <Text style={styles.receiptSummaryText}>Працівник: {receipt.employee}</Text> */}
+                      </View>
+                    </View>
+                  </View>
+                  <View style={{ width: '40%' }}>
+                    <ScrollView
+                      style={{ height: deviceHeight * 0.25, width: '100%' }}
+                      contentContainerStyle={{ padding: 20 }}
+                      persistentScrollbar
+                    >
+                      <Text style={styles.receiptSummaryText}>Зміст чеку:</Text>
+
+                      {receipt.receipt.map((item, index) => (
+                        <View
+                          style={{
+                            width: '100%',
+                            borderBottomWidth: 1.5,
+                            borderBottomColor: '#F2F2F2',
+                            marginBottom: 10,
+                          }}
+                          key={index}
+                        >
+                          <Text
+                            style={[
+                              styles.receiptSummaryReceiptText,
+                              { marginBottom: 5 },
+                            ]}
+                          >
+                            {item?.title}
+                            {item?.size ? ', ' + item?.size : ''}
+                          </Text>
+                          <Text style={styles.receiptSummaryReceiptText}>
+                            @{item?.price}, - {item?.quantity} шт -{' '}
+                            {item?.price * item?.quantity} грн
+                          </Text>
+                        </View>
+                      ))}
+                    </ScrollView>
                   </View>
                 </View>
-              </View>
-              <View style={{ width: '40%', }}>
-                <ScrollView
-                  style={{ height: deviceHeight * 0.25, width: '100%', }}
-                  contentContainerStyle={{ padding: 20, }}
-                  persistentScrollbar
-                >
-                  <Text style={styles.receiptSummaryText}>Зміст чеку:</Text>
-
-                  {receipt.receipt.map((item, index) => (
-                    <View style={{ width: '100%', borderBottomWidth: 1.5, borderBottomColor: '#F2F2F2', marginBottom: 10, }} key={index}>
-                      <Text style={[styles.receiptSummaryReceiptText, { marginBottom: 5, }]}>{item.title}{item.size ? ', ' + item.size : ''}</Text>
-                      <Text style={styles.receiptSummaryReceiptText}>@{item.price}, - {item.quantity} шт - {item.price * item.quantity} грн</Text>
-                    </View>
-                  ))}
-                </ScrollView>
-              </View>
-            </Collapsible>
-          </Fragment>
-        )
-      }) : (
-          <View style={{ position: 'absolute', top: deviceHeight * 0.3, alignSelf: 'center', alignItems: 'center', }}>
-            <Text style={styles.emptyHeadingText}>Чеки не знайдено</Text>
-            <Text style={styles.emptyText}>Перевірте інтернет з'єднання або наявність змін за {getUpperCaseDate('DD.MM') === getUpperCaseDate('DD.MM', historyParams.date) ? 'сьогодні' : getUpperCaseDate('DD.MM', historyParams.date)}</Text>
-          </View>
-        )}
+              )}
+            </Fragment>
+          );
+        })
+      ) : (
+        <View
+          style={{
+            position: 'absolute',
+            top: deviceHeight * 0.3,
+            alignSelf: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={styles.emptyHeadingText}>Чеки не знайдено</Text>
+          {/* <Text style={styles.emptyText}>Перевірте інтернет з'єднання або наявність змін за {getUpperCaseDate('DD.MM') === getUpperCaseDate('DD.MM', historyParams.date) ? 'сьогодні' : getUpperCaseDate('DD.MM', historyParams.date)}</Text> */}
+        </View>
+      )}
 
       <ReceiptModal
         isVisible={receiptModalOpened}
@@ -199,11 +248,10 @@ function HistoryList(props) {
         hideReceiptModal={hideReceiptModal}
       />
     </ScrollView>
-  )
+  );
 }
 
-export default HistoryList
-
+export default HistoryList;
 
 //   < RecyclerListView
 // style = { styles.container }
@@ -300,7 +348,6 @@ export default HistoryList
 //                 />
 //               </SharedButton>
 //             </View>
-
 
 //             <View style={styles.collapsedReceiptContent}>
 //               <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', }}>

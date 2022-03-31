@@ -14,6 +14,9 @@ const API = {
   async getProducts(payload) {
     return await asyncAxiosCall(`/client/products/get`, payload)
   },
+  async getStatistics(payload) {
+    return await asyncAxiosCall(`/client/statistics/get`, payload)
+  },
   async getSessions(payload) {
     return await asyncAxiosCall(`/user/getSessions`, payload)
   },

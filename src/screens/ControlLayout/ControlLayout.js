@@ -9,7 +9,7 @@ import Devices from './components/Pages/Devices/Devices';
 import EditReceipt from './components/Pages/EditReceipt/EditReceipt';
 import Settings from './components/Pages/Settings/Settings';
 
-// import { loadReceipts, loadDetails, } from '@reducers/OrderReducer'
+import { loadStatistics } from '@reducers/OrderReducer'
 
 import { deviceWidth, deviceHeight } from '@dimensions';
 import { GILROY_MEDIUM } from '@fonts';
@@ -41,12 +41,11 @@ function ControlLayout(props) {
     }
   }, [route, carouselRef.current]);
 
-  // useEffect(() => {
-  //   navigation.addListener('focus', () => {
-  //     dispatch(loadReceipts())
-  //     dispatch(loadDetails())
-  //   })
-  // }, [])
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      dispatch(loadStatistics())
+    })
+  }, [])
 
   return (
     <View style={styles.container}>

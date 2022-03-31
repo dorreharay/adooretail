@@ -9,8 +9,8 @@ import styles from './styles'
 import { deviceWidth } from '@dimensions'
 
 import SharedButton from '@shared/SharedButton';
-import { getFormattedDate, getSubstractDate, } from '@dateFormatter';
-// import { loadReceipts, loadDetails, } from '@reducers/OrderReducer'
+import { getFormattedDate, } from '@dateFormatter';
+import { loadStatistics } from '@reducers/OrderReducer'
 import { setHistoryParams, } from '@reducers/TempReducer'
 
 function Filters(props) {
@@ -18,7 +18,7 @@ function Filters(props) {
 
   const dispatch = useDispatch()
 
-  const details = useSelector(state => state.orders.details)
+  const statistics = useSelector(state => state.orders.statistics)
   const historyParams = useSelector(state => state.temp.historyParams)
 
   const [detailsExpanded, setExpandedDetailsStatus] = useState(false)
@@ -27,8 +27,7 @@ function Filters(props) {
     try {
       toastRef.current.show("Оновлення чеків", DURATION.FOREVER);
 
-      // await dispatch(loadReceipts())
-      // await dispatch(loadDetails())
+      dispatch(loadStatistics())
     } catch (error) {
       console.log('error - Filters - loadAgain', error)
     } finally {
@@ -93,37 +92,37 @@ function Filters(props) {
       <Collapsible style={{ width: deviceWidth * 0.38, paddingVertical: 15, paddingHorizontal: 25, }} collapsed={!detailsExpanded}>
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Безготівковий підсумок</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details?.payments?.debit?.total || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{statistics && statistics?.payments?.debit?.total || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Готівковий підсумок</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details?.payments?.cash?.total || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{statistics && statistics?.payments?.cash?.total || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Всього</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{(details && details?.total || 0) + (0 || 0) || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{(statistics && statistics?.total || 0) + (0 || 0) || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Витрати (транзакції)</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details?.transactions?.outcome && `-${details?.transactions?.outcome}` || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{statistics && statistics?.transactions?.outcome && `-${statistics?.transactions?.outcome}` || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Інкасації (транзакції)</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details?.transactions?.incasations && `-${details?.transactions?.incasations}` || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{statistics && statistics?.transactions?.incasations && `-${statistics?.transactions?.incasations}` || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Прибуток (транзакції)</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details && details?.transactions?.income || 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{statistics && statistics?.transactions?.income || 0} грн</Text>
         </View>
 
         <View style={styles.paymentDetails}>
           <Text style={styles.paymentDetailsHeadingText}><Text>Підсумок</Text>:</Text>
-          <Text style={styles.paymentDetailsText}>{details ? ((details?.payments?.cash?.total || 0) + (details?.payments?.debit?.total || 0) - (details?.transactions?.outcome || 0) - (details?.transactions?.incasations || 0) + (details?.transactions?.income || 0)) : 0} грн</Text>
+          <Text style={styles.paymentDetailsText}>{statistics ? ((statistics?.payments?.cash?.total || 0) + (statistics?.payments?.debit?.total || 0) - (statistics?.transactions?.outcome || 0) - (statistics?.transactions?.incasations || 0) + (statistics?.transactions?.income || 0)) : 0} грн</Text>
         </View>
       </Collapsible>
     </View>

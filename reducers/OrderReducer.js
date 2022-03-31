@@ -13,6 +13,8 @@ const SET_ACTIVE_PAYMENT_STATUS = 'SET_ACTIVE_PAYMENT_STATUS'
 const SET_TO_BE_PAID_SUM = 'SET_TO_BE_PAID_SUM'
 const SET_ENTERED_SUM = 'SET_ENTERED_SUM'
 const SET_EMPLOYEES_LIST_VISIBILITY = 'SET_EMPLOYEES_LIST_VISIBILITY'
+const SAVE_DAY_RECEIPTS = 'SAVE_DAY_RECEIPTS'
+const SAVE_STATISTICS = 'SAVE_STATISTICS'
 
 const initialState = {
   layout: 4,
@@ -27,6 +29,8 @@ const initialState = {
   toBePaidSum: 0,
   enteredSum: 0,
   employeesListVisible: false,
+  dayReceipts: null,
+  statistics: null,
 };
 
 export function generateCurrentReceiptId() {
@@ -121,6 +125,40 @@ export function setEmployeesListVisibility(payload) {
   }
 }
 
+export function loadStatistics() {
+  return async function (dispatch, getState) {
+    try {
+      const store = getState()
+
+      const historyParams = store.temp.historyParams
+
+      const data = await API.getStatistics({
+        client_id: store?.account?._id,
+        date: historyParams?.date
+      })
+
+      dispatch(saveDayReceipts(data?.receipts))
+      dispatch(saveStatistics(data?.statistics))
+    } catch (error) {
+      console.log(error)
+    }
+  };
+}
+
+export function saveDayReceipts(payload) {
+  return {
+    type: SAVE_DAY_RECEIPTS,
+    payload
+  }
+}
+
+export function saveStatistics(payload) {
+  return {
+    type: SAVE_STATISTICS,
+    payload
+  }
+}
+
 const ACTION_HANDLERS = {
   [SET_PRE_RECEIPTS]: (state, action) => {
     return { ...state, receiptsPreStates: action.payload }
@@ -154,6 +192,12 @@ const ACTION_HANDLERS = {
   },
   [SET_EMPLOYEES_LIST_VISIBILITY]: (state, action) => {
     return { ...state, employeesListVisible: action.payload }
+  },
+  [SAVE_DAY_RECEIPTS]: (state, action) => {
+    return { ...state, dayReceipts: action.payload }
+  },
+  [SAVE_STATISTICS]: (state, action) => {
+    return { ...state, statistics: action.payload }
   },
 };
 

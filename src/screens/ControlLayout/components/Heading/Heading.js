@@ -2,12 +2,9 @@ import React, { useState, } from 'react'
 import { View, Text, TouchableOpacity, } from 'react-native'
 import { useDispatch, useSelector, } from 'react-redux'
 import FastImage from 'react-native-fast-image'
-import Modal, { ModalContent, ModalFooter, ModalButton, } from 'react-native-modals';
 import styles from './styles'
 
-import { deviceWidth } from '@dimensions'
-
-import { setEmployees, setStartCash, } from '@reducers/UserReducer'
+import { setStartCash, } from '@reducers/UserReducer'
 import { setEndOfSessionStatus, setSessionModalState, setResetStatus, } from '@reducers/TempReducer';
 
 function Heading(props) {
@@ -15,7 +12,7 @@ function Heading(props) {
 
   const dispatch = useDispatch()
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const account = useSelector(state => state.account)
 
   const [exitPromptVisible, setExitPromptState] = useState(false)
 
@@ -59,7 +56,7 @@ function Heading(props) {
           />
 
           <Text style={[styles.menuItemActiveText, { fontSize: 18, }]}>
-            {currentAccount ? currentAccount?.business_name : ''}
+            {account ? account?.client_data?.business_name : ''}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -108,7 +105,7 @@ function Heading(props) {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={[styles.menuButton, { marginBottom: 10, }]}
         onPress={() => setExitPromptState(true)}
         activeOpacity={1}
@@ -143,7 +140,7 @@ function Heading(props) {
           <Text style={[styles.promptText, { fontSize: 22, }]}>Ви точно хочете вийти з аккаунту?</Text>
           <Text style={[styles.promptText, { marginTop: 20, }]}>Актуальна зміна буде закінчена. Необхідно ввести кінцеву касу.</Text>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </View>
   )
 }
