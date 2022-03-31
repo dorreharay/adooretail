@@ -120,65 +120,33 @@ export async function syncSessions() {
   }
 }
 
-export function validateByRoute(shift_start, shift_end, callback = () => {}) {
-  const currentStore = store.getState();
+const getLastSession = () => {
+  const sessions = getState('sessions').list;
+
+  if (!sessions?.length) return null;
+
+  return sessions.slice(-1)[0];
+};
+
+export function validateSession() {
+  console.log('=====>')
   const dispatch = store.dispatch;
+  const account = getState('account');
+  const sessionModalVisible = getState('temp');
+  const lastSession = getLastSession();
 
-  const { currentAccount } = currentStore.user;
+  if (!account) return;
 
-  if (currentAccount) {
-    validateSessionRoutine(shift_start, shift_end, callback);
-    callback();
-  } else {
-    callback();
-  }
-}
-
-export function validateSessionRoutine(shift_start, shift_end, callback) {
-  const dispatch = store.dispatch;
-  const currentStore = store.getState();
-  const { currentAccount } = currentStore.user;
-  const { modalStatus } = currentStore.temp;
-
-  if (!currentAccount) return;
-
-  const { localSessions, settings } = currentAccount;
-
-  if (localSessions.length === 0) return false;
-
-  const currentAccountSession = localSessions[localSessions.length - 1];
-
-  if (currentAccountSession.endTime) return true;
-
-  let startOfShift = '';
-  let endOfShift = '';
-
-  if (!shift_start || !shift_end) {
-    shift_start = currentAccount?.shift_start;
-    shift_end = currentAccount?.shift_end;
+  if (!lastSession) {
+    dispatch(setSessionModalState(true));
+    return;
   }
 
-  if (settings.shifts.enabled) {
-    startOfShift = getFormattedDate('YYYY-MM-DD HH:mm', {
-      hours: shift_start.hours,
-      minutes: shift_start.minutes,
-      seconds: 0,
-    });
-    endOfShift = getFormattedDate('YYYY-MM-DD HH:mm', {
-      hours: shift_end.hours,
-      minutes: shift_end.minutes,
-      seconds: 0,
-    });
-  } else {
-    startOfShift = getStartOfPeriod('YYYY-MM-DD HH:mm', 'day');
-    endOfShift = getEndOfPeriod('YYYY-MM-DD HH:mm', 'day');
-  }
-
-  // console.log('Shift validation', '- check enabled?', settings.shifts.enabled)
-  // console.log('%c%s', 'color: #E7715E; font: 0.8rem Tahoma;', `${getFormattedDate('HH:mm', startOfShift)}  ------>  ${getFormattedDate('HH:mm', endOfShift)}`)
+  const startOfShift = getStartOfPeriod('day');
+  const endOfShift = getEndOfPeriod('day');
 
   const isValid =
-    getIsBetween(currentAccountSession.startTime, startOfShift, endOfShift) &&
+    getIsBetween(lastSession?.summary?.time_start, startOfShift, endOfShift) &&
     getIsBetween(null, startOfShift, endOfShift);
 
   if (!isValid) {
@@ -186,8 +154,6 @@ export function validateSessionRoutine(shift_start, shift_end, callback) {
     dispatch(setSessionModalState(true));
     dispatch(setEndOfSessionStatus(true));
   }
-
-  callback && callback();
 }
 
 function getLastItems(array, slice) {

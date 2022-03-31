@@ -7,7 +7,7 @@ import AnimatedSplash from "react-native-animated-splash-screen";
 import BackgroundTimer from 'react-native-background-timer';
 import { TabActions } from '@react-navigation/native';
 
-import { syncSessions, validateSessionRoutine, } from '@helpers'
+import { syncSessions, validateSession } from '@helpers'
 
 import { GILROY_LIGHT } from '@fonts'
 
@@ -37,13 +37,22 @@ function AppSessions(props) {
   const [pinVisible, setPinVisible] = useState(false)
 
   useEffect(() => {
-    console.log('account', account)
     if (account) {
+      syncSessions()
+      validateSession()
+
       BackgroundTimer.clearInterval(syncRef.current);
+      BackgroundTimer.clearInterval(validationRef.current);
 
       syncRef.current = BackgroundTimer.setInterval(() => {
         syncSessions()
       }, account && account?.sync_data && account?.sync_data?.update_period || (30 * 1000));
+
+      validationRef.current = BackgroundTimer.setInterval(() => {
+        validateSession()
+      }, 10000);
+
+      // account && account?.sync_data && account?.sync_data?.shift_validation_period || (30 * 1000)
     }
 
     return () => {

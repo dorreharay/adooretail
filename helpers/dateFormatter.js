@@ -50,12 +50,12 @@ export function getIsBetweenAdvanced(compared, start, end) {
   return dayjs().isBetween(start, end)
 }
 
-export function getStartOfPeriod(format, period) {
-  return dayjs().startOf(period).format(format)
+export function getStartOfPeriod(period) {
+  return dayjs().startOf(period).toISOString()
 }
 
-export function getEndOfPeriod(format, period) {
-  return dayjs().endOf(period).format(format)
+export function getEndOfPeriod(period) {
+  return dayjs().endOf(period).toISOString()
 }
 
 export function getUpperCaseDate(format, date) {
