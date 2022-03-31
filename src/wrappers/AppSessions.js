@@ -50,9 +50,7 @@ function AppSessions(props) {
 
       validationRef.current = BackgroundTimer.setInterval(() => {
         validateSession()
-      }, 10000);
-
-      // account && account?.sync_data && account?.sync_data?.shift_validation_period || (30 * 1000)
+      }, account && account?.sync_data && account?.sync_data?.shift_validation_period || (30 * 1000));
     }
 
     return () => {
