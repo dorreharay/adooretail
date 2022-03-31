@@ -24,36 +24,36 @@ function CardPaymentStatus() {
     new Animated.Value(1),
   );
 
-  const startBlinking = () => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(statusDotOpacity, {
-          toValue: 0,
-          duration: 500,
-        }),
-        Animated.timing(statusDotOpacity, {
-          toValue: 1,
-          duration: 500,
-        }),
-      ]),
-      {
-        iterations: 300,
-      },
-    ).start();
-  };
+  // const startBlinking = () => {
+  //   Animated.loop(
+  //     Animated.sequence([
+  //       Animated.timing(statusDotOpacity, {
+  //         toValue: 0,
+  //         duration: 500,
+  //       }),
+  //       Animated.timing(statusDotOpacity, {
+  //         toValue: 1,
+  //         duration: 500,
+  //       }),
+  //     ]),
+  //     {
+  //       iterations: 300,
+  //     },
+  //   ).start();
+  // };
 
-  const stopBlinking = () => {
-    statusDotOpacity.stopAnimation();
-    setStatusDotOpacity(new Animated.Value(1));
-  };
+  // const stopBlinking = () => {
+  //   statusDotOpacity.stopAnimation();
+  //   setStatusDotOpacity(new Animated.Value(1));
+  // };
 
-  useEffect(() => {
-    if (paymentModalVisibility) {
-      startBlinking();
-    } else {
-      stopBlinking();
-    }
-  }, [paymentModalVisibility]);
+  // useEffect(() => {
+  //   if (paymentModalVisibility) {
+  //     startBlinking();
+  //   } else {
+  //     stopBlinking();
+  //   }
+  // }, [paymentModalVisibility]);
 
   if (activePaymentType?.key !== 1) return null;
 
@@ -78,7 +78,6 @@ function CardPaymentStatus() {
             style={[
               styles.statusDot,
               { backgroundColor: activePaymentStatus?.statusColor },
-              { opacity: statusDotOpacity },
             ]}
           />
           <Text style={styles.waitingText}>

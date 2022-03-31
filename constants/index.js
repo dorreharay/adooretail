@@ -4,13 +4,13 @@ export const PAYMENT_TYPES = {
   CASH: {
     key: 0,
     name: 'Готівка',
-    apiName: 'cash',
+    apiName: 'CASH',
     imageSource: require('@images/cash.png'),
   },
   DEBIT: {
     key: 1,
     name: 'Картка',
-    apiName: 'card',
+    apiName: 'DEBIT',
     imageSource: require('@images/debit.png'),
   },
 };
@@ -20,19 +20,21 @@ export const PAYMENT_STATUSES = {
     index: 0,
     statusColor: '#EDEDED',
     statusText: 'Очікування',
-    blinking: false,
   },
   WAITING: {
     index: 1,
     statusColor: 'yellow',
-    statusText: 'Очікування оплати в терміналі',
-    blinking: true,
+    statusText: 'Очікую підтвердження оплати',
+  },
+  PRINTING: {
+    index: 1,
+    statusColor: '#DC4EFF',
+    statusText: 'Друкую чек',
   },
   SUCCESS: {
     index: 2,
-    statusColor: '#6FE37A',
+    statusColor: '#35C56F',
     statusText: 'Оплата проведена',
-    blinking: false,
   },
 };
 

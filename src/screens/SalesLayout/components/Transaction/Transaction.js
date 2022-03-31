@@ -1,90 +1,105 @@
-import React, { useState, useEffect, useMemo, useRef, } from 'react'
-import { View, Text, TouchableOpacity, TextInput, TouchableOpacityBase, } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  TouchableOpacityBase,
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector, useDispatch } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import Toast, { DURATION } from 'react-native-easy-toast'
-import styles from './styles'
-import FastImage from 'react-native-fast-image'
+import Toast, { DURATION } from 'react-native-easy-toast';
+import styles from './styles';
+import FastImage from 'react-native-fast-image';
 
-import { syncSessions, } from '@helpers'
-import { dbidGenerator } from '@helpers'
-import { currentSessionSelector, } from '@selectors'
-import { setTransactionModalVisibility } from '@reducers/TempReducer'
-import { saveTransaction } from '@reducers/UserReducer'
+import { syncSessions } from '@helpers';
+import { dbidGenerator } from '@helpers';
+import { lastSessionSelector } from '@selectors';
+import { setTransactionModalVisibility } from '@reducers/TempReducer';
+import { saveTransactionData } from '@reducers/SessionReducer';
 
-import { getFormattedDate, } from '@dateFormatter'
-import { deviceWidth, deviceHeight } from '@dimensions'
+import { getFormattedDate } from '@dateFormatter';
+import { deviceWidth, deviceHeight } from '@dimensions';
 
 function Transaction(props) {
-  const {} = props
+  const {} = props;
 
-  const toastRef = useRef(null)
+  const toastRef = useRef(null);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const currentSession = useSelector(currentSessionSelector)
-  const transactionModalVisibility = useSelector(state => state.temp.transactionModalVisibility)
+  const lastSession = useSelector(lastSessionSelector);
+  const transactionModalVisibility = useSelector(
+    state => state.temp.transactionModalVisibility,
+  );
 
-  const [selectedTransactionType, setSelectedTransactionType] = useState('delivery')
-  const [amount, setAmount] = useState('0')
-  const [comment, setComment] = useState('')
-  const [amountFocused, setAmountFocused] = useState(false)
+  const [selectedTransactionType, setSelectedTransactionType] = useState(
+    'delivery',
+  );
+  const [amount, setAmount] = useState('0');
+  const [comment, setComment] = useState('');
+  const [amountFocused, setAmountFocused] = useState(false);
 
-  const handleAmountChange = (e) => {
-    const value = e.nativeEvent.text.replace(/[^0-9.]/g, '')
+  const handleAmountChange = e => {
+    const value = e.nativeEvent.text.replace(/[^0-9.]/g, '');
 
-    setAmount(value)
-  }
+    setAmount(value);
+  };
 
-  const handleCommentChange = (e) => {
-    const value = e.nativeEvent.text
+  const handleCommentChange = e => {
+    const value = e.nativeEvent.text;
 
-    setComment(value)
-  }
+    setComment(value);
+  };
 
   const handleSubmit = () => {
     if (canProceed) {
-      dispatch(saveTransaction({
-        type: selectedTransactionType,
-        sum: amount,
-        comment,
-        time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
-        session_id: currentSession.localId,
-        employees: currentSession.employees,
-        localId: dbidGenerator(),
-      }))
+      dispatch(
+        saveTransactionData({
+          type: selectedTransactionType,
+          sum: +amount,
+          comment,
+          time: getFormattedDate('YYYY-MM-DD HH:mm:ss'),
+          session_id: lastSession.session_id,
+          employees: lastSession.employees,
+          localId: dbidGenerator(),
+        }),
+      );
 
-      setAmount('0')
-      setComment('')
+      setAmount('0');
+      setComment('');
 
-      syncSessions()
+      syncSessions();
 
-      toastRef.current.show("Транзакцію збережено", 1000);
+      toastRef.current.show('Транзакцію збережено', 1000);
 
-      dispatch(setTransactionModalVisibility(false))
+      dispatch(setTransactionModalVisibility(false));
     }
-  }
+  };
 
   useEffect(() => {
-    setAmount('0')
-    setComment('')
-    setSelectedTransactionType('delivery')
-  }, [transactionModalVisibility])
+    setAmount('0');
+    setComment('');
+    setSelectedTransactionType('delivery');
+  }, [transactionModalVisibility]);
 
   const canProceed = useMemo(() => {
-    return +amount > 0 && comment !== ''
-  }, [amount, comment])
+    return +amount > 0 && comment !== '';
+  }, [amount, comment]);
 
   return (
-    <View style={[styles.wrapper, transactionModalVisibility && { top: 0, }]}>
+    <View style={[styles.wrapper, transactionModalVisibility && { top: 0 }]}>
       <TouchableOpacity
         style={styles.touchWrapper}
         onPress={() => dispatch(setTransactionModalVisibility(false))}
         activeOpacity={1}
       />
       <KeyboardAwareScrollView
-        style={{ paddingTop: (deviceHeight - deviceHeight * 0.9) / 2, zIndex: 13, }}
+        style={{
+          zIndex: 13,
+        }}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         extraScrollHeight={50}
         keyboardOpeningTime={0}
@@ -92,117 +107,171 @@ function Transaction(props) {
       >
         <View style={styles.container}>
           <View style={styles.rightSide}>
-            <View style={{ height: 20, }} />
+            <View style={{ height: 20 }} />
 
             <TouchableOpacity
-              style={[styles.typeItem, selectedTransactionType === 'delivery' && styles.typeItemActive]}
+              style={[
+                styles.typeItem,
+                selectedTransactionType === 'delivery' && styles.typeItemActive,
+              ]}
               onPress={() => setSelectedTransactionType('delivery')}
               activeOpacity={1}
             >
               <FastImage
-                style={{ width: 25, height: 25, marginRight: 10, opacity: selectedTransactionType === 'delivery' ? 1 : 0.5 }}
+                style={{
+                  width: 25,
+                  height: 25,
+                  marginRight: 10,
+                  opacity: selectedTransactionType === 'delivery' ? 1 : 0.5,
+                }}
                 source={require('@images/outcome.png')}
               />
-              <Text style={[styles.typeItemText, selectedTransactionType === 'delivery' && styles.typeItemTextActive]}>Витрата</Text>
+              <Text
+                style={[
+                  styles.typeItemText,
+                  selectedTransactionType === 'delivery' &&
+                    styles.typeItemTextActive,
+                ]}
+              >
+                Витрата
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.typeItem, selectedTransactionType === 'incasation' && styles.typeItemActive]}
+              style={[
+                styles.typeItem,
+                selectedTransactionType === 'incasation' &&
+                  styles.typeItemActive,
+              ]}
               onPress={() => setSelectedTransactionType('incasation')}
               activeOpacity={1}
             >
               <FastImage
-                style={{ width: 25, height: 25, marginRight: 10, opacity: selectedTransactionType === 'incasation' ? 1 : 0.5 }}
+                style={{
+                  width: 25,
+                  height: 25,
+                  marginRight: 10,
+                  opacity: selectedTransactionType === 'incasation' ? 1 : 0.5,
+                }}
                 source={require('@images/incasation.png')}
               />
-              <Text style={[styles.typeItemText, selectedTransactionType === 'incasation' && styles.typeItemTextActive]}>Інкасація</Text>
+              <Text
+                style={[
+                  styles.typeItemText,
+                  selectedTransactionType === 'incasation' &&
+                    styles.typeItemTextActive,
+                ]}
+              >
+                Інкасація
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.typeItem, selectedTransactionType === 'income' && styles.typeItemActive]}
+              style={[
+                styles.typeItem,
+                selectedTransactionType === 'income' && styles.typeItemActive,
+              ]}
               onPress={() => setSelectedTransactionType('income')}
               activeOpacity={1}
             >
               <FastImage
-                style={{ width: 25, height: 25, marginRight: 10, opacity: selectedTransactionType === 'income' ? 1 : 0.5 }}
+                style={{
+                  width: 25,
+                  height: 25,
+                  marginRight: 10,
+                  opacity: selectedTransactionType === 'income' ? 1 : 0.5,
+                }}
                 source={require('@images/income.png')}
               />
-              <Text style={[styles.typeItemText, selectedTransactionType === 'income' && styles.typeItemTextActive]}>Прибуток</Text>
+              <Text
+                style={[
+                  styles.typeItemText,
+                  selectedTransactionType === 'income' &&
+                    styles.typeItemTextActive,
+                ]}
+              >
+                Прибуток
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.leftSide}>
-            <View style={{ flexDirection: 'row', width: '100%', height: 50, alignItems: 'center', justifyContent: 'space-between', }}>
-              <Text style={styles.headingText}>
-                Транзакція
-              </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '100%',
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Text style={styles.headingText}>Транзакція</Text>
 
               <TouchableOpacity
                 style={styles.closeButton}
                 onPress={() => dispatch(setTransactionModalVisibility(false))}
               >
-                <Text style={styles.closeText}>
-                  Закрити
-                </Text>
+                <Text style={styles.closeText}>Закрити</Text>
               </TouchableOpacity>
             </View>
 
-            <Text style={styles.smallHeader}>
-              Сума
-            </Text>
+            <Text style={styles.smallHeader}>Сума</Text>
 
             <View style={styles.amountContainer}>
               <TextInput
                 value={amount}
                 onFocus={() => {
-                  setAmount('')
-                  setAmountFocused(true)
+                  setAmount('');
+                  setAmountFocused(true);
                 }}
                 onBlur={() => setAmountFocused(false)}
                 onChange={handleAmountChange}
                 style={styles.amountInput}
-                keyboardType='decimal-pad'
-                placeholder='0'
+                keyboardType="decimal-pad"
+                placeholder="0"
                 clearTextOnFocus
                 maxLength={7}
               />
-              <Text style={styles.amountCurrency}>
-                грн
-              </Text>
-              <Text style={[styles.amountCurrency, { marginLeft: 5, }]}>
+              <Text style={styles.amountCurrency}>грн</Text>
+              <Text style={[styles.amountCurrency, { marginLeft: 5 }]}>
                 {selectedTransactionType === 'delivery' && 'взято'}
                 {selectedTransactionType === 'incasation' && 'інкасовано'}
                 {selectedTransactionType === 'income' && 'внесено'}
               </Text>
             </View>
 
-            <Text style={styles.smallHeader}>
-              Коментар
-            </Text>
+            <Text style={styles.smallHeader}>Коментар</Text>
 
             <TextInput
               value={comment}
               onChange={handleCommentChange}
               style={styles.commentInput}
-              keyboardType='default'
-              placeholder='Введіть коментар до транзакції'
+              keyboardType="default"
+              placeholder="Введіть коментар до транзакції"
               multiline={true}
               numberOfLines={5}
             />
 
-            <TouchableOpacity 
-              style={{ width: '100%', height: '17%', marginTop: '8%', }}
-              onPress={handleSubmit}
-              activeOpacity={0.85}
-            >
-              <LinearGradient
-                start={{ x: 0, y: 1 }}
-                end={{ x: 1, y: 0 }}
-                colors={['#DB3E69', '#EF9058']}
-                style={[styles.paymentSubmitButtonGradient, !canProceed && { opacity: 0.6 }]}
+            <View style={styles.transactionSubmitButton}>
+              <TouchableOpacity
+                style={{ flex: 1 }}
+                onPress={handleSubmit}
+                activeOpacity={0.8}
               >
-                <Text style={styles.paymentSubmitButtonText}>Зберегти</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+                <LinearGradient
+                  start={{ x: 0, y: 1 }}
+                  end={{ x: 1, y: 0 }}
+                  colors={['#DB3E69', '#EF9058']}
+                  style={[
+                    styles.transactionSubmitButtonGradient,
+                    !canProceed && { opacity: 0.6 },
+                  ]}
+                >
+                  <Text style={styles.transactionSubmitButtonText}>
+                    Підтвердити
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </KeyboardAwareScrollView>
@@ -210,14 +279,14 @@ function Transaction(props) {
         ref={toastRef}
         opacity={1}
         style={{ paddingHorizontal: 40, backgroundColor: '#00000088' }}
-        position='bottom'
+        position="bottom"
         positionValue={150}
         textStyle={styles.toastText}
         fadeInDuration={200}
         fadeOutDuration={800}
       />
     </View>
-  )
+  );
 }
 
-export default Transaction
+export default Transaction;

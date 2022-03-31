@@ -1,16 +1,13 @@
 import store from '@store';
 import API from '@api';
-import { DURATION } from 'react-native-easy-toast';
 import {
   getFormattedDate,
   getStartOfPeriod,
   getEndOfPeriod,
   getIsBetween,
 } from '@dateFormatter';
-import { START, END, NOT_ON_SHIFT } from '@statuses';
 import { setProducts } from '@reducers/AccountReducer';
-import { syncDataWithStore, setNeedToReenter } from '@reducers/UserReducer';
-import { setPreReceipts } from '@reducers/OrderReducer';
+import { deleteSyncedSessions } from '@reducers/SessionReducer';
 import {
   setEndOfSessionStatus,
   setSessionModalState,
@@ -73,7 +70,7 @@ export const loadProducts = async toastRef => {
 
     const data = await API.getProducts({ token: account._id });
 
-    console.log('data', data)
+    console.log('data', data);
 
     if (!data) {
       if (toastRef) {
@@ -96,61 +93,32 @@ export const loadProducts = async toastRef => {
   }
 };
 
-export async function syncSessions(callback, newLocalSessions, customOffset) {
-  return;
-
+export async function syncSessions() {
   if (!store) return;
 
   const currentStore = store.getState();
   const dispatch = store.dispatch;
 
-  const { currentAccount } = currentStore.user;
-  const { receiptsPreStates } = currentStore.orders;
+  if (!currentStore?.account) return;
 
-  if (!currentAccount) {
-    callback();
+  let { list } = currentStore.sessions;
+  const { _id } = currentStore.account;
 
-    return;
-  }
-
-  const { localSessions, settings, passcode } = currentAccount;
+  list = list.filter(item => !!item);
 
   try {
-    const data = await API.synchronizeSessions(
-      {
-        localSessions: getLastItems(
-          newLocalSessions ? newLocalSessions : localSessions,
-          customOffset ? customOffset : 5,
-        ),
-        receiptsPreStates,
-        newSettings: settings,
-      },
-      currentAccount?.id,
-    );
+    const data = await API.synchronizeSessions({
+      client_id: _id,
+      local_sessions: list,
+    });
 
     if (!data) return null;
 
-    dispatch(setPreReceipts([]));
-
-    const { shift_start, shift_end, client_data } = data;
-    const { passcode: clientPasscode } = client_data;
-
-    dispatch(syncDataWithStore(data, shift_start, shift_end));
-
-    if (currentAccount) {
-      if (clientPasscode != passcode) {
-        dispatch(setNeedToReenter(true));
-      }
+    if (data?.todelete?.length) {
+      dispatch(deleteSyncedSessions(data?.todelete));
     }
-
-    validateByRoute(shift_start, shift_end, callback);
   } catch (error) {
     console.log(error);
-    validateByRoute(
-      currentAccount?.shift_start,
-      currentAccount?.shift_end,
-      callback,
-    );
   }
 }
 

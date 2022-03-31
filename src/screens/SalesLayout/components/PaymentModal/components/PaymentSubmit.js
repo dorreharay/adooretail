@@ -6,7 +6,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import styles from '../styles';
 
 import { PAYMENT_STATUSES } from '@constants';
-import saveReceipt from '@receipt'
+import saveReceipt from '@receipt';
 
 import {
   clearCurrentReceipt,
@@ -14,7 +14,10 @@ import {
   setPaymentModalVisibility,
 } from '@reducers/TempReducer';
 import { setCurrentService } from '@reducers/UserReducer';
-import { setPaymentButtonAccessibility, setActivePaymentStatus } from '@reducers/OrderReducer';
+import {
+  setPaymentButtonAccessibility,
+  setActivePaymentStatus,
+} from '@reducers/OrderReducer';
 
 function PaymentSubmit() {
   const dispatch = useDispatch();
@@ -40,24 +43,25 @@ function PaymentSubmit() {
 
     try {
       dispatch(setPrintStatus(true));
-      saveReceipt();
+      dispatch(setActivePaymentStatus(PAYMENT_STATUSES.PRINTING));
+      await saveReceipt();
       if (activePaymentType.key === 1) {
         dispatch(setActivePaymentStatus(PAYMENT_STATUSES.SUCCESS));
         BackgroundTimer.setTimeout(() => {
-          resetToInitial()
+          resetToInitial();
 
           BackgroundTimer.setTimeout(() => {
             dispatch(setActivePaymentStatus(PAYMENT_STATUSES.WAITING));
-          }, 300)
+          }, 300);
         }, 500);
       } else {
-        resetToInitial()
+        resetToInitial();
       }
 
       dispatch(setPrintStatus(false));
-
     } catch (error) {
       dispatch(setPrintStatus(false));
+      dispatch(setActivePaymentStatus(PAYMENT_STATUSES.WAITING));
     }
   };
 

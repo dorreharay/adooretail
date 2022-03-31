@@ -9,7 +9,7 @@ const API = {
     return await asyncAxiosCall('/client/account/get', payload)
   },
   async synchronizeSessions(payload) {
-    return await asyncAxiosCall(`/user/synchronizeSessions`, payload)
+    return await asyncAxiosCall(`/client/sync`, payload)
   },
   async getProducts(payload) {
     return await asyncAxiosCall(`/client/products/get`, payload)

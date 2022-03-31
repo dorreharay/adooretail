@@ -157,7 +157,7 @@ function Session() {
       dispatch(setSessionModalState(true));
     }, 300);
 
-    // await syncSessions(() => {}, null, 1);
+    await syncSessions();
 
     // dispatch(resetSessions());
   };

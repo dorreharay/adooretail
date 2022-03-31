@@ -46,6 +46,7 @@ const PaymentModal = () => {
       />
       <KeyboardAwareScrollView
         style={styles.keyboardAwareScrollViewStyles}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         keyboardOpeningTime={0}
         enableOnAndroid={true}

@@ -177,8 +177,8 @@ async function resolveDevice() {
 export async function printReceipt(receipt) {
   try {
     const currentStore = store.getState()
-    const { currentAccount, settings, } = currentStore.user
-    const { receipt_name, receipt_description } = currentAccount
+    const { settings, } = currentStore.user
+    const { receipt_name, receipt_description, address } = currentStore.account.client_data
 
     await resolveDevice()
 
@@ -197,7 +197,7 @@ export async function printReceipt(receipt) {
     )}
 
     {settings.receipt_show_address && (
-      await printRegularLine(parceCyrrilicText(currentAccount?.address), { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(parceCyrrilicText(address), { spaces: 1, paddingLeft: 2 })
     )}
 
     await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })
@@ -256,8 +256,8 @@ export async function printReceipt(receipt) {
 export async function printPreReceipt(receipt) {
   try {
     const currentStore = store.getState()
-    const { currentAccount, settings, } = currentStore.user
-    const { receipt_name, receipt_description } = currentAccount
+    const { settings, } = currentStore.user
+    const { receipt_name, receipt_description, address } = currentStore.account.client_data
 
     await resolveDevice()
 
@@ -276,7 +276,7 @@ export async function printPreReceipt(receipt) {
     )}
 
     {settings.receipt_show_address && (
-      await printRegularLine(parceCyrrilicText(currentAccount?.address), { spaces: 1, paddingLeft: 2 })
+      await printRegularLine(parceCyrrilicText(address), { spaces: 1, paddingLeft: 2 })
     )}
 
     await printRegularLine(`Номер замовлення: #${receipt.hash_id.slice(0, 18).toUpperCase()}`, { spaces: 1, paddingLeft: 2 })

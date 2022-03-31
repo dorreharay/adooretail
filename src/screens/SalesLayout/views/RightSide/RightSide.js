@@ -28,7 +28,7 @@ function RightSide(props) {
   const netInfo = useNetInfo();
 
   const layout = useSelector(state => state.orders.layout);
-  const currentAccount = useSelector(state => state.user.currentAccount);
+  const account = useSelector(state => state.account);
   const settings = useSelector(state => state.user.settings);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -52,7 +52,7 @@ function RightSide(props) {
       return;
     }
 
-    if (currentAccount) {
+    if (account) {
       delayedQuery(toastRef?.current);
     }
   };

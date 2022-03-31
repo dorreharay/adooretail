@@ -31,6 +31,8 @@ const base = {
   },
   paymentModal: {
     flexDirection: 'row',
+    width: deviceHeight,
+    height: deviceHeight * 0.8,
     borderRadius: 2,
     backgroundColor: '#FFFFFF',
     zIndex: 20,
@@ -94,20 +96,14 @@ const base = {
     fontFamily: GILROY_LIGHT,
   },
   keyboardAwareScrollViewStyles: {
-    paddingTop: (deviceHeight - deviceHeight * 0.8) / 2,
-    zIndex: 13
+    zIndex: 13,
   },
 };
 
 const styles = createStyles(
   base,
 
-  maxWidth(1300, {
-    paymentModal: {
-      width: deviceHeight,
-      height: deviceHeight * 0.8,
-    },
-  }),
+  maxWidth(1300, {}),
 );
 
 export default styles;

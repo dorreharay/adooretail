@@ -1,7 +1,7 @@
-import { createStyles, maxHeight, } from 'react-native-media-queries';
-import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_BOLD, } from '@fonts'
+import { createStyles, maxHeight } from 'react-native-media-queries';
+import { GILROY_REGULAR, GILROY_MEDIUM, GILROY_BOLD } from '@fonts';
 
-import { deviceWidth, deviceHeight } from '@dimensions'
+import { deviceWidth, deviceHeight } from '@dimensions';
 
 const base = {
   wrapper: {
@@ -25,8 +25,8 @@ const base = {
   },
   container: {
     flexDirection: 'row',
-    width: deviceHeight * 1.1,
-    height: deviceHeight * 0.9,
+    width: deviceHeight,
+    height: deviceHeight * 0.8,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     zIndex: 12,
@@ -37,11 +37,10 @@ const base = {
     fontFamily: GILROY_BOLD,
   },
   leftSide: {
-    justifyContent: 'center',
     width: '70%',
     height: '100%',
     padding: '5%',
-    paddingTop: 25,
+    paddingTop: 40,
     backgroundColor: '#FFFFFF00',
   },
   rightSide: {
@@ -107,8 +106,8 @@ const base = {
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-start',
-    width: '97%',
-    height: '31%',
+    width: '100%',
+    height: deviceHeight * 0.25,
     marginTop: '3%',
     marginRight: 15,
     paddingTop: '5%',
@@ -121,7 +120,7 @@ const base = {
     color: '#343434',
     fontSize: 25,
     fontFamily: GILROY_REGULAR,
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
   },
   submitButton: {
     position: 'absolute',
@@ -149,14 +148,19 @@ const base = {
     fontSize: 18,
     fontFamily: GILROY_REGULAR,
   },
-  paymentSubmitButtonGradient: {
+  transactionSubmitButton: {
+    width: '100%',
+    height: 75,
+    marginTop: 40,
+  },
+  transactionSubmitButtonGradient: {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     height: '100%',
     borderRadius: 5,
   },
-  paymentSubmitButtonText: {
+  transactionSubmitButtonText: {
     color: '#FFFFFF',
     fontSize: 26,
     fontFamily: GILROY_MEDIUM,
@@ -167,26 +171,9 @@ const styles = createStyles(
   base,
 
   maxHeight(500, {
-    container: {
-      flexDirection: 'row',
-      width: deviceWidth * 0.7,
-      height: deviceHeight * 0.80,
-    },
-    amountInput: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      alignSelf: 'flex-start',
-      width: 80,
-      height: 55,
-    },
-    commentInput: {
-      marginTop: '6%',
-    },
   }),
 
-  maxHeight(500, {
-
-  })
+  maxHeight(500, {}),
 );
 
-export default styles
+export default styles;

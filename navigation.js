@@ -63,29 +63,29 @@ function AppContainer() {
         }
       }}
     >
-      {/* <AppSessions navigationRef={navigationRef}> */}
-      <Tab.Navigator
-        initialRouteName={initialRoute}
-        backBehavior="none"
-        swipeEnabled={false}
-        tabBar={() => null}
-        removeClippedSubviews={Platform.OS === 'android'}
-        sceneContainerStyle={{
-          backgroundColor: '#FFFFFF00',
-        }}
-        style={{
-          backgroundColor: '#FFFFFF00',
-        }}
-      >
-        <Tab.Screen name="Initial1" component={Initial1} />
-        <Tab.Screen name="Initial2" component={Initial2} />
-        <Tab.Screen name="NoAccount" component={NoAccount} />
+      <AppSessions navigationRef={navigationRef}>
+        <Tab.Navigator
+          initialRouteName={initialRoute}
+          backBehavior="none"
+          swipeEnabled={false}
+          tabBar={() => null}
+          removeClippedSubviews={Platform.OS === 'android'}
+          sceneContainerStyle={{
+            backgroundColor: '#FFFFFF00',
+          }}
+          style={{
+            backgroundColor: '#FFFFFF00',
+          }}
+        >
+          <Tab.Screen name="Initial1" component={Initial1} />
+          <Tab.Screen name="Initial2" component={Initial2} />
+          <Tab.Screen name="NoAccount" component={NoAccount} />
 
-        <Tab.Screen name="Login" component={Login} />
-        <Tab.Screen name="SalesLayout" component={SalesLayout} />
-        <Tab.Screen name="ControlLayout" component={ControlLayout} />
-      </Tab.Navigator>
-      {/* </AppSessions> */}
+          <Tab.Screen name="Login" component={Login} />
+          <Tab.Screen name="SalesLayout" component={SalesLayout} />
+          <Tab.Screen name="ControlLayout" component={ControlLayout} />
+        </Tab.Navigator>
+      </AppSessions>
     </NavigationContainer>
   );
 }

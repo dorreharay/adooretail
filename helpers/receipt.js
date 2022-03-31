@@ -33,7 +33,7 @@ export default async function saveReceipt() {
   } = getState('orders');
   const { currentEmployee, currentService, settings } = getState('user');
   const { employees, delivery_services } = getState('account');
-  const { buffer, oldReceiptState } = getState('temp')
+  const { buffer, oldReceiptState } = getState('temp');
 
   const lastSession = getLastSession();
 
@@ -73,26 +73,24 @@ export default async function saveReceipt() {
     return;
   }
 
-  const newBuffer = buffer.map((item, index) =>
-    index === activeReceiptIndex ? null : item,
-  );
-
-  dispatch(setBuffer(newBuffer));
-
-  const newOldReceipt = oldReceiptState.map((item, index) =>
-    index === activeReceiptIndex ? null : item,
-  );
-
-  dispatch(setOldReceipt(newOldReceipt));
-
-  console.log('/////////////////////')
-
   try {
     if (settings?.printer_enabled) {
       await printReceipt(payload);
     }
 
     dispatch(removeCurrentReceiptId());
+
+    const newBuffer = buffer.map((item, index) =>
+      index === activeReceiptIndex ? null : item,
+    );
+
+    dispatch(setBuffer(newBuffer));
+
+    const newOldReceipt = oldReceiptState.map((item, index) =>
+      index === activeReceiptIndex ? null : item,
+    );
+
+    dispatch(setOldReceipt(newOldReceipt));
 
     BackgroundTimer.setTimeout(() => {
       dispatch(saveReceiptData(payload));

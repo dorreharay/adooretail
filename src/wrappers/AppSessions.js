@@ -25,7 +25,7 @@ function AppSessions(props) {
   const intervalRef = useRef(false)
   const validationRef = useRef(null)
 
-  const currentAccount = useSelector(state => state.user.currentAccount)
+  const account = useSelector(state => state.user.account)
   const modalStatus = useSelector(state => state.temp.modalStatus)
   const currentRoute = useSelector(state => state.temp.currentRoute)
   const settings = useSelector(state => state.user.settings)
@@ -37,37 +37,19 @@ function AppSessions(props) {
   const [pinVisible, setPinVisible] = useState(false)
 
   useEffect(() => {
-    if (currentAccount) {
-      BackgroundTimer.clearInterval(syncRef.current);
-      BackgroundTimer.clearInterval(validationRef.current);
-
-      validateSessionRoutine()
-
-      if (settings.shifts_enabled) {
-        validationRef.current = BackgroundTimer.setInterval(() => {
-          validateSessionRoutine()
-        }, currentAccount && currentAccount?.client_data && currentAccount?.client_data.shift_validation_period || (30 * 1000));
-      }
-
+    if (account) {
       BackgroundTimer.clearInterval(syncRef.current);
 
       syncRef.current = BackgroundTimer.setInterval(() => {
         syncSessions()
-      }, currentAccount && currentAccount?.client_data && currentAccount?.client_data.update_period || (30 * 1000));
+      }, account && account?.sync_data && account?.sync_data?.update_period || (30 * 1000));
     }
 
     return () => {
       BackgroundTimer.clearInterval(syncRef.current);
       BackgroundTimer.clearInterval(validationRef.current);
     };
-  }, [currentAccount])
-
-  const delay = (time) => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, time)
-    })
-  }
-
+  }, [account])
 
   useEffect(() => {
     BackgroundTimer.setTimeout(() => {
@@ -91,7 +73,7 @@ function AppSessions(props) {
     return () => {
       clearInterval(intervalRef.current)
     }
-  }, [currentAccount, currentRoute, modalStatus,])
+  }, [account, currentRoute, modalStatus,])
 
   useEffect(() => {
     getBuildInfo()

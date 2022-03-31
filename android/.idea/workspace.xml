@@ -8,12 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.babelrc" beforeDir="false" afterPath="$PROJECT_DIR$/../.babelrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../helpers/receipt.js" beforeDir="false" afterPath="$PROJECT_DIR$/../helpers/receipt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../reducers/SessionReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../reducers/SessionReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentSubmit.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/PaymentModal/components/PaymentSubmit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Session/Session.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/components/Session/Session.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../constants/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../constants/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
