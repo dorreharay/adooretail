@@ -25,7 +25,7 @@ function AppSessions(props) {
   const intervalRef = useRef(false)
   const validationRef = useRef(null)
 
-  const account = useSelector(state => state.user.account)
+  const account = useSelector(state => state.account)
   const modalStatus = useSelector(state => state.temp.modalStatus)
   const currentRoute = useSelector(state => state.temp.currentRoute)
   const settings = useSelector(state => state.user.settings)
@@ -37,6 +37,7 @@ function AppSessions(props) {
   const [pinVisible, setPinVisible] = useState(false)
 
   useEffect(() => {
+    console.log('account', account)
     if (account) {
       BackgroundTimer.clearInterval(syncRef.current);
 

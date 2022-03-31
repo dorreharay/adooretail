@@ -5,6 +5,8 @@ import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles';
 
+import { lastSessionSelector } from '@selectors';
+
 import { setCurrentEmployee } from '@reducers/UserReducer';
 import { setEmployeesListVisibility } from '@reducers/OrderReducer';
 
@@ -13,6 +15,7 @@ function EmployeePicker() {
 
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0;
   const account = useSelector(state => state.account);
+  const lastSession = useSelector(lastSessionSelector);
 
   const employeesListVisible = useSelector(
     state => state.orders.employeesListVisible,
@@ -41,8 +44,8 @@ function EmployeePicker() {
         <Text style={styles.employeesListHeading}>Працівник</Text>
 
         <ScrollView style={styles.employeesList}>
-          {account?.employees &&
-            account?.employees.map((item, key) => (
+          {lastSession?.employees &&
+            lastSession?.employees.map((item, key) => (
               <TouchableOpacity
                 style={styles.employeesListItem}
                 onPress={() => {

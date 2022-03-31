@@ -70,8 +70,6 @@ export const loadProducts = async toastRef => {
 
     const data = await API.getProducts({ token: account._id });
 
-    console.log('data', data);
-
     if (!data) {
       if (toastRef) {
         toastRef.close();

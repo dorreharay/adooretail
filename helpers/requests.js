@@ -13,8 +13,6 @@ export async function useRequest(type, payload) {
   const request = types.find(item => item.type === type).request
 
   try {
-    console.log('request', request)
-
     if (!request) throw new Error('Invalid request type')
 
     data = await request(payload)

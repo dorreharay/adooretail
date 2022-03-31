@@ -162,7 +162,6 @@ function Products(props) {
   }, [searchTerm, layout]);
 
   const actualList = useMemo(() => {
-    console.log('account?.products', account?.products)
     if (!account?.products) return [];
 
     return [searchResult.length > 0 ? searchResult : account?.products][0];
