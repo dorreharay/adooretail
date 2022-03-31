@@ -129,10 +129,8 @@ const getLastSession = () => {
 };
 
 export function validateSession() {
-  console.log('=====>')
   const dispatch = store.dispatch;
   const account = getState('account');
-  const sessionModalVisible = getState('temp');
   const lastSession = getLastSession();
 
   if (!account) return;
