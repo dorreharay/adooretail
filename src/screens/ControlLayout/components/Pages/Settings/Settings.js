@@ -133,34 +133,6 @@ const Settings = ({ navigation }) => {
                   >
                     <Text style={[styles.buttonText, settings.payment_type_debit && styles.activeButtonText]}>Картка</Text>
                   </TouchableOpacity>
-
-                  {(settings.payment_type_cash && settings.payment_type_debit) && (
-                    <>
-                      <View style={styles.devider}></View>
-
-                      <TouchableOpacity
-                        style={[styles.button, settings.payment_type_cash_default && styles.activeButton]}
-                        onPress={() => {
-                          updateSettings('payment_type_cash_default', true)
-                          updateSettings('payment_type_debit_default', false)
-                        }}
-                        activeOpacity={1}
-                      >
-                        <Text style={[styles.buttonText, settings.payment_type_cash_default && styles.activeButtonText]}>Готівка за замовч.</Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity
-                        style={[styles.button, { marginTop: 10, }, settings.payment_type_debit_default && styles.activeButton]}
-                        onPress={() => {
-                          updateSettings('payment_type_debit_default', true)
-                          updateSettings('payment_type_cash_default', false)
-                        }}
-                        activeOpacity={1}
-                      >
-                        <Text style={[styles.buttonText, settings.payment_type_debit_default && styles.activeButtonText]}>Картка за замовч.</Text>
-                      </TouchableOpacity>
-                    </>
-                  )}
                 </View>
               )}
               {selectedSetting === 'prints' && (
@@ -246,33 +218,6 @@ const Settings = ({ navigation }) => {
                     >
                       <Text style={[styles.buttonText, settings.delivery_use && styles.activeButtonText]}>Викор. сервіси</Text>
                     </TouchableOpacity>
-
-                    {settings.delivery_use && (
-                      <>
-                        <View style={styles.devider}></View>
-
-                        <TouchableOpacity
-                          style={[styles.button, settings.delivery_position_side && styles.activeButton]}
-                          onPress={() => {
-                            updateSettings('delivery_position_side', !settings.delivery_position_side)
-                            updateSettings('delivery_position_quick', false)
-                          }}
-                          activeOpacity={1}
-                        >
-                          <Text style={[styles.buttonText, settings.delivery_position_side && styles.activeButtonText]}>Вертик. список</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={[styles.button, { marginTop: 10, }, settings.delivery_position_quick && styles.activeButton]}
-                          onPress={() => {
-                            updateSettings('delivery_position_quick', !settings.delivery_position_quick)
-                            updateSettings('delivery_position_side', false)
-                          }}
-                          activeOpacity={1}
-                        >
-                          <Text style={[styles.buttonText, settings.delivery_position_quick && styles.activeButtonText]}>Горизонт. список</Text>
-                        </TouchableOpacity>
-                      </>
-                    )}
                   </View>
                 </>
               )}

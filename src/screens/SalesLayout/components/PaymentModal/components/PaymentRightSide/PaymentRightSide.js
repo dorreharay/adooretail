@@ -22,6 +22,8 @@ function PaymentRightSide() {
     state => state.orders.activePaymentType,
   );
 
+  const settings = useSelector(state => state.user.settings);
+
   const handleClose = () => {
     dispatch(setPaymentModalVisibility(false));
     dispatch(setActivePaymentStatus(PAYMENT_STATUSES.WAITING));
@@ -50,11 +52,16 @@ function PaymentRightSide() {
 
       <PaymentType />
 
-      <Text style={[styles.headingText, { paddingTop: 10, paddingBottom: 20 }]}>
-        Сервіс доставки
-      </Text>
-
-      <DeliveryPicker />
+      {settings?.delivery_use && (
+        <>
+          <Text
+            style={[styles.headingText, { paddingTop: 10, paddingBottom: 20 }]}
+          >
+            Сервіс доставки
+          </Text>
+          <DeliveryPicker />
+        </>
+      )}
 
       <PaymentSubmit />
     </View>

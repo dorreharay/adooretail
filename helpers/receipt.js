@@ -65,7 +65,11 @@ export default async function saveReceipt() {
     last_product_time: timeEnd,
     transaction_time_end: new Date().toISOString(),
     employee: employees ? employees[currentEmployee] : '',
-    service: delivery_services ? delivery_services[currentService]._id : '',
+    service: settings?.delivery_use
+      ? delivery_services
+        ? delivery_services[currentService]._id
+        : null
+      : null,
     session_id: lastSession?.session_id,
   };
 

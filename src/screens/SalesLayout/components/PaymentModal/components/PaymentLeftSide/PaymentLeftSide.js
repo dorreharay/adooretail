@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import FastImage from 'react-native-fast-image';
@@ -21,19 +21,37 @@ function PaymentLeftSide() {
   const activePaymentType = useSelector(
     state => state.orders.activePaymentType,
   );
+  const settings = useSelector(state => state.user.settings);
   const currentEmployee = useSelector(state => state.user.currentEmployee) || 0;
   const account = useSelector(state => state.account);
+
+  const [availablePaymentTypes, setAvailablePaymentTypes] = useState([]);
+
+  useEffect(() => {
+    if (settings?.payment_type_cash && settings?.payment_type_debit) {
+      setAvailablePaymentTypes([PAYMENT_TYPES.CASH, PAYMENT_TYPES.DEBIT])
+    } else if (settings?.payment_type_cash && !settings?.payment_type_debit) {
+      setAvailablePaymentTypes([PAYMENT_TYPES.CASH])
+      dispatch(setActivePaymentType(PAYMENT_TYPES.CASH))
+    } else if (!settings?.payment_type_cash && settings?.payment_type_debit) {
+      setAvailablePaymentTypes([PAYMENT_TYPES.DEBIT])
+      dispatch(setActivePaymentType(PAYMENT_TYPES.DEBIT))
+    } else if (!settings?.payment_type_cash && !settings?.payment_type_debit) {
+      setAvailablePaymentTypes([PAYMENT_TYPES.CASH])
+      dispatch(setActivePaymentType(PAYMENT_TYPES.CASH))
+    }
+  }, [settings]);
 
   return (
     <View style={styles.container}>
       <Text style={[styles.heading, { marginTop: '15%' }]}>Спосіб оплати</Text>
 
       <View style={{ marginTop: '10%' }}>
-        {[PAYMENT_TYPES.CASH, PAYMENT_TYPES.DEBIT].map((item, index) => (
+        {availablePaymentTypes.map((item, index) => (
           <TouchableOpacity
             style={[
               styles.paymentType,
-              activePaymentType.key === index && { backgroundColor: '#2E2C2E' },
+              activePaymentType.key === item.key && { backgroundColor: '#2E2C2E' },
             ]}
             onPress={() => dispatch(setActivePaymentType(item))}
             activeOpacity={1}
@@ -43,7 +61,7 @@ function PaymentLeftSide() {
               <FastImage
                 style={[
                   { width: 30, height: 30, marginRight: 15 },
-                  activePaymentType.key !== index && { opacity: 0.5 },
+                  activePaymentType.key !== item.key && { opacity: 0.5 },
                 ]}
                 source={item.imageSource}
               />
@@ -52,7 +70,7 @@ function PaymentLeftSide() {
             <Text
               style={[
                 styles.paymentTypeName,
-                activePaymentType.key === index && { color: '#FFFFFF' },
+                activePaymentType.key === item.key && { color: '#FFFFFF' },
               ]}
             >
               {item?.name}
