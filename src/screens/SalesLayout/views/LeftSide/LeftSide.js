@@ -295,8 +295,6 @@ function LeftSide() {
       employee: lastSession ? lastSession?.employees[currentEmployee] : '',
     };
 
-    console.log('///////', payload)
-
     try {
       dispatch(setPrintStatus(true));
 

@@ -9,13 +9,16 @@
   <component name="ChangeListManager">
     <list default="true" id="71fa996f-52b2-4acd-95be-cd191a0a9864" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/release/app.aab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../helpers/printer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../helpers/printer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/LeftSide.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/SalesLayout/views/LeftSide/LeftSide.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VQTBB19406151094]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/Andrii_Didkivskyi/.android/avd/10.1_WXGA_Tablet_API_Tiramisu.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -31,8 +34,9 @@
   <component name="GenerateSignedApkSettings">
     <option name="EXPORT_PRIVATE_KEY" value="false" />
     <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/app/adooretail.keystore" />
-    <option name="KEY_ALIAS" value="your_key_alias" />
+    <option name="KEY_ALIAS" value="adoo_key_alias" />
     <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -45,6 +49,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ApkExportedModule" value="adooretail.app" />
     <property name="BundleExportedModule" value="adooretail.app" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="10.1_WXGA_Tablet_API_30" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-05-22T07:49:02.008Z" />

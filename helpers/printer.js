@@ -288,6 +288,7 @@ export async function printReceipt(receipt) {
       `Номер замовлення: #${receipt?.hash_id?.slice(0, 18).toUpperCase()}`,
       { spaces: 1, paddingLeft: 2 },
     );
+    
     await printRegularLine(
       `Касир: ${parceCyrrilicText(receipt?.employee?.name)}`,
       { spaces: 1, paddingLeft: 2 },
